@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXBIT | Trade Beyond Limits</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#090a0c;color:#f5f5f5;font-family:Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 6%;border-bottom:1px solid #292929}
+.logo{font-size:27px;font-weight:900;letter-spacing:2px;color:#e5a52b}
+.logo span{color:white}
+nav a{color:#bbb;text-decoration:none;margin-left:22px;font-size:14px}
+nav a:hover{color:#e5a52b}
+.hero{padding:85px 7% 65px;background:radial-gradient(circle at 80% 30%,#39240d 0,#14110d 25%,#090a0c 65%)}
+.tag{color:#e5a52b;font-size:13px;letter-spacing:3px}
+h1{font-size:clamp(42px,7vw,76px);line-height:1.08;margin:20px 0}
+h1 span{color:#e5a52b}
+.hero p{color:#aaa;max-width:520px;line-height:1.8}
+.actions{margin-top:30px}
+.btn{display:inline-block;background:#e5a52b;color:#111;padding:14px 25px;border-radius:5px;text-decoration:none;font-weight:bold;margin-right:10px}
+.btn.outline{background:transparent;color:#e5a52b;border:1px solid #e5a52b}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding:30px 7%}
+.stat,.panel{background:#121416;border:1px solid #292929;border-radius:10px;padding:22px}
+.stat small{color:#999}
+.stat h2{margin-top:12px;color:#e5a52b}
+section.market{padding:35px 7% 70px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.section-title h2{font-size:27px}
+.tabs button{background:#1b1d20;border:1px solid #333;color:#bbb;padding:10px 17px;border-radius:5px;margin-left:5px}
+.tabs button.active{background:#e5a52b;color:#111;border-color:#e5a52b}
+table{width:100%;border-collapse:collapse;background:#121416;border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:17px 13px;border-bottom:1px solid #292929;font-size:14px}
+th{color:#999;font-weight:normal}
+td small{color:#888}
+.green{color:#36c98b}
+.red{color:#ff6969}
+.notice{color:#888;font-size:12px;margin-top:13px}
+.features{padding:55px 7%;background:#101214}
+.features h2{text-align:center;margin-bottom:30px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#17191c;padding:25px;border:1px solid #292929;border-radius:10px}
+.card h3{color:#e5a52b;margin-bottom:12px}
+.card p{color:#999;line-height:1.7;font-size:14px}
+footer{text-align:center;padding:30px;color:#777;border-top:1px solid #292929;font-size:13px}
+@media(max-width:650px){nav a{margin-left:10px;font-size:12px}.stats,.cards{grid-template-columns:1fr}.hero{padding-top:60px}th,td{padding:13px 7px;font-size:12px}.section-title{align-items:flex-start;gap:15px;flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">NEX<span>BIT</span></div>
+<nav>
+<a href="#home">Home</a>
+<a href="#markets">Markets</a>
+<a href="#features">Features</a>
+</nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+<div class="tag">THE FUTURE OF TRADING</div>
+<h1>Trade Beyond<br><span>Limits.</span></h1>
+<p>Explore digital assets and global stock markets from one powerful trading platform. Discover opportunities and take control of your trading journey.</p>
+<div class="actions">
+<a class="btn" href="#markets">Explore Markets</a>
+<a class="btn outline" href="#features">Discover NEXBIT</a>
+</div>
+</section>
+
+<div class="stats">
+<div class="stat"><small>Trading Markets</small><h2>Crypto + Stocks</h2></div>
+<div class="stat"><small>Platform Access</small><h2>Global</h2></div>
+<div class="stat"><small>Our Mission</small><h2>Trade Smarter</h2></div>
+</div>
+
+<section class="market" id="markets">
+<div class="section-title">
+<h2>Explore Markets</h2>
+<div class="tabs">
+<button class="active" onclick="showMarket('crypto',this)">Crypto</button>
+<button onclick="showMarket('stocks',this)">Stocks</button>
+</div>
+</div>
+<table>
+<thead><tr><th>Asset</th><th>Market</th><th>Price</th><th>24h</th></tr></thead>
+<tbody id="marketRows"></tbody>
+</table>
+<p class="notice">Illustrative sample data for website preview only. These are not live market prices or executable trading quotes.</p>
+</section>
+
+<section class="features" id="features">
+<h2>Why Choose NEXBIT?</h2>
+<div class="cards">
+<div class="card"><h3>Crypto Markets</h3><p>Explore popular digital assets and discover the cryptocurrency market in one place.</p></div>
+<div class="card"><h3>Global Stocks</h3><p>View a selection of international stock-market instruments alongside digital assets.</p></div>
+<div class="card"><h3>Built for You</h3><p>A clean, modern trading experience designed with clarity, accessibility and security in mind.</p></div>
+</div>
+</section>
+</main>
+
+<footer>
+<p>© 2026 NEXBIT. Trade Beyond Limits.</p>
+<p style="margin-top:9px">Preview website. Trading, deposits and withdrawals are not currently enabled.</p>
+</footer>
+
+<script>
+const markets={
+crypto:[
+["Bitcoin","BTC","$67,250.00","+2.41%","green"],
+["Ethereum","ETH","$3,480.00","+1.82%","green"],
+["Solana","SOL","$145.20","-0.65%","red"],
+["BNB","BNB","$590.00","+0.92%","green"],
+["XRP","XRP","$0.62","+1.14%","green"]
+],
+stocks:[
+["Apple","AAPL","$225.00","+0.85%","green"],
+["Microsoft","MSFT","$425.00","+1.20%","green"],
+["NVIDIA","NVDA","$138.00","-0.42%","red"],
+["Amazon","AMZN","$215.00","+0.64%","green"],
+["Tesla","TSLA","$340.00","+2.15%","green"]
+]};
+function showMarket(type,button){
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+document.getElementById("marketRows").innerHTML=markets[type].map(a=>`<tr><td><strong>${a[0]}</strong><br><small>${a[1]}</small></td><td>${type==="crypto"?"Crypto":"Stock"}</td><td>${a[2]}</td><td class="${a[4]}">${a[3]}</td></tr>`).join("");
+}
+showMarket("crypto",document.querySelector(".tabs button"));
+</script>
+</body>
+</html>
