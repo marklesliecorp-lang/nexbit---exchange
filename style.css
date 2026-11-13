@@ -1128,3 +1128,32 @@ footer p {
     display: block;
   }
 }
+/* NEXBIT LOGO SIZE FIX */
+
+.site-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hero-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
