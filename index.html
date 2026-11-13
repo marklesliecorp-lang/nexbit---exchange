@@ -217,7 +217,81 @@ details p{color:var(--muted);font-size:13px;margin-top:13px;max-width:720px}
 footer{border-top:1px solid var(--line);padding:30px 0;color:#858b95;font-size:11px}
 .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 footer .logo{font-size:20px;color:white}
-@media(max-width:760px){
+
+/* NEXBIT realistic iPhone trading screen */
+.phone.iphone{
+  width:290px;
+  min-height:520px;
+  padding:18px 14px 14px;
+  border-radius:38px;
+  background:linear-gradient(145deg,#34383e,#08090b 45%,#202329);
+  border:2px solid #a9874c;
+  box-shadow:0 30px 90px rgba(0,0,0,.9),
+             0 0 35px rgba(230,180,84,.16),
+             inset 0 0 8px rgba(255,255,255,.12);
+  transform:rotate(-6deg);
+  overflow:hidden;
+}
+.iphone-island{
+  width:85px;
+  height:20px;
+  background:#020304;
+  border-radius:20px;
+  margin:0 auto 12px;
+}
+.iphone-status{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  color:#fff;
+  padding:0 5px;
+}
+.iphone-brand{
+  text-align:center;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin:12px 0 18px;
+}
+.iphone-brand span{color:var(--gold)}
+.iphone-pair{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:5px;
+  margin-bottom:12px;
+}
+.iphone-pair strong{font-size:13px}
+.iphone-pair span{
+  font-size:8px;
+  color:var(--muted);
+}
+.iphone-live{
+  color:var(--green);
+  font-size:9px;
+  margin-bottom:8px;
+  letter-spacing:1px;
+}
+.tradingview-widget-container{
+  width:100%;
+  height:285px;
+  overflow:hidden;
+  border-radius:9px;
+  background:#101216;
+}
+.tradingview-widget-container iframe{
+  width:100%!important;
+  height:285px!important;
+}
+.iphone-footer{
+  text-align:center;
+  color:var(--gold);
+  font-size:8px;
+  letter-spacing:1.5px;
+  margin-top:13px;
+}
+
+  @media(max-width:760px){
   .navlinks{display:none;position:absolute;top:76px;left:0;right:0;
     padding:22px;background:#101216;flex-direction:column;gap:18px}
   .navlinks.show{display:flex}
