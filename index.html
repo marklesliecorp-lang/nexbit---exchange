@@ -5,180 +5,230 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#080808">
-
   <title>NEXBIT | Digital Asset Exchange</title>
-
-  <meta name="description" content="NEXBIT — A next-generation digital asset exchange.">
+  <meta name="description" content="NEXBIT — Your next move in digital finance.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- NAVIGATION -->
-  <header class="navbar">
-    <a href="/" class="logo">
-      <span class="logo-mark">N</span>
-      <span>NEXBIT</span>
-    </a>
+<header class="navbar">
+  <a href="#" class="logo">
+    <span class="logo-mark">N</span>
+    <span>NEXBIT</span>
+  </a>
 
-    <nav class="nav-links">
-      <a href="#markets">Markets</a>
-      <a href="#trade">Trade</a>
-      <a href="#features">Features</a>
-      <a href="#about">About</a>
-    </nav>
+  <nav class="nav-links" id="navLinks">
+    <a href="#markets">Markets</a>
+    <a href="#trade">Trade</a>
+    <a href="#features">Features</a>
+    <a href="#about">About</a>
+  </nav>
 
-    <div class="nav-actions">
-      <a href="#" class="login-btn">Log In</a>
-      <a href="#" class="signup-btn">Sign Up</a>
-    </div>
+  <div class="nav-actions">
+    <a href="#" class="login-btn">Log In</a>
+    <a href="#" class="signup-btn">Sign Up</a>
+  </div>
 
-    <button class="menu-toggle" aria-label="Open menu">
-      ☰
-    </button>
-  </header>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+</header>
 
-  <main>
+<main>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
+  <section class="hero">
 
-      <div class="hero-content">
+    <div class="hero-content">
+      <span class="eyebrow">THE FUTURE OF DIGITAL FINANCE</span>
 
-        <span class="eyebrow">
-          THE NEXT GENERATION OF DIGITAL FINANCE
-        </span>
+      <h1>
+        YOUR NEXT MOVE.<br>
+        <span>YOUR NEXT LEVEL.</span>
+      </h1>
 
-        <h1>
-          YOUR NEXT MOVE.<br>
-          <span>YOUR NEXT LEVEL.</span>
-        </h1>
-
-        <p>
-          Discover a smarter way to experience digital assets.
-          Trade, explore and manage your crypto journey with NEXBIT.
-        </p>
-
-        <div class="hero-buttons">
-          <a href="#" class="primary-btn">Get Started</a>
-          <a href="#features" class="secondary-btn">Explore NEXBIT</a>
-        </div>
-
-      </div>
-
-      <div class="hero-visual">
-        <div class="gold-glow"></div>
-
-        <div class="phone-placeholder">
-          <div class="phone-screen">
-            <span class="phone-brand">NEXBIT</span>
-            <p>Portfolio Balance</p>
-            <h2>••••••</h2>
-            <div class="phone-chart"></div>
-            <p>Market Overview</p>
-            <div class="phone-market">BTC / USDT</div>
-            <div class="phone-market">ETH / USDT</div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- MARKET SECTION -->
-    <section class="markets-section" id="markets">
-
-      <div class="section-heading">
-        <span class="eyebrow">MARKET OVERVIEW</span>
-        <h2>Explore the Crypto Market</h2>
-        <p>Discover digital assets and follow market movements.</p>
-      </div>
-
-      <div class="market-table">
-
-        <div class="market-row market-header">
-          <span>Asset</span>
-          <span>Price</span>
-          <span>24H Change</span>
-          <span>Market</span>
-        </div>
-
-        <div id="market-list">
-          <div class="market-row">
-            <span>Bitcoin (BTC)</span>
-            <span>Loading...</span>
-            <span>--</span>
-            <span>--</span>
-          </div>
-        </div>
-
-      </div>
-
-      <p class="demo-note">
-        Market display is a demonstration until a verified live data provider is connected.
+      <p>
+        Discover a smarter way to experience digital assets.
+        Explore the crypto market, follow prices and take control
+        of your digital finance journey with NEXBIT.
       </p>
 
-    </section>
-
-    <!-- FEATURES -->
-    <section class="features-section" id="features">
-
-      <div class="section-heading">
-        <span class="eyebrow">THE NEXBIT EXPERIENCE</span>
-        <h2>Everything in One Place</h2>
+      <div class="hero-buttons">
+        <a href="#markets" class="primary-btn">Explore Markets</a>
+        <a href="#features" class="secondary-btn">Discover NEXBIT</a>
       </div>
 
-      <div class="features-grid">
+      <div class="hero-trust">
+        <span>●</span> A new generation of digital finance
+      </div>
+    </div>
 
-        <article class="feature-card">
-          <div class="feature-icon">₿</div>
-          <h3>Spot Trading</h3>
-          <p>Explore digital asset trading through an intuitive interface.</p>
-        </article>
+    <div class="hero-visual">
 
-        <article class="feature-card">
-          <div class="feature-icon">◈</div>
-          <h3>Digital Wallet</h3>
-          <p>Manage your digital asset portfolio in one dashboard.</p>
-        </article>
+      <div class="gold-glow"></div>
 
-        <article class="feature-card">
-          <div class="feature-icon">↗</div>
-          <h3>Market Insights</h3>
-          <p>Follow prices, charts and cryptocurrency market movements.</p>
-        </article>
+      <div class="floating-coin bitcoin-coin">₿</div>
+      <div class="floating-coin ethereum-coin">◆</div>
+      <div class="floating-coin solana-coin">◎</div>
 
+      <div class="phone-placeholder">
+        <div class="phone-screen">
+
+          <div class="phone-top">
+            <span class="phone-brand">NEXBIT</span>
+            <span class="phone-menu">•••</span>
+          </div>
+
+          <p class="phone-label">TOTAL BALANCE</p>
+          <h2> $24,850.75 </h2>
+          <span class="phone-gain">+8.42% today</span>
+
+          <div class="phone-chart">
+            <svg viewBox="0 0 300 100" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#d6aa48" stop-opacity=".35"/>
+                  <stop offset="100%" stop-color="#d6aa48" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0 78 L25 65 L48 72 L70 43 L95 55 L120 35 L145 48 L170 22 L195 38 L220 15 L245 28 L270 8 L300 14 L300 100 L0 100 Z" fill="url(#chartFill)"/>
+              <path d="M0 78 L25 65 L48 72 L70 43 L95 55 L120 35 L145 48 L170 22 L195 38 L220 15 L245 28 L270 8 L300 14" fill="none" stroke="#d6aa48" stroke-width="3"/>
+            </svg>
+          </div>
+
+          <div class="phone-divider"></div>
+          <p class="phone-label">YOUR WATCHLIST</p>
+
+          <div class="phone-market">
+            <span class="phone-coin">₿</span>
+            <span>Bitcoin <small>BTC/USDT</small></span>
+            <strong>$67,420</strong>
+          </div>
+
+          <div class="phone-market">
+            <span class="phone-coin eth">◆</span>
+            <span>Ethereum <small>ETH/USDT</small></span>
+            <strong>$3,520</strong>
+          </div>
+
+          <div class="phone-market">
+            <span class="phone-coin sol">◎</span>
+            <span>Solana <small>SOL/USDT</small></span>
+            <strong>$182</strong>
+          </div>
+
+        </div>
       </div>
 
-    </section>
+    </div>
+  </section>
 
-    <!-- CALL TO ACTION -->
-    <section class="cta-section" id="trade">
-      <span class="eyebrow">YOUR JOURNEY STARTS HERE</span>
-      <h2>Make Your Next Move with NEXBIT.</h2>
-      <p>A new experience in digital finance is taking shape.</p>
-      <a href="#" class="primary-btn">Join NEXBIT</a>
-    </section>
+  <section class="stats-strip">
+    <div>
+      <strong>24/7</strong>
+      <span>Crypto markets</span>
+    </div>
+    <div>
+      <strong>Global</strong>
+      <span>Digital assets</span>
+    </div>
+    <div>
+      <strong>Real-time*</strong>
+      <span>Market updates</span>
+    </div>
+  </section>
 
-  </main>
+  <section class="markets-section" id="markets">
 
-  <!-- FOOTER -->
-  <footer id="about">
-    <a href="/" class="logo">
-      <span class="logo-mark">N</span>
-      <span>NEXBIT</span>
-    </a>
+    <div class="section-heading">
+      <span class="eyebrow">MARKET OVERVIEW</span>
+      <h2>Explore the Crypto Market</h2>
+      <p>Follow popular cryptocurrencies and their market movements.</p>
+    </div>
 
-    <p>© 2026 NEXBIT. All rights reserved.</p>
-    <p>Digital asset services are subject to availability and applicable regulations.</p>
-  </footer>
+    <div class="market-table">
+      <div class="market-row market-header">
+        <span>Asset</span>
+        <span>Price</span>
+        <span>24H Change</span>
+        <span>Market</span>
+      </div>
 
-  <script src="script.js"></script>
+      <div id="market-list">
+        <div class="market-row">
+          <span>Bitcoin (BTC)</span>
+          <span>Loading...</span>
+          <span>--</span>
+          <span>--</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="demo-note">
+      Prices are indicative market data, not executable trading quotes.
+    </p>
+
+  </section>
+
+  <section class="features-section" id="features">
+
+    <div class="section-heading">
+      <span class="eyebrow">THE NEXBIT EXPERIENCE</span>
+      <h2>Everything in One Place</h2>
+      <p>Explore the tools and features of a modern crypto platform.</p>
+    </div>
+
+    <div class="features-grid">
+
+      <article class="feature-card">
+        <div class="feature-icon">₿</div>
+        <h3>Spot Trading</h3>
+        <p>Explore crypto markets through a clear and intuitive trading interface.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">◈</div>
+        <h3>Digital Wallet</h3>
+        <p>A dedicated dashboard concept for viewing and managing digital assets.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon">↗</div>
+        <h3>Market Insights</h3>
+        <p>Follow prices, market trends and cryptocurrency movements.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="cta-section" id="trade">
+    <span class="eyebrow">YOUR JOURNEY STARTS HERE</span>
+    <h2>Make Your Next Move with NEXBIT.</h2>
+    <p>Discover a new experience in digital finance.</p>
+    <a href="#markets" class="primary-btn">Explore Crypto</a>
+  </section>
+
+</main>
+
+<footer id="about">
+  <a href="#" class="logo">
+    <span class="logo-mark">N</span>
+    <span>NEXBIT</span>
+  </a>
+
+  <p>© 2026 NEXBIT. All rights reserved.</p>
+  <p>Digital asset services are subject to availability and applicable regulations.</p>
+  <p class="footer-disclaimer">
+    This website is currently a demonstration interface.
+    No real deposits, withdrawals or trades are processed.
+  </p>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>
