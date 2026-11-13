@@ -1042,3 +1042,89 @@ footer p {
     font-size: 9px;
   }
 }
+
+/* NEXBIT REFINED HERO DESIGN */
+
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 22px;
+}
+
+.hero-brand .logo-mark {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  border: 1px solid #d4af37;
+  border-radius: 9px;
+  color: #d4af37;
+}
+
+.hero-brand-name {
+  color: #d4af37;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.hero-content h1 {
+  font-size: clamp(32px, 4.2vw, 52px);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.hero-content h1 span {
+  color: #d4af37;
+  text-shadow: 0 0 22px rgba(212,175,55,0.18);
+}
+
+.hero-content > p {
+  max-width: 490px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #a5a5a5;
+}
+
+.hero-image {
+  max-width: 100%;
+  height: auto;
+}
+
+/* MOBILE HERO ADJUSTMENTS */
+
+@media (max-width: 600px) {
+  .hero {
+    gap: 10px;
+    padding-top: 25px;
+  }
+
+  .hero-brand {
+    margin-bottom: 15px;
+  }
+
+  .hero-content h1 {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .hero-content > p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .hero-visual {
+    margin-top: -12px;
+  }
+
+  .hero-image {
+    width: 100%;
+    display: block;
+  }
+}
