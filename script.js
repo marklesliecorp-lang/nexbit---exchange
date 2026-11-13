@@ -101,7 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   price: coin.current_price,
   change: coin.price_change_percentage_24h || 0,
   image: coin.image,
-  marketCap: coin.market_cap
+  marketCap: coin.market_cap,
+sparkline: coin.sparkline_in_7d?.price || []
 }));
 
       displayMarkets(markets);
