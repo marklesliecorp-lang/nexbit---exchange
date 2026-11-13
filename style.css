@@ -1411,3 +1411,15 @@ footer p {
     padding-top: 12px;
   }
 }
+/* BRING APP DOWNLOAD SECTION CLOSER */
+
+.app-download-section {
+  padding-top: 0 !important;
+  margin-top: -35px;
+}
+
+@media (max-width: 600px) {
+  .app-download-section {
+    margin-top: -50px;
+  }
+}
