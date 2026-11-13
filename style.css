@@ -1377,3 +1377,26 @@ footer p {
     width: 145px;
   }
 }
+/* NEXBIT APP SERVICES LINE */
+
+.app-download-services {
+  color: #e8e8e8;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 2;
+  margin: 0 auto 18px;
+}
+
+.app-download-services span {
+  color: #d4af37;
+  padding: 0 5px;
+}
+
+@media (max-width: 600px) {
+  .app-download-services {
+    font-size: 12px;
+    line-height: 2.2;
+    padding: 0 8px;
+  }
+}
