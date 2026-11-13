@@ -1423,3 +1423,19 @@ footer p {
     margin-top: -50px;
   }
 }
+/* FIX APP DOWNLOAD HEADING CLIPPING */
+
+.app-download-section {
+  margin-top: -25px;
+  padding-top: 18px !important;
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+}
+
+@media (max-width: 600px) {
+  .app-download-section {
+    margin-top: -35px;
+    padding-top: 18px !important;
+  }
+}
