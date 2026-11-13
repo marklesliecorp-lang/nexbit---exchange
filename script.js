@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://api.coingecko.com/api/v3/coins/markets" +
         "?vs_currency=usd" +
         "&ids=bitcoin,ethereum,solana,binancecoin" +
-        "&price_change_percentage=24h";
+        "&price_change_percentage=24h&sparkline=true";
 
       const response = await fetch(url);
 
