@@ -62,11 +62,47 @@ document.addEventListener("DOMContentLoaded", () => {
       border:1px solid ${positive ? "rgba(33,214,139,0.3)" : "rgba(255,91,101,0.3)"};
     `;
 
-    // Market capitalization
-    const marketCell = document.createElement("span");
-    marketCell.textContent = coin.marketCap
-      ? "$" + Number(coin.marketCap).toLocaleString("en-US")
-      : "--";
+    // Market capitalization and mini price chart
+const marketCell = document.createElement("span");
+
+const cap = document.createElement("small");
+cap.textContent = coin.marketCap
+  ? "$" + Number(coin.marketCap).toLocaleString("en-US")
+  : "--";
+
+cap.style.cssText = "display:block;color:#aaa;font-size:10px;";
+
+marketCell.appendChild(cap);
+
+const values = coin.sparkline || [];
+
+if (values.length > 1) {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 100 30");
+  svg.setAttribute("width", "90");
+  svg.setAttribute("height", "30");
+
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+
+  const points = values.map((value, index) => {
+    const x = (index / (values.length - 1)) * 100;
+    const y = 27 - ((value - min) / range) * 24;
+    return `${x},${y}`;
+  }).join(" ");
+
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+  line.setAttribute("points", points);
+  line.setAttribute("fill", "none");
+  line.setAttribute("stroke", Number(coin.change) >= 0 ? "#21d68b" : "#ff5b65");
+  line.setAttribute("stroke-width", "2");
+  line.setAttribute("stroke-linecap", "round");
+  line.setAttribute("stroke-linejoin", "round");
+
+  svg.appendChild(line);
+  marketCell.appendChild(svg);
+}
 
     row.append(nameCell, priceCell, changeCell, marketCell);
     marketList.appendChild(row);
