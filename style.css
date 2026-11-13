@@ -1400,3 +1400,14 @@ footer p {
     padding: 0 8px;
   }
 }
+/* MOVE APP DOWNLOAD CLOSER TO HERO */
+
+.app-download-section {
+  padding-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .app-download-section {
+    padding-top: 12px;
+  }
+}
