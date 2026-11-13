@@ -1157,3 +1157,121 @@ footer p {
   align-items: center;
   gap: 9px;
 }
+
+/* NEXBIT ADVANTAGE SECTION */
+
+.advantage-section {
+  padding: 75px 5%;
+  background: #080808;
+}
+
+.advantage-section .section-heading {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+.advantage-section .section-heading h2 {
+  color: #fff;
+  font-size: 32px;
+  line-height: 1.25;
+  margin: 12px 0;
+}
+
+.advantage-section .section-heading p {
+  color: #999;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.advantage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.advantage-card {
+  background: linear-gradient(145deg, #151515, #0b0b0b);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 16px;
+  padding: 25px 20px;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.advantage-card:hover {
+  border-color: #d4af37;
+  transform: translateY(-5px);
+}
+
+.advantage-card img {
+  width: 85px;
+  height: 85px;
+  object-fit: contain;
+  margin-bottom: 18px;
+}
+
+.advantage-card h3 {
+  color: #d4af37;
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+
+.advantage-card p {
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.advantage-ira-icon {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d4af37;
+  border-radius: 50%;
+  color: #d4af37;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 900px) {
+  .advantage-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .advantage-section {
+    padding: 45px 4%;
+  }
+
+  .advantage-section .section-heading h2 {
+    font-size: 25px;
+  }
+
+  .advantage-grid {
+    gap: 12px;
+  }
+
+  .advantage-card {
+    padding: 20px 12px;
+  }
+
+  .advantage-card img,
+  .advantage-ira-icon {
+    width: 65px;
+    height: 65px;
+  }
+
+  .advantage-card h3 {
+    font-size: 14px;
+  }
+
+  .advantage-card p {
+    font-size: 11px;
+  }
+}
