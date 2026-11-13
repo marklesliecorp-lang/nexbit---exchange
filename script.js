@@ -96,11 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const markets = data.map(coin => ({
-        name: coin.name,
-        symbol: coin.symbol.toUpperCase(),
-        price: coin.current_price,
-        change: coin.price_change_percentage_24h || 0
-      }));
+  name: coin.name,
+  symbol: coin.symbol.toUpperCase(),
+  price: coin.current_price,
+  change: coin.price_change_percentage_24h || 0,
+  image: coin.image,
+  marketCap: coin.market_cap
+}));
 
       displayMarkets(markets);
 
