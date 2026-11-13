@@ -716,3 +716,20 @@ footer p {
     padding: 15px 8px;
   }
 }
+/* NEXBIT HERO IMAGE */
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 20px;
+  filter: drop-shadow(0 15px 35px rgba(214, 170, 72, 0.2));
+}
