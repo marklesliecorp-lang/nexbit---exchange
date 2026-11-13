@@ -166,6 +166,7 @@ async function loadNexbitTicker() {
         </div>
       `;
     }).join("");
+    ticker.innerHTML += ticker.innerHTML;
 
   } catch (error) {
     ticker.innerHTML = "<span>Market prices temporarily unavailable.</span>";
