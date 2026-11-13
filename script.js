@@ -1,78 +1,105 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  // NEXBIT sample market data.
-  // These are demonstration prices, not live exchange prices.
-  const markets = [
-    {
-      name: "Bitcoin",
-      symbol: "BTC",
-      price: 97450.25,
-      change: 2.45
-    },
-    {
-      name: "Ethereum",
-      symbol: "ETH",
-      price: 3240.80,
-      change: 1.82
-    },
-    {
-      name: "Solana",
-      symbol: "SOL",
-      price: 185.60,
-      change: 4.25
-    },
-    {
-      name: "BNB",
-      symbol: "BNB",
-      price: 645.30,
-      change: -0.75
-    }
+  const marketTable = document.querySelector(".market-table");
+  const demoNote = document.querySelector(".demo-note");
+
+  const sampleMarkets = [
+    { name: "Bitcoin", symbol: "BTC", price: 97450.25, change: 2.45 },
+    { name: "Ethereum", symbol: "ETH", price: 3240.80, change: 1.82 },
+    { name: "Solana", symbol: "SOL", price: 185.60, change: 4.25 },
+    { name: "BNB", symbol: "BNB", price: 645.30, change: -0.75 }
   ];
 
-  const marketTable = document.querySelector(".market-table");
+  function displayMarkets(markets) {
+    if (!marketTable) return;
 
-  if (marketTable) {
-    // Remove any previous sample rows before adding the new ones.
-    marketTable.querySelectorAll(".market-row").forEach(row => {
-      row.remove();
-    });
+    marketTable.querySelectorAll(".market-row").forEach(row => row.remove());
 
     markets.forEach(coin => {
       const row = document.createElement("div");
       row.className = "market-row";
 
-      const changeColor = coin.change >= 0 ? "#32c98b" : "#ef6262";
-      const changeSign = coin.change >= 0 ? "+" : "";
+      const nameCell = document.createElement("span");
+      const name = document.createElement("strong");
+      const symbol = document.createElement("small");
 
-      row.innerHTML = `
-        <span>
-          <strong>${coin.name}</strong>
-          <small style="color:#929292; margin-left:8px;">
-            ${coin.symbol}
-          </small>
-        </span>
-        <span>$${coin.price.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })}</span>
-        <span style="color:${changeColor}">
-          ${changeSign}${coin.change.toFixed(2)}%
-        </span>
-      `;
+      name.textContent = coin.name;
+      symbol.textContent = coin.symbol;
+      symbol.style.cssText = "color:#929292;margin-left:8px";
 
+      nameCell.append(name, symbol);
+
+      const priceCell = document.createElement("span");
+      priceCell.textContent = "$" + Number(coin.price).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      const changeCell = document.createElement("span");
+      const change = Number(coin.change) || 0;
+      changeCell.textContent = (change >= 0 ? "+" : "") + change.toFixed(2) + "%";
+      changeCell.style.color = change >= 0 ? "#32c98b" : "#ef6262";
+
+      row.append(nameCell, priceCell, changeCell);
       marketTable.appendChild(row);
     });
   }
 
-  // Add a clear demonstration-data notice.
-  const demoNote = document.querySelector(".demo-note");
+  async function loadMarkets() {
+    if (demoNote) demoNote.textContent = "Loading cryptocurrency prices...";
 
-  if (demoNote) {
-    demoNote.textContent =
-      "Demo market data only. Prices are illustrative and are not live trading prices.";
+    try {
+      const url =
+        "https://api.coingecko.com/api/v3/coins/markets" +
+        "?vs_currency=usd" +
+        "&ids=bitcoin,ethereum,solana,binancecoin" +
+        "&price_change_percentage=24h";
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Market data request failed");
+      }
+
+      const data = await response.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        throw new Error("No market data received");
+      }
+
+      const markets = data.map(coin => ({
+        name: coin.name,
+        symbol: coin.symbol.toUpperCase(),
+        price: coin.current_price,
+        change: coin.price_change_percentage_24h || 0
+      }));
+
+      displayMarkets(markets);
+
+      if (demoNote) {
+        demoNote.textContent =
+          "Indicative market prices supplied by CoinGecko. Not executable trading quotes.";
+      }
+
+    } catch (error) {
+      console.error("NEXBIT market data error:", error);
+
+      displayMarkets(sampleMarkets);
+
+      if (demoNote) {
+        demoNote.textContent =
+          "Live prices unavailable. Showing demonstration prices instead.";
+      }
+    }
   }
 
-  // Smooth scrolling for links that point to sections on this page.
+  // Load prices when the page opens.
+  loadMarkets();
+
+  // Refresh market prices every 60 seconds.
+  setInterval(loadMarkets, 60000);
+
+  // Smooth scrolling for page links.
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener("click", event => {
       const target = document.querySelector(link.getAttribute("href"));
@@ -87,5 +114,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  console.log("NEXBIT website initialized successfully.");
+  console.log("NEXBIT initialized.");
 });
