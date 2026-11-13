@@ -1275,3 +1275,105 @@ footer p {
     font-size: 11px;
   }
 }
+/* NEXBIT APP DOWNLOAD SECTION */
+
+.app-download-section {
+  padding: 55px 5%;
+  background: #080808;
+  text-align: center;
+  border-bottom: 1px solid rgba(212,175,55,0.12);
+}
+
+.app-download-content {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.app-download-eyebrow {
+  display: inline-block;
+  color: #d4af37;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+}
+
+.app-download-content h2 {
+  color: #fff;
+  font-size: clamp(25px, 4vw, 38px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.app-download-content h2 span {
+  color: #d4af37;
+}
+
+.app-download-content p {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.app-store-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.app-store-badges img {
+  width: 165px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.app-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating-stars {
+  color: #d4af37;
+  font-size: 21px;
+  letter-spacing: 4px;
+}
+
+.app-rating strong {
+  color: #fff;
+  font-size: 12px;
+}
+
+.app-rating span {
+  color: #777;
+  font-size: 11px;
+}
+
+@media (max-width: 600px) {
+  .app-download-section {
+    padding: 40px 5%;
+  }
+
+  .app-download-content h2 {
+    font-size: 25px;
+  }
+
+  .app-download-content p {
+    font-size: 12px;
+  }
+
+  .app-store-badges {
+    gap: 12px;
+  }
+
+  .app-store-badges img {
+    width: 145px;
+  }
+}
