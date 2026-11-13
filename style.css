@@ -926,5 +926,38 @@ footer p {
   .ticker-card {
     min-width: 165px;
     max-width: 165px;
+  }/* NEXBIT MOVING MARKET TICKER */
+.ticker-track {
+  display: flex;
+  width: max-content;
+  overflow: visible;
+  animation: nexbitTickerMove 30s linear infinite;
+}
+
+.market-ticker {
+  overflow: hidden;
+}
+
+.ticker-card {
+  flex-shrink: 0;
+}
+
+@keyframes nexbitTickerMove {
+  from {
+    transform: translateX(0);
   }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 600px) {
+  .ticker-track {
+    animation-duration: 25s;
+  }
+}
 }
