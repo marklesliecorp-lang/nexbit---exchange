@@ -1,506 +1,446 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090a0c">
 <title>NEXBIT | Trade Beyond Limits</title>
 <style>
 :root{
-  --bg:#090a0c;
-  --panel:#121418;
-  --panel2:#191c21;
+  --bg:#08090b;
+  --panel:#111318;
+  --panel2:#171a20;
   --gold:#e6b454;
   --orange:#bd702d;
-  --green:#21c78a;
-  --muted:#969ba5;
   --white:#f7f7f5;
+  --muted:#9298a3;
+  --green:#16c784;
+  --red:#ea3943;
   --line:rgba(255,255,255,.09);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{
   background:var(--bg);
   color:var(--white);
-  font-family:Arial,Helvetica,sans-serif;
-  line-height:1.6;
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
 }
 a{text-decoration:none;color:inherit}
 button{font:inherit;cursor:pointer}
-.container{width:min(1160px,91%);margin:auto}
 header{
-  position:sticky;top:0;z-index:20;
-  background:rgba(9,10,12,.94);
-  backdrop-filter:blur(16px);
+  height:82px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 7%;
   border-bottom:1px solid var(--line);
+  background:rgba(8,9,11,.92);
+  position:relative;
+  z-index:10;
 }
-.nav{
-  min-height:76px;display:flex;align-items:center;
-  justify-content:space-between;gap:20px;
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{width:27px;height:34px;flex-shrink:0}
+.brand-name{
+  font-size:25px;
+  font-weight:850;
+  letter-spacing:2px;
 }
-.logo{font-size:25px;font-weight:900;letter-spacing:2px}
-.logo span{color:var(--gold)}
-.navlinks{display:flex;gap:28px;color:#c5c6ca;font-size:13px}
-.navlinks a:hover{color:var(--gold)}
-.nav-actions{display:flex;gap:10px;align-items:center}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:12px 19px;border-radius:7px;font-size:13px;
-  font-weight:700;border:1px solid var(--line);
+.brand-name span{color:var(--gold)}
+nav{display:flex;gap:30px;color:#c4c6ca;font-size:13px}
+nav a:hover{color:var(--gold)}
+.header-actions{display:flex;align-items:center;gap:20px;font-size:13px}
+.login{color:#ddd}
+.signup{
+  background:linear-gradient(135deg,#f2ca76,#bd812f);
+  color:#17120a;
+  padding:12px 20px;
+  border-radius:5px;
+  font-weight:800;
 }
-.btn-gold{
-  background:linear-gradient(110deg,var(--gold),#bd792f);
-  color:#17120a;border:0;
-}
-.btn-outline{color:var(--white)}
-.btn:hover{transform:translateY(-2px);transition:.2s}
-.menu{display:none;background:none;color:white;border:0;font-size:25px}
 .hero{
-  position:relative;overflow:hidden;padding:95px 0 75px;
+  min-height:650px;
+  padding:85px 7% 70px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:30px;
+  position:relative;
+  overflow:hidden;
   background:
-  radial-gradient(ellipse at 80% 35%,rgba(190,119,43,.16),transparent 42%),
-  radial-gradient(ellipse at 10% 80%,rgba(220,166,75,.08),transparent 38%);
+    radial-gradient(ellipse at 78% 48%,rgba(181,116,38,.15),transparent 43%),
+    radial-gradient(ellipse at 12% 80%,rgba(150,94,26,.08),transparent 35%);
 }
-.hero-grid{
-  display:grid;grid-template-columns:1.05fr .95fr;
-  gap:55px;align-items:center;
+.hero:before{
+  content:"";
+  position:absolute;
+  width:650px;height:650px;
+  right:-180px;top:0;
+  border:1px solid rgba(230,180,84,.08);
+  border-radius:50%;
+  box-shadow:0 0 0 55px rgba(230,180,84,.018),
+             0 0 0 110px rgba(230,180,84,.015);
 }
+.hero-copy{position:relative;z-index:2;max-width:570px}
 .eyebrow{
-  color:var(--gold);font-size:11px;font-weight:800;
-  letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;
+  color:var(--gold);
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-size:11px;
+  font-weight:800;
+  margin-bottom:22px;
 }
-h1{font-size:clamp(42px,6vw,70px);line-height:1.08;letter-spacing:-2px}
-h1 span,.gold{color:var(--gold)}
-.hero-copy{color:#aeb1b8;margin:22px 0 28px;max-width:520px;font-size:16px}
-.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
-.trust-line{margin-top:27px;color:#888e98;font-size:12px}
-.visual{
-  position:relative;min-height:390px;display:flex;
-  align-items:center;justify-content:center;
+h1{
+  font-size:clamp(46px,6vw,76px);
+  line-height:1.04;
+  letter-spacing:-3px;
+  margin-bottom:23px;
 }
-.glow{
-  position:absolute;width:310px;height:310px;border-radius:50%;
-  background:rgba(207,145,55,.13);filter:blur(55px);
+h1 span{
+  color:var(--gold);
+  display:block;
+}
+.hero-copy p{
+  color:#aeb1b8;
+  line-height:1.8;
+  max-width:470px;
+  font-size:15px;
+}
+.hero-buttons{display:flex;gap:14px;margin-top:32px}
+.primary-btn,.secondary-btn{
+  padding:15px 23px;
+  border-radius:5px;
+  font-weight:750;
+  font-size:13px;
+}
+.primary-btn{
+  background:linear-gradient(135deg,#f3cc7c,#bf8436);
+  color:#17120a;
+}
+.secondary-btn{
+  border:1px solid rgba(230,180,84,.55);
+  color:var(--gold);
+}
+.trust-line{
+  display:flex;gap:24px;margin-top:42px;
+  color:#8d929b;font-size:11px;flex-wrap:wrap;
+}
+.trust-line span:before{content:"✦ ";color:var(--gold)}
+.phone-area{
+  min-height:540px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1100px;
 }
 .phone{
-  position:relative;width:245px;padding:18px;
-  background:linear-gradient(145deg,#25282e,#0d0f12);
-  border:1px solid rgba(230,180,84,.5);
-  border-radius:28px;box-shadow:0 25px 80px #000;
-  transform:rotate(-5deg);z-index:2;
+  width:310px;
+  background:#050607;
+  border:3px solid #45464a;
+  border-radius:39px;
+  padding:10px;
+  transform:rotate(-7deg);
+  box-shadow:0 35px 90px #000,0 0 45px rgba(230,180,84,.13);
+  position:relative;
+  z-index:2;
 }
-.phone-top{display:flex;justify-content:space-between;font-size:11px;color:#aeb2b9}
-.phone-title{margin-top:24px;color:#aeb2b9;font-size:12px}
-.balance{font-size:29px;font-weight:800;margin:5px 0}
-.positive{color:var(--green);font-size:12px}
-.phone-chart{width:100%;height:105px;margin:20px 0}
-.phone-actions{display:flex;gap:8px}
-.phone-actions div{
-  flex:1;text-align:center;padding:10px 3px;
-  background:#292c31;border-radius:8px;font-size:10px
-}
-.coin{
-  position:absolute;width:62px;height:62px;border-radius:50%;
-  display:grid;place-items:center;font-size:27px;font-weight:900;
-  color:#16120a;background:linear-gradient(145deg,#ffe1a0,#b87a27);
-  box-shadow:0 10px 35px #000;z-index:3;
-}
-.coin.one{top:35px;right:15px}
-.coin.two{bottom:30px;left:5px;width:48px;height:48px;font-size:21px}
-.float-tag{
-  position:absolute;right:0;bottom:55px;z-index:4;
-  background:#171a1e;border:1px solid var(--line);
-  border-radius:10px;padding:12px 15px;font-size:12px;
-}
-.float-tag strong{display:block;color:var(--green);font-size:16px}
-.ticker{
-  overflow:hidden;background:#111317;border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);padding:15px 0;
-}
-.ticker-track{
-  display:flex;width:max-content;gap:38px;
-  animation:scroll 30s linear infinite;
-  color:#c8cbd0;font-size:12px;font-weight:700;
-}
-.ticker-track span{white-space:nowrap}
-.ticker-track b{color:var(--gold);margin-right:7px}
-@keyframes scroll{to{transform:translateX(-50%)}}
-section{padding:85px 0}
-.section-head{text-align:center;max-width:650px;margin:0 auto 42px}
-.section-head h2{font-size:clamp(29px,4vw,43px);line-height:1.2}
-.section-head p{color:var(--muted);margin-top:13px;font-size:14px}
-.metrics{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:15px;
-}
-.metric{
-  padding:25px;background:var(--panel);border:1px solid var(--line);
-  border-radius:12px;text-align:center;
-}
-.metric strong{display:block;font-size:30px;color:var(--gold)}
-.metric span{font-size:12px;color:var(--muted)}
-.metric-note{text-align:center;color:#747b85;font-size:11px;margin-top:17px}
-.market-section{background:#0d0f12}
-.tabs{display:flex;justify-content:center;gap:10px;margin-bottom:28px}
-.tab{
-  border:1px solid var(--line);background:var(--panel);
-  color:#b7bbc2;padding:10px 25px;border-radius:7px;
-}
-.tab.active{background:var(--gold);color:#17120a;border-color:var(--gold);font-weight:800}
-.market-box{
-  background:var(--panel);border:1px solid var(--line);
-  border-radius:12px;overflow:hidden;
-}
-.market-row{
-  display:grid;grid-template-columns:1.5fr 1fr 1fr;
-  padding:17px 22px;border-bottom:1px solid var(--line);
-  align-items:center;font-size:13px;
-}
-.market-row:last-child{border:0}
-.market-row.heading{color:#858b95;font-size:11px;text-transform:uppercase}
-.asset{display:flex;align-items:center;gap:12px;font-weight:700}
-.asset-icon{
-  width:34px;height:34px;border-radius:50%;
-  display:grid;place-items:center;background:#292c31;color:var(--gold);
-}
-.change{color:var(--green)}
-.market-note{text-align:center;color:#858b95;font-size:11px;margin-top:15px}
-.card-section{
+.phone-screen{
+  background:#0d1015;
+  border-radius:29px;
+  padding:16px 12px 13px;
   overflow:hidden;
-  background:radial-gradient(ellipse at 78% 50%,rgba(193,126,43,.15),transparent 42%);
 }
-.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}
-.card-copy h2{font-size:clamp(32px,4vw,46px);line-height:1.15}
-.card-copy p{color:var(--muted);font-size:14px;margin:18px 0 25px}
-.bank-card{
-  width:min(100%,440px);aspect-ratio:1.6/1;margin:auto;
-  padding:28px;border-radius:19px;position:relative;overflow:hidden;
-  background:linear-gradient(130deg,#34363a 0%,#151719 48%,#3b2a18 100%);
-  border:1px solid rgba(230,180,84,.7);
-  box-shadow:0 30px 65px #000;
-  transform:rotate(-5deg);
+.phone-top{
+  display:flex;justify-content:space-between;
+  color:#aeb2ba;font-size:10px;margin-bottom:18px;
 }
-.bank-card:before{
-  content:"";position:absolute;width:250px;height:250px;
-  border:1px solid rgba(230,180,84,.2);border-radius:50%;
-  right:-65px;top:-110px;box-shadow:0 0 0 25px rgba(230,180,84,.04),0 0 0 50px rgba(230,180,84,.03);
+.phone-brand{
+  color:var(--gold);font-weight:900;
+  letter-spacing:1.5px;font-size:12px;
 }
-.card-brand{font-size:21px;font-weight:900;letter-spacing:2px}
-.card-brand span{color:var(--gold)}
-.chip{width:42px;height:31px;border-radius:6px;background:linear-gradient(135deg,#f1d28b,#99713b);margin-top:27px}
-.card-number{font-size:17px;letter-spacing:4px;margin-top:25px;color:#dedbd2}
-.card-bottom{display:flex;justify-content:space-between;align-items:end;margin-top:16px}
-.card-bottom small{font-size:9px;color:#aaa}
-.card-bottom strong{display:block;font-size:12px}
-.card-bottom .nex{font-size:25px;font-weight:900;color:var(--gold)}
+.pair{display:flex;justify-content:space-between;align-items:center}
+.pair strong{font-size:15px}
+.live{font-size:9px;color:var(--green)}
+.price{font-size:23px;font-weight:800;margin-top:10px}
+.change{font-size:10px;color:var(--green);margin-top:4px}
+.chart-tabs{
+  display:flex;justify-content:space-between;
+  color:#828994;font-size:9px;margin:19px 0 12px;
+}
+.chart-tabs .active{color:var(--gold)}
+.chart{
+  height:132px;
+  background:linear-gradient(180deg,rgba(22,199,132,.09),transparent);
+  border-bottom:1px solid #252b32;
+  position:relative;
+  overflow:hidden;
+}
+.chart svg{width:100%;height:100%}
+.chart-caption{
+  display:flex;justify-content:space-between;
+  color:#777f8a;font-size:8px;margin-top:7px;
+}
+.phone-buttons{display:flex;gap:8px;margin:13px 0 12px}
+.phone-buttons button{
+  border:0;border-radius:4px;color:white;
+  padding:10px 0;flex:1;font-size:11px;font-weight:800;
+}
+.buy{background:#0c9c68}
+.sell{background:#d83f4b}
+.book-title{
+  display:flex;justify-content:space-between;
+  color:#d8dbe0;font-size:10px;font-weight:800;
+  margin:8px 0 9px;
+}
+.book-head,.book-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:3px;font-size:8px;padding:4px 2px;
+}
+.book-head{color:#777f8a;border-bottom:1px solid #252a31}
+.book-row span:nth-child(2),.book-row span:nth-child(3){text-align:right}
+.sell-row{color:#f16c75}
+.buy-row{color:#22c98d}
+.book-divider{
+  border-top:1px solid #282e36;
+  margin:4px 0;
+}
+.phone-bottom{
+  display:flex;justify-content:space-around;
+  color:#858c96;font-size:8px;margin-top:14px;
+  border-top:1px solid #272c33;padding-top:12px;
+}
+.phone-bottom span:first-child{color:var(--gold)}
+.coin{
+  position:absolute;
+  width:43px;height:43px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#ffe8a4,#d99b34 55%,#805018);
+  border:2px solid #f5ca72;
+  box-shadow:0 5px 22px rgba(220,157,54,.3);
+  display:flex;align-items:center;justify-content:center;
+  color:#704512;font-size:23px;font-weight:900;
+  z-index:3;
+}
+.coin.one{top:75px;right:12%;transform:rotate(13deg)}
+.coin.two{bottom:85px;left:7%;width:32px;height:32px;font-size:17px}
+.coin.three{top:46%;right:0;width:27px;height:27px;font-size:14px}
+.coin.four{bottom:30px;right:16%;width:24px;height:24px;font-size:13px}
+.market-strip{
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:25px 7%;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:20px;background:#0c0e11;
+}
+.market-stat{text-align:center}
+.market-stat strong{
+  display:block;color:var(--gold);
+  font-size:24px;margin-bottom:7px;
+}
+.market-stat span{color:#8f949d;font-size:11px}
+.section{padding:85px 7%}
+.section-heading{text-align:center;margin-bottom:40px}
+.section-heading h2{font-size:34px;margin-bottom:12px}
+.section-heading h2 span{color:var(--gold)}
+.section-heading p{color:var(--muted);font-size:13px}
 .features{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:50px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
 }
 .feature{
-  background:var(--panel);padding:24px;border:1px solid var(--line);border-radius:10px;
+  background:linear-gradient(145deg,#171a20,#101216);
+  border:1px solid var(--line);
+  border-radius:10px;padding:28px;
 }
-.feature .symbol{font-size:24px;color:var(--gold)}
-.feature h3{font-size:16px;margin:12px 0 7px}
-.feature p{font-size:12px;color:var(--muted)}
-.faq-section{background:#0d0f12}
-.faq{max-width:800px;margin:auto}
-details{border-bottom:1px solid var(--line);padding:19px 4px}
-summary{cursor:pointer;font-size:14px;font-weight:700;list-style:none}
-summary:after{content:"+";float:right;color:var(--gold);font-size:20px}
-details[open] summary:after{content:"−"}
-details p{color:var(--muted);font-size:13px;margin-top:13px;max-width:720px}
-.support{
-  text-align:center;
-  background:radial-gradient(ellipse at center,rgba(194,132,48,.12),transparent 65%);
+.feature-icon{font-size:25px;color:var(--gold);margin-bottom:18px}
+.feature h3{font-size:16px;margin-bottom:10px}
+.feature p{color:#9298a3;font-size:12px;line-height:1.7}
+footer{
+  padding:28px 7%;border-top:1px solid var(--line);
+  color:#777e88;font-size:11px;
+  display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
 }
-.support p{color:var(--muted);max-width:550px;margin:15px auto 25px;font-size:14px}
-footer{border-top:1px solid var(--line);padding:30px 0;color:#858b95;font-size:11px}
-.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-footer .logo{font-size:20px;color:white}
-
-/* NEXBIT realistic iPhone trading screen */
-.phone.iphone{
-  width:290px;
-  min-height:520px;
-  padding:18px 14px 14px;
-  border-radius:38px;
-  background:linear-gradient(145deg,#34383e,#08090b 45%,#202329);
-  border:2px solid #a9874c;
-  box-shadow:0 30px 90px rgba(0,0,0,.9),
-             0 0 35px rgba(230,180,84,.16),
-             inset 0 0 8px rgba(255,255,255,.12);
-  transform:rotate(-6deg);
-  overflow:hidden;
+@media(max-width:900px){
+  header{padding:0 5%}
+  nav{gap:15px}
+  .hero{padding:65px 5%;grid-template-columns:1fr}
+  .hero-copy{text-align:center;margin:auto}
+  .hero-copy p{margin:auto}
+  .hero-buttons,.trust-line{justify-content:center}
+  .phone-area{min-height:520px}
+  .market-strip{padding:24px 5%}
+  .section{padding:65px 5%}
 }
-.iphone-island{
-  width:85px;
-  height:20px;
-  background:#020304;
-  border-radius:20px;
-  margin:0 auto 12px;
-}
-.iphone-status{
-  display:flex;
-  justify-content:space-between;
-  font-size:10px;
-  color:#fff;
-  padding:0 5px;
-}
-.iphone-brand{
-  text-align:center;
-  font-size:16px;
-  font-weight:900;
-  letter-spacing:2px;
-  margin:12px 0 18px;
-}
-.iphone-brand span{color:var(--gold)}
-.iphone-pair{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:5px;
-  margin-bottom:12px;
-}
-.iphone-pair strong{font-size:13px}
-.iphone-pair span{
-  font-size:8px;
-  color:var(--muted);
-}
-.iphone-live{
-  color:var(--green);
-  font-size:9px;
-  margin-bottom:8px;
-  letter-spacing:1px;
-}
-.tradingview-widget-container{
-  width:100%;
-  height:285px;
-  overflow:hidden;
-  border-radius:9px;
-  background:#101216;
-}
-.tradingview-widget-container iframe{
-  width:100%!important;
-  height:285px!important;
-}
-.iphone-footer{
-  text-align:center;
-  color:var(--gold);
-  font-size:8px;
-  letter-spacing:1.5px;
-  margin-top:13px;
-}
-
-  @media(max-width:760px){
-  .navlinks{display:none;position:absolute;top:76px;left:0;right:0;
-    padding:22px;background:#101216;flex-direction:column;gap:18px}
-  .navlinks.show{display:flex}
-  .menu{display:block}
-  .nav-actions .btn-outline{display:none}
-  .hero{padding:65px 0 45px}
-  .hero-grid,.card-grid{grid-template-columns:1fr}
-  .visual{min-height:340px;margin-top:15px}
-  .metrics{grid-template-columns:1fr}
+@media(max-width:600px){
+  header{height:70px;padding:0 5%}
+  .brand svg{width:23px;height:30px}
+  .brand-name{font-size:21px}
+  nav{display:none}
+  .header-actions{gap:13px;font-size:11px}
+  .signup{padding:10px 13px}
+  .hero{padding:65px 5% 35px;gap:5px}
+  h1{font-size:49px;letter-spacing:-2px}
+  .hero-copy p{font-size:13px}
+  .hero-buttons{gap:9px}
+  .primary-btn,.secondary-btn{padding:13px 15px;font-size:11px}
+  .trust-line{gap:12px;font-size:9px;margin-top:28px}
+  .phone-area{min-height:490px;transform:scale(.92)}
+  .coin.one{right:3%}
+  .coin.two{left:0}
+  .market-strip{grid-template-columns:repeat(2,1fr);gap:25px}
+  .market-stat strong{font-size:21px}
   .features{grid-template-columns:1fr}
-  section{padding:65px 0}
-  .market-row{padding:14px 12px;font-size:11px}
-  .asset{gap:7px}
-  .asset-icon{width:28px;height:28px}
-  .bank-card{transform:none}
+  .section-heading h2{font-size:28px}
+  footer{justify-content:center;text-align:center}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="container nav">
-    <a class="logo" href="#">NEX<span>BIT</span></a>
-    <nav class="navlinks" id="navlinks">
-      <a href="#markets">Markets</a>
-      <a href="#stocks">Stocks</a>
-      <a href="#card">NEXBIT Card</a>
-      <a href="#faq">FAQ</a>
-      <a href="#support">Support</a>
-    </nav>
-    <div class="nav-actions">
-      <a class="btn btn-outline" href="#markets">Explore markets</a>
-      <a class="btn btn-gold" href="#support">Get started</a>
-      <button class="menu" onclick="document.getElementById('navlinks').classList.toggle('show')" aria-label="Open menu">☰</button>
-    </div>
+  <a href="#" class="brand" aria-label="NEXBIT home">
+    <svg viewBox="0 0 34 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 37V5L30 37V5" stroke="#E6B454" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/>
+    </svg>
+    <div class="brand-name">NEX<span>BIT</span></div>
+  </a>
+  <nav>
+    <a href="#markets">Markets</a>
+    <a href="#features">Features</a>
+    <a href="#features">Earn</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="header-actions">
+    <a class="login" href="#">Log In</a>
+    <a class="signup" href="#">Sign Up</a>
   </div>
 </header>
 
 <main>
 <section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <div class="eyebrow">The next move starts here</div>
-      <h1>Trade beyond <span>limits.</span></h1>
-      <p class="hero-copy">Explore digital assets and stock markets through one modern trading experience. Discover opportunities and take control of your financial journey with NEXBIT.</p>
-      <div class="hero-buttons">
-        <a class="btn btn-gold" href="#markets">Explore markets →</a>
-        <a class="btn btn-outline" href="#card">Discover NEXBIT Card</a>
-      </div>
-      <p class="trust-line">CRYPTO · STOCKS · DIGITAL FINANCE</p>
+  <div class="hero-copy">
+    <div class="eyebrow">The next generation trading platform</div>
+    <h1>Trade Smarter.<span>Grow Bigger.</span></h1>
+    <p>
+      Discover a smarter way to trade crypto and explore global markets.
+      Your next move starts with NEXBIT.
+    </p>
+    <div class="hero-buttons">
+      <a class="primary-btn" href="#markets">Start Trading ↗</a>
+      <a class="secondary-btn" href="#markets">Explore Markets</a>
     </div>
-
-    
-
-      <div class="float-tag">Market opportunities<strong>Beyond limits ↗</strong></div>
+    <div class="trust-line">
+      <span>Advanced Trading Tools</span>
+      <span>Market Insights</span>
+      <span>24/7 Support</span>
     </div>
   </div>
-</section>
 
-<div class="ticker">
-  <div class="ticker-track">
-    <span><b>₿ BITCOIN</b> Digital assets</span>
-    <span><b>Ξ ETHEREUM</b> Smart contracts</span>
-    <span><b>◎ SOLANA</b> Blockchain</span>
-    <span><b>USDT</b> Digital dollar</span>
-    <span><b>STOCKS</b> Global markets</span>
-    <span><b>₿ BITCOIN</b> Digital assets</span>
-    <span><b>Ξ ETHEREUM</b> Smart contracts</span>
-    <span><b>◎ SOLANA</b> Blockchain</span>
-    <span><b>USDT</b> Digital dollar</span>
-    <span><b>STOCKS</b> Global markets</span>
-  </div>
-</div>
+  <div class="phone-area">
+    <div class="coin one">₿</div>
+    <div class="coin two">₿</div>
+    <div class="coin three">₿</div>
+    <div class="coin four">₿</div>
 
-<section>
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Built for the next generation</div>
-      <h2>A platform focused on <span class="gold">possibility.</span></h2>
-      <p>As the NEXBIT ecosystem develops, verified platform activity and performance information will be displayed here.</p>
-    </div>
-    <div class="metrics">
-      <div class="metric"><strong>—</strong><span>Total successful trades</span></div>
-      <div class="metric"><strong>—</strong><span>Community followers</span></div>
-      <div class="metric"><strong>—</strong><span>Realized platform P&amp;L</span></div>
-    </div>
-    <p class="metric-note">Verified platform statistics will appear here when the relevant data systems are connected.</p>
-  </div>
-</section>
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="phone-top">
+          <span>9:41</span><span class="phone-brand">NEXBIT</span><span>●●●</span>
+        </div>
+        <div class="pair">
+          <strong>BTC/USDT</strong>
+          <span class="live">● LIVE MARKET</span>
+        </div>
+        <div class="price">$67,842.50</div>
+        <div class="change">+2.45% &nbsp; Today</div>
 
-<section class="market-section" id="markets">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Explore the markets</div>
-      <h2>One destination. <span class="gold">More opportunities.</span></h2>
-      <p>Explore the digital asset and stock market categories planned for the NEXBIT platform.</p>
-    </div>
-    <div class="tabs">
-      <button class="tab active" id="cryptoTab" onclick="showMarket('crypto')">Crypto</button>
-      <button class="tab" id="stockTab" onclick="showMarket('stocks')">Stocks</button>
-    </div>
-    <div class="market-box" id="marketTable">
-      <div class="market-row heading"><span>Asset</span><span>Market</span><span>Status</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">₿</span>Bitcoin</div><span>BTC / USDT</span><span class="change">Listed category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">Ξ</span>Ethereum</div><span>ETH / USDT</span><span class="change">Listed category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">◎</span>Solana</div><span>SOL / USDT</span><span class="change">Listed category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">₮</span>Tether</div><span>USDT</span><span class="change">Listed category</span></div>
-    </div>
-    <p class="market-note">Market categories shown for presentation. Live prices and trading are not connected yet.</p>
-  </div>
-</section>
+        <div class="chart-tabs">
+          <span>15m</span><span class="active">1H</span>
+          <span>4H</span><span>1D</span><span>1W</span>
+        </div>
 
-<section class="card-section" id="card">
-  <div class="container card-grid">
-    <div class="card-copy">
-      <div class="eyebrow">Introducing the NEXBIT Card</div>
-      <h2>Move with confidence. <span class="gold">Think beyond.</span></h2>
-      <p>Discover the NEXBIT Card concept: a premium card experience designed to complement the NEXBIT digital finance ecosystem.</p>
-      <p>Want to learn about card features and availability? Our customer support team can provide further information.</p>
-      <a class="btn btn-gold" href="#support">Ask customer support →</a>
-    </div>
-    <div class="bank-card">
-      <div class="card-brand">NEX<span>BIT</span></div>
-      <div class="chip"></div>
-      <div class="card-number">•••• &nbsp; •••• &nbsp; •••• &nbsp; ••••</div>
-      <div class="card-bottom">
-        <div><small>MEMBER</small><strong>NEXBIT CLIENT</strong></div>
-        <div class="nex">NEXBIT</div>
+        <div class="chart">
+          <svg viewBox="0 0 280 132" preserveAspectRatio="none">
+            <g stroke="#242b32" stroke-width="1">
+              <path d="M0 25H280M0 55H280M0 85H280M0 115H280"/>
+            </g>
+            <path d="M0 105 L18 94 L35 101 L52 75 L68 84 L85 62 L101 72 L118 46 L135 57 L151 35 L168 51 L184 29 L201 42 L218 18 L235 30 L252 12 L280 20 L280 132 L0 132Z" fill="url(#area)" opacity=".35"/>
+            <path d="M0 105 L18 94 L35 101 L52 75 L68 84 L85 62 L101 72 L118 46 L135 57 L151 35 L168 51 L184 29 L201 42 L218 18 L235 30 L252 12 L280 20" stroke="#16c784" stroke-width="2.2" fill="none"/>
+            <g stroke-width="1.5">
+              <path d="M18 83V111M35 87V108M52 63V86M68 72V94M85 49V76M101 58V82M118 36V62M135 43V69M151 26V49M168 36V62M184 18V42M201 27V52M218 9V32M235 17V42M252 5V25" stroke="#16c784"/>
+            </g>
+            <defs>
+              <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#16c784"/>
+                <stop offset="100%" stop-color="#16c784" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="chart-caption">
+          <span>Trading chart</span><span>Volume bars</span>
+        </div>
+
+        <div class="phone-buttons">
+          <button class="buy" type="button">BUY</button>
+          <button class="sell" type="button">SELL</button>
+        </div>
+
+        <div class="book-title">
+          <span>ORDER BOOK</span><span>BTC / USDT</span>
+        </div>
+        <div class="book-head">
+          <span>Price (USDT)</span><span>Amount (BTC)</span><span>Total</span>
+        </div>
+        <div class="book-row sell-row"><span>67,850.20</span><span>0.024</span><span>1,628.40</span></div>
+        <div class="book-row sell-row"><span>67,849.10</span><span>0.118</span><span>8,006.19</span></div>
+        <div class="book-row sell-row"><span>67,847.80</span><span>0.052</span><span>3,528.08</span></div>
+        <div class="book-divider"></div>
+        <div class="book-row buy-row"><span>67,842.50</span><span>0.085</span><span>5,766.61</span></div>
+        <div class="book-row buy-row"><span>67,840.20</span><span>0.143</span><span>9,704.15</span></div>
+        <div class="book-row buy-row"><span>67,838.90</span><span>0.067</span><span>4,545.21</span></div>
+        <div class="phone-bottom">
+          <span>⌂ Home</span><span>⌁ Markets</span>
+          <span>⇄ Trade</span><span>◉ Assets</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">The NEXBIT experience</div>
-      <h2>Designed around <span class="gold">your ambitions.</span></h2>
-    </div>
-    <div class="features">
-      <div class="feature"><div class="symbol">◈</div><h3>Digital asset markets</h3><p>Explore a growing range of cryptocurrency market categories.</p></div>
-      <div class="feature"><div class="symbol">▥</div><h3>Stock market access</h3><p>Bring stock market opportunities into the wider NEXBIT vision.</p></div>
-      <div class="feature"><div class="symbol">✧</div><h3>Modern experience</h3><p>A clean, intuitive interface designed to make navigating markets easier.</p></div>
-    </div>
-  </div>
+<section class="market-strip" id="markets">
+  <div class="market-stat"><strong>Crypto</strong><span>Explore digital assets</span></div>
+  <div class="market-stat"><strong>Stocks</strong><span>Discover global markets</span></div>
+  <div class="market-stat"><strong>24/7</strong><span>Market access</span></div>
+  <div class="market-stat"><strong>NEXBIT</strong><span>Your trading destination</span></div>
 </section>
 
-<section class="faq-section" id="faq">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Need to know more?</div>
-      <h2>Frequently asked <span class="gold">questions.</span></h2>
-      <p>Some helpful information about the NEXBIT platform and its planned services.</p>
-    </div>
-    <div class="faq">
-      <details><summary>What is NEXBIT?</summary><p>NEXBIT is a digital finance and trading platform project focused on cryptocurrency markets, stock market opportunities and related financial services.</p></details>
-      <details><summary>Can I trade cryptocurrencies on NEXBIT?</summary><p>Cryptocurrency markets are part of the planned platform. Live trading will be made available only when the required trading systems and services are ready.</p></details>
-      <details><summary>Will NEXBIT support stock trading?</summary><p>Stock market access is part of the NEXBIT platform vision. Availability will depend on the relevant market infrastructure and service arrangements.</p></details>
-      <details><summary>How can I learn about the NEXBIT Card?</summary><p>Contact NEXBIT customer support for information about card features and availability.</p></details>
-      <details><summary>How do deposits and withdrawals work?</summary><p>Deposit and withdrawal instructions will be provided through official NEXBIT channels when those services are operational. Always verify payment details before sending funds.</p></details>
-      <details><summary>How do I contact customer support?</summary><p>Use the customer support section below for assistance and information about available support channels.</p></details>
-    </div>
+<section class="section" id="features">
+  <div class="section-heading">
+    <h2>Everything You Need to <span>Trade</span></h2>
+    <p>Powerful tools and a smarter trading experience.</p>
   </div>
-</section>
-
-<section class="support" id="support">
-  <div class="container">
-    <div class="eyebrow">We're here to help</div>
-    <h2>Have a question about <span class="gold">NEXBIT?</span></h2>
-    <p>Our customer support information will be published here. Check back for official contact details and service updates.</p>
-    <a class="btn btn-gold" href="#faq">Explore frequently asked questions</a>
+  <div class="features">
+    <article class="feature">
+      <div class="feature-icon">◈</div>
+      <h3>Advanced Markets</h3>
+      <p>Explore crypto and stock market opportunities from one platform.</p>
+    </article>
+    <article class="feature">
+      <div class="feature-icon">⌁</div>
+      <h3>Trading Insights</h3>
+      <p>Follow market movements and make informed trading decisions.</p>
+    </article>
+    <article class="feature">
+      <div class="feature-icon">◇</div>
+      <h3>Customer Support</h3>
+      <p>Get help and guidance whenever you need assistance.</p>
+    </article>
   </div>
 </section>
 </main>
 
-<footer>
-  <div class="container footer-row">
-    <div><div class="logo">NEX<span>BIT</span></div><p>Trade Beyond Limits.</p></div>
-    <div>© <span id="year"></span> NEXBIT. All rights reserved.</div>
-  </div>
+<footer id="about">
+  <span>© 2026 NEXBIT. All rights reserved.</span>
+  <span>Trade Beyond Limits.</span>
 </footer>
-
-<script>
-document.getElementById("year").textContent=new Date().getFullYear();
-
-function showMarket(type){
-  const table=document.getElementById("marketTable");
-  const crypto=document.getElementById("cryptoTab");
-  const stocks=document.getElementById("stockTab");
-
-  crypto.classList.toggle("active",type==="crypto");
-  stocks.classList.toggle("active",type==="stocks");
-
-  if(type==="crypto"){
-    table.innerHTML=`
-      <div class="market-row heading"><span>Asset</span><span>Market</span><span>Status</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">₿</span>Bitcoin</div><span>BTC / USDT</span><span class="change">Listed category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">Ξ</span>Ethereum</div><span>ETH / USDT</span><span class="change">Listed category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">◎</span>Solana</div><span>SOL / USDT</span><span class="change">Listed category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">₮</span>Tether</div><span>USDT</span><span class="change">Listed category</span></div>`;
-  }else{
-    table.innerHTML=`
-      <div class="market-row heading"><span>Company</span><span>Market</span><span>Status</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">A</span>Apple</div><span>AAPL</span><span class="change">Planned category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">M</span>Microsoft</div><span>MSFT</span><span class="change">Planned category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">N</span>NVIDIA</div><span>NVDA</span><span class="change">Planned category</span></div>
-      <div class="market-row"><div class="asset"><span class="asset-icon">T</span>Tesla</div><span>TSLA</span><span class="change">Planned category</span></div>`;
-  }
-}
-</script>
 </body>
 </html>
