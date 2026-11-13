@@ -11,39 +11,67 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   function displayMarkets(markets) {
-    if (!marketTable) return;
+  const marketList = document.getElementById("market-list");
+  if (!marketList) return;
 
-    marketTable.querySelectorAll(".market-row").forEach(row => row.remove());
+  marketList.innerHTML = "";
 
-    markets.forEach(coin => {
-      const row = document.createElement("div");
-      row.className = "market-row";
+  markets.forEach(coin => {
+    const row = document.createElement("div");
+    row.className = "market-row";
 
-      const nameCell = document.createElement("span");
-      const name = document.createElement("strong");
-      const symbol = document.createElement("small");
+    // Coin logo and name
+    const nameCell = document.createElement("span");
+    nameCell.style.cssText = "display:flex;align-items:center;gap:10px;";
 
-      name.textContent = coin.name;
-      symbol.textContent = coin.symbol;
-      symbol.style.cssText = "color:#929292;margin-left:8px";
+    const logo = document.createElement("img");
+    logo.src = coin.image || "";
+    logo.alt = coin.name;
+    logo.style.cssText = "width:28px;height:28px;border-radius:50%;";
 
-      nameCell.append(name, symbol);
+    const name = document.createElement("strong");
+    name.textContent = coin.name;
 
-      const priceCell = document.createElement("span");
-      priceCell.textContent = "$" + Number(coin.price).toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
+    const symbol = document.createElement("small");
+    symbol.textContent = coin.symbol;
+    symbol.style.cssText = "color:#929292;margin-left:5px;";
 
-      const changeCell = document.createElement("span");
-      const change = Number(coin.change) || 0;
-      changeCell.textContent = (change >= 0 ? "+" : "") + change.toFixed(2) + "%";
-      changeCell.style.color = change >= 0 ? "#32c98b" : "#ef6262";
+    nameCell.append(logo, name, symbol);
 
-      row.append(nameCell, priceCell, changeCell);
-      marketTable.appendChild(row);
-    });
-  }
+    // Price
+    const priceCell = document.createElement("span");
+    priceCell.textContent = "$" + Number(coin.price).toLocaleString("en-US");
+
+    // Green or red change box
+    const changeCell = document.createElement("span");
+    const change = Number(coin.change) || 0;
+    const positive = change >= 0;
+
+    changeCell.textContent =
+      (positive ? "+" : "") + change.toFixed(2) + "%";
+
+    changeCell.style.cssText = `
+      display:inline-block;
+      width:max-content;
+      padding:6px 9px;
+      border-radius:7px;
+      font-size:11px;
+      font-weight:800;
+      color:${positive ? "#21d68b" : "#ff5b65"};
+      background:${positive ? "rgba(33,214,139,0.12)" : "rgba(255,91,101,0.12)"};
+      border:1px solid ${positive ? "rgba(33,214,139,0.3)" : "rgba(255,91,101,0.3)"};
+    `;
+
+    // Market capitalization
+    const marketCell = document.createElement("span");
+    marketCell.textContent = coin.marketCap
+      ? "$" + Number(coin.marketCap).toLocaleString("en-US")
+      : "--";
+
+    row.append(nameCell, priceCell, changeCell, marketCell);
+    marketList.appendChild(row);
+  });
+}
 
   async function loadMarkets() {
     if (demoNote) demoNote.textContent = "Loading cryptocurrency prices...";
