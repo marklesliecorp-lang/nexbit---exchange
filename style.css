@@ -961,3 +961,84 @@ footer p {
   }
 }
 }
+/* NEXBIT TRENDING CRYPTO DESIGN */
+
+.markets-section {
+  padding: 65px 5%;
+  background: #080808;
+}
+
+.markets-section .section-heading {
+  margin-bottom: 30px;
+}
+
+.markets-section .section-heading h2 {
+  color: #fff;
+  font-size: 32px;
+}
+
+.markets-section .section-heading p {
+  color: #999;
+}
+
+.market-table {
+  background: #101010;
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.market-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+  border-bottom: 1px solid #242424;
+  color: #fff;
+  font-size: 13px;
+}
+
+.market-header {
+  color: #d4af37;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: #151515;
+}
+
+.market-row:last-child {
+  border-bottom: none;
+}
+
+.demo-note {
+  color: #777;
+  font-size: 11px;
+  margin-top: 15px;
+}
+
+@media (max-width: 600px) {
+  .markets-section {
+    padding: 40px 4%;
+  }
+
+  .markets-section .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .market-row {
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 7px;
+    padding: 14px 10px;
+    font-size: 11px;
+  }
+
+  .market-row > :last-child {
+    display: none;
+  }
+
+  .market-header {
+    font-size: 9px;
+  }
+}
