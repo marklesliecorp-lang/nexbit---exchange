@@ -877,3 +877,54 @@ footer p {
     min-width: 0;
   }
 }
+/* NEXBIT COMPACT TICKER */
+.market-ticker {
+  padding: 7px 4%;
+  gap: 12px;
+}
+
+.ticker-track {
+  gap: 9px;
+}
+
+.ticker-card {
+  min-width: 175px;
+  max-width: 175px;
+  padding: 7px 9px;
+  gap: 7px;
+  border-radius: 9px;
+}
+
+.ticker-card img {
+  width: 25px;
+  height: 25px;
+}
+
+.ticker-name {
+  font-size: 11px;
+}
+
+.ticker-price {
+  font-size: 10px;
+}
+
+.ticker-change {
+  padding: 5px 6px;
+  font-size: 9px;
+}
+
+.ticker-label {
+  font-size: 10px;
+}
+
+@media (max-width: 600px) {
+  .market-ticker {
+    padding: 7px 3%;
+    gap: 7px;
+  }
+
+  .ticker-card {
+    min-width: 165px;
+    max-width: 165px;
+  }
+}
