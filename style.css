@@ -1439,3 +1439,131 @@ footer p {
     padding-top: 18px !important;
   }
 }
+
+/* NEXBIT PROMOTIONS & REWARDS */
+
+.promotions-section {
+  padding: 75px 5%;
+  background:
+    radial-gradient(ellipse at center top, rgba(212,175,55,0.07), transparent 55%),
+    #080808;
+}
+
+.promotions-section .section-heading {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 42px;
+}
+
+.promotions-section .section-heading h2 {
+  color: #fff;
+  font-size: 34px;
+  margin: 12px 0;
+}
+
+.promotions-section .section-heading p {
+  color: #999;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.promotion-card {
+  background: linear-gradient(145deg, #17150f, #0b0b0b);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 18px;
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.promotion-card:hover {
+  transform: translateY(-7px);
+  border-color: #d4af37;
+  box-shadow: 0 12px 35px rgba(212,175,55,0.12);
+}
+
+.promotion-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 20px;
+  filter: drop-shadow(0 8px 18px rgba(212,175,55,0.12));
+}
+
+.promotion-card h3 {
+  color: #d4af37;
+  font-size: 19px;
+  margin-bottom: 12px;
+}
+
+.promotion-card p {
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.8;
+  min-height: 70px;
+}
+
+.promotion-link {
+  display: inline-block;
+  color: #e5c65b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-top: 17px;
+}
+
+.promotions-footer {
+  color: #d4af37;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-top: 42px;
+}
+
+@media (max-width: 850px) {
+  .promotions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .promotions-section {
+    padding: 48px 4%;
+  }
+
+  .promotions-section .section-heading h2 {
+    font-size: 26px;
+  }
+
+  .promotions-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .promotion-card {
+    padding: 20px;
+  }
+
+  .promotion-card img {
+    height: 180px;
+  }
+
+  .promotion-card h3 {
+    font-size: 18px;
+  }
+
+  .promotion-card p {
+    min-height: auto;
+  }
+}
