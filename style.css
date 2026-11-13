@@ -3,11 +3,12 @@
   --bg: #080808;
   --surface: #111111;
   --surface-light: #181818;
-  --gold: #d6a84b;
+  --gold: #d6aa48;
   --gold-light: #f4d58a;
-  --text: #f5f5f5;
-  --muted: #929292;
-  --border: rgba(255, 255, 255, 0.09);
+  --white: #ffffff;
+  --muted: #999999;
+  --green: #19c784;
+  --red: #f05b68;
 }
 
 * {
@@ -22,8 +23,8 @@ html {
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: "Inter", Arial, sans-serif;
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
 
@@ -32,32 +33,26 @@ a {
   text-decoration: none;
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
-}
-
-/* NAVIGATION */
-
 .navbar {
-  width: 100%;
   min-height: 82px;
   padding: 0 7%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  background: rgba(8, 8, 8, 0.94);
-  position: relative;
-  z-index: 10;
+  background: rgba(8, 8, 8, .96);
+  border-bottom: 1px solid rgba(214, 170, 72, .15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(15px);
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 11px;
-  font-size: 25px;
-  font-weight: 800;
+  font-size: 23px;
+  font-weight: 900;
   letter-spacing: 2px;
 }
 
@@ -66,121 +61,110 @@ button {
   height: 35px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--gold-light), #a87520);
+  background: linear-gradient(135deg, #f4d58a, #a87924);
   color: #080808;
+  border-radius: 9px;
+  font-size: 22px;
   font-weight: 900;
 }
 
 .nav-links {
   display: flex;
-  align-items: center;
   gap: 35px;
-  color: #bcbcbc;
-  font-size: 14px;
 }
 
-.nav-links a:hover {
-  color: var(--gold-light);
+.nav-links a,
+.login-btn {
+  color: #c5c5c5;
+  font-size: 13px;
+  font-weight: 600;
+  transition: .3s;
+}
+
+.nav-links a:hover,
+.login-btn:hover {
+  color: var(--gold);
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
 }
 
-.login-btn {
-  color: white;
-  font-size: 14px;
-}
-
-.signup-btn,
-.primary-btn {
-  background: linear-gradient(135deg, var(--gold-light), #bd8b32);
-  color: #090909;
-  border: none;
-  border-radius: 7px;
-  padding: 13px 23px;
+.signup-btn {
+  background: linear-gradient(135deg, #f1d28a, #bd8b32);
+  color: #080808;
+  padding: 12px 23px;
+  border-radius: 5px;
+  font-size: 13px;
   font-weight: 800;
-  transition: 0.25s ease;
-}
-
-.signup-btn:hover,
-.primary-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(214, 168, 75, 0.25);
 }
 
 .menu-toggle {
   display: none;
+  color: var(--gold);
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
 }
-
-/* HERO */
 
 .hero {
-  min-height: 660px;
-  padding: 90px 7%;
+  min-height: 650px;
+  padding: 90px 8% 100px;
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1.05fr .95fr;
   align-items: center;
-  gap: 50px;
+  gap: 35px;
   position: relative;
   overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  width: 550px;
-  height: 550px;
-  background: rgba(196, 145, 48, 0.09);
-  filter: blur(130px);
-  border-radius: 50%;
-  right: 5%;
-  top: 5%;
-  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 75% 48%, rgba(151, 105, 28, .15), transparent 42%),
+    linear-gradient(110deg, #080808, #0d0c09 70%, #080808);
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 620px;
 }
 
 .eyebrow {
-  color: var(--gold-light);
-  font-size: 12px;
+  display: inline-block;
+  color: var(--gold);
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
 }
 
 .hero h1 {
-  font-size: clamp(42px, 5.3vw, 72px);
-  line-height: 1.08;
-  letter-spacing: -2.5px;
+  font-size: clamp(38px, 5vw, 67px);
+  line-height: 1.12;
+  font-weight: 900;
+  letter-spacing: -3px;
   margin-bottom: 25px;
 }
 
 .hero h1 span {
-  color: var(--gold);
+  background: linear-gradient(90deg, #f8e3ac, #c18c31);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
-.hero-content p {
-  color: #a8a8a8;
-  font-size: 16px;
+.hero-content > p {
+  max-width: 490px;
+  color: #a6a6a6;
+  font-size: 15px;
   line-height: 1.9;
-  max-width: 510px;
   margin-bottom: 32px;
 }
 
 .hero-buttons {
   display: flex;
-  align-items: center;
-  gap: 16px;
   flex-wrap: wrap;
+  gap: 15px;
 }
 
 .primary-btn,
@@ -189,100 +173,244 @@ button {
   justify-content: center;
   align-items: center;
   min-height: 49px;
+  padding: 0 25px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: .3s;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #f1d28a, #bd8b32);
+  color: #080808;
+}
+
+.primary-btn:hover,
+.signup-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(214, 170, 72, .25);
 }
 
 .secondary-btn {
-  padding: 13px 23px;
-  border: 1px solid rgba(214, 168, 75, 0.5);
+  border: 1px solid rgba(214, 170, 72, .55);
   color: var(--gold-light);
-  border-radius: 7px;
-  transition: 0.25s ease;
 }
 
 .secondary-btn:hover {
-  background: rgba(214, 168, 75, 0.1);
+  background: rgba(214, 170, 72, .1);
 }
 
-/* HERO VISUAL */
+.hero-trust {
+  color: #888;
+  font-size: 11px;
+  margin-top: 35px;
+}
+
+.hero-trust span {
+  color: var(--green);
+  margin-right: 7px;
+}
 
 .hero-visual {
-  min-height: 470px;
+  min-height: 450px;
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  perspective: 1000px;
 }
 
 .gold-glow {
   position: absolute;
-  width: 350px;
-  height: 350px;
-  background: rgba(214, 168, 75, 0.18);
+  width: 380px;
+  height: 380px;
+  background: rgba(190, 139, 43, .2);
   filter: blur(100px);
   border-radius: 50%;
 }
 
 .phone-placeholder {
+  width: 230px;
+  height: 420px;
+  padding: 9px;
+  border: 2px solid #8f6b30;
+  border-radius: 32px;
+  background: linear-gradient(145deg, #333, #080808 40%);
+  box-shadow: 0 0 50px rgba(214, 170, 72, .22);
+  transform: rotate(-7deg);
   position: relative;
   z-index: 2;
-  width: 255px;
-  min-height: 430px;
-  padding: 12px;
-  border-radius: 35px;
-  background: linear-gradient(145deg, #555, #111 25%, #292929 75%, #777);
-  border: 2px solid #777;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8);
-  transform: rotate(-7deg);
 }
 
 .phone-screen {
-  min-height: 402px;
-  padding: 22px 15px;
-  border-radius: 25px;
-  background: #090909;
-  border: 1px solid #333;
+  height: 100%;
+  padding: 22px 14px;
+  border-radius: 23px;
+  background: linear-gradient(160deg, #171717, #080808);
+  overflow: hidden;
+}
+
+.phone-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 27px;
 }
 
 .phone-brand {
-  color: var(--gold-light);
-  font-size: 17px;
-  font-weight: 800;
-  margin-bottom: 32px;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
 
-.phone-screen h3 {
-  font-size: 12px;
+.phone-menu {
   color: #aaa;
-  margin-bottom: 8px;
+}
+
+.phone-label {
+  color: #929292;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
 }
 
 .phone-screen h2 {
-  font-size: 27px;
-  margin-bottom: 25px;
+  font-size: 25px;
+  margin-bottom: 7px;
+}
+
+.phone-gain {
+  color: var(--green);
+  font-size: 10px;
 }
 
 .phone-chart {
-  height: 105px;
-  border-radius: 9px;
-  margin-bottom: 25px;
-  background:
-    linear-gradient(160deg, transparent 48%, #d6a84b 49%, #d6a84b 51%, transparent 52%),
-    linear-gradient(180deg, rgba(214, 168, 75, 0.13), transparent);
+  height: 95px;
+  margin: 18px 0;
+}
+
+.phone-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+.phone-divider {
+  height: 1px;
+  background: #333;
+  margin: 13px 0 18px;
 }
 
 .phone-market {
   display: flex;
-  justify-content: space-between;
-  padding: 13px 0;
-  border-top: 1px solid #292929;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #292929;
+  font-size: 9px;
+}
+
+.phone-market span:nth-child(2) {
+  flex: 1;
+  color: white;
+}
+
+.phone-market small {
+  display: block;
+  color: #888;
+  margin-top: 4px;
+}
+
+.phone-market strong {
+  font-size: 9px;
+}
+
+.phone-coin {
+  width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+  background: #a97828;
+  color: #111;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.phone-coin.eth {
+  background: #8e8ba8;
+}
+
+.phone-coin.sol {
+  background: #66c6a5;
+}
+
+.floating-coin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f6df9f, #a87522);
+  color: #17110a;
+  font-weight: 900;
+  box-shadow: 0 10px 40px rgba(214, 170, 72, .3);
+  z-index: 3;
+}
+
+.bitcoin-coin {
+  width: 85px;
+  height: 85px;
+  font-size: 50px;
+  top: 45px;
+  left: 4%;
+}
+
+.ethereum-coin {
+  width: 56px;
+  height: 56px;
+  font-size: 30px;
+  top: 125px;
+  right: 2%;
+  background: linear-gradient(135deg, #d4d1ed, #77718f);
+}
+
+.solana-coin {
+  width: 48px;
+  height: 48px;
+  font-size: 27px;
+  bottom: 55px;
+  left: 8%;
+  background: linear-gradient(135deg, #b4ebd5, #3b997c);
+}
+
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 32px 9%;
+  background: #101010;
+  border-top: 1px solid #252016;
+  border-bottom: 1px solid #252016;
+  text-align: center;
+}
+
+.stats-strip div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stats-strip strong {
+  color: var(--gold-light);
+  font-size: 23px;
+}
+
+.stats-strip span {
+  color: #888;
   font-size: 11px;
 }
 
-/* MARKETS */
-
-.markets-section {
-  padding: 90px 7%;
-  background: #0d0d0d;
+.markets-section,
+.features-section {
+  padding: 100px 8%;
 }
 
 .section-heading {
@@ -291,154 +419,149 @@ button {
 }
 
 .section-heading h2 {
-  font-size: clamp(28px, 4vw, 42px);
+  font-size: clamp(27px, 4vw, 39px);
+  font-weight: 800;
   margin-bottom: 13px;
 }
 
 .section-heading p {
-  color: var(--muted);
-  line-height: 1.7;
+  color: #929292;
+  font-size: 14px;
+  line-height: 1.8;
 }
 
 .market-table {
-  max-width: 1100px;
+  max-width: 1050px;
   margin: auto;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: #111;
+  border: 1px solid #29251c;
+  border-radius: 10px;
   overflow: hidden;
-  background: var(--surface);
 }
 
-.market-header,
 .market-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 15px;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
   align-items: center;
-  padding: 20px 25px;
+  gap: 12px;
+  padding: 22px 25px;
+  border-bottom: 1px solid #292929;
+  font-size: 13px;
+}
+
+.market-row:last-child {
+  border-bottom: none;
 }
 
 .market-header {
-  color: var(--muted);
-  font-size: 12px;
+  background: #191714;
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  background: #151515;
-}
-
-.market-row {
-  border-top: 1px solid var(--border);
-  font-size: 14px;
-}
-
-.market-row span:last-child {
-  color: #32c98b;
-  text-align: right;
-}
-
-.market-row span:nth-child(2),
-.market-header span:nth-child(2) {
-  text-align: center;
 }
 
 .demo-note {
   color: #777;
   font-size: 11px;
   text-align: center;
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
-/* FEATURES */
-
 .features-section {
-  padding: 100px 7%;
+  background: #0d0d0d;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
-  max-width: 1150px;
+  max-width: 1100px;
   margin: auto;
 }
 
 .feature-card {
   padding: 35px 28px;
-  background: linear-gradient(145deg, #171717, #0d0d0d);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  transition: 0.3s ease;
+  background: linear-gradient(145deg, #171717, #101010);
+  border: 1px solid #302819;
+  border-radius: 9px;
+  transition: .3s;
 }
 
 .feature-card:hover {
   transform: translateY(-7px);
-  border-color: rgba(214, 168, 75, 0.55);
+  border-color: var(--gold);
 }
 
 .feature-icon {
-  width: 50px;
-  height: 50px;
+  width: 49px;
+  height: 49px;
   display: grid;
   place-items: center;
-  background: rgba(214, 168, 75, 0.12);
-  color: var(--gold-light);
-  border-radius: 12px;
-  font-size: 24px;
+  background: rgba(214, 170, 72, .12);
+  color: var(--gold);
+  border-radius: 9px;
+  font-size: 26px;
   margin-bottom: 25px;
 }
 
 .feature-card h3 {
-  font-size: 19px;
+  font-size: 18px;
   margin-bottom: 14px;
 }
 
 .feature-card p {
-  color: var(--muted);
-  font-size: 14px;
+  color: #999;
+  font-size: 13px;
   line-height: 1.8;
 }
 
-/* CALL TO ACTION */
-
 .cta-section {
-  margin: 40px 7% 90px;
+  margin: 80px 8%;
   padding: 75px 25px;
   text-align: center;
-  border: 1px solid rgba(214, 168, 75, 0.25);
-  border-radius: 16px;
+  border: 1px solid rgba(214, 170, 72, .3);
+  border-radius: 12px;
   background:
-    radial-gradient(circle at center, rgba(214, 168, 75, 0.14), transparent 65%),
+    radial-gradient(ellipse at center, rgba(171, 120, 35, .16), transparent 70%),
     #111;
 }
 
 .cta-section h2 {
-  font-size: clamp(28px, 4vw, 43px);
-  margin-bottom: 18px;
+  font-size: clamp(25px, 4vw, 40px);
+  margin-bottom: 17px;
 }
 
 .cta-section p {
-  color: #aaa;
-  line-height: 1.8;
+  color: #999;
   margin-bottom: 28px;
+  font-size: 14px;
 }
 
-/* FOOTER */
-
 footer {
-  padding: 45px 7%;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 13px;
+  padding: 45px 8%;
   text-align: center;
+  border-top: 1px solid #252016;
+  background: #090909;
 }
 
 footer .logo {
   justify-content: center;
-  color: white;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-/* RESPONSIVE DESIGN */
+footer p {
+  color: #777;
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 8px;
+}
+
+.footer-disclaimer {
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 @media (max-width: 900px) {
   .navbar {
@@ -450,12 +573,16 @@ footer .logo {
   }
 
   .hero {
-    padding: 75px 5%;
-    gap: 20px;
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .hero h1 {
+    letter-spacing: -2px;
   }
 
   .features-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
 }
 
@@ -465,41 +592,41 @@ footer .logo {
   }
 
   .logo {
-    font-size: 21px;
+    font-size: 20px;
+  }
+
+  .menu-toggle {
+    display: block;
   }
 
   .nav-links {
     display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    padding: 25px;
+    background: #111;
+    flex-direction: column;
+    gap: 23px;
+    border-bottom: 1px solid #49391d;
+  }
+
+  .nav-links.open {
+    display: flex;
   }
 
   .nav-actions {
-    gap: 12px;
-  }
-
-  .login-btn {
-    font-size: 12px;
-  }
-
-  .signup-btn {
-    padding: 10px 14px;
-    font-size: 12px;
-  }
-
-  .menu-toggle {
     display: none;
   }
 
   .hero {
     grid-template-columns: 1fr;
-    padding: 65px 6% 40px;
+    padding: 75px 7% 55px;
     text-align: center;
   }
 
-  .hero-content {
-    margin: auto;
-  }
-
-  .hero-content p {
+  .hero-content > p {
     margin-left: auto;
     margin-right: auto;
   }
@@ -508,12 +635,33 @@ footer .logo {
     justify-content: center;
   }
 
-  .hero-visual {
-    min-height: 400px;
+  .hero-trust {
+    margin-top: 25px;
   }
 
-  .phone-placeholder {
-    transform: rotate(-4deg) scale(0.88);
+  .hero-visual {
+    min-height: 450px;
+    margin-top: 20px;
+  }
+
+  .bitcoin-coin {
+    left: 0;
+  }
+
+  .ethereum-coin {
+    right: 0;
+  }
+
+  .stats-strip {
+    padding: 25px 4%;
+  }
+
+  .stats-strip strong {
+    font-size: 17px;
+  }
+
+  .stats-strip span {
+    font-size: 9px;
   }
 
   .markets-section,
@@ -521,19 +669,50 @@ footer .logo {
     padding: 70px 5%;
   }
 
-  .market-header,
   .market-row {
-    padding: 17px 12px;
-    font-size: 11px;
+    grid-template-columns: 1.2fr 1fr 1fr;
     gap: 8px;
+    padding: 17px 12px;
+    font-size: 10px;
+  }
+
+  .market-row span:last-child {
+    display: none;
+  }
+
+  .market-header {
+    font-size: 9px;
   }
 
   .features-grid {
     grid-template-columns: 1fr;
   }
 
+  .feature-card {
+    padding: 28px;
+  }
+
   .cta-section {
-    margin: 20px 5% 65px;
-    padding: 55px 20px;
+    margin: 50px 5%;
+    padding: 55px 18px;
+  }
+
+  footer {
+    padding: 40px 5%;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .phone-placeholder {
+    transform: scale(.9) rotate(-7deg);
+  }
+
+  .market-row {
+    font-size: 9px;
+    padding: 15px 8px;
   }
 }
