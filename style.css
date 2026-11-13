@@ -733,3 +733,106 @@ footer p {
   border-radius: 20px;
   filter: drop-shadow(0 15px 35px rgba(214, 170, 72, 0.2));
 }
+/* NEXBIT LIVE MARKET TICKER */
+.market-ticker {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 22px 5%;
+  background: #080808;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  overflow: hidden;
+}
+
+.ticker-label {
+  color: #d4af37;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: none;
+}
+
+.ticker-track::-webkit-scrollbar {
+  display: none;
+}
+
+.ticker-card {
+  min-width: 215px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 15px;
+  background: #111111;
+  border: 1px solid #292929;
+  border-radius: 12px;
+}
+
+.ticker-card img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+.ticker-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.ticker-name {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ticker-price {
+  color: #bdbdbd;
+  font-size: 12px;
+}
+
+.ticker-change {
+  margin-left: auto;
+  padding: 7px 9px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.ticker-change.up {
+  color: #21d68b;
+  background: rgba(33, 214, 139, 0.12);
+  border: 1px solid rgba(33, 214, 139, 0.3);
+}
+
+.ticker-change.down {
+  color: #ff5b65;
+  background: rgba(255, 91, 101, 0.12);
+  border: 1px solid rgba(255, 91, 101, 0.3);
+}
+
+@media (max-width: 600px) {
+  .market-ticker {
+    padding: 16px 4%;
+    gap: 12px;
+  }
+
+  .ticker-card {
+    min-width: 195px;
+  }
+
+  .ticker-label {
+    font-size: 10px;
+  }
+}
