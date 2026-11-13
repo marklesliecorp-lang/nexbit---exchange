@@ -132,3 +132,45 @@ if (menuToggle && navLinks) {
     });
   });
 }
+// NEXBIT LIVE MARKET TICKER
+async function loadNexbitTicker() {
+  const ticker = document.getElementById("ticker-track");
+  if (!ticker) return;
+
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,binancecoin,ripple,dogecoin&price_change_percentage=24h"
+    );
+
+    if (!response.ok) throw new Error("Market data unavailable");
+
+    const coins = await response.json();
+
+    ticker.innerHTML = coins.map(coin => {
+      const change = coin.price_change_percentage_24h ?? 0;
+      const direction = change >= 0 ? "up" : "down";
+      const sign = change >= 0 ? "+" : "";
+
+      return `
+        <div class="ticker-card">
+          <img src="${coin.image}" alt="${coin.name} logo">
+          <div class="ticker-info">
+            <span class="ticker-name">${coin.symbol.toUpperCase()}/USDT</span>
+            <span class="ticker-price">
+              $${Number(coin.current_price).toLocaleString("en-US")}
+            </span>
+          </div>
+          <span class="ticker-change ${direction}">
+            ${sign}${change.toFixed(2)}%
+          </span>
+        </div>
+      `;
+    }).join("");
+
+  } catch (error) {
+    ticker.innerHTML = "<span>Market prices temporarily unavailable.</span>";
+  }
+}
+
+loadNexbitTicker();
+setInterval(loadNexbitTicker, 60000);
