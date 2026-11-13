@@ -274,23 +274,46 @@ footer .logo{font-size:20px;color:white}
       <div class="glow"></div>
       <div class="coin one">₿</div>
       <div class="coin two">Ξ</div>
-      <div class="phone">
-        <div class="phone-top"><span>NEXBIT</span><span>● ● ●</span></div>
-        <div class="phone-title">Portfolio overview</div>
-        <div class="balance">Your next move.</div>
-        <div class="positive">A smarter market experience</div>
-        <svg class="phone-chart" viewBox="0 0 250 105" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#dcae57" stop-opacity=".35"/>
-              <stop offset="100%" stop-color="#dcae57" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <path d="M0 82 L25 68 L48 74 L70 43 L92 55 L117 30 L140 44 L163 18 L188 33 L212 12 L250 4 L250 105 L0 105Z" fill="url(#chartFill)"/>
-          <path d="M0 82 L25 68 L48 74 L70 43 L92 55 L117 30 L140 44 L163 18 L188 33 L212 12 L250 4" fill="none" stroke="#e6b454" stroke-width="3"/>
-        </svg>
-        <div class="phone-actions"><div>Markets</div><div>Portfolio</div><div>Explore</div></div>
-      </div>
+      
+<div class="phone iphone">
+  <div class="iphone-island"></div>
+  <div class="iphone-status">
+    <span>9:41</span><span>● ● ●</span>
+  </div>
+  <div class="iphone-brand">NEX<span>BIT</span></div>
+  <div class="iphone-pair">
+    <strong>BTC / USDT</strong>
+    <span>BITCOIN MARKET</span>
+  </div>
+  <div class="iphone-live">● MARKET CHART</div>
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+    {
+      "autosize": true,
+      "symbol": "BINANCE:BTCUSDT",
+      "interval": "15",
+      "timezone": "Etc/UTC",
+      "theme": "dark",
+      "style": "1",
+      "locale": "en",
+      "allow_symbol_change": false,
+      "hide_top_toolbar": true,
+      "hide_side_toolbar": true,
+      "hide_legend": false,
+      "hide_volume": true,
+      "calendar": false,
+      "details": false,
+      "save_image": false,
+      "backgroundColor": "#101216",
+      "gridColor": "rgba(230,180,84,0.08)",
+      "support_host": "https://www.tradingview.com"
+    }
+    </script>
+  </div>
+  <div class="iphone-footer">NEXBIT · TRADE BEYOND LIMITS</div>
+</div>
+
       <div class="float-tag">Market opportunities<strong>Beyond limits ↗</strong></div>
     </div>
   </div>
