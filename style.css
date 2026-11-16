@@ -1567,3 +1567,168 @@ footer p {
     min-height: auto;
   }
 }
+
+/* NEXBIT PROMOTIONS & REWARDS */
+
+.promotions-section {
+  padding: 85px 6%;
+  background: #080808;
+  color: #fff;
+  overflow: hidden;
+}
+
+.promotions-container {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.promotions-heading {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.promotion-label {
+  color: #d6a832;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.promotions-heading h2 {
+  font-size: clamp(30px, 5vw, 45px);
+  margin: 12px 0;
+  font-weight: 800;
+}
+
+.promotions-heading h2 span {
+  color: #e6b83f;
+}
+
+.promotions-heading p {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.promotion-card {
+  background: #111;
+  border: 1px solid rgba(218, 174, 54, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.35s ease, border-color 0.35s ease;
+}
+
+.promotion-card:hover {
+  transform: translateY(-8px);
+  border-color: #e6b83f;
+}
+
+.promotion-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #191919;
+}
+
+.promotion-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.promotion-card:hover .promotion-image img {
+  transform: scale(1.06);
+}
+
+.promotion-content {
+  padding: 23px;
+}
+
+.promotion-tag {
+  display: inline-block;
+  color: #e6b83f;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+.promotion-content h3 {
+  font-size: 21px;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.promotion-content p {
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.8;
+  min-height: 68px;
+}
+
+.promotion-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 11px 18px;
+  background: linear-gradient(135deg, #f2cb62, #c99727);
+  color: #111;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 7px;
+  transition: opacity 0.3s ease;
+}
+
+.promotion-button:hover {
+  opacity: 0.85;
+}
+
+.promotion-button span {
+  font-size: 17px;
+}
+
+.promotion-image.image-missing {
+  background: #191919;
+  position: relative;
+}
+
+.promotion-image.image-missing::after {
+  content: "Promotion image unavailable";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #c9a448;
+  font-size: 12px;
+}
+
+@media (max-width: 850px) {
+  .promotions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .promotions-section {
+    padding: 60px 5%;
+  }
+
+  .promotions-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .promotion-content p {
+    min-height: auto;
+  }
+}
