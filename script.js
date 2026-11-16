@@ -225,57 +225,44 @@ document.addEventListener("DOMContentLoaded", () => {
   // NEXBIT INVESTMENT CARD ANIMATION
   // =====================================
 
-  const investmentCards = document.querySelectorAll(
-    ".nexbit-investments .investment-card"
-  );
+  
+const investmentCards = document.querySelectorAll(
+  ".nexbit-investments .investment-card"
+);
 
-  if (investmentCards.length) {
+if (investmentCards.length) {
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+  if (reducedMotion || !("IntersectionObserver" in window)) {
+    investmentCards.forEach(card => {
+      card.classList.add("is-visible");
+    });
+  } else {
+    const investmentObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          } else {
+            // Reset when the card leaves the screen
+            entry.target.classList.remove("is-visible");
+          }
+        });
+      },
+      {
+        threshold: 0.15
+      }
+    );
 
-    if (reducedMotion || !("IntersectionObserver" in window)) {
-      investmentCards.forEach(card => {
-        card.classList.add("is-visible");
-      });
-
-    } else {
-
-      const investmentObserver = new IntersectionObserver(
-        (entries, observer) => {
-
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-
-        },
-        {
-          threshold: 0.10,
-          rootMargin: "0px 0px -35px 0px"
-        }
-      );
-
-      investmentCards.forEach((card, index) => {
-
-        // This class is required by the animation CSS.
-        card.classList.add("reveal-ready");
-
-        // BASIC appears first, then SILVER, then GOLD.
-        card.style.transitionDelay = `${index * 0.18}s`;
-
-        investmentObserver.observe(card);
-      });
-    }
+    investmentCards.forEach((card, index) => {
+      card.classList.add("reveal-ready");
+      card.style.transitionDelay = `${index * 0.18}s`;
+      investmentObserver.observe(card);
+    });
   }
-
-  console.log("NEXBIT initialized successfully.");
-
-});
-
+}
 
 // =====================================
 // NEXBIT LIVE MARKET TICKER
