@@ -225,45 +225,43 @@ document.addEventListener("DOMContentLoaded", () => {
   // NEXBIT INVESTMENT CARD ANIMATION
   // =====================================
 
-  
-const investmentCards = document.querySelectorAll(
-  ".nexbit-investments .investment-card"
-);
+function initializeInvestmentAnimation() {
+  const cards = document.querySelectorAll(
+    ".nexbit-investments .investment-card"
+  );
 
-if (investmentCards.length) {
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  if (!cards.length) return;
 
-  if (reducedMotion || !("IntersectionObserver" in window)) {
-    investmentCards.forEach(card => {
-      card.classList.add("is-visible");
-    });
-  } else {
-    const investmentObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          } else {
-            // Reset when the card leaves the screen
-            entry.target.classList.remove("is-visible");
-          }
-        });
-      },
-      {
-        threshold: 0.15
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+      } else {
+        entry.target.classList.remove("is-visible");
       }
-    );
-
-    investmentCards.forEach((card, index) => {
-      card.classList.add("reveal-ready");
-      card.style.transitionDelay = `${index * 0.18}s`;
-      investmentObserver.observe(card);
     });
-  }
+  }, {
+    threshold: 0.05,
+    rootMargin: "0px 0px -30px 0px"
+  });
+
+  cards.forEach((card, index) => {
+    card.classList.add("reveal-ready");
+    card.style.transitionDelay = `${index * 0.2}s`;
+    observer.observe(card);
+  });
 }
 
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeInvestmentAnimation
+  );
+} else {
+  initializeInvestmentAnimation();
+}
+
+  
 // =====================================
 // NEXBIT LIVE MARKET TICKER
 // =====================================
