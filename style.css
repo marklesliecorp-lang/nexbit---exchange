@@ -1732,3 +1732,27 @@ footer p {
     min-height: auto;
   }
 }
+
+/* NEXBIT PROMOTION IMAGE SIZE FIX */
+
+.promotion-image {
+  width: 100%;
+  height: 160px;
+  aspect-ratio: auto;
+  overflow: hidden;
+  background: #191919;
+}
+
+.promotion-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .promotion-image {
+    height: 145px;
+  }
+}
