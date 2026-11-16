@@ -2377,3 +2377,49 @@ footer p {
   }
 
 }
+
+
+/* NEXBIT SHORTER MOBILE INVESTMENT CARDS */
+@media (max-width: 700px) {
+
+  .investment-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    gap: 12px;
+  }
+
+  .investment-card {
+    padding: 15px 18px;
+  }
+
+  .investment-card h3 {
+    font-size: 22px;
+    margin: 8px 0 4px;
+  }
+
+  /* Remove lengthy descriptions on small screens */
+  .package-description {
+    display: none;
+  }
+
+  .package-price {
+    padding: 7px 0;
+  }
+
+  .package-price strong {
+    font-size: 25px;
+  }
+
+  .package-features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 12px;
+  }
+
+  .package-features li {
+    font-size: 12px;
+    padding: 6px 0;
+    line-height: 1.35;
+  }
+
+}
