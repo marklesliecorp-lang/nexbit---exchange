@@ -242,3 +242,53 @@ async function loadNexbitTicker() {
 
 loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
+
+
+/* NEXBIT INVESTMENT PACKAGE SCROLL ANIMATION */
+
+function initializeInvestmentAnimation() {
+  const section = document.querySelector(".nexbit-investments");
+
+  if (!section) return;
+
+  const cards = section.querySelectorAll(".investment-card");
+
+  if (!cards.length) return;
+
+  if (
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    return;
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    return;
+  }
+
+  section.classList.add("reveal-ready");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        cards.forEach(card => {
+          card.classList.add("is-visible");
+        });
+
+        observer.disconnect();
+      }
+    });
+  }, {
+    threshold: 0.15
+  });
+
+  observer.observe(section);
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeInvestmentAnimation
+  );
+} else {
+  initializeInvestmentAnimation();
+}
