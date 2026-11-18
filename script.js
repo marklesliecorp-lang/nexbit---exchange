@@ -1,4 +1,14 @@
 
+// Coin logos used when the live-price provider does not return image URLs.
+const NEXBIT_COIN_LOGOS = {
+  BTC: "https://assets.coingecko.com/coins/images/1/large/bitcoin.png",
+  ETH: "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
+  SOL: "https://assets.coingecko.com/coins/images/4128/large/solana.png",
+  BNB: "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
+  XRP: "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png",
+  DOGE: "https://assets.coingecko.com/coins/images/5/large/dogecoin.png"
+};
+
 document.addEventListener("DOMContentLoaded", () => {
 
   // =====================================
@@ -8,10 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const demoNote = document.querySelector(".demo-note");
 
   const sampleMarkets = [
-    { name: "Bitcoin", symbol: "BTC", price: 97450.25, change: 2.45 },
-    { name: "Ethereum", symbol: "ETH", price: 3240.80, change: 1.82 },
-    { name: "Solana", symbol: "SOL", price: 185.60, change: 4.25 },
-    { name: "BNB", symbol: "BNB", price: 645.30, change: -0.75 }
+    { name: "Bitcoin", symbol: "BTC", image: NEXBIT_COIN_LOGOS.BTC, price: 97450.25, change: 2.45 },
+    { name: "Ethereum", symbol: "ETH", image: NEXBIT_COIN_LOGOS.ETH, price: 3240.80, change: 1.82 },
+    { name: "Solana", symbol: "SOL", image: NEXBIT_COIN_LOGOS.SOL, price: 185.60, change: 4.25 },
+    { name: "BNB", symbol: "BNB", image: NEXBIT_COIN_LOGOS.BNB, price: 645.30, change: -0.75 }
   ];
 
   function displayMarkets(markets) {
@@ -29,8 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "display:flex;align-items:center;gap:10px;";
 
       const logo = document.createElement("img");
-      logo.src = coin.image || "";
-      logo.alt = coin.name;
+      logo.src = coin.image || NEXBIT_COIN_LOGOS[coin.symbol] || "";
+      logo.alt = coin.name + " logo";
+      logo.onerror = () => { logo.style.display = "none"; };
       logo.style.cssText =
         "width:28px;height:28px;border-radius:50%;";
 
@@ -187,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const backupMarkets = backupData.map(coin => ({
           name: names[coin.symbol.replace("USDT", "")] || coin.symbol,
           symbol: coin.symbol.replace("USDT", ""),
+          image: NEXBIT_COIN_LOGOS[coin.symbol.replace("USDT", "")],
           price: Number(coin.lastPrice),
           change: Number(coin.priceChangePercent),
           marketCap: null,
@@ -369,7 +381,8 @@ async function loadNexbitTicker() {
         return `
           <div class="ticker-card">
             <div class="ticker-info">
-              <span class="ticker-name">${symbol}/USDT</span>
+            <img src="${NEXBIT_COIN_LOGOS[symbol] || ""}" alt="${symbol} logo" onerror="this.style.display=\'none\'">
+            <span class="ticker-name">${symbol}/USDT</span>
               <span class="ticker-price">
                 ${Number(coin.lastPrice).toLocaleString("en-US")}
               </span>
