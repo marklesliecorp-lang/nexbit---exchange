@@ -3770,3 +3770,18 @@ button:focus-visible {
   color: #d2adff;
   background: linear-gradient(145deg, rgba(189,140,255,.28), rgba(47,29,75,.85));
 }
+
+
+/* KEEP GOLD PACKAGE CARD HEIGHT CONSISTENT WITH THE OTHER TIERS */
+@media (min-width: 701px) {
+  .investment-grid {
+    align-items: stretch;
+  }
+  .investment-grid .investment-card {
+    min-height: 490px;
+  }
+  .investment-card > .gold-glow {
+    position: absolute;
+    z-index: 0;
+  }
+}
