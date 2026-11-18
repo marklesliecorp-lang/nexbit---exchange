@@ -3787,14 +3787,30 @@ button:focus-visible {
 }
 
 
-/* MOBILE PACKAGE HEIGHT ALIGNMENT — keep tier badges from stretching Gold */
-@media (max-width: 700px) {
-  .investment-card-top {
-    min-height: 24px;
-    align-items: center;
-  }
-  .investment-card-top .premium-label {
-    margin: 0;
-    align-self: center;
-  }
+/* FIX GOLD CARD HEIGHT: keep its decorative glow out of normal layout flow */
+.nexbit-investments .gold-card > .gold-glow {
+  position: absolute;
+  z-index: 0;
+  top: -100px;
+  right: -65px;
+  width: 180px;
+  height: 180px;
+  pointer-events: none;
+}
+
+/* Give every package the same top-row height, including Gold's badge */
+.nexbit-investments .investment-card-top {
+  height: 26px;
+  min-height: 26px;
+  flex: 0 0 26px;
+  align-items: center;
+}
+
+.nexbit-investments .investment-card-top .premium-label {
+  height: 18px;
+  box-sizing: border-box;
+  padding: 3px 8px;
+  margin: 0;
+  line-height: 12px;
+  align-self: center;
 }
