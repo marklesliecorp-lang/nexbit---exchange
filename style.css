@@ -3528,8 +3528,10 @@ button:focus-visible {
   color: #c5c7ff;
 }
 .diamond-label {
-  color: #d5d6ff;
-  border-color: rgba(183, 185, 255, 0.45);
+  background: linear-gradient(135deg, rgba(205, 207, 255, 0.96), rgba(126, 131, 210, 0.96));
+  color: #17182d;
+  border: 1px solid rgba(224, 225, 255, 0.72);
+  box-shadow: 0 2px 12px rgba(139, 143, 230, 0.2);
 }
 .diamond-icon {
   background: linear-gradient(135deg, #e0e1ff, #8589dc);
