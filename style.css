@@ -3785,3 +3785,16 @@ button:focus-visible {
     z-index: 0;
   }
 }
+
+
+/* MOBILE PACKAGE HEIGHT ALIGNMENT — keep tier badges from stretching Gold */
+@media (max-width: 700px) {
+  .investment-card-top {
+    min-height: 24px;
+    align-items: center;
+  }
+  .investment-card-top .premium-label {
+    margin: 0;
+    align-self: center;
+  }
+}
