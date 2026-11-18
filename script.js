@@ -616,3 +616,19 @@ if (document.readyState === "loading") {
 } else {
   initializeNexbitReviewFade();
 }
+
+
+// FAQ show-more / show-less control
+document.addEventListener("DOMContentLoaded", function () {
+  const faqSection = document.querySelector(".nexbit-faq-section");
+  const faqButton = document.querySelector(".nexbit-faq-more");
+  if (!faqSection || !faqButton) return;
+
+  faqButton.addEventListener("click", function () {
+    const expanded = faqSection.classList.toggle("faq-expanded");
+    faqButton.setAttribute("aria-expanded", String(expanded));
+    faqButton.innerHTML = expanded
+      ? 'See fewer questions <span aria-hidden="true">−</span>'
+      : 'See more questions <span aria-hidden="true">＋</span>';
+  });
+});
