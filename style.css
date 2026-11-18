@@ -3814,3 +3814,183 @@ button:focus-visible {
   line-height: 12px;
   align-self: center;
 }
+
+
+/* =====================================
+   NEXBIT HOW IT WORKS
+===================================== */
+.how-it-works-section {
+  position: relative;
+  overflow: hidden;
+  padding: 88px 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(30, 105, 220, .14), transparent 58%),
+    linear-gradient(180deg, #080f1d 0%, #060b14 100%);
+  color: #f5f8ff;
+}
+.how-it-works-container {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+}
+.how-it-works-heading {
+  max-width: 680px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+.how-it-works-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #69aaff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .19em;
+}
+.how-it-works-heading h2 {
+  margin: 0;
+  color: #f7f9ff;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -.035em;
+}
+.how-it-works-heading h2 span {
+  color: #70aaff;
+  text-shadow: 0 0 25px rgba(55, 135, 255, .25);
+}
+.how-it-works-heading p {
+  margin: 13px 0 0;
+  color: #9eacc2;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+.how-step-card {
+  position: relative;
+  min-width: 0;
+  min-height: 218px;
+  padding: 23px 21px 25px;
+  overflow: hidden;
+  border: 1px solid rgba(115, 161, 226, .19);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(19, 34, 57, .96), rgba(10, 18, 32, .98));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .035);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.how-step-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(91, 157, 255, .58);
+  box-shadow: 0 16px 38px rgba(0, 68, 160, .18), 0 0 24px rgba(48, 126, 235, .09);
+}
+.how-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.how-step-number {
+  color: #72adff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.how-step-icon {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  place-items: center;
+  border: 1px solid rgba(100, 164, 255, .32);
+  border-radius: 15px;
+  background: linear-gradient(145deg, rgba(44, 112, 208, .2), rgba(21, 54, 101, .22));
+  box-shadow: 0 0 22px rgba(50, 126, 232, .12);
+}
+.how-step-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: #8fc0ff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.how-step-card h3 {
+  margin: 0 0 9px;
+  color: #f4f7ff;
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+.how-step-card p {
+  margin: 0;
+  color: #a7b4c9;
+  font-size: 13px;
+  line-height: 1.7;
+}
+@media (max-width: 900px) {
+  .how-it-works-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .how-it-works-section {
+    padding: 62px 17px;
+  }
+  .how-it-works-heading {
+    margin-bottom: 28px;
+  }
+  .how-it-works-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+  .how-step-card {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    column-gap: 15px;
+    align-items: center;
+    min-height: 0;
+    padding: 17px;
+  }
+  .how-step-top {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    margin: 0;
+  }
+  .how-step-icon {
+    width: 50px;
+    height: 50px;
+    flex-basis: 50px;
+    border-radius: 14px;
+  }
+  .how-step-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+  .how-step-card h3 {
+    grid-column: 2;
+    align-self: end;
+    margin: 0 0 4px;
+    font-size: 16px;
+  }
+  .how-step-card p {
+    grid-column: 2;
+    align-self: start;
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .how-step-card {
+    transition: none;
+  }
+  .how-step-card:hover {
+    transform: none;
+  }
+}
