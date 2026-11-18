@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261118-review-slider-compact2">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <!-- NEXBIT SIGNUP EXPERIENCE -->
@@ -57,6 +58,14 @@
 (function () {
   const form = document.getElementById('nexbitSignupForm');
   if (!form) return;
+
+  const message = document.getElementById('signupFormMessage');
+  const submitButton = form.querySelector('.signup-submit');
+  const supabaseClient = window.supabase.createClient(
+    'https://cubzhenuumvsogysmaeo.supabase.co',
+    'sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N'
+  );
+
   form.querySelectorAll('.signup-password-toggle').forEach(function (button) {
     button.addEventListener('click', function () {
       const field = document.getElementById(button.dataset.target);
@@ -67,17 +76,50 @@
       button.setAttribute('aria-label', (reveal ? 'Hide ' : 'Show ') + 'password');
     });
   });
-  form.addEventListener('submit', function (event) {
+
+  form.addEventListener('submit', async function (event) {
     event.preventDefault();
+
+    const fullName = document.getElementById('signupFullName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
     const password = document.getElementById('signupPassword').value;
     const confirm = document.getElementById('signupConfirmPassword').value;
-    const message = document.getElementById('signupFormMessage');
+
     if (password !== confirm) {
       message.textContent = 'Your passwords do not match. Please check and try again.';
       document.getElementById('signupConfirmPassword').focus();
       return;
     }
-    message.textContent = 'The registration form design is ready, but account creation is not connected yet. No information has been submitted.';
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'CREATING ACCOUNT...';
+    message.textContent = '';
+
+    try {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: { full_name: fullName }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        message.textContent = 'Your NEXBIT account has been created. You can now sign in.';
+      } else {
+        message.textContent = 'Registration started successfully. Please check your email for a confirmation link before signing in.';
+      }
+
+      form.reset();
+    } catch (error) {
+      console.error('NEXBIT registration error:', error);
+      message.textContent = error.message || 'We could not create your account right now. Please try again.';
+    } finally {
+      submitButton.disabled = false;
+      submitButton.innerHTML = 'CREATE ACCOUNT <span aria-hidden="true">→</span>';
+    }
   });
 })();
 </script>
