@@ -3272,3 +3272,30 @@ button:focus-visible {
     padding: 12px 9px;
   }
 }
+
+
+/* NEXBIT REVIEWS — MORE COMPACT CARD HEIGHT */
+.nexbit-voices-page .nexbit-voice-card {
+  padding: 18px 18px 16px;
+}
+.nexbit-voice-card .nexbit-review-text,
+.nexbit-voice-card p {
+  line-height: 1.48;
+  margin-bottom: 9px;
+}
+.nexbit-voice-person {
+  margin-bottom: 10px;
+}
+.nexbit-review-duration {
+  margin-top: 8px;
+}
+@media (max-width: 900px) {
+  .nexbit-voices-page .nexbit-voice-card {
+    padding: 14px 11px 13px;
+  }
+}
+@media (max-width: 620px) {
+  .nexbit-voices-page .nexbit-voice-card {
+    padding: 11px 8px 10px;
+  }
+}
