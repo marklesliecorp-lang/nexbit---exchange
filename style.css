@@ -2885,3 +2885,137 @@ footer p {
     max-width: 100%;
   }
 }
+
+
+/* NEXBIT animated experience highlights */
+.nexbit-voices {
+  width: 100%;
+  padding: 58px 0 34px;
+  overflow: hidden;
+  background: #080808;
+}
+.nexbit-voices-heading {
+  max-width: 760px;
+  margin: 0 auto 28px;
+  padding: 0 22px;
+  text-align: center;
+}
+.nexbit-voices-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #c8cdd4;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+.nexbit-voices-heading h2 {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: clamp(25px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -.8px;
+}
+.nexbit-voices-heading p {
+  color: #a5aab2;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.nexbit-voices-window {
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 0 18px;
+}
+.nexbit-voices-track {
+  display: flex;
+  width: max-content;
+  gap: 18px;
+  padding-left: 18px;
+  animation: nexbit-voices-scroll 38s linear infinite;
+}
+.nexbit-voices-window:hover .nexbit-voices-track {
+  animation-play-state: paused;
+}
+.nexbit-voice-card {
+  display: flex;
+  flex: 0 0 330px;
+  flex-direction: column;
+  min-height: 218px;
+  padding: 22px;
+  border: 1px solid rgba(200,205,212,.42);
+  border-radius: 15px;
+  background: #101113;
+  box-shadow: 0 12px 30px rgba(0,0,0,.24);
+}
+.nexbit-voice-person {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  margin-bottom: 18px;
+}
+.nexbit-voice-person img {
+  width: 49px;
+  height: 49px;
+  flex: 0 0 49px;
+  border: 1px solid rgba(200,205,212,.7);
+  border-radius: 50%;
+  object-fit: cover;
+  background: #202226;
+}
+.nexbit-voice-person div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.nexbit-voice-person strong {
+  color: #f5f6f7;
+  font-size: 14px;
+  line-height: 1.35;
+}
+.nexbit-voice-person span {
+  color: #9299a3;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.15px;
+}
+.nexbit-voice-card > p {
+  flex: 1;
+  color: #c1c5cb;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.nexbit-voice-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 19px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(200,205,212,.2);
+  color: #aeb5bf;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.nexbit-voices-note {
+  margin: 0 auto;
+  padding: 0 18px;
+  color: #777f89;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.6;
+}
+@keyframes nexbit-voices-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 9px)); }
+}
+@media (max-width: 600px) {
+  .nexbit-voices { padding: 43px 0 28px; }
+  .nexbit-voices-heading { margin-bottom: 20px; }
+  .nexbit-voices-track { gap: 12px; padding-left: 12px; animation-duration: 32s; }
+  .nexbit-voice-card { flex-basis: 286px; min-height: 215px; padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nexbit-voices-track { animation: none; }
+  .nexbit-voices-window { overflow-x: auto; }
+}
