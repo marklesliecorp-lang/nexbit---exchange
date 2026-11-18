@@ -21,7 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Bitcoin", symbol: "BTC", image: NEXBIT_COIN_LOGOS.BTC, price: 97450.25, change: 2.45 },
     { name: "Ethereum", symbol: "ETH", image: NEXBIT_COIN_LOGOS.ETH, price: 3240.80, change: 1.82 },
     { name: "Solana", symbol: "SOL", image: NEXBIT_COIN_LOGOS.SOL, price: 185.60, change: 4.25 },
-    { name: "BNB", symbol: "BNB", image: NEXBIT_COIN_LOGOS.BNB, price: 645.30, change: -0.75 }
+    { name: "BNB", symbol: "BNB", image: NEXBIT_COIN_LOGOS.BNB, price: 645.30, change: -0.75 },
+    { name: "XRP", symbol: "XRP", image: NEXBIT_COIN_LOGOS.XRP, price: 0, change: 0 },
+    { name: "Dogecoin", symbol: "DOGE", image: NEXBIT_COIN_LOGOS.DOGE, price: 0, change: 0 }
   ];
 
   function displayMarkets(markets) {
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Binance's public WebSocket streams keep card prices moving continuously.
   function initializeNexbitLivePrices() {
-    const symbols = ["btcusdt", "ethusdt", "solusdt", "bnbusdt"];
+    const symbols = ["btcusdt", "ethusdt", "solusdt", "bnbusdt", "xrpusdt", "dogeusdt"];
     const streams = symbols.map(symbol => symbol + "@ticker").join("/");
     const socketUrl = "wss://stream.binance.com:9443/stream?streams=" + streams;
     let fallbackTimer = null;
@@ -127,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function pollBackupPrices() {
       try {
-        const pairs = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"];
+        const pairs = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT", "DOGEUSDT"];
         const url = "https://api.binance.com/api/v3/ticker/24hr?symbols=" +
           encodeURIComponent(JSON.stringify(pairs));
         const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
@@ -188,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const url =
         "https://api.coingecko.com/api/v3/coins/markets" +
         "?vs_currency=usd" +
-        "&ids=bitcoin,ethereum,solana,binancecoin" +
+        "&ids=bitcoin,ethereum,solana,binancecoin,ripple,dogecoin" +
         "&price_change_percentage=24h&sparkline=true";
 
       const response = await fetch(url, { signal: AbortSignal.timeout(12000) });
@@ -224,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("NEXBIT CoinGecko market data error:", error);
 
       try {
-        const symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"];
+        const symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT", "DOGEUSDT"];
         const backupUrl =
           "https://api.binance.com/api/v3/ticker/24hr?symbols=" +
           encodeURIComponent(JSON.stringify(symbols));
@@ -239,7 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
           BTC: "Bitcoin",
           ETH: "Ethereum",
           SOL: "Solana",
-          BNB: "BNB"
+          BNB: "BNB",
+          XRP: "XRP",
+          DOGE: "Dogecoin"
         };
 
         const backupMarkets = backupData.map(coin => ({
