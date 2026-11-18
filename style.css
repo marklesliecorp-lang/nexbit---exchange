@@ -3442,3 +3442,47 @@ button:focus-visible {
   line-height: 1.25;
   letter-spacing: .2px;
 }
+
+
+/* Force portrait and review heading into one horizontal header row */
+.nexbit-voices-page article.nexbit-voice-card > .nexbit-voice-person {
+  display: grid !important;
+  grid-template-columns: 38px minmax(0, 1fr) !important;
+  grid-template-rows: auto !important;
+  align-items: center !important;
+  justify-content: start !important;
+  flex-direction: unset !important;
+  column-gap: 9px !important;
+  width: 100% !important;
+}
+.nexbit-voices-page article.nexbit-voice-card > .nexbit-voice-person > img {
+  display: block !important;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  margin: 0 !important;
+}
+.nexbit-voices-page article.nexbit-voice-card > .nexbit-voice-person > div {
+  display: flex !important;
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+.nexbit-voices-page article.nexbit-voice-card > .nexbit-voice-person strong {
+  display: block !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+}
+.nexbit-voices-page article.nexbit-voice-card > .nexbit-voice-person span {
+  display: block !important;
+  font-size: 7px !important;
+  line-height: 1.25 !important;
+}
