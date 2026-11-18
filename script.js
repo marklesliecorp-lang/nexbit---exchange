@@ -461,75 +461,38 @@ async function loadNexbitTicker() {
 loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
 
-// NEXBIT review carousel: drag/swipe manually, hold to pause, tap to toggle.
-const reviewWindow = document.querySelector(".nexbit-voices-window");
-const reviewTrack = document.querySelector(".nexbit-voices-track");
+// NEXBIT REVIEW CARD SCROLL REVEAL — matches the package-card animation.
+function initializeReviewRevealAnimation() {
+  const cards = document.querySelectorAll(
+    ".nexbit-voices .nexbit-voice-card"
+  );
 
-if (reviewWindow && reviewTrack) {
-  let pressStartedAt = 0;
-  let startX = 0;
-  let startTime = 0;
-  let activeAnimation = null;
-  let wasPaused = false;
-  let didDrag = false;
-  let suppressNextClick = false;
+  if (!cards.length) return;
 
-  reviewWindow.addEventListener("pointerdown", (event) => {
-    if (event.target.closest("a, button")) return;
-    if (event.pointerType === "mouse" && event.button !== 0) return;
-
-    pressStartedAt = Date.now();
-    startX = event.clientX;
-    didDrag = false;
-    wasPaused = reviewTrack.classList.contains("is-paused");
-    activeAnimation = reviewTrack.getAnimations()[0] || null;
-    startTime = activeAnimation ? Number(activeAnimation.currentTime) || 0 : 0;
-
-    reviewTrack.classList.add("is-pressed");
-    reviewWindow.setPointerCapture?.(event.pointerId);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+      } else {
+        entry.target.classList.remove("is-visible");
+      }
+    });
+  }, {
+    threshold: 0.05,
+    rootMargin: "0px 0px -30px 0px"
   });
 
-  reviewWindow.addEventListener("pointermove", (event) => {
-    if (!pressStartedAt) return;
-    const distance = event.clientX - startX;
-
-    if (Math.abs(distance) > 6) {
-      didDrag = true;
-      suppressNextClick = true;
-    }
-
-    if (didDrag && activeAnimation) {
-      // The track contains two matching review sets. One seamless loop is
-      // exactly half the track width; wrap the animation time at that boundary.
-      const timing = activeAnimation.effect?.getComputedTiming();
-      const durationMs = Number(timing?.duration) ||
-        (parseFloat(getComputedStyle(reviewTrack).animationDuration) * 1000) || 58000;
-      const loopDistance = reviewTrack.querySelector('.nexbit-voices-group')?.getBoundingClientRect().width || reviewTrack.scrollWidth / 2;
-      const timeShift = (distance / loopDistance) * durationMs;
-      activeAnimation.currentTime = ((startTime - timeShift) % durationMs + durationMs) % durationMs;
-    }
+  cards.forEach((card, index) => {
+    card.classList.add("reveal-ready");
+    card.style.transitionDelay = `${index * 0.2}s`;
+    observer.observe(card);
   });
+}
 
-  const releaseReviewPress = () => {
-    if (!pressStartedAt) return;
-    const pressDuration = Date.now() - pressStartedAt;
-    reviewTrack.classList.remove("is-pressed");
-    if (!didDrag && pressDuration > 180) suppressNextClick = true;
-    pressStartedAt = 0;
-    activeAnimation = null;
-  };
-
-  reviewWindow.addEventListener("pointerup", releaseReviewPress);
-  reviewWindow.addEventListener("pointercancel", releaseReviewPress);
-
-  reviewWindow.addEventListener("click", (event) => {
-    if (event.target.closest("a, button")) return;
-    if (suppressNextClick) {
-      suppressNextClick = false;
-      return;
-    }
-    reviewTrack.classList.toggle("is-paused");
-  });
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeReviewRevealAnimation);
+} else {
+  initializeReviewRevealAnimation();
 }
 
 });
