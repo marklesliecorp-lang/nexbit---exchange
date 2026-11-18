@@ -62,47 +62,22 @@
     <article class="panel"><div class="section-head"><h2>My investments</h2><span class="status">Coming soon</span></div><div class="empty"><strong>No investment records yet</strong>Your active plans and investment history will appear here when investment services are connected.</div></article>
     <article class="panel"><div class="section-head"><h2>Market watch</h2><span class="market-note">Preview</span></div><div class="market-list"><div class="market-row"><div class="coin">BTC <small>Bitcoin</small></div><div class="price">—</div><div class="market-note">Live data pending</div></div><div class="market-row"><div class="coin">ETH <small>Ethereum</small></div><div class="price">—</div><div class="market-note">Live data pending</div></div><div class="market-row"><div class="coin">SOL <small>Solana</small></div><div class="price">—</div><div class="market-note">Live data pending</div></div></div></article>
   </section>
-  <section class="panel account-panel" id="accountSettings">
-    <div class="section-head"><h2>Account settings</h2><span class="status">Private account</span></div>
-    <div class="account-grid">
-      <form class="account-form" id="profileForm">
-        <div><label class="field-label" for="fullNameInput">Full name</label><input class="account-input" id="fullNameInput" type="text" autocomplete="name" maxlength="100" required placeholder="Your full name"></div>
-        <div><label class="field-label" for="emailInput">Registered email</label><input class="account-input" id="emailInput" type="email" readonly></div>
-        <div><label class="field-label" for="verificationInput">Email verification</label><input class="account-input" id="verificationInput" type="text" readonly value="Checking…"></div>
-        <button class="gold-button" id="saveProfileButton" type="submit">Save profile</button>
-        <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
-      </form>
-      <form class="account-form" id="passwordForm">
-        <div><label class="field-label" for="newPasswordInput">New password</label><input class="account-input" id="newPasswordInput" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters"></div>
-        <div><label class="field-label" for="confirmPasswordInput">Confirm new password</label><input class="account-input" id="confirmPasswordInput" type="password" autocomplete="new-password" minlength="8" required placeholder="Enter the new password again"></div>
-        <button class="gold-button" id="changePasswordButton" type="submit">Update password</button>
-        <p class="form-message" id="passwordMessage" role="status" aria-live="polite">Choose a strong password you do not use elsewhere.</p>
-      </form>
-    </div>
-  </section>
   <div class="notice">Wallet balances, deposits, withdrawals, transfers, investment returns and market prices are not active yet. No financial activity is processed from this dashboard at this stage.</div>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 </main>
-<nav class="bottom-nav" aria-label="Main navigation"><a href="dashboard.html"><span>⌂</span>Home</a><a href="#market"><span>⌁</span>Markets</a><a href="#investments"><span>◈</span>Invest</a><a href="#assets"><span>▣</span>Assets</a><a href="#accountSettings"><span>◎</span>Account</a></nav>
+<nav class="bottom-nav" aria-label="Main navigation"><a href="dashboard.html"><span>⌂</span>Home</a><a href="#market"><span>⌁</span>Markets</a><a href="#investments"><span>◈</span>Invest</a><a href="#assets"><span>▣</span>Assets</a><a href="account.html"><span>◎</span>Account</a></nav>
 <script>
 (function(){
   const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
   const message=document.getElementById('authMessage');
   const nameNode=document.getElementById('userName');
   const emailNode=document.getElementById('accountEmail');
-  const fullNameInput=document.getElementById('fullNameInput');
-  const emailInput=document.getElementById('emailInput');
-  const verificationInput=document.getElementById('verificationInput');
-  let currentUser=null;
   document.getElementById('todayLabel').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
   async function init(){
     const {data:{user},error}=await client.auth.getUser();
     if(error||!user){window.location.replace('login.html');return;}
 
-    currentUser=user;
     emailNode.textContent=user.email||'Signed-in account';
-    emailInput.value=user.email||'';
-    verificationInput.value=user.email_confirmed_at?'Verified':'Not verified';
 
     let profileName='';
     const {data:profile,error:profileError}=await client
@@ -120,44 +95,11 @@
     const metadataName=user.user_metadata&&typeof user.user_metadata.full_name==='string'
       ?user.user_metadata.full_name.trim()
       :'';
-    const fullName=profileName||metadataName;
-    fullNameInput.value=fullName;
-    const displayName=fullName.split(/\s+/)[0];
+    const displayName=(profileName||metadataName).split(/\s+/)[0];
     nameNode.textContent=displayName?', '+displayName:'';
 
     message.textContent='Your secure session is active.';
   }
-  document.getElementById('profileForm').addEventListener('submit',async function(event){
-    event.preventDefault();
-    if(!currentUser)return;
-    const fullName=fullNameInput.value.trim();
-    const status=document.getElementById('profileMessage');
-    const button=document.getElementById('saveProfileButton');
-    if(fullName.length<2){status.textContent='Please enter your full name.';return;}
-    button.disabled=true;button.textContent='Saving…';status.textContent='';
-    const {error:profileError}=await client.from('profiles').update({full_name:fullName}).eq('id',currentUser.id);
-    if(profileError){status.textContent='Could not save your profile. Please try again.';button.disabled=false;button.textContent='Save profile';return;}
-    const {error:metadataError}=await client.auth.updateUser({data:{full_name:fullName}});
-    if(metadataError){status.textContent='Profile saved, but account details did not fully sync. Please refresh and try again.';}
-    else{nameNode.textContent=', '+fullName.split(/\s+/)[0];status.textContent='Your profile has been updated.';}
-    button.disabled=false;button.textContent='Save profile';
-  });
-
-  document.getElementById('passwordForm').addEventListener('submit',async function(event){
-    event.preventDefault();
-    const password=document.getElementById('newPasswordInput').value;
-    const confirmation=document.getElementById('confirmPasswordInput').value;
-    const status=document.getElementById('passwordMessage');
-    const button=document.getElementById('changePasswordButton');
-    if(password.length<8){status.textContent='Your password must be at least 8 characters.';return;}
-    if(password!==confirmation){status.textContent='The passwords do not match.';return;}
-    button.disabled=true;button.textContent='Updating…';status.textContent='';
-    const {error}=await client.auth.updateUser({password});
-    if(error){status.textContent='Could not update your password. Please try again.';}
-    else{status.textContent='Password updated successfully.';this.reset();}
-    button.disabled=false;button.textContent='Update password';
-  });
-
   document.getElementById('logoutButton').addEventListener('click',async function(){
     this.disabled=true;this.textContent='Logging out…';
     const {error}=await client.auth.signOut();
