@@ -3299,3 +3299,87 @@ button:focus-visible {
     padding: 11px 8px 10px;
   }
 }
+
+
+/* NEXBIT REVIEWS — COMPACT THREE-CARD ROW, INCLUDING SMALL SCREENS */
+.nexbit-voices-window,
+.nexbit-voices-track,
+.nexbit-voices-page {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+.nexbit-voices-page {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px;
+  padding: 0 2px 6px;
+}
+.nexbit-voices-page .nexbit-voice-card {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 0;
+  padding: 14px 13px 12px;
+  overflow: hidden;
+}
+.nexbit-voices-page .nexbit-voice-person {
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.nexbit-voices-page .nexbit-voice-person img {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+}
+.nexbit-voices-page .nexbit-voice-person strong {
+  font-size: 11px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.nexbit-voices-page .nexbit-voice-person span {
+  font-size: 8px;
+  letter-spacing: .35px;
+  overflow-wrap: anywhere;
+}
+.nexbit-voices-page .nexbit-review-rating {
+  gap: 4px;
+  margin: 0 0 7px;
+}
+.nexbit-voices-page .nexbit-review-rating span { font-size: 12px; letter-spacing: 0; }
+.nexbit-voices-page .nexbit-review-rating b { font-size: 10px; }
+.nexbit-voices-page .nexbit-voice-card > p {
+  flex: 1;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.nexbit-voices-page .nexbit-voice-footer {
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+  padding-top: 7px;
+  font-size: 7px;
+  letter-spacing: .35px;
+}
+@media (max-width: 900px) {
+  .nexbit-voices-page { gap: 9px; }
+  .nexbit-voices-page .nexbit-voice-card { padding: 11px 9px; }
+}
+@media (max-width: 620px) {
+  .nexbit-voices { padding-left: 3%; padding-right: 3%; }
+  .nexbit-voices-page {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px;
+    padding: 0 1px 5px;
+  }
+  .nexbit-voices-page .nexbit-voice-card { padding: 9px 6px; border-radius: 10px; }
+  .nexbit-voices-page .nexbit-voice-person { flex-direction: column; align-items: flex-start; gap: 5px; }
+  .nexbit-voices-page .nexbit-voice-person img { width: 30px; height: 30px; flex-basis: 30px; }
+  .nexbit-voices-page .nexbit-voice-person strong { font-size: 9px; }
+  .nexbit-voices-page .nexbit-voice-person span { font-size: 7px; }
+  .nexbit-voices-page .nexbit-review-rating span { font-size: 10px; }
+  .nexbit-voices-page .nexbit-review-rating b { font-size: 8px; }
+  .nexbit-voices-page .nexbit-voice-card > p { font-size: 9px; line-height: 1.35; }
+  .nexbit-voices-page .nexbit-voice-footer { font-size: 6px; letter-spacing: 0; }
+}
