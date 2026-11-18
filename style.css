@@ -3817,14 +3817,14 @@ button:focus-visible {
 
 
 /* =====================================
-   NEXBIT HOW IT WORKS — BLACK & BURNT ORANGE
+   NEXBIT HOW IT WORKS — BLACK & BURNT GOLD
 ===================================== */
 .how-it-works-section {
   position: relative;
   overflow: hidden;
   padding: 88px 24px;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(222, 111, 49, .13), transparent 58%),
+    radial-gradient(ellipse at 50% 0%, rgba(197, 138, 50, .15), transparent 58%),
     linear-gradient(180deg, #101010 0%, #080808 100%);
   color: #ffffff;
 }
@@ -3840,7 +3840,7 @@ button:focus-visible {
 .how-it-works-eyebrow {
   display: inline-block;
   margin-bottom: 12px;
-  color: #f19a62;
+  color: #d9a441;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: .19em;
@@ -3853,8 +3853,8 @@ button:focus-visible {
   letter-spacing: -.035em;
 }
 .how-it-works-heading h2 span {
-  color: #f18a4b;
-  text-shadow: 0 0 25px rgba(222, 111, 49, .22);
+  color: #e0ad52;
+  text-shadow: 0 0 25px rgba(197, 138, 50, .25);
 }
 .how-it-works-heading p {
   margin: 13px 0 0;
@@ -3873,7 +3873,7 @@ button:focus-visible {
   min-height: 218px;
   padding: 23px 21px 25px;
   overflow: hidden;
-  border: 1px solid rgba(184, 91, 45, .48);
+  border: 1px solid rgba(197, 138, 50, .5);
   border-radius: 17px;
   background: linear-gradient(145deg, #202020, #141414);
   box-shadow: 0 12px 32px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .035);
@@ -3881,8 +3881,8 @@ button:focus-visible {
 }
 .how-step-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 157, 99, .9);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, .55), 0 0 24px rgba(222, 111, 49, .17);
+  border-color: rgba(235, 190, 105, .95);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .55), 0 0 24px rgba(197, 138, 50, .2);
 }
 .how-step-top {
   display: flex;
@@ -3892,7 +3892,7 @@ button:focus-visible {
   margin-bottom: 22px;
 }
 .how-step-number {
-  color: #f19a62;
+  color: #d9a441;
   font-size: 13px;
   font-weight: 800;
   letter-spacing: .12em;
@@ -3903,16 +3903,16 @@ button:focus-visible {
   height: 54px;
   flex: 0 0 54px;
   place-items: center;
-  border: 1px solid rgba(184, 91, 45, .72);
+  border: 1px solid rgba(197, 138, 50, .75);
   border-radius: 15px;
-  background: linear-gradient(145deg, rgba(184, 91, 45, .25), rgba(116, 53, 27, .22));
-  box-shadow: 0 0 22px rgba(222, 111, 49, .16);
+  background: linear-gradient(145deg, rgba(197, 138, 50, .27), rgba(111, 75, 28, .24));
+  box-shadow: 0 0 22px rgba(197, 138, 50, .2);
 }
 .how-step-icon svg {
   width: 30px;
   height: 30px;
   fill: none;
-  stroke: #ffb17f;
+  stroke: #f2cf86;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
