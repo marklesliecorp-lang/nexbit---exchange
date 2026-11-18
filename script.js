@@ -462,6 +462,9 @@ loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
 
 // NEXBIT REVIEW SLIDER — measured one-card movement.
+});
+
+// Review slider runs independently so unrelated page scripts cannot block it.
 function initializeNexbitReviewSlider() {
   const viewport = document.getElementById("nexbitVoicesWindow");
   const track = document.getElementById("nexbitVoicesTrack");
@@ -549,5 +552,3 @@ if (document.readyState === "loading") {
 } else {
   initializeNexbitReviewSlider();
 }
-
-});
