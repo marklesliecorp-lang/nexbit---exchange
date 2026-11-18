@@ -823,6 +823,48 @@
   <p>Digital asset services are subject to availability and applicable regulations.</p>
 </footer>
 
+<!-- FLOATING NEXBIT LIVE SUPPORT -->
+<div class="nexbit-live-support" id="nexbitLiveSupport">
+  <div class="live-support-panel" id="liveSupportPanel" aria-hidden="true">
+    <div class="live-support-panel-head">
+      <div class="live-support-agent-icon">✦</div>
+      <div>
+        <strong>NEXBIT Live Support</strong>
+        <span><i></i> Support assistant</span>
+      </div>
+      <button class="live-support-close" id="liveSupportClose" type="button" aria-label="Close support panel">×</button>
+    </div>
+    <div class="live-support-panel-body">
+      <div class="live-support-welcome">
+        <strong>Welcome to NEXBIT Support</strong>
+        <p>Thanks for reaching out. Our live chat service is being set up.</p>
+      </div>
+    </div>
+  </div>
+  <button class="live-support-trigger" id="liveSupportTrigger" type="button" aria-expanded="false" aria-controls="liveSupportPanel">
+    <span class="live-support-trigger-icon">✦</span>
+    <span>Live Support</span>
+    <span class="live-support-online-dot" aria-hidden="true"></span>
+  </button>
+</div>
+<script>
+(function () {
+  const trigger = document.getElementById('liveSupportTrigger');
+  const panel = document.getElementById('liveSupportPanel');
+  const close = document.getElementById('liveSupportClose');
+  if (!trigger || !panel || !close) return;
+  function setOpen(open) {
+    panel.classList.toggle('is-open', open);
+    panel.setAttribute('aria-hidden', String(!open));
+    trigger.setAttribute('aria-expanded', String(open));
+  }
+  trigger.addEventListener('click', function () {
+    setOpen(!panel.classList.contains('is-open'));
+  });
+  close.addEventListener('click', function () { setOpen(false); });
+})();
+</script>
+
 <script src="script.js?v=20261118-review-autoplay-v2"></script>
 
 </body>
