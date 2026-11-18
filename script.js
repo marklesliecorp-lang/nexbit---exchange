@@ -499,10 +499,14 @@ if (reviewWindow && reviewTrack) {
     }
 
     if (didDrag && activeAnimation) {
-      const durationSeconds = parseFloat(getComputedStyle(reviewTrack).animationDuration) || 58;
-      const pixelsPerMs = (reviewTrack.scrollWidth / 2) / (durationSeconds * 1000);
-      const durationMs = durationSeconds * 1000;
-      activeAnimation.currentTime = ((startTime - distance / pixelsPerMs) % durationMs + durationMs) % durationMs;
+      // The track contains three identical review sets, so one loop is one third
+      // of its full width. Wrap the animation time to keep both ends continuous.
+      const timing = activeAnimation.effect?.getComputedTiming();
+      const durationMs = Number(timing?.duration) ||
+        (parseFloat(getComputedStyle(reviewTrack).animationDuration) * 1000) || 58000;
+      const loopDistance = reviewTrack.scrollWidth / 3;
+      const timeShift = (distance / loopDistance) * durationMs;
+      activeAnimation.currentTime = ((startTime - timeShift) % durationMs + durationMs) % durationMs;
     }
   });
 
