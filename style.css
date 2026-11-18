@@ -4081,3 +4081,47 @@ button:focus-visible {
   .nexbit-faq-answer { padding: 0 16px 17px; }
   .nexbit-faq-answer p { font-size: 12px; }
 }
+
+
+/* FOOTER QUICK LINKS */
+footer {
+  background: #000;
+}
+.footer-quick-links {
+  width: min(760px, 100%);
+  margin: 0 auto 28px;
+  padding: 24px 0 26px;
+  border-top: 1px solid rgba(217, 164, 65, .18);
+  border-bottom: 1px solid rgba(217, 164, 65, .18);
+}
+.footer-quick-links h3 {
+  margin: 0 0 18px;
+  color: #d9a441;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.footer-quick-links nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px 25px;
+}
+.footer-quick-links nav a {
+  color: #c5c5c5;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.footer-quick-links nav a:hover,
+.footer-quick-links nav a:focus-visible {
+  color: #e0ad52;
+}
+@media (max-width: 560px) {
+  .footer-quick-links { padding: 21px 0 23px; }
+  .footer-quick-links nav { gap: 14px 19px; }
+  .footer-quick-links nav a { font-size: 11px; }
+}
