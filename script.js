@@ -312,7 +312,8 @@ async function loadNexbitTicker() {
 
   try {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,binancecoin,ripple,dogecoin&price_change_percentage=24h"
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,binancecoin,ripple,dogecoin&price_change_percentage=24h",
+      { signal: AbortSignal.timeout(12000) }
     );
 
     if (!response.ok) {
