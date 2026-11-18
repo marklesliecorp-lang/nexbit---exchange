@@ -50,16 +50,31 @@
   if (email) emailLabel.textContent = email;
   else emailLabel.hidden = true;
 
-  // Supabase completes the email-link callback and establishes a session here.
-  supabaseClient.auth.getSession().then(function ({ data }) {
-    if (data && data.session) {
-      kicker.textContent = 'EMAIL VERIFIED';
-      heading.textContent = 'You’re all set';
-      copy.textContent = 'Your email address has been verified. Your NEXBIT account is ready for the next step.';
-      emailLabel.hidden = true;
-      resendButton.hidden = true;
-      message.textContent = 'Email verification successful.';
+  let verificationShown = false;
+  function showVerifiedState() {
+    if (verificationShown) return;
+    verificationShown = true;
+    kicker.textContent = 'EMAIL VERIFIED';
+    heading.textContent = 'You’re all set';
+    copy.textContent = 'Your email address has been verified. Your NEXBIT account is ready for the next step.';
+    emailLabel.hidden = true;
+    resendButton.hidden = true;
+    message.textContent = 'Email verification successful.';
+  }
+
+  // Supabase processes the confirmation link and emits SIGNED_IN when verification succeeds.
+  supabaseClient.auth.onAuthStateChange(function (event, session) {
+    if ((event === 'SIGNED_IN' || event === 'USER_UPDATED') && session) {
+      showVerifiedState();
     }
+  });
+
+  supabaseClient.auth.getSession().then(function ({ data, error }) {
+    if (error) {
+      message.textContent = 'We could not confirm your session. Please open the latest verification email and try again.';
+      return;
+    }
+    if (data && data.session) showVerifiedState();
   });
 
   resendButton.addEventListener('click', async function () {
