@@ -4694,3 +4694,52 @@ footer {
     line-height: 1.55;
   }
 }
+
+
+/* PROMOTIONS & REWARDS — REDUCE OUTER CARD DIMENSIONS */
+.promotions-grid {
+  max-width: 900px;
+  gap: 14px;
+}
+.promotion-card {
+  max-width: 100%;
+  border-radius: 12px;
+}
+.promotion-image {
+  height: 105px;
+}
+.promotion-content {
+  padding: 12px;
+}
+.promotion-content h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.promotion-content p {
+  font-size: 10px;
+  line-height: 1.5;
+}
+.promotion-button {
+  padding: 8px 11px;
+  font-size: 10px;
+}
+@media (max-width: 600px) {
+  .promotions-grid {
+    width: 100%;
+    max-width: 330px;
+    margin: 0 auto;
+    gap: 12px;
+  }
+  .promotion-image {
+    height: 95px;
+  }
+  .promotion-content {
+    padding: 11px;
+  }
+  .promotion-content h3 {
+    font-size: 14px;
+  }
+  .promotion-content p {
+    font-size: 10px;
+  }
+}
