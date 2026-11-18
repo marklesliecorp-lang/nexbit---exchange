@@ -4125,3 +4125,29 @@ footer {
   .footer-quick-links nav { gap: 14px 19px; }
   .footer-quick-links nav a { font-size: 11px; }
 }
+
+
+/* FOOTER INVESTMENT RISK DISCLAIMER */
+.footer-disclaimer-note {
+  width: min(760px, 100%);
+  margin: 0 auto 26px;
+  color: #a9a9a9;
+  font-size: 11px;
+  line-height: 1.8;
+  text-align: center;
+}
+.footer-disclaimer-note strong {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #d9a441;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+@media (max-width: 560px) {
+  .footer-disclaimer-note {
+    margin-bottom: 22px;
+    font-size: 10px;
+    line-height: 1.75;
+  }
+}
