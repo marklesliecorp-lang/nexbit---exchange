@@ -2936,6 +2936,10 @@ footer p {
 .nexbit-voices-window:active .nexbit-voices-track {
   animation-play-state: paused;
 }
+.nexbit-voices-track.is-paused,
+.nexbit-voices-track.is-pressed {
+  animation-play-state: paused !important;
+}
 .nexbit-voice-card {
   display: flex;
   flex: 0 0 330px;
