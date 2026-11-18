@@ -2937,7 +2937,7 @@ footer p {
   width: max-content;
   gap: 0;
   padding-left: 0;
-  animation: nexbit-voices-scroll 58s linear infinite;
+  animation: none;
 }
 .nexbit-voices-group {
   display: flex;
@@ -2945,13 +2945,18 @@ footer p {
   gap: 18px;
   padding-left: 18px;
 }
-.nexbit-voices-window:hover .nexbit-voices-track,
-.nexbit-voices-window:active .nexbit-voices-track {
-  animation-play-state: paused;
+/* Review cards use the same staggered scroll-reveal animation as packages. */
+.nexbit-voice-card.reveal-ready {
+  opacity: 0;
+  transform: translate3d(0, 35px, 0);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
-.nexbit-voices-track.is-paused,
-.nexbit-voices-track.is-pressed {
-  animation-play-state: paused !important;
+.nexbit-voice-card.reveal-ready.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 .nexbit-voice-card {
   display: flex;
@@ -3023,20 +3028,18 @@ footer p {
   font-size: 10px;
   line-height: 1.6;
 }
-@keyframes nexbit-voices-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
 @media (max-width: 600px) {
   .nexbit-voices { padding: 43px 0 28px; }
   .nexbit-voices-heading { margin-bottom: 20px; }
-  .nexbit-voices-track { animation-duration: 48s; }
   .nexbit-voices-group { gap: 12px; padding-left: 12px; }
   .nexbit-voice-card { flex-basis: 286px; min-height: 215px; padding: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nexbit-voices-track { animation: none; }
-  .nexbit-voices-window { overflow-x: auto; }
+  .nexbit-voice-card.reveal-ready {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 
