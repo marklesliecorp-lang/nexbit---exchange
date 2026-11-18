@@ -2595,3 +2595,37 @@ footer p {
   .market-card { padding-left: 10px; padding-right: 10px; }
   .market-coin-name { font-size: 12px; }
 }
+
+/* Compact layout for the four approved market statistics */
+.markets-stats {
+  max-width: 900px;
+  margin-top: 32px;
+  border-radius: 14px;
+}
+.markets-stats div {
+  min-height: 86px;
+  gap: 6px;
+  padding: 12px 8px;
+}
+.markets-stats strong {
+  font-size: clamp(20px, 2.4vw, 26px);
+}
+.markets-stats span {
+  font-size: 11px;
+}
+@media (max-width: 650px) {
+  .markets-stats {
+    margin-top: 28px;
+  }
+  .markets-stats div {
+    min-height: 72px;
+    padding: 9px 6px;
+  }
+  .markets-stats strong {
+    font-size: 20px;
+  }
+  .markets-stats span {
+    font-size: 10px;
+  }
+}
+
