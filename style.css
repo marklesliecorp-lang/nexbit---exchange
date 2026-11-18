@@ -4385,3 +4385,120 @@ footer {
   transform: translateY(-1px);
 }
 .nexbit-faq-more span { font-size: 17px; line-height: 1; }
+
+
+/* NEXBIT FAQ — sharp black and graphite redesign */
+.nexbit-faq-section {
+  position: relative;
+  overflow: hidden;
+  padding: 92px 20px;
+  background: #030303;
+  border-top: 1px solid rgba(224, 173, 82, .22);
+  border-bottom: 1px solid rgba(224, 173, 82, .12);
+}
+.nexbit-faq-section::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 320px;
+  top: -190px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(217, 164, 65, .10), transparent 70%);
+  pointer-events: none;
+}
+.nexbit-faq-container { position: relative; z-index: 1; width: min(860px, 100%); }
+.nexbit-faq-heading { margin-bottom: 42px; }
+.nexbit-faq-eyebrow {
+  padding: 7px 12px;
+  border: 1px solid rgba(224, 173, 82, .34);
+  border-radius: 3px;
+  background: rgba(224, 173, 82, .07);
+  color: #edbd62;
+  font-size: 10px;
+  letter-spacing: .22em;
+}
+.nexbit-faq-heading h2 {
+  color: #f7f7f7;
+  font-size: clamp(30px, 4.5vw, 44px);
+  letter-spacing: -.035em;
+}
+.nexbit-faq-heading h2 span {
+  color: #e8b653;
+  text-shadow: 0 0 24px rgba(217, 164, 65, .18);
+}
+.nexbit-faq-heading p { color: #929292; }
+.nexbit-faq-list { gap: 10px; }
+.nexbit-faq-item {
+  position: relative;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  background: linear-gradient(110deg, #111 0%, #0b0b0b 100%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .22);
+  transition: border-color .22s ease, background .22s ease, transform .22s ease;
+}
+.nexbit-faq-item:hover {
+  border-color: rgba(224, 173, 82, .48);
+  transform: translateY(-1px);
+}
+.nexbit-faq-item[open] {
+  border-color: rgba(224, 173, 82, .72);
+  background: linear-gradient(110deg, #17130b 0%, #0c0c0c 72%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .32), inset 3px 0 0 #d9a441;
+}
+.nexbit-faq-item summary {
+  min-height: 64px;
+  padding: 18px 21px;
+  color: #f1f1f1;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .005em;
+}
+.nexbit-faq-item summary::after {
+  width: 29px;
+  height: 29px;
+  flex-basis: 29px;
+  border: 1px solid rgba(224, 173, 82, .55);
+  border-radius: 6px;
+  background: #17130b;
+  color: #edbd62;
+}
+.nexbit-faq-item[open] summary::after {
+  background: #d9a441;
+  color: #080808;
+}
+.nexbit-faq-answer { padding: 0 21px 21px; }
+.nexbit-faq-answer p {
+  padding-top: 2px;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.85;
+}
+.nexbit-faq-more {
+  min-width: 210px;
+  margin-top: 28px;
+  padding: 13px 22px;
+  border: 1px solid #d9a441;
+  border-radius: 5px;
+  background: #d9a441;
+  color: #080808;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: .035em;
+  box-shadow: 0 5px 22px rgba(217, 164, 65, .12);
+}
+.nexbit-faq-more:hover {
+  background: #f0c46b;
+  border-color: #f0c46b;
+  color: #050505;
+}
+@media (max-width: 560px) {
+  .nexbit-faq-section { padding: 66px 15px; }
+  .nexbit-faq-heading { margin-bottom: 30px; }
+  .nexbit-faq-heading h2 { font-size: 30px; }
+  .nexbit-faq-item { border-radius: 7px; }
+  .nexbit-faq-item summary { min-height: 58px; padding: 15px 14px; font-size: 13px; }
+  .nexbit-faq-answer { padding: 0 14px 17px; }
+  .nexbit-faq-answer p { font-size: 12px; }
+  .nexbit-faq-more { width: 100%; max-width: 260px; }
+}
