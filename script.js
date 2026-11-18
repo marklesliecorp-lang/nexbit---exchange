@@ -504,7 +504,7 @@ if (reviewWindow && reviewTrack) {
       const timing = activeAnimation.effect?.getComputedTiming();
       const durationMs = Number(timing?.duration) ||
         (parseFloat(getComputedStyle(reviewTrack).animationDuration) * 1000) || 58000;
-      const loopDistance = reviewTrack.scrollWidth / 2;
+      const loopDistance = reviewTrack.querySelector('.nexbit-voices-group')?.getBoundingClientRect().width || reviewTrack.scrollWidth / 2;
       const timeShift = (distance / loopDistance) * durationMs;
       activeAnimation.currentTime = ((startTime - timeShift) % durationMs + durationMs) % durationMs;
     }
