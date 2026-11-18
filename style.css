@@ -2775,3 +2775,67 @@ footer p {
     margin-bottom: 10px;
   }
 }
+
+/* Further reduce LIVE MARKETS ticker footprint */
+.market-ticker {
+  padding: 3px 2.5%;
+  gap: 7px;
+}
+.ticker-label {
+  font-size: 8px;
+  letter-spacing: .8px;
+}
+.ticker-track {
+  gap: 5px;
+}
+.ticker-card {
+  min-width: 128px;
+  max-width: 128px;
+  padding: 4px 5px;
+  gap: 5px;
+  border-radius: 7px;
+}
+.ticker-card img {
+  width: 18px;
+  height: 18px;
+}
+.ticker-info {
+  gap: 2px;
+}
+.ticker-name,
+.ticker-price {
+  font-size: 8px;
+  line-height: 1.15;
+}
+.ticker-change {
+  margin-left: 2px;
+  padding: 3px 4px;
+  font-size: 7px;
+  border-radius: 5px;
+}
+@media (max-width: 600px) {
+  .market-ticker {
+    padding: 3px 2.5%;
+    gap: 3px;
+  }
+  .ticker-label {
+    padding: 0;
+    font-size: 8px;
+  }
+  .ticker-track {
+    gap: 4px;
+  }
+  .ticker-card {
+    min-width: 122px;
+    max-width: 122px;
+    padding: 4px;
+  }
+  .ticker-card img {
+    width: 17px;
+    height: 17px;
+  }
+  .ticker-change {
+    padding: 2px 3px;
+    font-size: 7px;
+  }
+}
