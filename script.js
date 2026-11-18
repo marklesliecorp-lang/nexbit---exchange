@@ -464,56 +464,35 @@ setInterval(loadNexbitTicker, 60000);
 // NEXBIT REVIEW SLIDER — measured one-card movement.
 });
 
-// NEXBIT REVIEW SLIDER — iOS-safe touch and button navigation.
-function initializeNexbitReviewSlider() {
-  const viewport = document.getElementById("nexbitVoicesWindow");
+// NEXBIT REVIEWS — single-card fade-and-reveal navigation.
+function initializeNexbitReviewFade() {
   const track = document.getElementById("nexbitVoicesTrack");
-  if (!viewport || !track || track.dataset.sliderReady === "true") return;
+  if (!track || track.dataset.fadeReady === "true") return;
 
   const pages = Array.from(track.querySelectorAll(".nexbit-voices-page"));
   const previous = document.getElementById("nexbitVoicesPrev");
   const next = document.getElementById("nexbitVoicesNext");
   const dots = Array.from(document.querySelectorAll(".nexbit-voices-dot"));
   if (!pages.length) return;
-  track.dataset.sliderReady = "true";
 
+  track.dataset.fadeReady = "true";
   let currentPage = 0;
-  let touchStartX = null;
-  let pointerStartX = null;
 
-  track.style.display = "flex";
-  track.style.gap = "0";
-  track.style.padding = "0";
-  const slideTransition = "transform 650ms cubic-bezier(.22,1,.36,1)";
-  track.style.setProperty("transition", slideTransition, "important");
-  track.style.willChange = "transform";
+  function showPage(index) {
+    currentPage = (index + pages.length) % pages.length;
 
-  function setDimensions() {
-    const width = Math.round(viewport.getBoundingClientRect().width);
-    if (!width) return;
-    track.style.width = (width * pages.length) + "px";
-    pages.forEach(page => {
-      page.style.flex = "0 0 " + width + "px";
-      page.style.width = width + "px";
-      page.style.minWidth = width + "px";
-      page.style.boxSizing = "border-box";
-    });
-    showPage(currentPage, false);
-  }
-
-  function showPage(index, animate = true) {
-    currentPage = Math.max(0, Math.min(pages.length - 1, index));
-    const width = Math.round(viewport.getBoundingClientRect().width);
-    if (!width) return;
-    track.style.setProperty("transition", animate ? slideTransition : "none", "important");
-    track.style.transform = "translate3d(" + (-currentPage * width) + "px,0,0)";
     pages.forEach((page, pageIndex) => {
+      const active = pageIndex === currentPage;
+      page.classList.toggle("is-active", active);
       page.querySelectorAll(".nexbit-voice-card").forEach(card => {
-        card.classList.toggle("is-visible", pageIndex === currentPage);
+        card.classList.toggle("is-visible", active);
       });
+      page.setAttribute("aria-hidden", active ? "false" : "true");
     });
-    if (previous) previous.disabled = currentPage === 0;
-    if (next) next.disabled = currentPage === pages.length - 1;
+
+    if (previous) previous.disabled = false;
+    if (next) next.disabled = false;
+
     dots.forEach((dot, dotIndex) => {
       const active = dotIndex === currentPage;
       dot.classList.toggle("is-active", active);
@@ -526,42 +505,30 @@ function initializeNexbitReviewSlider() {
   if (next) next.addEventListener("click", () => showPage(currentPage + 1));
   dots.forEach(dot => dot.addEventListener("click", () => {
     const page = Number(dot.dataset.reviewPage);
-    if (Number.isInteger(page)) showPage(page);
+    if (Number.isInteger(page) && page >= 0 && page < pages.length) showPage(page);
   }));
 
-  // Touch events are used explicitly for iPhone Safari; no pointer capture needed.
-  viewport.addEventListener("touchstart", event => {
-    if (event.touches.length !== 1) return;
-    touchStartX = event.touches[0].clientX;
-  }, { passive: true });
-  viewport.addEventListener("touchend", event => {
-    if (touchStartX === null || !event.changedTouches.length) return;
-    const distance = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(distance) > 40) showPage(currentPage + (distance < 0 ? 1 : -1));
-    touchStartX = null;
-  }, { passive: true });
-  viewport.addEventListener("touchcancel", () => { touchStartX = null; }, { passive: true });
+  // Allow a simple left/right swipe on touch screens without relying on drag transforms.
+  let touchStartX = null;
+  const viewport = document.getElementById("nexbitVoicesWindow");
+  if (viewport) {
+    viewport.addEventListener("touchstart", event => {
+      if (event.touches.length === 1) touchStartX = event.touches[0].clientX;
+    }, { passive: true });
+    viewport.addEventListener("touchend", event => {
+      if (touchStartX === null || !event.changedTouches.length) return;
+      const distance = event.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(distance) > 45) showPage(currentPage + (distance < 0 ? 1 : -1));
+      touchStartX = null;
+    }, { passive: true });
+    viewport.addEventListener("touchcancel", () => { touchStartX = null; }, { passive: true });
+  }
 
-  // Keep mouse/trackpad dragging on desktop.
-  viewport.addEventListener("pointerdown", event => {
-    if (event.pointerType === "touch" || event.target.closest("button")) return;
-    pointerStartX = event.clientX;
-  });
-  viewport.addEventListener("pointerup", event => {
-    if (pointerStartX === null) return;
-    const distance = event.clientX - pointerStartX;
-    if (Math.abs(distance) > 40) showPage(currentPage + (distance < 0 ? 1 : -1));
-    pointerStartX = null;
-  });
-  viewport.addEventListener("pointercancel", () => { pointerStartX = null; });
-
-  window.addEventListener("resize", setDimensions);
-  window.addEventListener("orientationchange", () => window.setTimeout(setDimensions, 150));
-  if ("ResizeObserver" in window) new ResizeObserver(setDimensions).observe(viewport);
-  setDimensions();
+  showPage(0);
 }
+
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeNexbitReviewSlider, { once: true });
+  document.addEventListener("DOMContentLoaded", initializeNexbitReviewFade, { once: true });
 } else {
-  initializeNexbitReviewSlider();
+  initializeNexbitReviewFade();
 }
