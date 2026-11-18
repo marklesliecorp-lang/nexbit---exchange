@@ -4550,3 +4550,51 @@ footer {
   .nexbit-faq-answer { padding: 0 13px 14px; }
   .nexbit-faq-answer p { font-size: 10.5px; }
 }
+
+
+/* HOW NEXBIT WORKS — more compact layout */
+.how-it-works-section { padding: 62px 20px; }
+.how-it-works-container { width: min(1040px, 100%); }
+.how-it-works-heading { margin-bottom: 30px; }
+.how-it-works-eyebrow { font-size: 9px; margin-bottom: 9px; }
+.how-it-works-heading h2 { font-size: clamp(26px, 3.4vw, 36px); }
+.how-it-works-heading p { margin-top: 9px; font-size: 12px; }
+.how-it-works-grid { gap: 13px; }
+.how-step-card {
+  min-height: 185px;
+  padding: 18px 17px 19px;
+  border-radius: 13px;
+}
+.how-step-top { margin-bottom: 16px; }
+.how-step-number { font-size: 11px; }
+.how-step-icon {
+  width: 45px;
+  height: 45px;
+  flex-basis: 45px;
+  border-radius: 12px;
+}
+.how-step-icon svg { width: 25px; height: 25px; }
+.how-step-card h3 { margin-bottom: 7px; font-size: 15px; }
+.how-step-card p { font-size: 11px; line-height: 1.6; }
+@media (max-width: 560px) {
+  .how-it-works-section { padding: 48px 14px; }
+  .how-it-works-heading { margin-bottom: 22px; }
+  .how-it-works-heading h2 { font-size: 25px; }
+  .how-it-works-heading p { font-size: 11px; }
+  .how-it-works-grid { gap: 10px; }
+  .how-step-card {
+    grid-template-columns: 46px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 13px;
+  }
+  .how-step-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+  .how-step-icon svg { width: 23px; height: 23px; }
+  .how-step-top { gap: 8px; }
+  .how-step-number { font-size: 10px; }
+  .how-step-card h3 { font-size: 13px; }
+  .how-step-card p { font-size: 10px; line-height: 1.5; }
+}
