@@ -4198,3 +4198,111 @@ footer {
 .logo {
   gap: 5px;
 }
+
+/* SECURITY, PRIVACY POLICY AND TERMS SECTIONS */
+.trust-section {
+  padding: 76px 5%;
+  background: #080808;
+  border-top: 1px solid rgba(217, 164, 65, .12);
+  color: #f5f5f5;
+}
+.trust-section:nth-of-type(even) {
+  background: #050505;
+}
+.trust-section-inner {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+}
+.trust-section .eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  color: #d9a441;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-align: center;
+}
+.trust-section h2 {
+  margin: 0 0 18px;
+  color: #f5f5f5;
+  font-size: clamp(27px, 4vw, 38px);
+  font-weight: 850;
+  text-align: center;
+}
+.trust-section h2 span {
+  color: #dfb45e;
+}
+.trust-intro {
+  max-width: 760px;
+  margin: 0 auto 34px;
+  color: #bdbdbd;
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
+}
+.trust-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+.trust-card {
+  padding: 26px 22px;
+  background: linear-gradient(145deg, #141414, #0b0b0b);
+  border: 1px solid rgba(217, 164, 65, .22);
+  border-radius: 14px;
+}
+.trust-card-icon {
+  display: inline-grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  margin-bottom: 15px;
+  border: 1px solid rgba(217, 164, 65, .45);
+  border-radius: 10px;
+  color: #e2b75f;
+  font-size: 20px;
+}
+.trust-card h3,
+.trust-reading h3 {
+  margin: 0 0 9px;
+  color: #e2b75f;
+  font-size: 15px;
+  font-weight: 750;
+}
+.trust-card p,
+.trust-reading p {
+  margin: 0 0 18px;
+  color: #b8b8b8;
+  font-size: 13px;
+  line-height: 1.85;
+}
+.trust-reading {
+  max-width: 850px;
+}
+.trust-reading h2 {
+  margin-bottom: 12px;
+}
+.trust-reading .trust-intro {
+  margin-bottom: 32px;
+}
+.trust-reading h3 {
+  margin-top: 23px;
+}
+.trust-reading p:last-child {
+  margin-bottom: 0;
+}
+.trust-footnote {
+  margin-top: 26px !important;
+  padding: 14px 16px;
+  border-left: 2px solid #b88935;
+  background: rgba(217, 164, 65, .06);
+  color: #999 !important;
+  font-size: 11px !important;
+}
+@media (max-width: 760px) {
+  .trust-section { padding: 58px 6%; }
+  .trust-card-grid { grid-template-columns: 1fr; gap: 13px; }
+  .trust-card { padding: 22px 19px; }
+  .trust-reading p { font-size: 12px; }
+}
