@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "&ids=bitcoin,ethereum,solana,binancecoin" +
         "&price_change_percentage=24h&sparkline=true";
 
-      const response = await fetch(url);
+      const response = await fetch(url, { signal: AbortSignal.timeout(12000) });
 
       if (!response.ok) {
         throw new Error("Market data request failed");
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const backupUrl =
           "https://api.binance.com/api/v3/ticker/24hr?symbols=" +
           encodeURIComponent(JSON.stringify(symbols));
-        const backupResponse = await fetch(backupUrl);
+        const backupResponse = await fetch(backupUrl, { signal: AbortSignal.timeout(12000) });
 
         if (!backupResponse.ok) {
           throw new Error("Backup market data request failed");
@@ -352,7 +352,7 @@ async function loadNexbitTicker() {
       const backupUrl =
         "https://api.binance.com/api/v3/ticker/24hr?symbols=" +
         encodeURIComponent(JSON.stringify(symbols));
-      const backupResponse = await fetch(backupUrl);
+      const backupResponse = await fetch(backupUrl, { signal: AbortSignal.timeout(12000) });
 
       if (!backupResponse.ok) {
         throw new Error("Backup ticker request failed");
