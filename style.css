@@ -2861,3 +2861,14 @@ footer p {
     margin-top: 32px;
   }
 }
+
+/* Slightly narrow the investment package cards without changing their content */
+.nexbit-investments .investment-grid {
+  max-width: 900px;
+}
+@media (max-width: 700px) {
+  .nexbit-investments .investment-grid {
+    width: 88%;
+    max-width: 320px;
+  }
+}
