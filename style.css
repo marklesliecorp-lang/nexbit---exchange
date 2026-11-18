@@ -3168,3 +3168,56 @@ button:focus-visible {
   font-weight: 600;
   letter-spacing: .2px;
 }
+
+
+/* NEXBIT REVIEWS — RESPONSIVE THREE-COLUMN GRID */
+.nexbit-voices {
+  padding: 58px 5% 42px;
+  overflow: visible;
+}
+.nexbit-voices-heading {
+  max-width: 900px;
+  margin: 0 auto 30px;
+}
+.nexbit-voices-heading h2 {
+  color: #f5f6f7;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+.nexbit-voices-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 22px;
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+.nexbit-voices-grid .nexbit-voice-card {
+  width: auto;
+  min-width: 0;
+  min-height: 100%;
+  flex: initial;
+  box-sizing: border-box;
+}
+@media (max-width: 900px) {
+  .nexbit-voices-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+@media (max-width: 620px) {
+  .nexbit-voices {
+    padding: 42px 5% 30px;
+  }
+  .nexbit-voices-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    max-width: 440px;
+  }
+  .nexbit-voices-grid .nexbit-voice-card {
+    min-height: 0;
+    padding: 20px;
+  }
+}
