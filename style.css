@@ -2522,3 +2522,76 @@ footer p {
   .market-live-dot::before { animation: none; }
   .market-card { transition: none; }
 }
+
+
+/* Reference-matched layout: two columns, three rows, then a 2x2 stats grid */
+.market-cards {
+  max-width: 1120px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 24px;
+}
+.market-card {
+  min-height: 198px;
+  padding: 26px 28px 22px;
+  border-radius: 25px;
+}
+.market-card-top { justify-content: flex-start; }
+.market-card-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 22px 0 14px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, rgba(214,170,72,.24), rgba(200,205,212,.16));
+  color: #e7c77d;
+}
+.market-card-asset { padding-right: 84px; }
+.market-card-price-line { margin-top: 30px; }
+.markets-stats {
+  max-width: 1120px;
+  margin: 76px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(200,205,212,.28);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.markets-stats div {
+  min-height: 126px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 18px 10px;
+}
+.markets-stats div:nth-child(odd) { border-right: 1px solid rgba(200,205,212,.24); }
+.markets-stats div:nth-child(-n+2) { border-bottom: 1px solid rgba(200,205,212,.24); }
+.markets-stats strong {
+  color: #f1d28a;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+}
+.markets-stats span { color: #c8cdd4; font-size: 13px; }
+@media (max-width: 650px) {
+  .market-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .market-card { min-height: 174px; padding: 21px 13px 16px; border-radius: 19px; }
+  .market-card-tag { border-radius: 0 17px 0 12px; padding: 6px 8px; font-size: 8px; }
+  .market-card-asset { padding-right: 0; gap: 8px; }
+  .market-coin-logo { width: 34px; height: 34px; flex-basis: 34px; padding: 4px; }
+  .market-coin-name { font-size: 13px; overflow-wrap: anywhere; }
+  .market-coin-symbol { font-size: 9px; letter-spacing: .5px; }
+  .market-card-price-line { align-items: flex-start; flex-direction: column; gap: 9px; margin-top: 22px; }
+  .market-card-price { font-size: clamp(17px, 4vw, 23px); }
+  .market-change { font-size: 10px; padding: 5px 7px; }
+  .market-card-bottom { margin-top: 12px; padding-top: 9px; font-size: 8px; }
+  .markets-stats { margin-top: 48px; }
+  .markets-stats div { min-height: 104px; }
+  .markets-stats span { font-size: 11px; }
+}
+@media (max-width: 360px) {
+  .market-card { padding-left: 10px; padding-right: 10px; }
+  .market-coin-name { font-size: 12px; }
+}
