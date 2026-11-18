@@ -476,7 +476,7 @@ function initializeNexbitReviewSlider() {
   let pointerDelta = 0;
   cards.forEach((card, index) => {
     card.classList.add("reveal-ready");
-    card.style.transitionDelay = ((index % 2) * 0.16) + "s";
+    card.style.transitionDelay = "0s";
   });
   function showPage(index) {
     currentPage = Math.max(0, Math.min(pages.length - 1, index));
