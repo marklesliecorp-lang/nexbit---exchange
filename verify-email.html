@@ -59,7 +59,10 @@
     copy.textContent = 'Your email address has been verified. Your NEXBIT account is ready for the next step.';
     emailLabel.hidden = true;
     resendButton.hidden = true;
-    message.textContent = 'Email verification successful.';
+    message.textContent = 'Email verification successful. Redirecting you to login...';
+    window.setTimeout(function () {
+      window.location.replace('login.html');
+    }, 3000);
   }
 
   // Supabase processes the confirmation link and emits SIGNED_IN when verification succeeds.
