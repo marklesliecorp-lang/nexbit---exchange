@@ -109,7 +109,8 @@
           message.className='message success show';
           passwordField.value='';
           submit.innerHTML='LOGGED IN ✓';
-          // The account dashboard will become the post-login destination once it is built.
+          message.textContent='Login successful. Taking you to your dashboard…';
+          window.setTimeout(function(){ window.location.replace('dashboard.html'); }, 1200);
         }catch(error){
           console.error('NEXBIT login error:',error);
           message.textContent=error.message==='Invalid login credentials'
