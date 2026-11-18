@@ -3511,3 +3511,38 @@ button:focus-visible {
   align-self: stretch;
   text-align: left;
 }
+
+
+/* NEXBIT DIAMOND PACKAGE */
+.diamond-card {
+  background: linear-gradient(145deg, #20213a, #10121d 72%);
+  border: 1.5px solid rgba(151, 153, 255, 0.72);
+  box-shadow: 0 0 28px rgba(115, 119, 230, 0.12);
+}
+.diamond-card:hover {
+  border-color: #b8baff;
+  box-shadow: 0 15px 45px rgba(115, 119, 230, 0.22);
+}
+.diamond-card .package-number,
+.diamond-card h3 {
+  color: #c5c7ff;
+}
+.diamond-label {
+  color: #d5d6ff;
+  border-color: rgba(183, 185, 255, 0.45);
+}
+.diamond-icon {
+  background: linear-gradient(135deg, #e0e1ff, #8589dc);
+  color: #17182d;
+  border: 1px solid rgba(220, 221, 255, 0.8);
+}
+.diamond-card .package-price strong {
+  color: #d5d6ff;
+}
+.diamond-card .package-features li span {
+  color: #b8baff;
+}
+.diamond-button {
+  background: linear-gradient(135deg, #777bd1, #a5a7f1);
+  color: #111326;
+}
