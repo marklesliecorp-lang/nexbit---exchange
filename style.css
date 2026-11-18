@@ -3416,3 +3416,29 @@ button:focus-visible {
   .nexbit-voices-page .nexbit-voice-person strong { font-size: 10px; }
   .nexbit-voices-page .nexbit-voice-card > p { font-size: 10px; line-height: 1.4; }
 }
+
+
+/* Keep the review title beside its portrait on every screen */
+.nexbit-voices-page .nexbit-voice-person {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px;
+}
+.nexbit-voices-page .nexbit-voice-person img {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+}
+.nexbit-voices-page .nexbit-voice-person div {
+  min-width: 0;
+}
+.nexbit-voices-page .nexbit-voice-person strong {
+  font-size: 10px;
+  line-height: 1.25;
+}
+.nexbit-voices-page .nexbit-voice-person span {
+  font-size: 7px;
+  line-height: 1.25;
+  letter-spacing: .2px;
+}
