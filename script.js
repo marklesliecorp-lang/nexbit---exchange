@@ -163,12 +163,52 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     } catch (error) {
-      console.error("NEXBIT market data error:", error);
-      displayMarkets(sampleMarkets);
+      console.error("NEXBIT CoinGecko market data error:", error);
 
-      if (demoNote) {
-        demoNote.textContent =
-          "Live prices unavailable. Showing demonstration prices instead.";
+      try {
+        const symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"];
+        const backupUrl =
+          "https://api.binance.com/api/v3/ticker/24hr?symbols=" +
+          encodeURIComponent(JSON.stringify(symbols));
+        const backupResponse = await fetch(backupUrl);
+
+        if (!backupResponse.ok) {
+          throw new Error("Backup market data request failed");
+        }
+
+        const backupData = await backupResponse.json();
+        const names = {
+          BTC: "Bitcoin",
+          ETH: "Ethereum",
+          SOL: "Solana",
+          BNB: "BNB"
+        };
+
+        const backupMarkets = backupData.map(coin => ({
+          name: names[coin.symbol.replace("USDT", "")] || coin.symbol,
+          symbol: coin.symbol.replace("USDT", ""),
+          price: Number(coin.lastPrice),
+          change: Number(coin.priceChangePercent),
+          marketCap: null,
+          sparkline: []
+        }));
+
+        if (!backupMarkets.length) {
+          throw new Error("No backup market data received");
+        }
+
+        displayMarkets(backupMarkets);
+        if (demoNote) {
+          demoNote.textContent =
+            "Indicative prices supplied by Binance. Not executable trading quotes.";
+        }
+      } catch (backupError) {
+        console.error("NEXBIT backup market data error:", backupError);
+        displayMarkets(sampleMarkets);
+        if (demoNote) {
+          demoNote.textContent =
+            "Live prices are temporarily unavailable. Showing demonstration prices instead.";
+        }
       }
     }
   }
@@ -305,9 +345,51 @@ async function loadNexbitTicker() {
     ticker.innerHTML = tickerContent + tickerContent;
 
   } catch (error) {
-    console.error("NEXBIT ticker error:", error);
-    ticker.innerHTML =
-      "<span>Market prices temporarily unavailable.</span>";
+    console.error("NEXBIT CoinGecko ticker error:", error);
+
+    try {
+      const symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT", "DOGEUSDT"];
+      const backupUrl =
+        "https://api.binance.com/api/v3/ticker/24hr?symbols=" +
+        encodeURIComponent(JSON.stringify(symbols));
+      const backupResponse = await fetch(backupUrl);
+
+      if (!backupResponse.ok) {
+        throw new Error("Backup ticker request failed");
+      }
+
+      const backupCoins = await backupResponse.json();
+      const tickerContent = backupCoins.map(coin => {
+        const symbol = coin.symbol.replace("USDT", "");
+        const change = Number(coin.priceChangePercent) || 0;
+        const direction = change >= 0 ? "up" : "down";
+        const sign = change >= 0 ? "+" : "";
+
+        return `
+          <div class="ticker-card">
+            <div class="ticker-info">
+              <span class="ticker-name">${symbol}/USDT</span>
+              <span class="ticker-price">
+                ${Number(coin.lastPrice).toLocaleString("en-US")}
+              </span>
+            </div>
+            <span class="ticker-change ${direction}">
+              ${sign}${change.toFixed(2)}%
+            </span>
+          </div>
+        `;
+      }).join("");
+
+      if (!tickerContent) {
+        throw new Error("No backup ticker data received");
+      }
+
+      ticker.innerHTML = tickerContent + tickerContent;
+    } catch (backupError) {
+      console.error("NEXBIT backup ticker error:", backupError);
+      ticker.innerHTML =
+        "<span>Live market data temporarily unavailable.</span>";
+    }
   }
 }
 
