@@ -2706,3 +2706,72 @@ footer p {
   .hero-signup-button::before { animation: none; }
 }
 
+/* Compact live markets ticker and tighten hero spacing */
+.market-ticker {
+  padding: 5px 3%;
+  gap: 9px;
+}
+.ticker-track {
+  gap: 7px;
+}
+.ticker-card {
+  min-width: 150px;
+  max-width: 150px;
+  padding: 6px 7px;
+  gap: 6px;
+  border-radius: 8px;
+}
+.ticker-card img {
+  width: 22px;
+  height: 22px;
+}
+.ticker-info {
+  gap: 3px;
+}
+.ticker-name,
+.ticker-price {
+  font-size: 9px;
+}
+.ticker-change {
+  padding: 4px 5px;
+  font-size: 8px;
+}
+.ticker-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.hero-content h1 {
+  margin-bottom: 12px;
+}
+.hero-description {
+  margin-top: 0;
+  margin-bottom: 14px;
+  line-height: 1.65;
+}
+.hero-app-services {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.hero-trust {
+  margin-top: 10px;
+}
+@media (max-width: 600px) {
+  .market-ticker {
+    padding: 5px 3%;
+    gap: 5px;
+  }
+  .ticker-card {
+    min-width: 145px;
+    max-width: 145px;
+  }
+  .hero-content h1 {
+    margin-bottom: 10px;
+  }
+  .hero-description {
+    margin-bottom: 11px;
+    line-height: 1.6;
+  }
+  .hero-app-services {
+    margin-bottom: 10px;
+  }
+}
