@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070707">
+  <meta name="description" content="Log in securely to your NEXBIT account.">
+  <title>Log In | NEXBIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root{color-scheme:dark;--gold:#e0b653;--gold-bright:#ffe4a0;--muted:#a7a196}
+    *{box-sizing:border-box}
+    html{min-height:100%;background:#070707}
+    body{margin:0;min-height:100vh;background:#070707;color:#fff;font-family:Inter,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    .login-page{position:relative;isolation:isolate;overflow:hidden;min-height:100vh;display:grid;place-items:center;padding:38px 18px;background:radial-gradient(ellipse at 50% 28%,rgba(199,146,43,.17),transparent 40%),radial-gradient(ellipse at 8% 90%,rgba(130,84,18,.12),transparent 34%),linear-gradient(145deg,#080808,#050505 65%,#0b0905)}
+    .login-grid{position:absolute;inset:0;z-index:-1;opacity:.13;background-image:linear-gradient(rgba(218,171,75,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(218,171,75,.11) 1px,transparent 1px);background-size:58px 58px;mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent)}
+    .orb{position:absolute;z-index:-1;width:340px;height:340px;border-radius:50%;filter:blur(95px);background:rgba(213,157,48,.17);pointer-events:none;animation:drift 10s ease-in-out infinite alternate}
+    .orb.one{top:2%;left:calc(50% - 410px)}.orb.two{right:calc(50% - 420px);bottom:0;background:rgba(126,83,20,.17);animation-delay:-4s}
+    .login-shell{width:min(100%,440px);position:relative;text-align:center}
+    .brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:30px;color:var(--gold-bright);font-size:29px;font-weight:900;letter-spacing:.17em;text-shadow:0 0 10px rgba(255,213,120,.72),0 0 28px rgba(214,158,47,.45);animation:brandGlow 3.2s ease-in-out infinite}
+    .brand-mark{font-size:23px;color:#ffe7ad}
+    .eyebrow{margin:0 0 10px;color:#dcb45d;font-size:9px;font-weight:800;letter-spacing:.25em}
+    h1{margin:0;font-size:clamp(29px,6vw,38px);letter-spacing:-.045em;font-weight:800}
+    .intro{margin:11px 0 26px;color:#aaa49a;font-size:13px;line-height:1.7}
+    .login-card{padding:30px;border:1px solid rgba(225,180,85,.4);border-radius:18px;background:linear-gradient(145deg,rgba(25,23,19,.96),rgba(9,9,9,.98));box-shadow:0 25px 80px rgba(0,0,0,.62),0 0 38px rgba(207,151,42,.12),inset 0 1px 0 rgba(255,255,255,.05);text-align:left;backdrop-filter:blur(16px)}
+    .field-label{display:block;margin:0 0 8px;color:#e9dfca;font-size:11px;font-weight:650}
+    .field{width:100%;height:49px;margin:0 0 19px;padding:0 14px;border:1px solid #38342b;border-radius:9px;outline:none;background:rgba(4,4,4,.82);color:#fff;font:inherit;font-size:12px;transition:border-color .2s,box-shadow .2s}
+    .field::placeholder{color:#77736c}.field:focus{border-color:#dfb454;box-shadow:0 0 0 3px rgba(217,173,80,.13)}
+    .password-wrap{position:relative}.password-wrap .field{padding-right:67px}
+    .toggle{position:absolute;right:9px;top:0;height:49px;padding:0 7px;border:0;background:transparent;color:#e8c36e;font-size:10px;font-weight:750;cursor:pointer}
+    .form-options{display:flex;align-items:center;justify-content:flex-end;margin:-3px 0 22px}
+    .forgot{color:#e8c36e;font-size:10px;font-weight:650}.forgot:hover{text-decoration:underline}
+    .submit{width:100%;min-height:51px;display:flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:9px;background:linear-gradient(110deg,#ffe6a0 0%,#e1b34e 48%,#bd8122 100%);color:#171006;font-size:11px;font-weight:900;letter-spacing:.12em;cursor:pointer;box-shadow:0 8px 27px rgba(202,147,42,.27);transition:transform .2s,filter .2s,box-shadow .2s}
+    .submit:hover{transform:translateY(-2px);filter:brightness(1.07);box-shadow:0 12px 32px rgba(202,147,42,.38)}.submit:disabled{opacity:.65;cursor:wait;transform:none}
+    .message{display:none;margin:14px 0 0;padding:11px 12px;border-radius:8px;font-size:11px;line-height:1.6;text-align:center}
+    .message.show{display:block}.message.error{color:#ffb4b8;background:rgba(190,54,65,.1);border:1px solid rgba(240,91,104,.28)}.message.success{color:#f2d58c;background:rgba(217,164,65,.09);border:1px solid rgba(217,164,65,.28)}
+    .divider{display:flex;align-items:center;gap:12px;margin:23px 0 18px;color:#716c62;font-size:9px;letter-spacing:.12em}.divider:before,.divider:after{content:"";height:1px;flex:1;background:#302a20}
+    .signup-note{margin:0;text-align:center;color:#999187;font-size:11px}.signup-note a{color:#f0cb78;font-weight:750}.signup-note a:hover{text-decoration:underline}
+    .back-home{display:inline-block;margin-top:23px;color:#a7a196;font-size:10px}.back-home:hover{color:#f0cb78}
+    .security{margin:18px 8px 0;color:#777166;font-size:9px;line-height:1.7}
+    @keyframes brandGlow{0%,100%{text-shadow:0 0 8px rgba(255,213,120,.48),0 0 22px rgba(214,158,47,.3)}50%{text-shadow:0 0 15px rgba(255,225,157,.95),0 0 36px rgba(214,158,47,.62)}}
+    @keyframes drift{from{transform:translate(-12px,-8px) scale(.92)}to{transform:translate(18px,15px) scale(1.12)}}
+    @media(max-width:520px){.login-page{padding:30px 15px}.brand{font-size:26px;margin-bottom:25px}.login-card{padding:24px 18px;border-radius:15px}.orb{width:250px;height:250px;filter:blur(75px)}}
+    @media(prefers-reduced-motion:reduce){.brand,.orb{animation:none}.submit{transition:none}}
+  </style>
+</head>
+<body>
+  <main class="login-page">
+    <div class="login-grid" aria-hidden="true"></div>
+    <div class="orb one" aria-hidden="true"></div><div class="orb two" aria-hidden="true"></div>
+    <section class="login-shell" aria-labelledby="loginTitle">
+      <a class="brand" href="index.html" aria-label="NEXBIT home"><span class="brand-mark">✦</span><span>NEXBIT</span></a>
+      <p class="eyebrow">WELCOME BACK</p>
+      <h1 id="loginTitle">Log in to your account</h1>
+      <p class="intro">Your NEXBIT account is just one step away.</p>
+      <form class="login-card" id="nexbitLoginForm">
+        <label class="field-label" for="loginEmail">Email Address</label>
+        <input class="field" id="loginEmail" name="email" type="email" placeholder="Enter your email address" autocomplete="email" required>
+        <label class="field-label" for="loginPassword">Password</label>
+        <div class="password-wrap">
+          <input class="field" id="loginPassword" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <button class="toggle" id="togglePassword" type="button" aria-label="Show password">Show</button>
+        </div>
+        <div class="form-options"><a class="forgot" href="forgot-password.html">Forgot password?</a></div>
+        <button class="submit" id="loginSubmit" type="submit">LOG IN <span aria-hidden="true">→</span></button>
+        <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+        <div class="divider">NEW TO NEXBIT?</div>
+        <p class="signup-note">Don't have an account? <a href="signup.html">Create one</a></p>
+      </form>
+      <a class="back-home" href="index.html">← Back to homepage</a>
+      <p class="security"><span aria-hidden="true">◆</span> Keep your password private. NEXBIT support will never ask you to share it.</p>
+    </section>
+  </main>
+  <script>
+    (function(){
+      const form=document.getElementById('nexbitLoginForm');
+      const emailField=document.getElementById('loginEmail');
+      const passwordField=document.getElementById('loginPassword');
+      const toggle=document.getElementById('togglePassword');
+      const submit=document.getElementById('loginSubmit');
+      const message=document.getElementById('loginMessage');
+      const supabaseClient=window.supabase.createClient(
+        'https://cubzhenuumvsogysmaeo.supabase.co',
+        'sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N'
+      );
+      toggle.addEventListener('click',function(){
+        const reveal=passwordField.type==='password';
+        passwordField.type=reveal?'text':'password';
+        toggle.textContent=reveal?'Hide':'Show';
+        toggle.setAttribute('aria-label',reveal?'Hide password':'Show password');
+      });
+      form.addEventListener('submit',async function(event){
+        event.preventDefault();
+        message.className='message';
+        message.textContent='';
+        submit.disabled=true;
+        submit.innerHTML='SIGNING IN...';
+        try{
+          const {data,error}=await supabaseClient.auth.signInWithPassword({
+            email:emailField.value.trim(),
+            password:passwordField.value
+          });
+          if(error) throw error;
+          message.textContent='You are now logged in. Your secure session has been started.';
+          message.className='message success show';
+          passwordField.value='';
+          submit.innerHTML='LOGGED IN ✓';
+          // The account dashboard will become the post-login destination once it is built.
+        }catch(error){
+          console.error('NEXBIT login error:',error);
+          message.textContent=error.message==='Invalid login credentials'
+            ?'The email or password is incorrect. Please check your details and try again.'
+            :error.message||'We could not log you in right now. Please try again.';
+          message.className='message error show';
+          submit.disabled=false;
+          submit.innerHTML='LOG IN <span aria-hidden="true">→</span>';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
