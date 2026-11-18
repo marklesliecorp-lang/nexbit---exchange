@@ -4987,7 +4987,7 @@ footer {
 }
 .signup-terms { display: flex; align-items: flex-start; gap: 9px; margin: 2px 0 20px; color: #aaa49a; font-size: 10px; line-height: 1.6; }
 .signup-terms input { margin: 2px 0 0; accent-color: #d9aa43; }
-.signup-terms a, .signup-login-note a { color: #e6bd66; text-decoration: none; }
+.signup-terms a, .signup-login-note a { color: #f0cf7d; font-weight: 700; text-decoration: none; }
 .signup-submit {
   display: flex;
   align-items: center;
