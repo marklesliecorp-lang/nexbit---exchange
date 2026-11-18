@@ -461,34 +461,62 @@ async function loadNexbitTicker() {
 loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
 
-// NEXBIT review carousel: hold to pause, tap/click to toggle pause.
+// NEXBIT review carousel: drag/swipe manually, hold to pause, tap to toggle.
 const reviewWindow = document.querySelector(".nexbit-voices-window");
 const reviewTrack = document.querySelector(".nexbit-voices-track");
 
 if (reviewWindow && reviewTrack) {
   let pressStartedAt = 0;
+  let startX = 0;
+  let startTime = 0;
+  let activeAnimation = null;
+  let wasPaused = false;
+  let didDrag = false;
   let suppressNextClick = false;
 
   reviewWindow.addEventListener("pointerdown", (event) => {
     if (event.target.closest("a, button")) return;
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+
     pressStartedAt = Date.now();
+    startX = event.clientX;
+    didDrag = false;
+    wasPaused = reviewTrack.classList.contains("is-paused");
+    activeAnimation = reviewTrack.getAnimations()[0] || null;
+    startTime = activeAnimation ? Number(activeAnimation.currentTime) || 0 : 0;
+
     reviewTrack.classList.add("is-pressed");
+    reviewWindow.setPointerCapture?.(event.pointerId);
+  });
+
+  reviewWindow.addEventListener("pointermove", (event) => {
+    if (!pressStartedAt) return;
+    const distance = event.clientX - startX;
+
+    if (Math.abs(distance) > 6) {
+      didDrag = true;
+      suppressNextClick = true;
+    }
+
+    if (didDrag && activeAnimation) {
+      const durationSeconds = parseFloat(getComputedStyle(reviewTrack).animationDuration) || 58;
+      const pixelsPerMs = (reviewTrack.scrollWidth / 2) / (durationSeconds * 1000);
+      const durationMs = durationSeconds * 1000;
+      activeAnimation.currentTime = ((startTime - distance / pixelsPerMs) % durationMs + durationMs) % durationMs;
+    }
   });
 
   const releaseReviewPress = () => {
     if (!pressStartedAt) return;
     const pressDuration = Date.now() - pressStartedAt;
     reviewTrack.classList.remove("is-pressed");
-    suppressNextClick = pressDuration > 180;
+    if (!didDrag && pressDuration > 180) suppressNextClick = true;
     pressStartedAt = 0;
+    activeAnimation = null;
   };
 
-  document.addEventListener("pointerup", releaseReviewPress);
-  document.addEventListener("pointercancel", () => {
-    reviewTrack.classList.remove("is-pressed");
-    pressStartedAt = 0;
-    suppressNextClick = false;
-  });
+  reviewWindow.addEventListener("pointerup", releaseReviewPress);
+  reviewWindow.addEventListener("pointercancel", releaseReviewPress);
 
   reviewWindow.addEventListener("click", (event) => {
     if (event.target.closest("a, button")) return;
