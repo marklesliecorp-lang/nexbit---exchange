@@ -3824,9 +3824,9 @@ button:focus-visible {
   overflow: hidden;
   padding: 88px 24px;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(30, 105, 220, .14), transparent 58%),
-    linear-gradient(180deg, #080f1d 0%, #060b14 100%);
-  color: #f5f8ff;
+    radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, .09), transparent 58%),
+    linear-gradient(180deg, #101010 0%, #080808 100%);
+  color: #ffffff;
 }
 .how-it-works-container {
   width: min(1160px, 100%);
@@ -3840,25 +3840,25 @@ button:focus-visible {
 .how-it-works-eyebrow {
   display: inline-block;
   margin-bottom: 12px;
-  color: #69aaff;
+  color: #d4af37;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: .19em;
 }
 .how-it-works-heading h2 {
   margin: 0;
-  color: #f7f9ff;
+  color: #ffffff;
   font-size: clamp(30px, 4vw, 44px);
   font-weight: 800;
   letter-spacing: -.035em;
 }
 .how-it-works-heading h2 span {
-  color: #70aaff;
-  text-shadow: 0 0 25px rgba(55, 135, 255, .25);
+  color: #dfbb65;
+  text-shadow: 0 0 25px rgba(212, 175, 55, .20);
 }
 .how-it-works-heading p {
   margin: 13px 0 0;
-  color: #9eacc2;
+  color: #999999;
   font-size: 15px;
   line-height: 1.65;
 }
@@ -3873,16 +3873,16 @@ button:focus-visible {
   min-height: 218px;
   padding: 23px 21px 25px;
   overflow: hidden;
-  border: 1px solid rgba(115, 161, 226, .19);
+  border: 1px solid rgba(212, 175, 55, .22);
   border-radius: 17px;
-  background: linear-gradient(145deg, rgba(19, 34, 57, .96), rgba(10, 18, 32, .98));
-  box-shadow: 0 12px 32px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .035);
+  background: linear-gradient(145deg, #191919, #0b0b0b);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025);
   transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 .how-step-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(91, 157, 255, .58);
-  box-shadow: 0 16px 38px rgba(0, 68, 160, .18), 0 0 24px rgba(48, 126, 235, .09);
+  border-color: rgba(212, 175, 55, .65);
+  box-shadow: 0 16px 38px rgba(140, 105, 28, .16), 0 0 24px rgba(212, 175, 55, .08);
 }
 .how-step-top {
   display: flex;
@@ -3892,7 +3892,7 @@ button:focus-visible {
   margin-bottom: 22px;
 }
 .how-step-number {
-  color: #72adff;
+  color: #d4af37;
   font-size: 13px;
   font-weight: 800;
   letter-spacing: .12em;
@@ -3903,30 +3903,30 @@ button:focus-visible {
   height: 54px;
   flex: 0 0 54px;
   place-items: center;
-  border: 1px solid rgba(100, 164, 255, .32);
+  border: 1px solid rgba(212, 175, 55, .35);
   border-radius: 15px;
-  background: linear-gradient(145deg, rgba(44, 112, 208, .2), rgba(21, 54, 101, .22));
-  box-shadow: 0 0 22px rgba(50, 126, 232, .12);
+  background: linear-gradient(145deg, rgba(212, 175, 55, .14), rgba(115, 83, 25, .12));
+  box-shadow: 0 0 22px rgba(212, 175, 55, .10);
 }
 .how-step-icon svg {
   width: 30px;
   height: 30px;
   fill: none;
-  stroke: #8fc0ff;
+  stroke: #e4c36a;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 .how-step-card h3 {
   margin: 0 0 9px;
-  color: #f4f7ff;
+  color: #ffffff;
   font-size: 17px;
   font-weight: 750;
   line-height: 1.35;
 }
 .how-step-card p {
   margin: 0;
-  color: #a7b4c9;
+  color: #aaaaaa;
   font-size: 13px;
   line-height: 1.7;
 }
