@@ -4151,3 +4151,44 @@ footer {
     line-height: 1.75;
   }
 }
+
+
+/* NEXBIT premium gold wordmark */
+.logo > .logo-wordmark {
+  position: relative;
+  display: inline-block;
+  font-family: "Arial", "Helvetica Neue", sans-serif;
+  font-size: 1em;
+  font-weight: 900;
+  letter-spacing: 2.6px;
+  line-height: 1;
+  color: #e8c477;
+  background: linear-gradient(
+    110deg,
+    #a87924 0%,
+    #e4bd69 24%,
+    #fff0bd 42%,
+    #c99435 58%,
+    #f0d28b 76%,
+    #a87924 100%
+  );
+  background-size: 220% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: nexbitWordmarkShine 5.5s ease-in-out infinite;
+  text-shadow: 0 0 16px rgba(217, 164, 65, 0.12);
+}
+
+@keyframes nexbitWordmarkShine {
+  0%, 18% { background-position: 100% 0; }
+  55%, 100% { background-position: -120% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo > .logo-wordmark {
+    animation: none;
+    background-position: 50% 0;
+  }
+}
