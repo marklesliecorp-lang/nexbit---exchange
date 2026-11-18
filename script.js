@@ -526,21 +526,51 @@ function initializeNexbitReviewFade() {
 
   showPage(0);
 
-  // Automatically crossfade to the next review every five seconds.
-  // Keep the carousel moving without requiring taps or swipes.
-  let autoplayTimer = window.setInterval(() => {
-    if (!document.hidden) showPage(currentPage + 1);
-  }, 5000);
+  // Automatically crossfade every two seconds, pausing while a visitor holds the review.
+  const autoplayDelay = 2000;
+  let autoplayTimer = null;
+  let isHoldingReview = false;
 
-  // Stop the timer while the page is in the background and resume on return.
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
+  function startAutoplay() {
+    if (autoplayTimer !== null || isHoldingReview || document.hidden) return;
+    autoplayTimer = window.setInterval(() => {
+      showPage(currentPage + 1);
+    }, autoplayDelay);
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimer !== null) {
       window.clearInterval(autoplayTimer);
       autoplayTimer = null;
-    } else if (autoplayTimer === null) {
-      autoplayTimer = window.setInterval(() => showPage(currentPage + 1), 5000);
     }
+  }
+
+  function holdReview() {
+    isHoldingReview = true;
+    stopAutoplay();
+  }
+
+  function releaseReview() {
+    if (!isHoldingReview) return;
+    isHoldingReview = false;
+    startAutoplay();
+  }
+
+  const reviewViewport = document.getElementById("nexbitVoicesWindow");
+  if (reviewViewport) {
+    reviewViewport.addEventListener("pointerdown", holdReview);
+    reviewViewport.addEventListener("pointerup", releaseReview);
+    reviewViewport.addEventListener("pointercancel", releaseReview);
+    reviewViewport.addEventListener("pointerleave", releaseReview);
+    reviewViewport.addEventListener("lostpointercapture", releaseReview);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
   });
+
+  startAutoplay();
 }
 
 if (document.readyState === "loading") {
