@@ -74,9 +74,28 @@
   async function init(){
     const {data:{user},error}=await client.auth.getUser();
     if(error||!user){window.location.replace('login.html');return;}
+
     emailNode.textContent=user.email||'Signed-in account';
-    const displayName=user.user_metadata&&user.user_metadata.full_name?user.user_metadata.full_name.trim().split(/\s+/)[0]:'';
+
+    let profileName='';
+    const {data:profile,error:profileError}=await client
+      .from('profiles')
+      .select('full_name')
+      .eq('id',user.id)
+      .maybeSingle();
+
+    if(profileError){
+      console.warn('NEXBIT profile could not be loaded:',profileError.message);
+    }else if(profile&&typeof profile.full_name==='string'){
+      profileName=profile.full_name.trim();
+    }
+
+    const metadataName=user.user_metadata&&typeof user.user_metadata.full_name==='string'
+      ?user.user_metadata.full_name.trim()
+      :'';
+    const displayName=(profileName||metadataName).split(/\s+/)[0];
     nameNode.textContent=displayName?', '+displayName:'';
+
     message.textContent='Your secure session is active.';
   }
   document.getElementById('logoutButton').addEventListener('click',async function(){
