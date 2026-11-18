@@ -3019,3 +3019,95 @@ footer p {
   .nexbit-voices-track { animation: none; }
   .nexbit-voices-window { overflow-x: auto; }
 }
+
+
+/* NEXBIT visual polish — consistent black, champagne-gold and silver palette */
+:root {
+  --silver: #c8cdd4;
+  --silver-soft: rgba(200, 205, 212, .22);
+  --gold-border: rgba(214, 170, 72, .34);
+  --text-muted: #aeb4bd;
+}
+
+::selection {
+  color: #090909;
+  background: #e7c77d;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
+}
+
+.navbar {
+  border-bottom-color: var(--silver-soft);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .18);
+}
+
+.nav-links a {
+  transition: color .2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--gold-light);
+}
+
+.section-heading p,
+.investment-heading p,
+.promotions-heading p {
+  color: var(--text-muted);
+}
+
+.advantage-card,
+.feature-card,
+.promotion-card {
+  border: 1px solid var(--silver-soft);
+  background: linear-gradient(145deg, #171819, #0d0e0f 78%);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .22);
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+.advantage-card:hover,
+.feature-card:hover,
+.promotion-card:hover {
+  border-color: var(--gold-border);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .34), 0 0 20px rgba(214, 170, 72, .06);
+}
+
+.eyebrow,
+.investment-eyebrow,
+.promotion-label {
+  color: var(--silver);
+}
+
+.nexbit-voices {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(200, 205, 212, .045), transparent 55%),
+    #080808;
+}
+
+.nexbit-voice-card {
+  border-color: rgba(200, 205, 212, .48);
+  background: linear-gradient(145deg, #171819, #0e0f10 78%);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, .3);
+}
+
+.nexbit-voice-person img {
+  border-color: #c8cdd4;
+  box-shadow: 0 0 0 2px rgba(214, 170, 72, .16);
+}
+
+.nexbit-voice-footer {
+  border-top-color: rgba(200, 205, 212, .24);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .advantage-card,
+  .feature-card,
+  .promotion-card,
+  .nav-links a {
+    transition: none;
+  }
+}
