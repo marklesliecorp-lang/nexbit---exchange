@@ -4632,3 +4632,65 @@ footer {
   .how-step-card h3 { font-size: 12px; }
   .how-step-card p { font-size: 9.5px; }
 }
+
+
+/* PROMOTIONS & REWARDS — COMPACT CARD SIZING */
+.promotions-section {
+  padding-top: 58px;
+  padding-bottom: 58px;
+}
+.promotions-heading {
+  margin-bottom: 30px;
+}
+.promotions-grid {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 18px;
+}
+.promotion-image {
+  height: 125px;
+}
+.promotion-content {
+  padding: 15px;
+}
+.promotion-tag {
+  font-size: 9px;
+  margin-bottom: 7px;
+}
+.promotion-content h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.promotion-content p {
+  font-size: 11px;
+  line-height: 1.6;
+  min-height: 0;
+}
+.promotion-button {
+  margin-top: 9px;
+  padding: 9px 14px;
+  font-size: 11px;
+}
+@media (max-width: 600px) {
+  .promotions-section {
+    padding: 42px 5%;
+  }
+  .promotions-grid {
+    max-width: 420px;
+    gap: 14px;
+  }
+  .promotion-image {
+    height: 112px;
+  }
+  .promotion-content {
+    padding: 13px;
+  }
+  .promotion-content h3 {
+    font-size: 15px;
+  }
+  .promotion-content p {
+    font-size: 10.5px;
+    line-height: 1.55;
+  }
+}
