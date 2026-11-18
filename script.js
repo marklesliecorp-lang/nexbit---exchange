@@ -366,6 +366,44 @@ if (document.readyState === "loading") {
 
   
 // =====================================
+
+
+  // =====================================
+  // NEXBIT HOW IT WORKS CARD SCROLL REVEAL
+  // Uses the same reveal timing and scroll-out behavior as packages.
+  // =====================================
+  function initializeHowItWorksAnimation() {
+    const cards = document.querySelectorAll(
+      ".how-it-works-section .how-step-card"
+    );
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+        } else {
+          entry.target.classList.remove("is-visible");
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: "0px 0px -30px 0px"
+    });
+
+    cards.forEach((card, index) => {
+      card.classList.add("reveal-ready");
+      card.style.transitionDelay = `${index * 0.2}s`;
+      observer.observe(card);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeHowItWorksAnimation);
+  } else {
+    initializeHowItWorksAnimation();
+  }
+
 // NEXBIT LIVE MARKET TICKER
 // =====================================
 
