@@ -461,38 +461,63 @@ async function loadNexbitTicker() {
 loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
 
-// NEXBIT REVIEW CARD SCROLL REVEAL — matches the package-card animation.
-function initializeReviewRevealAnimation() {
-  const cards = document.querySelectorAll(
-    ".nexbit-voices .nexbit-voice-card"
-  );
-
-  if (!cards.length) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-      } else {
-        entry.target.classList.remove("is-visible");
-      }
-    });
-  }, {
-    threshold: 0.05,
-    rootMargin: "0px 0px -30px 0px"
-  });
-
+// NEXBIT REVIEW SLIDER — two pages, three cards per page.
+function initializeNexbitReviewSlider() {
+  const viewport = document.getElementById("nexbitVoicesWindow");
+  const track = document.getElementById("nexbitVoicesTrack");
+  if (!viewport || !track) return;
+  const pages = Array.from(track.querySelectorAll(".nexbit-voices-page"));
+  const cards = Array.from(track.querySelectorAll(".nexbit-voice-card"));
+  const previous = document.getElementById("nexbitVoicesPrev");
+  const next = document.getElementById("nexbitVoicesNext");
+  const dots = Array.from(document.querySelectorAll(".nexbit-voices-dot"));
+  let currentPage = 0;
+  let pointerStart = null;
+  let pointerDelta = 0;
   cards.forEach((card, index) => {
     card.classList.add("reveal-ready");
-    card.style.transitionDelay = `${index * 0.2}s`;
-    observer.observe(card);
+    card.style.transitionDelay = ((index % 3) * 0.16) + "s";
   });
+  function showPage(index) {
+    currentPage = Math.max(0, Math.min(pages.length - 1, index));
+    track.style.transform = "translate3d(-" + (currentPage * 100) + "%,0,0)";
+    pages.forEach((page, pageIndex) => page.querySelectorAll(".nexbit-voice-card").forEach(card => card.classList.toggle("is-visible", pageIndex === currentPage)));
+    if (previous) previous.disabled = currentPage === 0;
+    if (next) next.disabled = currentPage === pages.length - 1;
+    dots.forEach((dot, dotIndex) => {
+      const active = dotIndex === currentPage;
+      dot.classList.toggle("is-active", active);
+      if (active) dot.setAttribute("aria-current", "true");
+      else dot.removeAttribute("aria-current");
+    });
+  }
+  if (previous) previous.addEventListener("click", () => showPage(currentPage - 1));
+  if (next) next.addEventListener("click", () => showPage(currentPage + 1));
+  dots.forEach(dot => dot.addEventListener("click", () => showPage(Number(dot.dataset.reviewPage))));
+  viewport.addEventListener("pointerdown", event => {
+    if (event.target.closest("button")) return;
+    pointerStart = event.clientX;
+    pointerDelta = 0;
+    viewport.classList.add("is-dragging");
+    if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+  });
+  viewport.addEventListener("pointermove", event => { if (pointerStart !== null) pointerDelta = event.clientX - pointerStart; });
+  function finishSwipe() {
+    if (pointerStart === null) return;
+    if (Math.abs(pointerDelta) > 45) showPage(currentPage + (pointerDelta < 0 ? 1 : -1));
+    pointerStart = null;
+    pointerDelta = 0;
+    viewport.classList.remove("is-dragging");
+  }
+  viewport.addEventListener("pointerup", finishSwipe);
+  viewport.addEventListener("pointercancel", finishSwipe);
+  viewport.addEventListener("lostpointercapture", finishSwipe);
+  showPage(0);
 }
-
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeReviewRevealAnimation);
+  document.addEventListener("DOMContentLoaded", initializeNexbitReviewSlider);
 } else {
-  initializeReviewRevealAnimation();
+  initializeNexbitReviewSlider();
 }
 
 });
