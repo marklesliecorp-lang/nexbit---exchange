@@ -4192,3 +4192,9 @@ footer {
     background-position: 50% 0;
   }
 }
+
+
+/* Bring the NEXBIT wordmark closer to its logo symbol */
+.logo {
+  gap: 5px;
+}
