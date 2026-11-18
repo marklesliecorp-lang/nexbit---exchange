@@ -464,29 +464,33 @@ setInterval(loadNexbitTicker, 60000);
 // NEXBIT REVIEW SLIDER — measured one-card movement.
 });
 
-// Review slider runs independently so unrelated page scripts cannot block it.
+// NEXBIT REVIEW SLIDER — iOS-safe touch and button navigation.
 function initializeNexbitReviewSlider() {
   const viewport = document.getElementById("nexbitVoicesWindow");
   const track = document.getElementById("nexbitVoicesTrack");
-  if (!viewport || !track) return;
+  if (!viewport || !track || track.dataset.sliderReady === "true") return;
 
   const pages = Array.from(track.querySelectorAll(".nexbit-voices-page"));
   const previous = document.getElementById("nexbitVoicesPrev");
   const next = document.getElementById("nexbitVoicesNext");
   const dots = Array.from(document.querySelectorAll(".nexbit-voices-dot"));
   if (!pages.length) return;
+  track.dataset.sliderReady = "true";
 
   let currentPage = 0;
-  let pointerStart = null;
-  let pointerDelta = 0;
+  let touchStartX = null;
+  let pointerStartX = null;
 
   track.style.display = "flex";
   track.style.gap = "0";
   track.style.padding = "0";
-  track.style.transition = "transform .65s cubic-bezier(.22,1,.36,1)";
+  const slideTransition = "transform 650ms cubic-bezier(.22,1,.36,1)";
+  track.style.setProperty("transition", slideTransition, "important");
+  track.style.willChange = "transform";
 
   function setDimensions() {
-    const width = viewport.clientWidth;
+    const width = Math.round(viewport.getBoundingClientRect().width);
+    if (!width) return;
     track.style.width = (width * pages.length) + "px";
     pages.forEach(page => {
       page.style.flex = "0 0 " + width + "px";
@@ -499,8 +503,9 @@ function initializeNexbitReviewSlider() {
 
   function showPage(index, animate = true) {
     currentPage = Math.max(0, Math.min(pages.length - 1, index));
-    const width = viewport.clientWidth;
-    track.style.transition = animate ? "transform .65s cubic-bezier(.22,1,.36,1)" : "none";
+    const width = Math.round(viewport.getBoundingClientRect().width);
+    if (!width) return;
+    track.style.setProperty("transition", animate ? slideTransition : "none", "important");
     track.style.transform = "translate3d(" + (-currentPage * width) + "px,0,0)";
     pages.forEach((page, pageIndex) => {
       page.querySelectorAll(".nexbit-voice-card").forEach(card => {
@@ -519,36 +524,44 @@ function initializeNexbitReviewSlider() {
 
   if (previous) previous.addEventListener("click", () => showPage(currentPage - 1));
   if (next) next.addEventListener("click", () => showPage(currentPage + 1));
-  dots.forEach(dot => dot.addEventListener("click", () => showPage(Number(dot.dataset.reviewPage))));
+  dots.forEach(dot => dot.addEventListener("click", () => {
+    const page = Number(dot.dataset.reviewPage);
+    if (Number.isInteger(page)) showPage(page);
+  }));
 
+  // Touch events are used explicitly for iPhone Safari; no pointer capture needed.
+  viewport.addEventListener("touchstart", event => {
+    if (event.touches.length !== 1) return;
+    touchStartX = event.touches[0].clientX;
+  }, { passive: true });
+  viewport.addEventListener("touchend", event => {
+    if (touchStartX === null || !event.changedTouches.length) return;
+    const distance = event.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(distance) > 40) showPage(currentPage + (distance < 0 ? 1 : -1));
+    touchStartX = null;
+  }, { passive: true });
+  viewport.addEventListener("touchcancel", () => { touchStartX = null; }, { passive: true });
+
+  // Keep mouse/trackpad dragging on desktop.
   viewport.addEventListener("pointerdown", event => {
-    if (event.target.closest("button")) return;
-    pointerStart = event.clientX;
-    pointerDelta = 0;
-    viewport.classList.add("is-dragging");
-    if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+    if (event.pointerType === "touch" || event.target.closest("button")) return;
+    pointerStartX = event.clientX;
   });
-  viewport.addEventListener("pointermove", event => {
-    if (pointerStart !== null) pointerDelta = event.clientX - pointerStart;
+  viewport.addEventListener("pointerup", event => {
+    if (pointerStartX === null) return;
+    const distance = event.clientX - pointerStartX;
+    if (Math.abs(distance) > 40) showPage(currentPage + (distance < 0 ? 1 : -1));
+    pointerStartX = null;
   });
-  function finishSwipe() {
-    if (pointerStart === null) return;
-    if (Math.abs(pointerDelta) > 45) {
-      showPage(currentPage + (pointerDelta < 0 ? 1 : -1));
-    }
-    pointerStart = null;
-    pointerDelta = 0;
-    viewport.classList.remove("is-dragging");
-  }
-  viewport.addEventListener("pointerup", finishSwipe);
-  viewport.addEventListener("pointercancel", finishSwipe);
-  viewport.addEventListener("lostpointercapture", finishSwipe);
+  viewport.addEventListener("pointercancel", () => { pointerStartX = null; });
 
   window.addEventListener("resize", setDimensions);
+  window.addEventListener("orientationchange", () => window.setTimeout(setDimensions, 150));
+  if ("ResizeObserver" in window) new ResizeObserver(setDimensions).observe(viewport);
   setDimensions();
 }
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeNexbitReviewSlider);
+  document.addEventListener("DOMContentLoaded", initializeNexbitReviewSlider, { once: true });
 } else {
   initializeNexbitReviewSlider();
 }
