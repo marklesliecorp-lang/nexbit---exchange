@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261118-review-grid-2">
+  <link rel="stylesheet" href="style.css?v=20261118-review-slider-1">
 </head>
 
 <body>
@@ -118,7 +118,7 @@
         <p>Discover the experiences and perspectives shaping the NEXBIT community.</p>
       </div>
 
-      <div class="nexbit-voices-grid">
+      <div class="nexbit-voices-window" id="nexbitVoicesWindow"><div class="nexbit-voices-track" id="nexbitVoicesTrack"><div class="nexbit-voices-page">
         <article class="nexbit-voice-card">
           <div class="nexbit-voice-person"><img src="nexbit-portrait-01.jpg" alt="Illustrative portrait"><div><strong>Top Exchanger</strong><span>1 year ago • Emily Carter</span></div></div>
           <div class="nexbit-review-rating" aria-label="Rating: 5 out of 5 stars"><span>★★★★★</span><b>5.0</b></div>
@@ -140,6 +140,7 @@
           <div class="nexbit-voice-footer"><span>PLATFORM EXPERIENCE</span><span>03 / 06</span></div>
         </article>
 
+        </div><div class="nexbit-voices-page">
         <article class="nexbit-voice-card">
           <div class="nexbit-voice-person"><img src="nexbit-portrait-04.jpg" alt="Illustrative portrait"><div><strong>Top Exchanger</strong><span>ILLUSTRATIVE FEEDBACK</span></div></div>
           <div class="nexbit-review-rating" aria-label="Example rating: 5 out of 5 stars"><span>★★★★★</span><b>5.0</b></div>
@@ -160,6 +161,14 @@
           <p>“The experience brings useful digital-finance features together in a way that feels organized.”</p>
           <div class="nexbit-voice-footer"><span>PLATFORM EXPERIENCE</span><span>06 / 06</span></div>
         </article>
+</div></div></div>
+      <div class="nexbit-voices-controls" aria-label="Review navigation">
+        <button class="nexbit-voices-arrow" id="nexbitVoicesPrev" type="button" aria-label="Previous reviews">‹</button>
+        <div class="nexbit-voices-dots">
+          <button class="nexbit-voices-dot is-active" type="button" data-review-page="0" aria-label="Show reviews 1 to 3" aria-current="true"></button>
+          <button class="nexbit-voices-dot" type="button" data-review-page="1" aria-label="Show reviews 4 to 6"></button>
+        </div>
+        <button class="nexbit-voices-arrow" id="nexbitVoicesNext" type="button" aria-label="Next reviews">›</button>
       </div>
     </section>
 
