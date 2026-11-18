@@ -3456,3 +3456,36 @@ button:focus-visible {
     transform: none;
   }
 }
+
+
+/* NEXBIT REVIEWS — consistent left alignment across every card */
+.nexbit-voices-page .nexbit-voice-card {
+  align-items: stretch;
+  text-align: left;
+}
+.nexbit-voices-page .nexbit-voice-person {
+  width: 100%;
+  justify-content: flex-start;
+  align-self: stretch;
+  text-align: left;
+}
+.nexbit-voices-page .nexbit-voice-person > div {
+  align-items: flex-start;
+  text-align: left;
+}
+.nexbit-voices-page .nexbit-review-rating {
+  width: 100%;
+  justify-content: flex-start;
+  align-self: stretch;
+  text-align: left;
+}
+.nexbit-voices-page .nexbit-voice-card > p {
+  width: 100%;
+  align-self: stretch;
+  text-align: left;
+}
+.nexbit-voices-page .nexbit-voice-footer {
+  width: 100%;
+  align-self: stretch;
+  text-align: left;
+}
