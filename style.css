@@ -2872,3 +2872,16 @@ footer p {
     max-width: 320px;
   }
 }
+
+
+/* Further narrow investment package cards on iPhone-sized screens */
+@media (max-width: 700px) {
+  .nexbit-investments .investment-grid {
+    width: 84%;
+    max-width: 280px;
+  }
+  .nexbit-investments .investment-card {
+    width: 100%;
+    max-width: 100%;
+  }
+}
