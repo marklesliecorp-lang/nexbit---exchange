@@ -4502,3 +4502,51 @@ footer {
   .nexbit-faq-answer p { font-size: 12px; }
   .nexbit-faq-more { width: 100%; max-width: 260px; }
 }
+
+
+/* FAQ compact typography and cards */
+.nexbit-faq-heading h2 {
+  font-size: clamp(25px, 3.6vw, 36px);
+}
+.nexbit-faq-heading p {
+  font-size: 12px;
+  line-height: 1.65;
+}
+.nexbit-faq-eyebrow {
+  font-size: 9px;
+  padding: 6px 10px;
+}
+.nexbit-faq-list { gap: 8px; }
+.nexbit-faq-item summary {
+  min-height: 54px;
+  padding: 14px 17px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.nexbit-faq-item summary::after {
+  width: 25px;
+  height: 25px;
+  flex-basis: 25px;
+  font-size: 16px;
+}
+.nexbit-faq-answer { padding: 0 17px 16px; }
+.nexbit-faq-answer p {
+  font-size: 11px;
+  line-height: 1.7;
+}
+.nexbit-faq-more {
+  min-width: 185px;
+  padding: 11px 18px;
+  font-size: 11px;
+}
+@media (max-width: 560px) {
+  .nexbit-faq-heading h2 { font-size: 26px; }
+  .nexbit-faq-heading p { font-size: 11px; }
+  .nexbit-faq-item summary {
+    min-height: 50px;
+    padding: 13px 13px;
+    font-size: 11px;
+  }
+  .nexbit-faq-answer { padding: 0 13px 14px; }
+  .nexbit-faq-answer p { font-size: 10.5px; }
+}
