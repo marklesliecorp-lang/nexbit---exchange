@@ -3817,15 +3817,15 @@ button:focus-visible {
 
 
 /* =====================================
-   NEXBIT HOW IT WORKS — SLATE & BURNT ORANGE
+   NEXBIT HOW IT WORKS — BLACK & BURNT ORANGE
 ===================================== */
 .how-it-works-section {
   position: relative;
   overflow: hidden;
   padding: 88px 24px;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(222, 111, 49, .16), transparent 58%),
-    linear-gradient(180deg, #303943 0%, #202832 100%);
+    radial-gradient(ellipse at 50% 0%, rgba(222, 111, 49, .13), transparent 58%),
+    linear-gradient(180deg, #101010 0%, #080808 100%);
   color: #ffffff;
 }
 .how-it-works-container {
@@ -3873,16 +3873,16 @@ button:focus-visible {
   min-height: 218px;
   padding: 23px 21px 25px;
   overflow: hidden;
-  border: 1px solid rgba(238, 133, 77, .42);
+  border: 1px solid rgba(184, 91, 45, .48);
   border-radius: 17px;
-  background: linear-gradient(145deg, #46515d, #303a45);
-  box-shadow: 0 12px 32px rgba(5, 12, 20, .22), inset 0 1px 0 rgba(255, 255, 255, .07);
+  background: linear-gradient(145deg, #202020, #141414);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .035);
   transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 .how-step-card:hover {
   transform: translateY(-5px);
   border-color: rgba(255, 157, 99, .9);
-  box-shadow: 0 16px 38px rgba(5, 12, 20, .3), 0 0 24px rgba(222, 111, 49, .17);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .55), 0 0 24px rgba(222, 111, 49, .17);
 }
 .how-step-top {
   display: flex;
@@ -3903,9 +3903,9 @@ button:focus-visible {
   height: 54px;
   flex: 0 0 54px;
   place-items: center;
-  border: 1px solid rgba(244, 147, 91, .62);
+  border: 1px solid rgba(184, 91, 45, .72);
   border-radius: 15px;
-  background: linear-gradient(145deg, rgba(230, 119, 57, .30), rgba(173, 79, 34, .24));
+  background: linear-gradient(145deg, rgba(184, 91, 45, .25), rgba(116, 53, 27, .22));
   box-shadow: 0 0 22px rgba(222, 111, 49, .16);
 }
 .how-step-icon svg {
