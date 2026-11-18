@@ -3864,8 +3864,17 @@ button:focus-visible {
 }
 .how-it-works-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 18px;
+}
+.how-step-card {
+  grid-column: span 2;
+}
+.how-step-card:nth-last-child(2) {
+  grid-column: 1 / span 3;
+}
+.how-step-card:last-child {
+  grid-column: 4 / span 3;
 }
 .how-step-card {
   position: relative;
@@ -3933,6 +3942,11 @@ button:focus-visible {
 @media (max-width: 900px) {
   .how-it-works-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .how-step-card,
+  .how-step-card:nth-last-child(2),
+  .how-step-card:last-child {
+    grid-column: auto;
   }
 }
 @media (max-width: 560px) {
