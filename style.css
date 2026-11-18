@@ -3548,3 +3548,181 @@ button:focus-visible {
   background: linear-gradient(135deg, #777bd1, #a5a7f1);
   color: #111326;
 }
+
+
+
+/* NEXBIT INVESTMENT PACKAGES — PREMIUM GLOW DESIGN 3 */
+.nexbit-investments {
+  background:
+    radial-gradient(ellipse at 12% 38%, rgba(0, 145, 255, .10), transparent 34%),
+    radial-gradient(ellipse at 50% 0%, rgba(214, 170, 72, .10), transparent 42%),
+    radial-gradient(ellipse at 88% 38%, rgba(151, 95, 255, .11), transparent 34%),
+    linear-gradient(180deg, #090b14 0%, #07080d 100%);
+}
+
+.investment-heading h2 span {
+  background: linear-gradient(90deg, #70caff, #e2e6f0 38%, #f1c96f 68%, #c39aff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.investment-heading-line {
+  background: linear-gradient(90deg, transparent, #65bfff 25%, #d6aa48 55%, #b68aff 78%, transparent);
+}
+
+.investment-card {
+  --tier-accent: #55bfff;
+  --tier-glow: rgba(45, 158, 255, .22);
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--tier-glow), transparent 58%),
+    linear-gradient(155deg, #172235 0%, #101522 48%, #090d16 100%);
+  border: 1px solid color-mix(in srgb, var(--tier-accent) 62%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 10px 30px rgba(0,0,0,.28),
+    0 0 24px var(--tier-glow);
+}
+
+.investment-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 190px;
+  height: 190px;
+  top: -115px;
+  right: -75px;
+  border-radius: 50%;
+  background: var(--tier-glow);
+  filter: blur(38px);
+  pointer-events: none;
+}
+
+.investment-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.investment-card:hover {
+  border-color: var(--tier-accent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    0 16px 38px rgba(0,0,0,.38),
+    0 0 34px var(--tier-glow);
+}
+
+.basic-card {
+  --tier-accent: #39b9ff;
+  --tier-glow: rgba(35, 157, 255, .24);
+}
+
+.silver-card {
+  --tier-accent: #cbd6e7;
+  --tier-glow: rgba(184, 202, 230, .20);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--tier-glow), transparent 58%),
+    linear-gradient(155deg, #252d3b 0%, #151b27 48%, #0b1019 100%);
+}
+
+.gold-card {
+  --tier-accent: #f0bd4e;
+  --tier-glow: rgba(236, 174, 48, .25);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--tier-glow), transparent 58%),
+    linear-gradient(155deg, #382a13 0%, #20190e 48%, #100d09 100%);
+}
+
+.diamond-card {
+  --tier-accent: #bd8cff;
+  --tier-glow: rgba(157, 91, 255, .28);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--tier-glow), transparent 58%),
+    linear-gradient(155deg, #2a1c43 0%, #191329 48%, #0d0b17 100%);
+  border-color: rgba(189, 140, 255, .72);
+}
+
+.investment-card .package-icon {
+  border-color: var(--tier-accent);
+  color: var(--tier-accent);
+  box-shadow: 0 0 18px var(--tier-glow);
+}
+
+.basic-card .package-icon {
+  background: linear-gradient(135deg, #b9edff, #168fe8);
+  color: #071526;
+  border: 0;
+}
+
+.silver-card .package-icon {
+  background: linear-gradient(135deg, #f4f7ff, #879bb9);
+  color: #101722;
+  border: 0;
+}
+
+.gold-card .package-icon {
+  background: linear-gradient(135deg, #ffe6a1, #c18a20);
+  color: #241707;
+}
+
+.diamond-card .package-icon,
+.diamond-icon {
+  background: linear-gradient(135deg, #f0dcff, #9862e8);
+  color: #1b1030;
+  border: 0;
+}
+
+.basic-card .package-number,
+.basic-card h3,
+.basic-card .package-price strong,
+.basic-card .package-features li span { color: #79d4ff; }
+
+.silver-card .package-number,
+.silver-card h3,
+.silver-card .package-price strong,
+.silver-card .package-features li span { color: #dce6f5; }
+
+.gold-card .package-number,
+.gold-card h3,
+.gold-card .package-price strong,
+.gold-card .package-features li span { color: #f4ce75; }
+
+.diamond-card .package-number,
+.diamond-card h3,
+.diamond-card .package-price strong,
+.diamond-card .package-features li span { color: #d2adff; }
+
+.basic-button {
+  border: 1px solid #39b9ff;
+  color: #8bdcff;
+  box-shadow: 0 0 15px rgba(35,157,255,.13);
+}
+.basic-button:hover {
+  background: linear-gradient(110deg, #168fe8, #75d6ff);
+  color: #061321;
+}
+.silver-button {
+  border: 1px solid #cbd6e7;
+  color: #e5edf9;
+  box-shadow: 0 0 15px rgba(184,202,230,.12);
+}
+.silver-button:hover {
+  background: linear-gradient(110deg, #8d9fb9, #e2eaf6);
+  color: #111722;
+}
+.gold-button {
+  background: linear-gradient(110deg, #bd8420, #ffe19a 52%, #d49a2d);
+  color: #241707;
+  box-shadow: 0 0 20px rgba(236,174,48,.24);
+}
+.gold-button:hover {
+  box-shadow: 0 0 28px rgba(236,174,48,.42);
+}
+.diamond-button {
+  background: linear-gradient(110deg, #8750d2, #e1c4ff 52%, #a56ce9);
+  color: #1b1030;
+  box-shadow: 0 0 20px rgba(157,91,255,.24);
+}
+.diamond-button:hover {
+  box-shadow: 0 0 28px rgba(157,91,255,.42);
+}
