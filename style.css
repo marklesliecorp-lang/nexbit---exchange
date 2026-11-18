@@ -4306,3 +4306,53 @@ footer {
   .trust-card { padding: 22px 19px; }
   .trust-reading p { font-size: 12px; }
 }
+
+
+/* NEXBIT Security cards: compact black and sharp gold finish */
+.security-section {
+  padding-top: 58px;
+  padding-bottom: 58px;
+  background: #000000;
+}
+.security-section .trust-section-inner {
+  max-width: 960px;
+}
+.security-section .trust-intro {
+  margin-bottom: 24px;
+}
+.security-section .trust-card-grid {
+  gap: 13px;
+  margin-top: 22px;
+}
+.security-section .trust-card {
+  padding: 19px 17px;
+  background: linear-gradient(145deg, #151515 0%, #080808 100%);
+  border: 1px solid rgba(224, 173, 82, .42);
+  border-radius: 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+.security-section .trust-card-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 11px;
+  border-color: rgba(224, 173, 82, .6);
+  border-radius: 8px;
+  color: #f0c46d;
+  font-size: 17px;
+}
+.security-section .trust-card h3 {
+  margin-bottom: 7px;
+  color: #f0c46d;
+  font-size: 14px;
+}
+.security-section .trust-card p {
+  margin-bottom: 0;
+  color: #bdbdbd;
+  font-size: 12px;
+  line-height: 1.65;
+}
+@media (max-width: 760px) {
+  .security-section { padding: 46px 6%; }
+  .security-section .trust-card-grid { gap: 10px; }
+  .security-section .trust-card { padding: 16px 15px; }
+}
