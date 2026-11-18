@@ -2935,9 +2935,15 @@ footer p {
 .nexbit-voices-track {
   display: flex;
   width: max-content;
+  gap: 0;
+  padding-left: 0;
+  animation: nexbit-voices-scroll 58s linear infinite;
+}
+.nexbit-voices-group {
+  display: flex;
+  flex: 0 0 auto;
   gap: 18px;
   padding-left: 18px;
-  animation: nexbit-voices-scroll 58s linear infinite;
 }
 .nexbit-voices-window:hover .nexbit-voices-track,
 .nexbit-voices-window:active .nexbit-voices-track {
@@ -3024,7 +3030,8 @@ footer p {
 @media (max-width: 600px) {
   .nexbit-voices { padding: 43px 0 28px; }
   .nexbit-voices-heading { margin-bottom: 20px; }
-  .nexbit-voices-track { gap: 12px; padding-left: 12px; animation-duration: 48s; }
+  .nexbit-voices-track { animation-duration: 48s; }
+  .nexbit-voices-group { gap: 12px; padding-left: 12px; }
   .nexbit-voice-card { flex-basis: 286px; min-height: 215px; padding: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
