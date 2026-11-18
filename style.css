@@ -3994,3 +3994,25 @@ button:focus-visible {
     transform: none;
   }
 }
+
+
+/* HOW IT WORKS — same scroll-reveal motion as the investment package cards */
+.how-it-works-section .how-step-card.reveal-ready {
+  opacity: 0;
+  transform: translate3d(0, 35px, 0);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.how-it-works-section .how-step-card.reveal-ready.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .how-it-works-section .how-step-card.reveal-ready {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
