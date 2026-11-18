@@ -461,4 +461,43 @@ async function loadNexbitTicker() {
 loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
 
+// NEXBIT review carousel: hold to pause, tap/click to toggle pause.
+const reviewWindow = document.querySelector(".nexbit-voices-window");
+const reviewTrack = document.querySelector(".nexbit-voices-track");
+
+if (reviewWindow && reviewTrack) {
+  let pressStartedAt = 0;
+  let suppressNextClick = false;
+
+  reviewWindow.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("a, button")) return;
+    pressStartedAt = Date.now();
+    reviewTrack.classList.add("is-pressed");
+  });
+
+  const releaseReviewPress = () => {
+    if (!pressStartedAt) return;
+    const pressDuration = Date.now() - pressStartedAt;
+    reviewTrack.classList.remove("is-pressed");
+    suppressNextClick = pressDuration > 180;
+    pressStartedAt = 0;
+  };
+
+  document.addEventListener("pointerup", releaseReviewPress);
+  document.addEventListener("pointercancel", () => {
+    reviewTrack.classList.remove("is-pressed");
+    pressStartedAt = 0;
+    suppressNextClick = false;
+  });
+
+  reviewWindow.addEventListener("click", (event) => {
+    if (event.target.closest("a, button")) return;
+    if (suppressNextClick) {
+      suppressNextClick = false;
+      return;
+    }
+    reviewTrack.classList.toggle("is-paused");
+  });
+}
+
 });
