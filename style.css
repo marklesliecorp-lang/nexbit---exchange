@@ -3241,3 +3241,34 @@ button:focus-visible {
 @media (max-width: 900px) { .nexbit-voices-page { gap: 13px; } .nexbit-voices-page .nexbit-voice-card { padding: 18px; } }
 @media (max-width: 620px) { .nexbit-voices { padding: 36px 5% 26px; } .nexbit-voices-heading { margin-bottom: 18px; } .nexbit-voices-page { grid-template-columns: minmax(0,1fr); gap: 12px; padding: 0 2px 6px; } .nexbit-voices-page .nexbit-voice-card { min-height: 0; padding: 17px; } .nexbit-voices-controls { margin-top: 5px; } }
 @media (prefers-reduced-motion: reduce) { .nexbit-voices-track,.nexbit-voices-arrow,.nexbit-voices-dot { transition: none; } .nexbit-voice-card.reveal-ready { opacity: 1; transform: none; transition: none; } }
+
+/* NEXBIT REVIEWS — KEEP THREE CARDS SIDE BY SIDE ON EVERY SCREEN */
+.nexbit-voices-page {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 20px;
+}
+.nexbit-voices-page .nexbit-voice-card {
+  min-width: 0;
+  width: auto;
+}
+@media (max-width: 900px) {
+  .nexbit-voices-page {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .nexbit-voices-page .nexbit-voice-card {
+    padding: 15px 12px;
+  }
+}
+@media (max-width: 620px) {
+  .nexbit-voices-page {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0 1px 6px;
+  }
+  .nexbit-voices-page .nexbit-voice-card {
+    min-height: 0;
+    padding: 12px 9px;
+  }
+}
