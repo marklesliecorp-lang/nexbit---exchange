@@ -28,109 +28,156 @@ document.addEventListener("DOMContentLoaded", () => {
     const marketList = document.getElementById("market-list");
     if (!marketList) return;
 
+    const tags = { BTC: "TRENDING", ETH: "POPULAR", SOL: "HOT", BNB: "MARKET PICK" };
     marketList.innerHTML = "";
 
     markets.forEach(coin => {
-      const row = document.createElement("div");
-      row.className = "market-row";
+      const symbol = String(coin.symbol || "").toUpperCase();
+      const card = document.createElement("article");
+      card.className = "market-card";
+      card.dataset.symbol = symbol;
 
-      const nameCell = document.createElement("span");
-      nameCell.style.cssText =
-        "display:flex;align-items:center;gap:10px;";
+      const top = document.createElement("div");
+      top.className = "market-card-top";
+
+      const asset = document.createElement("div");
+      asset.className = "market-card-asset";
 
       const logo = document.createElement("img");
-      logo.src = coin.image || NEXBIT_COIN_LOGOS[coin.symbol] || "";
-      logo.alt = coin.name + " logo";
-      logo.onerror = () => { logo.style.display = "none"; };
-      logo.style.cssText =
-        "width:28px;height:28px;border-radius:50%;";
+      logo.className = "market-coin-logo";
+      logo.src = coin.image || NEXBIT_COIN_LOGOS[symbol] || "";
+      logo.alt = (coin.name || symbol) + " logo";
+      logo.onerror = () => { logo.style.visibility = "hidden"; };
 
+      const identity = document.createElement("div");
       const name = document.createElement("strong");
-      name.textContent = coin.name;
+      name.className = "market-coin-name";
+      name.textContent = coin.name || symbol;
+      const ticker = document.createElement("span");
+      ticker.className = "market-coin-symbol";
+      ticker.textContent = symbol + " / USDT";
+      identity.append(name, ticker);
+      asset.append(logo, identity);
 
-      const symbol = document.createElement("small");
-      symbol.textContent = coin.symbol;
-      symbol.style.cssText = "color:#929292;margin-left:5px;";
+      const tag = document.createElement("span");
+      tag.className = "market-card-tag";
+      tag.textContent = tags[symbol] || "LIVE ASSET";
+      top.append(asset, tag);
 
-      nameCell.append(logo, name, symbol);
+      const priceLine = document.createElement("div");
+      priceLine.className = "market-card-price-line";
+      const price = document.createElement("strong");
+      price.className = "market-card-price";
+      price.dataset.price = "true";
+      price.textContent = "$" + Number(coin.price).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 8
+      });
 
-      const priceCell = document.createElement("span");
-      priceCell.textContent =
-        "$" + Number(coin.price).toLocaleString("en-US");
+      const change = document.createElement("span");
+      const changeValue = Number(coin.change) || 0;
+      change.className = "market-change " + (changeValue >= 0 ? "up" : "down");
+      change.dataset.change = "true";
+      change.textContent = (changeValue >= 0 ? "▲ +" : "▼ ") + changeValue.toFixed(2) + "%";
+      priceLine.append(price, change);
 
-      const changeCell = document.createElement("span");
-      const change = Number(coin.change) || 0;
-      const positive = change >= 0;
+      const bottom = document.createElement("div");
+      bottom.className = "market-card-bottom";
+      const live = document.createElement("span");
+      live.className = "market-live-dot";
+      live.textContent = "LIVE MARKET DATA";
+      bottom.append(live);
 
-      changeCell.textContent =
-        (positive ? "+" : "") + change.toFixed(2) + "%";
-
-      changeCell.style.cssText = `
-        display:inline-block;
-        width:max-content;
-        padding:6px 9px;
-        border-radius:7px;
-        font-size:11px;
-        font-weight:800;
-        color:${positive ? "#21d68b" : "#ff5b65"};
-        background:${positive ? "rgba(33,214,139,0.12)" : "rgba(255,91,101,0.12)"};
-        border:1px solid ${positive ? "rgba(33,214,139,0.3)" : "rgba(255,91,101,0.3)"};
-      `;
-
-      const marketCell = document.createElement("span");
-
-      const cap = document.createElement("small");
-      cap.textContent = coin.marketCap
-        ? "$" + Number(coin.marketCap).toLocaleString("en-US")
-        : "--";
-
-      cap.style.cssText =
-        "display:block;color:#aaa;font-size:10px;";
-
-      marketCell.appendChild(cap);
-
-      const values = coin.sparkline || [];
-
-      if (values.length > 1) {
-        const svg = document.createElementNS(
-          "http://www.w3.org/2000/svg", "svg"
-        );
-
-        svg.setAttribute("viewBox", "0 0 100 30");
-        svg.setAttribute("width", "90");
-        svg.setAttribute("height", "30");
-
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-        const range = max - min || 1;
-
-        const points = values.map((value, index) => {
-          const x = (index / (values.length - 1)) * 100;
-          const y = 27 - ((value - min) / range) * 24;
-          return `${x},${y}`;
-        }).join(" ");
-
-        const line = document.createElementNS(
-          "http://www.w3.org/2000/svg", "polyline"
-        );
-
-        line.setAttribute("points", points);
-        line.setAttribute("fill", "none");
-        line.setAttribute(
-          "stroke", Number(coin.change) >= 0 ? "#21d68b" : "#ff5b65"
-        );
-        line.setAttribute("stroke-width", "2");
-        line.setAttribute("stroke-linecap", "round");
-        line.setAttribute("stroke-linejoin", "round");
-
-        svg.appendChild(line);
-        marketCell.appendChild(svg);
-      }
-
-      row.append(nameCell, priceCell, changeCell, marketCell);
-      marketList.appendChild(row);
+      card.append(top, priceLine, bottom);
+      marketList.appendChild(card);
     });
   }
+
+  // Binance's public WebSocket streams keep card prices moving continuously.
+  function initializeNexbitLivePrices() {
+    const symbols = ["btcusdt", "ethusdt", "solusdt", "bnbusdt"];
+    const streams = symbols.map(symbol => symbol + "@ticker").join("/");
+    const socketUrl = "wss://stream.binance.com:9443/stream?streams=" + streams;
+    let fallbackTimer = null;
+    let socket;
+
+    function updateCard(ticker) {
+      const symbol = String(ticker.s || "").replace("USDT", "");
+      const card = document.querySelector('.market-card[data-symbol="' + symbol + '"]');
+      if (!card) return;
+
+      const priceNode = card.querySelector("[data-price]");
+      const changeNode = card.querySelector("[data-change]");
+      const price = Number(ticker.c);
+      const change = Number(ticker.P);
+
+      if (priceNode && Number.isFinite(price)) {
+        priceNode.textContent = "$" + price.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 8
+        });
+      }
+
+      if (changeNode && Number.isFinite(change)) {
+        changeNode.classList.toggle("up", change >= 0);
+        changeNode.classList.toggle("down", change < 0);
+        changeNode.textContent = (change >= 0 ? "▲ +" : "▼ ") + change.toFixed(2) + "%";
+      }
+    }
+
+    async function pollBackupPrices() {
+      try {
+        const pairs = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"];
+        const url = "https://api.binance.com/api/v3/ticker/24hr?symbols=" +
+          encodeURIComponent(JSON.stringify(pairs));
+        const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
+        if (!response.ok) throw new Error("Backup live prices unavailable");
+        const data = await response.json();
+        data.forEach(coin => updateCard({
+          s: coin.symbol,
+          c: coin.lastPrice,
+          P: coin.priceChangePercent
+        }));
+      } catch (error) {
+        console.warn("NEXBIT live-price backup is temporarily unavailable:", error);
+      }
+    }
+
+    function connect() {
+      try {
+        socket = new WebSocket(socketUrl);
+        socket.onopen = () => {
+          if (fallbackTimer) {
+            clearInterval(fallbackTimer);
+            fallbackTimer = null;
+          }
+        };
+        socket.onmessage = event => {
+          try {
+            const message = JSON.parse(event.data);
+            if (message && message.data) updateCard(message.data);
+          } catch (error) {
+            console.warn("NEXBIT live market message could not be read:", error);
+          }
+        };
+        socket.onerror = () => socket.close();
+        socket.onclose = () => {
+          if (!fallbackTimer) {
+            pollBackupPrices();
+            fallbackTimer = setInterval(pollBackupPrices, 15000);
+          }
+          setTimeout(connect, 5000);
+        };
+      } catch (error) {
+        if (!fallbackTimer) fallbackTimer = setInterval(pollBackupPrices, 15000);
+        setTimeout(connect, 5000);
+      }
+    }
+
+    connect();
+  }
+
+  initializeNexbitLivePrices();
 
   async function loadMarkets() {
     if (demoNote) {
