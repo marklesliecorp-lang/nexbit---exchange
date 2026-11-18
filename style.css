@@ -2930,9 +2930,10 @@ footer p {
   width: max-content;
   gap: 18px;
   padding-left: 18px;
-  animation: nexbit-voices-scroll 38s linear infinite;
+  animation: nexbit-voices-scroll 58s linear infinite;
 }
-.nexbit-voices-window:hover .nexbit-voices-track {
+.nexbit-voices-window:hover .nexbit-voices-track,
+.nexbit-voices-window:active .nexbit-voices-track {
   animation-play-state: paused;
 }
 .nexbit-voice-card {
@@ -3012,7 +3013,7 @@ footer p {
 @media (max-width: 600px) {
   .nexbit-voices { padding: 43px 0 28px; }
   .nexbit-voices-heading { margin-bottom: 20px; }
-  .nexbit-voices-track { gap: 12px; padding-left: 12px; animation-duration: 32s; }
+  .nexbit-voices-track { gap: 12px; padding-left: 12px; animation-duration: 48s; }
   .nexbit-voice-card { flex-basis: 286px; min-height: 215px; padding: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
