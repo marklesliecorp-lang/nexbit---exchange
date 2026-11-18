@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Verify your NEXBIT account email address.">
+  <title>Verify Your Email | NEXBIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261118-email-verification">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <main class="nexbit-verify-section">
+    <div class="verify-grid" aria-hidden="true"></div>
+    <div class="verify-glow" aria-hidden="true"></div>
+    <div class="verify-shell">
+      <a class="verify-brand" href="index.html" aria-label="NEXBIT home"><span class="verify-brand-mark">✦</span><span>NEXBIT</span></a>
+      <section class="verify-card" aria-labelledby="verifyHeading">
+        <div class="verify-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="m8 3 4-2 4 2"/></svg>
+        </div>
+        <p class="verify-kicker" id="verifyKicker">ONE LAST STEP</p>
+        <h1 id="verifyHeading">You’re almost there</h1>
+        <p class="verify-copy" id="verifyCopy">We’ve sent a verification link to your email address. Open your inbox and verify your account to continue.</p>
+        <p class="verify-email" id="verifyEmail">your@email.com</p>
+        <button class="verify-resend" id="resendVerification" type="button">RESEND VERIFICATION EMAIL</button>
+        <p class="verify-message" id="verifyMessage" role="status" aria-live="polite"></p>
+        <a class="verify-back" href="index.html">Return to NEXBIT</a>
+      </section>
+      <p class="verify-footnote">If you don’t see the email, check your spam or junk folder. Never share your password or verification link with anyone.</p>
+    </div>
+  </main>
+<script>
+(function () {
+  const supabaseClient = window.supabase.createClient(
+    'https://cubzhenuumvsogysmaeo.supabase.co',
+    'sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N'
+  );
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get('email') || '';
+  const emailLabel = document.getElementById('verifyEmail');
+  const resendButton = document.getElementById('resendVerification');
+  const message = document.getElementById('verifyMessage');
+  const heading = document.getElementById('verifyHeading');
+  const copy = document.getElementById('verifyCopy');
+  const kicker = document.getElementById('verifyKicker');
+  if (email) emailLabel.textContent = email;
+  else emailLabel.hidden = true;
+
+  // Supabase completes the email-link callback and establishes a session here.
+  supabaseClient.auth.getSession().then(function ({ data }) {
+    if (data && data.session) {
+      kicker.textContent = 'EMAIL VERIFIED';
+      heading.textContent = 'You’re all set';
+      copy.textContent = 'Your email address has been verified. Your NEXBIT account is ready for the next step.';
+      emailLabel.hidden = true;
+      resendButton.hidden = true;
+      message.textContent = 'Email verification successful.';
+    }
+  });
+
+  resendButton.addEventListener('click', async function () {
+    if (!email) {
+      message.textContent = 'We can’t find the email address for this request. Please return to sign up and try again.';
+      return;
+    }
+    resendButton.disabled = true;
+    resendButton.textContent = 'SENDING...';
+    message.textContent = '';
+    try {
+      const { error } = await supabaseClient.auth.resend({
+        type: 'signup',
+        email: email,
+        options: { emailRedirectTo: 'https://nexbit-blf.pages.dev/verify-email.html' }
+      });
+      if (error) throw error;
+      message.textContent = 'A new verification email has been sent. Please check your inbox.';
+    } catch (error) {
+      console.error('NEXBIT verification resend error:', error);
+      message.textContent = error.message || 'We couldn’t resend the email. Please try again shortly.';
+    } finally {
+      resendButton.disabled = false;
+      resendButton.textContent = 'RESEND VERIFICATION EMAIL';
+    }
+  });
+})();
+</script>
+</body>
+</html>
