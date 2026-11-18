@@ -5027,3 +5027,36 @@ footer {
   .signup-brand, .signup-glow { animation: none; }
   .signup-submit { transition: none; }
 }
+
+
+/* NEXBIT email verification screen */
+.nexbit-verify-section {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: 100vh; display: grid; place-items: center;
+  padding: 56px 18px; background:
+    radial-gradient(ellipse at 50% 34%, rgba(190,137,35,.16), transparent 43%),
+    radial-gradient(ellipse at 8% 90%, rgba(112,73,17,.11), transparent 36%), #050505;
+  color: #fff;
+}
+.verify-grid { position:absolute; inset:0; z-index:-1; opacity:.13; background-image:linear-gradient(rgba(218,171,75,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(218,171,75,.09) 1px,transparent 1px); background-size:58px 58px; mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent); }
+.verify-glow { position:absolute; z-index:-1; width:340px; height:340px; border-radius:50%; filter:blur(85px); background:rgba(220,164,52,.16); pointer-events:none; animation:signupGlowDrift 9s ease-in-out infinite alternate; }
+.verify-shell { width:min(100%,460px); text-align:center; }
+.verify-brand { display:inline-flex; align-items:center; gap:9px; margin-bottom:35px; color:#f2cb70; font-size:27px; font-weight:900; letter-spacing:.15em; text-shadow:0 0 10px rgba(255,202,91,.55),0 0 28px rgba(221,162,48,.32); animation:signupWordmarkGlow 3.4s ease-in-out infinite; }
+.verify-brand-mark { color:#ffe4a0; font-size:23px; }
+.verify-card { padding:35px 30px 30px; border:1px solid rgba(225,180,85,.35); border-radius:18px; background:linear-gradient(145deg,rgba(25,23,19,.95),rgba(9,9,9,.98)); box-shadow:0 22px 70px rgba(0,0,0,.58),0 0 34px rgba(207,151,42,.1),inset 0 1px 0 rgba(255,255,255,.045); }
+.verify-icon { width:76px; height:76px; display:grid; place-items:center; margin:0 auto 23px; border:1px solid rgba(231,190,99,.7); border-radius:50%; color:#f4d17d; background:radial-gradient(circle,rgba(221,170,65,.2),rgba(221,170,65,.035) 70%); box-shadow:0 0 28px rgba(217,166,60,.2),inset 0 0 20px rgba(217,166,60,.08); }
+.verify-icon svg { width:34px; height:34px; }
+.verify-kicker { margin:0 0 10px; color:#dcb45d; font-size:9px; font-weight:800; letter-spacing:.22em; }
+.verify-card h1 { margin:0; color:#fff; font-size:clamp(27px,5vw,35px); font-weight:800; letter-spacing:-.035em; }
+.verify-copy { margin:13px 0 20px; color:#aaa49a; font-size:13px; line-height:1.75; }
+.verify-email { overflow-wrap:anywhere; margin:0 auto 22px; padding:12px 14px; border:1px solid #383126; border-radius:8px; background:rgba(5,5,5,.72); color:#f0d28c; font-size:12px; }
+.verify-resend { width:100%; min-height:49px; border:0; border-radius:8px; background:linear-gradient(110deg,#f5d887,#d9a63c 52%,#bd8122); color:#171006; font-size:11px; font-weight:900; letter-spacing:.08em; cursor:pointer; box-shadow:0 7px 25px rgba(202,147,42,.24); transition:transform .2s,filter .2s; }
+.verify-resend:hover { transform:translateY(-2px); filter:brightness(1.06); }
+.verify-resend:disabled { opacity:.65; cursor:wait; transform:none; }
+.verify-message { min-height:0; margin:0; color:#f0c96f; font-size:11px; line-height:1.6; }
+.verify-message:not(:empty) { margin-top:13px; }
+.verify-back { display:inline-block; margin-top:20px; color:#e6bd66; font-size:11px; text-decoration:none; }
+.verify-back:hover { text-decoration:underline; }
+.verify-footnote { margin:23px 5px 0; color:#817b70; font-size:9px; line-height:1.7; }
+@media(max-width:560px) { .nexbit-verify-section{padding:38px 15px}.verify-card{padding:29px 19px 25px}.verify-brand{font-size:25px;margin-bottom:27px} }
+@media(prefers-reduced-motion:reduce){.verify-brand,.verify-glow{animation:none}.verify-resend{transition:none}}
