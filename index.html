@@ -832,6 +832,35 @@
       <p class="signup-security-note"><span aria-hidden="true">◆</span> Your details should only be submitted through a secure, verified NEXBIT registration service.</p>
     </div>
   </section>
+<script>
+(function () {
+  const form = document.getElementById('nexbitSignupForm');
+  if (!form) return;
+  form.querySelectorAll('.signup-password-toggle').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const field = document.getElementById(button.dataset.target);
+      if (!field) return;
+      const reveal = field.type === 'password';
+      field.type = reveal ? 'text' : 'password';
+      button.textContent = reveal ? 'Hide' : 'Show';
+      button.setAttribute('aria-label', (reveal ? 'Hide ' : 'Show ') + 'password');
+    });
+  });
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const password = document.getElementById('signupPassword').value;
+    const confirm = document.getElementById('signupConfirmPassword').value;
+    const message = document.getElementById('signupFormMessage');
+    if (password !== confirm) {
+      message.textContent = 'Your passwords do not match. Please check and try again.';
+      document.getElementById('signupConfirmPassword').focus();
+      return;
+    }
+    message.textContent = 'The registration form design is ready, but account creation is not connected yet. No information has been submitted.';
+  });
+})();
+</script>
+
 
 </main>
 
