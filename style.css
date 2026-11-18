@@ -2924,6 +2924,13 @@ footer p {
   width: 100%;
   overflow: hidden;
   padding: 8px 0 18px;
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.nexbit-voices-window:active {
+  cursor: grabbing;
 }
 .nexbit-voices-track {
   display: flex;
