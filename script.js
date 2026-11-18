@@ -396,3 +396,5 @@ async function loadNexbitTicker() {
 
 loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
+
+});
