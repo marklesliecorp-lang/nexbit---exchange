@@ -525,6 +525,22 @@ function initializeNexbitReviewFade() {
   }
 
   showPage(0);
+
+  // Automatically crossfade to the next review every five seconds.
+  // Keep the carousel moving without requiring taps or swipes.
+  let autoplayTimer = window.setInterval(() => {
+    if (!document.hidden) showPage(currentPage + 1);
+  }, 5000);
+
+  // Stop the timer while the page is in the background and resume on return.
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    } else if (autoplayTimer === null) {
+      autoplayTimer = window.setInterval(() => showPage(currentPage + 1), 5000);
+    }
+  });
 }
 
 if (document.readyState === "loading") {
