@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Manage your NEXBIT account settings.">
+<title>Account | NEXBIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{color-scheme:dark;--line:rgba(185,116,35,.25);--gold:#c78332;--gold2:#f0bd70;--muted:#92877a;--white:#f7f2e9}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#000;color:var(--white);font-family:Inter,Arial,sans-serif}body{padding-bottom:90px}a{color:inherit;text-decoration:none}button,input{font:inherit}
+.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 900px)/2));position:sticky;top:0;z-index:5;background:rgba(0,0,0,.96);backdrop-filter:blur(14px)}
+.brand{font-size:23px;font-weight:900;letter-spacing:.17em;color:var(--gold2);text-shadow:0 0 10px rgba(220,143,62,.65),0 0 28px rgba(180,99,27,.35)}.brand span{color:var(--gold)}
+.profile-btn{border:1px solid var(--line);background:#080706;color:#e9d8c1;border-radius:10px;min-height:39px;padding:0 13px;font-size:12px;cursor:pointer}
+.layout{max-width:900px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:800;margin:0 0 9px}.heading{font-size:clamp(26px,4vw,34px);letter-spacing:-.045em;margin:0;font-weight:800}.sub{color:var(--muted);font-size:12px;margin:9px 0 24px}
+.panel{background:linear-gradient(145deg,#0b0907,#030303 80%);border:1px solid var(--line);border-radius:15px;padding:22px;box-shadow:0 12px 38px rgba(0,0,0,.4),0 0 26px rgba(173,98,31,.055);margin-bottom:16px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.panel-head h2{font-size:14px;margin:0}.status{font-size:10px;color:var(--gold2);border:1px solid var(--line);padding:6px 9px;border-radius:20px}
+.form{display:grid;gap:13px}.field-label{display:block;font-size:10px;color:#c6b49d;margin-bottom:7px}.field{width:100%;min-height:46px;padding:0 13px;border:1px solid rgba(185,116,35,.3);border-radius:9px;background:#050403;color:#f7f2e9;font-size:12px;outline:none}.field:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(240,189,112,.1)}.field[readonly]{color:#9b8e7d;background:#080706}.gold-button{min-height:44px;padding:0 17px;border:1px solid #d79a4e;border-radius:9px;background:linear-gradient(110deg,#9f5b1e,#e0a454);color:#120b04;font-size:11px;font-weight:800;cursor:pointer}.gold-button:disabled{opacity:.6;cursor:wait}.form-message{min-height:16px;color:var(--gold2);font-size:10px;line-height:1.5;margin:0}
+.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:6;background:rgba(0,0,0,.97);border-top:1px solid var(--line);padding:10px 5px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}.bottom-nav a{text-align:center;color:#887c6d;font-size:9px;font-weight:600}.bottom-nav a span{display:block;color:var(--gold2);font-size:16px;margin-bottom:5px}.bottom-nav a.active{color:var(--gold2)}
+.note{font-size:10px;line-height:1.6;color:var(--muted);margin:0}
+@media(max-width:600px){.topbar{height:62px;padding:0 16px}.brand{font-size:20px}.layout{padding:25px 15px}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="dashboard.html" aria-label="NEXBIT dashboard"><span>✦</span> NEXBIT</a>
+  <button class="profile-btn" id="logoutButton" type="button">Log out ↗</button>
+</header>
+<main class="layout">
+  <p class="eyebrow">PERSONAL AREA</p>
+  <h1 class="heading">Account settings</h1>
+  <p class="sub">Manage your personal information and account security.</p>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Personal information</h2><span class="status">Private account</span></div>
+    <form class="form" id="profileForm">
+      <div><label class="field-label" for="fullNameInput">Full name</label><input class="field" id="fullNameInput" type="text" autocomplete="name" maxlength="100" required placeholder="Your full name"></div>
+      <div><label class="field-label" for="emailInput">Registered email</label><input class="field" id="emailInput" type="email" readonly></div>
+      <div><label class="field-label" for="verificationInput">Email verification</label><input class="field" id="verificationInput" type="text" readonly value="Checking…"></div>
+      <button class="gold-button" id="saveProfileButton" type="submit">Save changes</button>
+      <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Password and security</h2><span class="status">Secure update</span></div>
+    <form class="form" id="passwordForm">
+      <div><label class="field-label" for="newPasswordInput">New password</label><input class="field" id="newPasswordInput" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters"></div>
+      <div><label class="field-label" for="confirmPasswordInput">Confirm new password</label><input class="field" id="confirmPasswordInput" type="password" autocomplete="new-password" minlength="8" required placeholder="Enter the new password again"></div>
+      <button class="gold-button" id="changePasswordButton" type="submit">Update password</button>
+      <p class="form-message" id="passwordMessage" role="status" aria-live="polite">Choose a strong password you do not use elsewhere.</p>
+    </form>
+  </section>
+  <p class="note">Your account information is private to your signed-in account. Keep your password confidential and use a unique password for NEXBIT.</p>
+  <p class="form-message" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
+</main>
+<nav class="bottom-nav" aria-label="Main navigation">
+  <a href="dashboard.html"><span>⌂</span>Home</a>
+  <a href="dashboard.html#market"><span>⌁</span>Markets</a>
+  <a href="dashboard.html#investments"><span>◈</span>Invest</a>
+  <a href="dashboard.html#assets"><span>▣</span>Assets</a>
+  <a class="active" href="account.html"><span>◎</span>Account</a>
+</nav>
+<script>
+(function(){
+  const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
+  const fullNameInput=document.getElementById('fullNameInput');
+  const emailInput=document.getElementById('emailInput');
+  const verificationInput=document.getElementById('verificationInput');
+  const authMessage=document.getElementById('authMessage');
+  let currentUser=null;
+
+  async function init(){
+    const {data:{user},error}=await client.auth.getUser();
+    if(error||!user){window.location.replace('login.html');return;}
+    currentUser=user;
+    emailInput.value=user.email||'';
+    verificationInput.value=user.email_confirmed_at?'Verified':'Not verified';
+
+    const {data:profile,error:profileError}=await client.from('profiles').select('full_name').eq('id',user.id).maybeSingle();
+    if(profileError)console.warn('NEXBIT profile load:',profileError.message);
+    const profileName=profile&&typeof profile.full_name==='string'?profile.full_name.trim():'';
+    const metadataName=user.user_metadata&&typeof user.user_metadata.full_name==='string'?user.user_metadata.full_name.trim():'';
+    fullNameInput.value=profileName||metadataName;
+    authMessage.textContent='Your secure session is active.';
+  }
+
+  document.getElementById('profileForm').addEventListener('submit',async function(event){
+    event.preventDefault();
+    if(!currentUser)return;
+    const fullName=fullNameInput.value.trim();
+    const status=document.getElementById('profileMessage');
+    const button=document.getElementById('saveProfileButton');
+    if(fullName.length<2){status.textContent='Please enter your full name.';return;}
+    button.disabled=true;button.textContent='Saving…';status.textContent='';
+    const {error:profileError}=await client.from('profiles').update({full_name:fullName}).eq('id',currentUser.id);
+    if(profileError){status.textContent='Could not save your profile. Please try again.';button.disabled=false;button.textContent='Save changes';return;}
+    const {error:metadataError}=await client.auth.updateUser({data:{full_name:fullName}});
+    status.textContent=metadataError?'Profile saved, but account details did not fully sync. Please refresh and try again.':'Your profile has been updated.';
+    button.disabled=false;button.textContent='Save changes';
+  });
+
+  document.getElementById('passwordForm').addEventListener('submit',async function(event){
+    event.preventDefault();
+    const password=document.getElementById('newPasswordInput').value;
+    const confirmation=document.getElementById('confirmPasswordInput').value;
+    const status=document.getElementById('passwordMessage');
+    const button=document.getElementById('changePasswordButton');
+    if(password.length<8){status.textContent='Your password must be at least 8 characters.';return;}
+    if(password!==confirmation){status.textContent='The passwords do not match.';return;}
+    button.disabled=true;button.textContent='Updating…';status.textContent='';
+    const {error}=await client.auth.updateUser({password});
+    if(error){status.textContent='Could not update your password. Please try again.';}
+    else{status.textContent='Password updated successfully.';this.reset();}
+    button.disabled=false;button.textContent='Update password';
+  });
+
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){authMessage.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+
+  init().catch(function(error){console.error('NEXBIT account page error:',error);window.location.replace('login.html');});
+})();
+</script>
+</body>
+</html>
