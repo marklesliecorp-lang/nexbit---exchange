@@ -4356,3 +4356,32 @@ footer {
   .security-section .trust-card-grid { gap: 10px; }
   .security-section .trust-card { padding: 16px 15px; }
 }
+
+
+/* FAQ progressive disclosure */
+.nexbit-faq-item.faq-hidden-item { display: none; }
+.nexbit-faq-section.faq-expanded .nexbit-faq-item.faq-hidden-item { display: block; }
+.nexbit-faq-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 190px;
+  margin: 24px auto 0;
+  padding: 12px 22px;
+  border: 1px solid #d9a441;
+  border-radius: 8px;
+  background: #111111;
+  color: #e7b957;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.nexbit-faq-more:hover {
+  background: #d9a441;
+  color: #080808;
+  transform: translateY(-1px);
+}
+.nexbit-faq-more span { font-size: 17px; line-height: 1; }
