@@ -461,27 +461,49 @@ async function loadNexbitTicker() {
 loadNexbitTicker();
 setInterval(loadNexbitTicker, 60000);
 
-// NEXBIT REVIEW SLIDER — two pages, three cards per page.
+// NEXBIT REVIEW SLIDER — measured one-card movement.
 function initializeNexbitReviewSlider() {
   const viewport = document.getElementById("nexbitVoicesWindow");
   const track = document.getElementById("nexbitVoicesTrack");
   if (!viewport || !track) return;
+
   const pages = Array.from(track.querySelectorAll(".nexbit-voices-page"));
-  const cards = Array.from(track.querySelectorAll(".nexbit-voice-card"));
   const previous = document.getElementById("nexbitVoicesPrev");
   const next = document.getElementById("nexbitVoicesNext");
   const dots = Array.from(document.querySelectorAll(".nexbit-voices-dot"));
+  if (!pages.length) return;
+
   let currentPage = 0;
   let pointerStart = null;
   let pointerDelta = 0;
-  cards.forEach((card, index) => {
-    card.classList.add("reveal-ready");
-    card.style.transitionDelay = "0s";
-  });
-  function showPage(index) {
+
+  track.style.display = "flex";
+  track.style.gap = "0";
+  track.style.padding = "0";
+  track.style.transition = "transform .65s cubic-bezier(.22,1,.36,1)";
+
+  function setDimensions() {
+    const width = viewport.clientWidth;
+    track.style.width = (width * pages.length) + "px";
+    pages.forEach(page => {
+      page.style.flex = "0 0 " + width + "px";
+      page.style.width = width + "px";
+      page.style.minWidth = width + "px";
+      page.style.boxSizing = "border-box";
+    });
+    showPage(currentPage, false);
+  }
+
+  function showPage(index, animate = true) {
     currentPage = Math.max(0, Math.min(pages.length - 1, index));
-    track.style.transform = "translate3d(-" + (currentPage * 100) + "%,0,0)";
-    pages.forEach((page, pageIndex) => page.querySelectorAll(".nexbit-voice-card").forEach(card => card.classList.toggle("is-visible", pageIndex === currentPage)));
+    const width = viewport.clientWidth;
+    track.style.transition = animate ? "transform .65s cubic-bezier(.22,1,.36,1)" : "none";
+    track.style.transform = "translate3d(" + (-currentPage * width) + "px,0,0)";
+    pages.forEach((page, pageIndex) => {
+      page.querySelectorAll(".nexbit-voice-card").forEach(card => {
+        card.classList.toggle("is-visible", pageIndex === currentPage);
+      });
+    });
     if (previous) previous.disabled = currentPage === 0;
     if (next) next.disabled = currentPage === pages.length - 1;
     dots.forEach((dot, dotIndex) => {
@@ -491,9 +513,11 @@ function initializeNexbitReviewSlider() {
       else dot.removeAttribute("aria-current");
     });
   }
+
   if (previous) previous.addEventListener("click", () => showPage(currentPage - 1));
   if (next) next.addEventListener("click", () => showPage(currentPage + 1));
   dots.forEach(dot => dot.addEventListener("click", () => showPage(Number(dot.dataset.reviewPage))));
+
   viewport.addEventListener("pointerdown", event => {
     if (event.target.closest("button")) return;
     pointerStart = event.clientX;
@@ -501,10 +525,14 @@ function initializeNexbitReviewSlider() {
     viewport.classList.add("is-dragging");
     if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
   });
-  viewport.addEventListener("pointermove", event => { if (pointerStart !== null) pointerDelta = event.clientX - pointerStart; });
+  viewport.addEventListener("pointermove", event => {
+    if (pointerStart !== null) pointerDelta = event.clientX - pointerStart;
+  });
   function finishSwipe() {
     if (pointerStart === null) return;
-    if (Math.abs(pointerDelta) > 45) showPage(currentPage + (pointerDelta < 0 ? 1 : -1));
+    if (Math.abs(pointerDelta) > 45) {
+      showPage(currentPage + (pointerDelta < 0 ? 1 : -1));
+    }
     pointerStart = null;
     pointerDelta = 0;
     viewport.classList.remove("is-dragging");
@@ -512,7 +540,9 @@ function initializeNexbitReviewSlider() {
   viewport.addEventListener("pointerup", finishSwipe);
   viewport.addEventListener("pointercancel", finishSwipe);
   viewport.addEventListener("lostpointercapture", finishSwipe);
-  showPage(0);
+
+  window.addEventListener("resize", setDimensions);
+  setDimensions();
 }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initializeNexbitReviewSlider);
