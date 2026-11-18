@@ -31,7 +31,7 @@
 
   <div class="nav-actions">
     <a href="#" class="login-btn">Log In</a>
-    <a href="#signup" class="signup-btn">Sign Up</a>
+    <a href="signup.html" class="signup-btn">Sign Up</a>
   </div>
 
   <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
       Invest <span>·</span> Spend <span>·</span> Withdraw
     </div>
 
-    <a href="#signup" class="hero-signup-button">
+    <a href="signup.html" class="hero-signup-button">
       <span>SIGN UP NOW</span>
       <svg class="verified-mark" viewBox="0 0 24 24" role="img" aria-label="Verified">
         <path d="M12 1.8 14.8 3l3-.1 1.2 2.8 2.4 1.8-.7 3 1 2.8-2.2 2.1-.7 3-3 .6L12 21l-2.8-1.5-3-.6-.7-3-2.2-2.1 1-2.8-.7-3L7 6l1.2-3 3 .1L12 1.8Z" fill="currentColor"/>
@@ -245,7 +245,7 @@
           <li><span>✓</span> Copy Trading: Yes</li>
         </ul>
 
-        <a href="#signup" class="package-button basic-button">
+        <a href="signup.html" class="package-button basic-button">
           Select This Package <span>→</span>
         </a>
 
@@ -278,7 +278,7 @@
           <li><span>✓</span> Copy Trading: Yes</li>
         </ul>
 
-        <a href="#signup" class="package-button silver-button">
+        <a href="signup.html" class="package-button silver-button">
           Select This Package <span>→</span>
         </a>
 
@@ -314,7 +314,7 @@
           <li><span>✓</span> Copy Trading: Yes</li>
         </ul>
 
-        <a href="#signup" class="package-button gold-button">
+        <a href="signup.html" class="package-button gold-button">
           Select This Package <span>→</span>
         </a>
 
@@ -347,7 +347,7 @@
           <li><span>✓</span> Copy Trading: Yes</li>
         </ul>
 
-        <a href="#signup" class="package-button diamond-button">
+        <a href="signup.html" class="package-button diamond-button">
           Select This Package <span>→</span>
         </a>
 
@@ -541,7 +541,7 @@
           <span class="promotion-tag">WELCOME BONUS</span>
           <h3>Welcome Rewards</h3>
           <p>Start your NEXBIT journey and explore exciting rewards for new users.</p>
-          <a href="#signup" class="promotion-button">Get Started <span>→</span></a>
+          <a href="signup.html" class="promotion-button">Get Started <span>→</span></a>
         </div>
       </div>
 
@@ -575,7 +575,7 @@
           <span class="promotion-tag">SPECIAL OFFERS</span>
           <h3>Exclusive Offers</h3>
           <p>Explore special promotions and opportunities available to NEXBIT users.</p>
-          <a href="#signup" class="promotion-button">Discover More <span>→</span></a>
+          <a href="signup.html" class="promotion-button">Discover More <span>→</span></a>
         </div>
       </div>
 
@@ -793,73 +793,6 @@
   </section>
 
 
-  <!-- NEXBIT SIGNUP EXPERIENCE -->
-  <section class="nexbit-signup-section" id="signup">
-    <div class="signup-glow signup-glow-one" aria-hidden="true"></div>
-    <div class="signup-glow signup-glow-two" aria-hidden="true"></div>
-    <div class="signup-light-grid" aria-hidden="true"></div>
-    <div class="signup-shell">
-      <div class="signup-brand">
-        <span class="signup-brand-mark">✦</span>
-        <span>NEXBIT</span>
-      </div>
-      <p class="signup-kicker">YOUR NEXT MOVE STARTS HERE</p>
-      <h2>Create Your Account</h2>
-      <p class="signup-intro">Join NEXBIT and get started with your account.</p>
-      <form class="signup-card" id="nexbitSignupForm">
-        <label for="signupFullName">Full Name</label>
-        <input id="signupFullName" name="fullName" type="text" placeholder="Enter your full name" autocomplete="name" required>
-        <label for="signupEmail">Email Address</label>
-        <input id="signupEmail" name="email" type="email" placeholder="Enter your email address" autocomplete="email" required>
-        <label for="signupPassword">Password</label>
-        <div class="signup-password-wrap">
-          <input id="signupPassword" name="password" type="password" placeholder="Create a password" autocomplete="new-password" minlength="8" required>
-          <button class="signup-password-toggle" type="button" data-target="signupPassword" aria-label="Show password">Show</button>
-        </div>
-        <label for="signupConfirmPassword">Confirm Password</label>
-        <div class="signup-password-wrap">
-          <input id="signupConfirmPassword" name="confirmPassword" type="password" placeholder="Confirm your password" autocomplete="new-password" minlength="8" required>
-          <button class="signup-password-toggle" type="button" data-target="signupConfirmPassword" aria-label="Show confirm password">Show</button>
-        </div>
-        <label class="signup-terms">
-          <input type="checkbox" id="signupTerms" required>
-          <span>I agree to the <a href="#terms-conditions">Terms &amp; Conditions</a> and <a href="#privacy-policy">Privacy Policy</a>.</span>
-        </label>
-        <button class="signup-submit" type="submit">CREATE ACCOUNT <span aria-hidden="true">→</span></button>
-        <p class="signup-form-message" id="signupFormMessage" role="status" aria-live="polite"></p>
-        <p class="signup-login-note">Already have an account? <a href="#top">Log In</a></p>
-      </form>
-      <p class="signup-security-note"><span aria-hidden="true">◆</span> Your details should only be submitted through a secure, verified NEXBIT registration service.</p>
-    </div>
-  </section>
-<script>
-(function () {
-  const form = document.getElementById('nexbitSignupForm');
-  if (!form) return;
-  form.querySelectorAll('.signup-password-toggle').forEach(function (button) {
-    button.addEventListener('click', function () {
-      const field = document.getElementById(button.dataset.target);
-      if (!field) return;
-      const reveal = field.type === 'password';
-      field.type = reveal ? 'text' : 'password';
-      button.textContent = reveal ? 'Hide' : 'Show';
-      button.setAttribute('aria-label', (reveal ? 'Hide ' : 'Show ') + 'password');
-    });
-  });
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const password = document.getElementById('signupPassword').value;
-    const confirm = document.getElementById('signupConfirmPassword').value;
-    const message = document.getElementById('signupFormMessage');
-    if (password !== confirm) {
-      message.textContent = 'Your passwords do not match. Please check and try again.';
-      document.getElementById('signupConfirmPassword').focus();
-      return;
-    }
-    message.textContent = 'The registration form design is ready, but account creation is not connected yet. No information has been submitted.';
-  });
-})();
-</script>
 
 
 </main>
