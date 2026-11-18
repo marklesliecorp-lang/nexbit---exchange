@@ -3726,3 +3726,47 @@ button:focus-visible {
 .diamond-button:hover {
   box-shadow: 0 0 28px rgba(157,91,255,.42);
 }
+
+
+/* PACKAGE EMBLEMS — INLINE BESIDE EACH TIER NAME */
+.investment-card h3.package-title {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 23px;
+}
+.package-logo {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid currentColor;
+  box-shadow: 0 0 18px var(--tier-glow);
+}
+.package-logo svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.basic-logo {
+  color: #79d4ff;
+  background: linear-gradient(145deg, rgba(57,185,255,.25), rgba(12,35,58,.8));
+}
+.silver-logo {
+  color: #e0e8f5;
+  background: linear-gradient(145deg, rgba(203,214,231,.25), rgba(40,51,69,.8));
+}
+.gold-logo {
+  color: #f4ce75;
+  background: linear-gradient(145deg, rgba(240,189,78,.28), rgba(68,46,13,.85));
+}
+.diamond-logo {
+  color: #d2adff;
+  background: linear-gradient(145deg, rgba(189,140,255,.28), rgba(47,29,75,.85));
+}
