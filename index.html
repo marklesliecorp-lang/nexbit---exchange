@@ -31,7 +31,7 @@
 
   <div class="nav-actions">
     <a href="#" class="login-btn">Log In</a>
-    <a href="#" class="signup-btn">Sign Up</a>
+    <a href="#signup" class="signup-btn">Sign Up</a>
   </div>
 
   <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
@@ -789,6 +789,47 @@
       <p>To the extent permitted by applicable law, NEXBIT is not responsible for losses arising from reliance on general website information, service interruptions or events outside its reasonable control. Nothing in these terms excludes liability that cannot legally be excluded. Updated terms will be posted on this page.</p>
       <h3>9. Governing law and operator details</h3>
       <p>The final terms must identify the NEXBIT contracting legal entity, its registered address, the governing law and dispute-resolution process. These details have not been supplied for this website and should be completed and reviewed by qualified legal counsel before launch.</p>
+    </div>
+  </section>
+
+
+  <!-- NEXBIT SIGNUP EXPERIENCE -->
+  <section class="nexbit-signup-section" id="signup">
+    <div class="signup-glow signup-glow-one" aria-hidden="true"></div>
+    <div class="signup-glow signup-glow-two" aria-hidden="true"></div>
+    <div class="signup-light-grid" aria-hidden="true"></div>
+    <div class="signup-shell">
+      <div class="signup-brand">
+        <span class="signup-brand-mark">✦</span>
+        <span>NEXBIT</span>
+      </div>
+      <p class="signup-kicker">YOUR NEXT MOVE STARTS HERE</p>
+      <h2>Create Your Account</h2>
+      <p class="signup-intro">Join NEXBIT and get started with your account.</p>
+      <form class="signup-card" id="nexbitSignupForm">
+        <label for="signupFullName">Full Name</label>
+        <input id="signupFullName" name="fullName" type="text" placeholder="Enter your full name" autocomplete="name" required>
+        <label for="signupEmail">Email Address</label>
+        <input id="signupEmail" name="email" type="email" placeholder="Enter your email address" autocomplete="email" required>
+        <label for="signupPassword">Password</label>
+        <div class="signup-password-wrap">
+          <input id="signupPassword" name="password" type="password" placeholder="Create a password" autocomplete="new-password" minlength="8" required>
+          <button class="signup-password-toggle" type="button" data-target="signupPassword" aria-label="Show password">Show</button>
+        </div>
+        <label for="signupConfirmPassword">Confirm Password</label>
+        <div class="signup-password-wrap">
+          <input id="signupConfirmPassword" name="confirmPassword" type="password" placeholder="Confirm your password" autocomplete="new-password" minlength="8" required>
+          <button class="signup-password-toggle" type="button" data-target="signupConfirmPassword" aria-label="Show confirm password">Show</button>
+        </div>
+        <label class="signup-terms">
+          <input type="checkbox" id="signupTerms" required>
+          <span>I agree to the <a href="#terms-conditions">Terms &amp; Conditions</a> and <a href="#privacy-policy">Privacy Policy</a>.</span>
+        </label>
+        <button class="signup-submit" type="submit">CREATE ACCOUNT <span aria-hidden="true">→</span></button>
+        <p class="signup-form-message" id="signupFormMessage" role="status" aria-live="polite"></p>
+        <p class="signup-login-note">Already have an account? <a href="#top">Log In</a></p>
+      </form>
+      <p class="signup-security-note"><span aria-hidden="true">◆</span> Your details should only be submitted through a secure, verified NEXBIT registration service.</p>
     </div>
   </section>
 
