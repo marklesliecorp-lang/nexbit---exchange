@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="View your NEXBIT wallet and asset activity.">
+<title>Assets | NEXBIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{color-scheme:dark;--line:rgba(185,116,35,.25);--gold:#c78332;--gold2:#f0bd70;--muted:#92877a;--white:#f7f2e9}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#000;color:var(--white);font-family:Inter,Arial,sans-serif}body{padding-bottom:88px}a{color:inherit;text-decoration:none}
+.topbar{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1120px)/2));position:sticky;top:0;z-index:5;background:rgba(0,0,0,.96);backdrop-filter:blur(14px)}
+.brand{font-size:22px;font-weight:900;letter-spacing:.17em;color:var(--gold2);text-shadow:0 0 10px rgba(220,143,62,.65),0 0 28px rgba(180,99,27,.35)}.brand span{color:var(--gold)}
+.profile-btn{border:1px solid var(--line);background:#080706;color:#e9d8c1;border-radius:10px;min-height:39px;padding:0 13px;font-size:11px;cursor:pointer}
+main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:800;margin:0 0 9px}.heading{font-size:clamp(27px,4vw,35px);letter-spacing:-.045em;margin:0;font-weight:800}.sub{color:var(--muted);font-size:12px;margin:9px 0 25px}
+.panel{background:linear-gradient(145deg,#0b0907,#030303 80%);border:1px solid var(--line);border-radius:15px;padding:22px;box-shadow:0 12px 38px rgba(0,0,0,.4),0 0 26px rgba(173,98,31,.055)}
+.balance-panel{position:relative;overflow:hidden;padding:27px;min-height:205px}.balance-panel:after{content:"";position:absolute;width:250px;height:250px;border-radius:50%;right:-80px;top:-145px;background:rgba(196,119,42,.14);filter:blur(55px);pointer-events:none}
+.label{font-size:11px;color:#b8aa98;font-weight:600}.balance-row{display:flex;align-items:baseline;gap:10px;margin-top:15px}.balance{font-size:clamp(32px,6vw,48px);font-weight:800;letter-spacing:-.05em;color:#fff}.currency{font-size:12px;color:var(--gold2);font-weight:700}.balance-note{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px}.action{display:flex;align-items:center;justify-content:center;gap:9px;min-height:49px;border:1px solid var(--line);border-radius:10px;background:#080706;color:#e9d5b9;font-size:11px;font-weight:650;opacity:.72}.action span{font-size:17px;color:var(--gold2)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:15px}.stat-value{font-size:21px;font-weight:750;margin-top:14px}.stat-note{font-size:10px;color:var(--muted);margin-top:7px}.tag{display:inline-block;font-size:9px;color:var(--gold2);border:1px solid var(--line);border-radius:20px;padding:5px 8px;margin-top:12px}
+.section{margin-top:16px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}.section-head h2{font-size:14px;margin:0}.section-head span{font-size:10px;color:var(--muted)}
+.asset-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:15px;padding:15px 0;border-top:1px solid rgba(185,116,35,.13)}.asset-name{font-size:12px;font-weight:700}.asset-desc{font-size:10px;color:var(--muted);margin-top:4px}.asset-value{text-align:right;font-size:12px;font-weight:650;color:#e9d8c1}.asset-value small{display:block;color:var(--muted);font-size:9px;font-weight:500;margin-top:4px}
+.empty{border:1px dashed rgba(199,126,48,.25);border-radius:10px;padding:27px 15px;text-align:center;color:var(--muted);font-size:11px;line-height:1.7}.empty strong{display:block;color:#e7d2b6;font-size:12px;margin-bottom:5px}
+.notice{margin-top:16px;padding:12px 14px;border:1px solid rgba(199,126,48,.2);border-radius:10px;color:#a99b89;font-size:10px;line-height:1.65;background:#050403}
+.message{font-size:10px;color:var(--gold2);margin-top:14px}
+.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:6;background:rgba(0,0,0,.97);border-top:1px solid var(--line);padding:10px 5px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}.bottom-nav a{text-align:center;color:#887c6d;font-size:9px;font-weight:600}.bottom-nav a span{display:block;color:var(--gold2);font-size:16px;margin-bottom:5px}.bottom-nav a.active{color:var(--gold2)}
+@media(max-width:700px){.topbar{height:62px;padding:0 16px}.brand{font-size:20px}main{padding:25px 15px}.panel{padding:18px}.balance-panel{padding:21px}.stats{grid-template-columns:1fr}.actions{gap:7px}.action{font-size:9px;gap:6px;min-height:46px}.action span{font-size:15px}}
+@media(max-width:370px){.actions{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="dashboard.html" aria-label="NEXBIT dashboard"><span>✦</span> NEXBIT</a>
+  <button class="profile-btn" id="logoutButton" type="button">Log out ↗</button>
+</header>
+<main>
+  <p class="eyebrow">YOUR FINANCIAL OVERVIEW</p>
+  <h1 class="heading">Assets & Wallet</h1>
+  <p class="sub">View your wallet overview, assets and account activity.</p>
+
+  <section class="panel balance-panel">
+    <div class="label">Total wallet balance</div>
+    <div class="balance-row"><div class="balance">— — —</div><div class="currency">USD</div></div>
+    <p class="balance-note">Your wallet balance will appear here once secure wallet services and verified account records are connected.</p>
+    <div class="actions" aria-label="Wallet actions">
+      <div class="action"><span>＋</span>Deposit</div>
+      <div class="action"><span>↗</span>Withdraw</div>
+      <div class="action"><span>⇄</span>Transfer</div>
+      <div class="action"><span>◷</span>History</div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Wallet summary">
+    <article class="panel"><div class="label">Available balance</div><div class="stat-value">— — —</div><div class="stat-note">Available funds will display here.</div><span class="tag">Awaiting wallet connection</span></article>
+    <article class="panel"><div class="label">Invested balance</div><div class="stat-value">— — —</div><div class="stat-note">Linked investment records will display here.</div><span class="tag">Awaiting records</span></article>
+    <article class="panel"><div class="label">Total assets</div><div class="stat-value">— — —</div><div class="stat-note">Your verified asset total will display here.</div><span class="tag">Awaiting records</span></article>
+  </section>
+
+  <section class="panel section">
+    <div class="section-head"><h2>Asset breakdown</h2><span>Account holdings</span></div>
+    <div class="asset-row"><div><div class="asset-name">USD balance</div><div class="asset-desc">US Dollar wallet</div></div><div class="asset-value">—<small>Not connected</small></div></div>
+    <div class="asset-row"><div><div class="asset-name">Digital assets</div><div class="asset-desc">Supported cryptocurrencies</div></div><div class="asset-value">—<small>Not connected</small></div></div>
+  </section>
+
+  <section class="panel section">
+    <div class="section-head"><h2>Recent transactions</h2><span>Latest activity</span></div>
+    <div class="empty"><strong>No transactions to display</strong>Your deposits, withdrawals and transfers will appear here once secure wallet services are implemented.</div>
+  </section>
+  <div class="notice">Wallet actions are currently display-only. No deposits, withdrawals, transfers, trades or investment transactions can be initiated from this page. Figures are intentionally left blank until they can be loaded from verified records.</div>
+  <p class="message" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
+</main>
+<nav class="bottom-nav" aria-label="Main navigation">
+  <a href="dashboard.html"><span>⌂</span>Home</a>
+  <a href="dashboard.html#market"><span>⌁</span>Markets</a>
+  <a href="dashboard.html#investments"><span>◈</span>Invest</a>
+  <a class="active" href="wallet.html"><span>▣</span>Assets</a>
+  <a href="account.html"><span>◎</span>Account</a>
+</nav>
+<script>
+(function(){
+  const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
+  const message=document.getElementById('authMessage');
+  async function init(){
+    const {data:{user},error}=await client.auth.getUser();
+    if(error||!user){window.location.replace('login.html');return;}
+    message.textContent='Your secure session is active.';
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT wallet session error:',error);window.location.replace('login.html');});
+})();
+</script>
+</body>
+</html>
