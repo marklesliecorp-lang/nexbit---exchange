@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Create your NEXBIT account.">
+  <title>Sign Up | NEXBIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261118-review-slider-compact2">
+</head>
+<body>
+  <!-- NEXBIT SIGNUP EXPERIENCE -->
+  <section class="nexbit-signup-section" id="signup">
+    <div class="signup-glow signup-glow-one" aria-hidden="true"></div>
+    <div class="signup-glow signup-glow-two" aria-hidden="true"></div>
+    <div class="signup-light-grid" aria-hidden="true"></div>
+    <div class="signup-shell">
+      <div class="signup-brand">
+        <span class="signup-brand-mark">✦</span>
+        <span>NEXBIT</span>
+      </div>
+      <p class="signup-kicker">YOUR NEXT MOVE STARTS HERE</p>
+      <h2>Create Your Account</h2>
+      <p class="signup-intro">Join NEXBIT and get started with your account.</p>
+      <form class="signup-card" id="nexbitSignupForm">
+        <label for="signupFullName">Full Name</label>
+        <input id="signupFullName" name="fullName" type="text" placeholder="Enter your full name" autocomplete="name" required>
+        <label for="signupEmail">Email Address</label>
+        <input id="signupEmail" name="email" type="email" placeholder="Enter your email address" autocomplete="email" required>
+        <label for="signupPassword">Password</label>
+        <div class="signup-password-wrap">
+          <input id="signupPassword" name="password" type="password" placeholder="Create a password" autocomplete="new-password" minlength="8" required>
+          <button class="signup-password-toggle" type="button" data-target="signupPassword" aria-label="Show password">Show</button>
+        </div>
+        <label for="signupConfirmPassword">Confirm Password</label>
+        <div class="signup-password-wrap">
+          <input id="signupConfirmPassword" name="confirmPassword" type="password" placeholder="Confirm your password" autocomplete="new-password" minlength="8" required>
+          <button class="signup-password-toggle" type="button" data-target="signupConfirmPassword" aria-label="Show confirm password">Show</button>
+        </div>
+        <label class="signup-terms">
+          <input type="checkbox" id="signupTerms" required>
+          <span>I agree to the <a href="index.html#terms-conditions">Terms &amp; Conditions</a> and <a href="index.html#privacy-policy">Privacy Policy</a>.</span>
+        </label>
+        <button class="signup-submit" type="submit">CREATE ACCOUNT <span aria-hidden="true">→</span></button>
+        <p class="signup-form-message" id="signupFormMessage" role="status" aria-live="polite"></p>
+        <p class="signup-login-note">Already have an account? <a href="#top">Log In</a></p>
+      </form>
+      <p class="signup-security-note"><span aria-hidden="true">◆</span> Your details should only be submitted through a secure, verified NEXBIT registration service.</p>
+    </div>
+  </section>
+
+
+<script>
+(function () {
+  const form = document.getElementById('nexbitSignupForm');
+  if (!form) return;
+  form.querySelectorAll('.signup-password-toggle').forEach(function (button) {
+    button.addEventListener('click', function () {
+      const field = document.getElementById(button.dataset.target);
+      if (!field) return;
+      const reveal = field.type === 'password';
+      field.type = reveal ? 'text' : 'password';
+      button.textContent = reveal ? 'Hide' : 'Show';
+      button.setAttribute('aria-label', (reveal ? 'Hide ' : 'Show ') + 'password');
+    });
+  });
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const password = document.getElementById('signupPassword').value;
+    const confirm = document.getElementById('signupConfirmPassword').value;
+    const message = document.getElementById('signupFormMessage');
+    if (password !== confirm) {
+      message.textContent = 'Your passwords do not match. Please check and try again.';
+      document.getElementById('signupConfirmPassword').focus();
+      return;
+    }
+    message.textContent = 'The registration form design is ready, but account creation is not connected yet. No information has been submitted.';
+  });
+})();
+</script>
+</body>
+</html>
