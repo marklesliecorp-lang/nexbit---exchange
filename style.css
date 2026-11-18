@@ -3486,3 +3486,41 @@ button:focus-visible {
   font-size: 7px !important;
   line-height: 1.25 !important;
 }
+
+
+/* NEXBIT REVIEWS — ONE CARD PER SLIDE */
+.nexbit-voices-window {
+  overflow: hidden;
+}
+.nexbit-voices-track {
+  display: flex !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  transition: transform .65s cubic-bezier(.22, 1, .36, 1) !important;
+}
+.nexbit-voices-page {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box !important;
+  justify-items: center !important;
+  gap: 0 !important;
+  padding: 0 8px 8px !important;
+}
+.nexbit-voices-page .nexbit-voice-card {
+  display: block !important;
+  width: 100% !important;
+  max-width: 760px !important;
+  min-width: 0 !important;
+  margin: 0 auto !important;
+}
+.nexbit-voices-dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
