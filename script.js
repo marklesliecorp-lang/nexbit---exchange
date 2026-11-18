@@ -499,12 +499,12 @@ if (reviewWindow && reviewTrack) {
     }
 
     if (didDrag && activeAnimation) {
-      // The track contains three identical review sets, so one loop is one third
-      // of its full width. Wrap the animation time to keep both ends continuous.
+      // The track contains two matching review sets. One seamless loop is
+      // exactly half the track width; wrap the animation time at that boundary.
       const timing = activeAnimation.effect?.getComputedTiming();
       const durationMs = Number(timing?.duration) ||
         (parseFloat(getComputedStyle(reviewTrack).animationDuration) * 1000) || 58000;
-      const loopDistance = reviewTrack.scrollWidth / 3;
+      const loopDistance = reviewTrack.scrollWidth / 2;
       const timeShift = (distance / loopDistance) * durationMs;
       activeAnimation.currentTime = ((startTime - timeShift) % durationMs + durationMs) % durationMs;
     }
