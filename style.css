@@ -3007,7 +3007,7 @@ footer p {
 }
 @keyframes nexbit-voices-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(calc(-50% - 9px)); }
+  to { transform: translateX(-50%); }
 }
 @media (max-width: 600px) {
   .nexbit-voices { padding: 43px 0 28px; }
