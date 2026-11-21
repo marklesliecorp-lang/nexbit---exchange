@@ -29,6 +29,126 @@
 .bottom-nav{display:none}.loading{color:var(--gold2);font-size:12px}
 @media(max-width:760px){.topbar{height:62px;padding:0 16px}.brand{font-size:20px}.layout{padding:25px 15px}.welcome{align-items:flex-start;flex-direction:column;gap:8px}.grid,.lower{grid-template-columns:1fr}.side-stack{grid-template-columns:1fr 1fr}.panel{padding:18px}.actions{gap:7px}.action{font-size:9px;min-height:68px}.balance-panel{min-height:200px}.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:6;background:rgba(0,0,0,.97);border-top:1px solid var(--line);padding:10px 5px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}.bottom-nav a{text-align:center;color:#887c6d;font-size:9px;font-weight:600}.bottom-nav a span{display:block;color:var(--gold2);font-size:16px;margin-bottom:5px}.date-label{font-size:10px}}
 @media(max-width:390px){.side-stack{grid-template-columns:1fr}.actions{grid-template-columns:repeat(4,1fr)}.action{font-size:8px}.profile-btn{padding:0 9px}}
+
+/* NEXBIT DASHBOARD — STYLE 2: MODERN GLASSMORPHISM */
+html, body {
+  background:
+    radial-gradient(ellipse at 78% 12%, rgba(65, 105, 155, .18), transparent 34%),
+    radial-gradient(ellipse at 12% 42%, rgba(196, 145, 65, .13), transparent 36%),
+    linear-gradient(145deg, #07090e 0%, #090b11 48%, #050609 100%);
+}
+body { background-attachment: fixed; }
+.topbar {
+  background: rgba(10, 13, 20, .72);
+  border-bottom: 1px solid rgba(210, 222, 244, .13);
+  box-shadow: 0 8px 32px rgba(0,0,0,.2);
+}
+.brand { text-shadow: 0 0 16px rgba(240,189,112,.32); }
+.icon-btn, .profile-btn {
+  background: rgba(255,255,255,.055);
+  border-color: rgba(218,225,239,.17);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.layout { position: relative; }
+.welcome { align-items: center; }
+.eyebrow { color: #e0b86e; }
+.panel {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255,255,255,.105), rgba(255,255,255,.035) 55%, rgba(12,17,27,.52));
+  border: 1px solid rgba(218,228,245,.18);
+  border-top-color: rgba(255,255,255,.28);
+  border-radius: 19px;
+  box-shadow: 0 18px 48px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.07);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+.balance-panel {
+  background:
+    radial-gradient(ellipse at 88% 18%, rgba(224,174,91,.17), transparent 38%),
+    linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.035) 58%, rgba(12,17,27,.62));
+}
+.balance-panel:after {
+  width: 280px;
+  height: 280px;
+  right: -75px;
+  top: -105px;
+  background: rgba(229,177,91,.19);
+  filter: blur(62px);
+}
+.panel-label { color: #c3cbd8; }
+.balance { text-shadow: 0 3px 22px rgba(255,255,255,.12); }
+.currency, .balance-note strong { color: #f0c978; }
+.action {
+  border-color: rgba(218,228,245,.16);
+  background: linear-gradient(145deg, rgba(255,255,255,.095), rgba(255,255,255,.025));
+  color: #f1eee8;
+  border-radius: 13px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.action:hover {
+  transform: translateY(-2px);
+  border-color: rgba(240,201,120,.55);
+  background: linear-gradient(145deg, rgba(240,201,120,.14), rgba(255,255,255,.04));
+}
+.action .symbol { color: #f0c978; }
+.status {
+  color: #f0c978;
+  border-color: rgba(240,201,120,.3);
+  background: rgba(240,201,120,.07);
+}
+.section-head h2 { color: #f5f6fa; }
+.section-head a { color: #f0c978; }
+.empty {
+  border-color: rgba(218,228,245,.2);
+  background: rgba(255,255,255,.025);
+  border-radius: 13px;
+}
+.empty strong { color: #f0d7a4; }
+.market-row { border-top-color: rgba(218,228,245,.11); }
+.coin small, .market-note { color: #a6afbf; }
+.notice {
+  border-color: rgba(218,228,245,.15);
+  background: rgba(255,255,255,.045);
+  color: #aeb7c6;
+  border-radius: 13px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.account-input {
+  border-color: rgba(218,228,245,.2);
+  background: rgba(5,8,14,.48);
+  backdrop-filter: blur(12px);
+}
+.account-input:focus {
+  border-color: #f0c978;
+  box-shadow: 0 0 0 3px rgba(240,201,120,.12);
+}
+.gold-button {
+  border-color: rgba(255,225,164,.7);
+  background: linear-gradient(115deg, #f5d995, #d7a84f);
+  box-shadow: 0 8px 24px rgba(215,168,79,.18);
+}
+.bottom-nav {
+  background: rgba(9,12,18,.82);
+  border-top-color: rgba(218,228,245,.16);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+.bottom-nav a { color: #a6afbf; }
+.bottom-nav a span { color: #f0c978; }
+@media (max-width:760px) {
+  .panel { border-radius: 16px; }
+  .balance-panel { background:
+    radial-gradient(ellipse at 90% 12%, rgba(224,174,91,.18), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,255,255,.035) 62%, rgba(12,17,27,.62)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .action { transition: none; }
+}
+
 </style>
 </head>
 <body>
