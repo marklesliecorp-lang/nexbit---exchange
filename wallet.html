@@ -30,6 +30,9 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
 .bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;z-index:6;background:rgba(0,0,0,.97);border-top:1px solid var(--line);padding:10px 5px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(14px)}.bottom-nav a{text-align:center;color:#887c6d;font-size:9px;font-weight:600}.bottom-nav a span{display:block;color:var(--gold2);font-size:16px;margin-bottom:5px}.bottom-nav a.active{color:var(--gold2)}
 @media(max-width:700px){.topbar{height:62px;padding:0 16px}.brand{font-size:20px}main{padding:25px 15px}.panel{padding:18px}.balance-panel{padding:21px}.stats{grid-template-columns:1fr}.actions{gap:7px}.action{font-size:9px;gap:6px;min-height:46px}.action span{font-size:15px}}
 @media(max-width:370px){.actions{grid-template-columns:repeat(2,1fr)}}
+
+.withdraw-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.withdraw-field{display:flex;flex-direction:column;gap:7px}.withdraw-field.full{grid-column:1/-1}.withdraw-field label{font-size:10px;color:#b8aa98;font-weight:650}.withdraw-field input,.withdraw-field select,.withdraw-field textarea{width:100%;min-height:42px;padding:10px;border:1px solid var(--line);border-radius:8px;background:#030302;color:var(--white);font:12px Inter,Arial,sans-serif}.withdraw-field textarea{min-height:68px;resize:vertical}.withdraw-submit{min-height:43px;padding:0 16px;border:1px solid var(--gold);border-radius:8px;background:#211407;color:var(--gold2);font-weight:750;font-size:11px;cursor:pointer}.withdraw-submit:disabled{opacity:.5}.withdraw-history-row{padding:13px 0;border-top:1px solid rgba(185,116,35,.13);display:grid;grid-template-columns:1fr auto;gap:10px;font-size:10px}.withdraw-history-row strong{display:block;font-size:11px;color:#e9d8c1;margin-bottom:4px}.withdraw-status{color:var(--gold2);text-transform:capitalize}.withdraw-help{font-size:10px;color:#b9a58c;line-height:1.65;margin:12px 0 0}
+@media(max-width:520px){.withdraw-form{grid-template-columns:1fr}.withdraw-field.full{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -48,7 +51,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     <p class="balance-note">USD ledger balance. Other supported assets are listed separately below.</p>
     <div class="actions" aria-label="Wallet actions">
       <button class="action action-button" id="openDeposit" type="button"><span>＋</span>Deposit</button>
-      <div class="action"><span>↗</span>Withdraw</div>
+      <button class="action action-button" id="openWithdraw" type="button"><span>↗</span>Withdraw</button>
       <div class="action"><span>⇄</span>Transfer</div>
       <div class="action"><span>◷</span>History</div>
     </div>
@@ -60,7 +63,23 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     <p class="deposit-warning">Only send the exact asset using the network shown on its card. Sending through a different network or to an incorrect address may result in permanent loss. Deposits are not automatically credited yet; blockchain verification will be added separately.</p>
   </section>
 
-  <section class="stats" aria-label="Wallet summary">
+
+  <section class="panel deposit-panel" id="withdrawPanel" hidden>
+    <div class="section-head"><div><h2>Request a withdrawal</h2><span>Send a request for administrator review</span></div><button class="deposit-back" id="closeWithdraw" type="button">Close</button></div>
+    <form class="withdraw-form" id="withdrawForm">
+      <div class="withdraw-field"><label for="withdrawAsset">Asset</label><select id="withdrawAsset" required><option value="">Select asset</option></select></div>
+      <div class="withdraw-field"><label for="withdrawAmount">Amount</label><input id="withdrawAmount" type="number" min="0.000000000000000001" step="any" placeholder="Enter amount" required></div>
+      <div class="withdraw-field"><label for="withdrawNetwork">Network</label><input id="withdrawNetwork" maxlength="40" placeholder="e.g. Ethereum, TON, Bitcoin" required></div>
+      <div class="withdraw-field"><label for="withdrawAddress">Receiving wallet address</label><input id="withdrawAddress" maxlength="256" autocomplete="off" placeholder="Paste your destination address" required></div>
+      <div class="withdraw-field full"><label for="withdrawNote">Note (optional)</label><textarea id="withdrawNote" maxlength="500" placeholder="Optional information for the administrator"></textarea></div>
+      <div class="withdraw-field full"><button class="withdraw-submit" id="withdrawSubmit" type="submit">Submit withdrawal request</button></div>
+    </form>
+    <p class="withdraw-help">Requests are checked against your recorded account balance and remain subject to review. Submitting or approving a request does not send funds. Verify the asset, network and destination address carefully.</p>
+    <p class="message" id="withdrawMessage" role="status" aria-live="polite"></p>
+    <div class="section-head" style="margin-top:22px"><h2>Your withdrawal requests</h2><span>Recent requests</span></div>
+    <div id="withdrawHistory"><div class="empty">Loading your requests…</div></div>
+  </section>
+\n  <section class="stats" aria-label="Wallet summary">
     <article class="panel"><div class="label">Available USD balance</div><div class="stat-value" id="walletAvailableBalance">— — —</div><div class="stat-note">Available funds will display here.</div><span class="tag">Awaiting wallet connection</span></article>
     <article class="panel"><div class="label">Invested balance</div><div class="stat-value">— — —</div><div class="stat-note">Linked investment records will display here.</div><span class="tag">Awaiting records</span></article>
     <article class="panel"><div class="label">Asset types held</div><div class="stat-value" id="walletAssetCount">—</div><div class="stat-note">Number of asset codes with a positive balance.</div><span class="tag">Account ledger</span></article>
@@ -106,9 +125,38 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     message.textContent='Your secure session is active. Displayed amounts are internal ledger records, not proof of on-chain custody or transfers.';
     document.getElementById('openDeposit').addEventListener('click',openDeposits);
     document.getElementById('closeDeposit').addEventListener('click',()=>{document.getElementById('depositPanel').hidden=true;});
+    document.getElementById('openWithdraw').addEventListener('click',openWithdrawals);
+    document.getElementById('closeWithdraw').addEventListener('click',()=>{document.getElementById('withdrawPanel').hidden=true;});
+    document.getElementById('withdrawForm').addEventListener('submit',submitWithdrawal);
+    const assetSelect=document.getElementById('withdrawAsset');
+    rows.filter(r=>Number(r.balance)>0).forEach(r=>{const option=document.createElement('option');option.value=r.asset_code;option.textContent=r.asset_code+' — available ledger balance: '+qty(r.balance);assetSelect.appendChild(option);});
     if(new URLSearchParams(window.location.search).get('open')==='deposit')openDeposits();
   }
-  async function openDeposits(){
+
+  async function openWithdrawals(){
+    const panel=document.getElementById('withdrawPanel');panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'start'});
+    await loadWithdrawalHistory();
+  }
+  async function loadWithdrawalHistory(){
+    const target=document.getElementById('withdrawHistory');target.innerHTML='<div class="empty">Loading your requests…</div>';
+    const {data,error}=await client.rpc('nexbit_list_my_withdrawal_requests',{p_limit:50});
+    if(error){target.innerHTML='<div class="empty"><strong>Unable to load withdrawal history</strong>Please refresh and try again.</div>';console.error(error);return;}
+    const rows=data||[];
+    target.innerHTML=rows.length?rows.map(r=>'<div class="withdraw-history-row"><div><strong>'+safe(r.amount)+' '+safe(r.asset_code)+' · '+safe(r.network)+'</strong><span>'+safe(r.reference)+' · '+safe(new Date(r.created_at).toLocaleString())+'</span>'+(r.admin_comment?'<div class="asset-desc">Admin note: '+safe(r.admin_comment)+'</div>':'')+'</div><div class="withdraw-status">'+safe(r.status)+'</div></div>').join(''):'<div class="empty">You have not submitted any withdrawal requests.</div>';
+  }
+  async function submitWithdrawal(event){
+    event.preventDefault();const button=document.getElementById('withdrawSubmit'),msg=document.getElementById('withdrawMessage');
+    const asset=document.getElementById('withdrawAsset').value,amount=document.getElementById('withdrawAmount').value,network=document.getElementById('withdrawNetwork').value.trim(),address=document.getElementById('withdrawAddress').value.trim(),note=document.getElementById('withdrawNote').value.trim();
+    if(!asset||!amount||Number(amount)<=0||!network||!address){msg.textContent='Complete all required fields with a valid amount.';return;}
+    if(!window.confirm('Submit a withdrawal request for '+amount+' '+asset+' on '+network+' to the address you entered? Please verify the destination carefully.'))return;
+    button.disabled=true;button.textContent='Submitting…';msg.textContent='';
+    const {data,error}=await client.rpc('nexbit_submit_withdrawal_request',{p_asset_code:asset,p_amount:amount,p_network:network,p_destination_address:address,p_user_note:note||null});
+    button.disabled=false;button.textContent='Submit withdrawal request';
+    if(error){msg.textContent=error.message||'Could not submit your request.';return;}
+    const result=Array.isArray(data)?data[0]:data;msg.textContent='Request submitted. Reference: '+(result?.reference||'created')+'. It is awaiting administrator review; no funds have been sent.';
+    document.getElementById('withdrawForm').reset();await loadWithdrawalHistory();
+  }
+\n  async function openDeposits(){
     const panel=document.getElementById('depositPanel');
     panel.hidden=false;
     panel.scrollIntoView({behavior:'smooth',block:'start'});
