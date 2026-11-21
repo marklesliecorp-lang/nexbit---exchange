@@ -278,7 +278,11 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  function isSupportedDepositForApproval(row){
    const network=String(row?.network||'').toLowerCase();
    const asset=String(row?.asset_code||'').toUpperCase();
-   return row?.status==='awaiting_review' && ((network==='ethereum' && ['ETH','USDT'].includes(asset)) || (network==='solana' && asset==='SOL'));
+   return row?.status==='awaiting_review' && (
+     (network==='ethereum' && ['ETH','USDT'].includes(asset)) ||
+     (network==='solana' && asset==='SOL') ||
+     (network==='bitcoin' && asset==='BTC')
+   );
  }
  let detectedDepositSearchTimer=null;
  async function loadDetectedDeposits(){
@@ -291,7 +295,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
      if(error)throw error;
      const rows=data||[];
      if(!rows.length){
-       $('detectedDepositsBody').innerHTML='<tr><td colspan="8" class="empty">No detected deposits found yet. Deposits appear here after the Ethereum monitor detects an on-chain transfer.</td></tr>';
+       $('detectedDepositsBody').innerHTML='<tr><td colspan="8" class="empty">No detected deposits found yet. Deposits appear here after a configured blockchain monitor detects an on-chain transfer.</td></tr>';
      }else{
        $('detectedDepositsBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(date(r.detected_at))+'</td><td><span class="pill">'+escapeHtml(r.asset_code)+'</span></td><td>'+escapeHtml(String(r.amount))+'</td><td>'+escapeHtml(r.network)+'</td><td>'+escapeHtml(String(r.confirmations))+'</td><td style="max-width:220px;overflow-wrap:anywhere">'+escapeHtml(r.tx_hash)+'</td><td><span class="pill">'+escapeHtml(r.status.replaceAll('_',' '))+'</span></td><td><button class="view-btn" type="button" data-detected-deposit-index="'+i+'">Review</button></td></tr>').join('');
        $('detectedDepositsBody').querySelectorAll('[data-detected-deposit-index]').forEach(b=>b.addEventListener('click',()=>openDetectedDepositReview(rows[Number(b.dataset.detectedDepositIndex)])));
@@ -320,7 +324,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    $('approveDetectedDeposit').disabled = !canApprove || !selectedDepositUser;
    $('detectedDepositApprovalNote').textContent = canApprove
      ? (selectedDepositUser ? (String(row.network).toLowerCase()==='solana' ? 'Ready to verify Solana finality and the exact wallet receipt before crediting.' : 'Ready to check Ethereum finality before crediting.') : 'Select the correct user first. No balance will change until you approve.')
-     : 'Approval is available only for awaiting-review Ethereum ETH/USDT and Solana SOL deposits.';
+     : 'Approval is available only for awaiting-review supported Ethereum, Solana and Bitcoin deposits.';
    $('detectedDepositReview').hidden=false;
    $('detectedDepositReview').scrollIntoView({behavior:'smooth',block:'nearest'});
  }
@@ -331,18 +335,20 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    const network=String(row.network).toLowerCase();
    if(!isSupportedDepositForApproval(row))return;
    const solana=network==='solana';
-   if(!window.confirm('Approve '+row.amount+' '+row.asset_code+' for '+(selectedDepositUser.user_email||selectedDepositUser.user_id)+'? NEXBIT will verify '+(solana?'Solana finality and the exact amount received by the NEXBIT wallet':'Ethereum finality')+' first. If verification fails, no balance will be credited.'))return;
+   const bitcoin=network==='bitcoin';
+   const verification=bitcoin?'six Bitcoin confirmations and the exact BTC outputs to the NEXBIT wallet':solana?'Solana finality and the exact amount received by the NEXBIT wallet':'Ethereum finality';
+   if(!window.confirm('Approve '+row.amount+' '+row.asset_code+' for '+(selectedDepositUser.user_email||selectedDepositUser.user_id)+'? NEXBIT will verify '+verification+' first. If verification fails, no balance will be credited.'))return;
    const button=$('approveDetectedDeposit');
    button.disabled=true;
-   $('detectedDepositApprovalNote').textContent=solana?'Checking Solana finality and wallet receipt…':'Checking Ethereum finality…';
+   $('detectedDepositApprovalNote').textContent=bitcoin?'Checking Bitcoin transaction and six confirmations…':solana?'Checking Solana finality and wallet receipt…':'Checking Ethereum finality…';
    try{
-     const functionName=solana?'approve-solana-deposit':'approve-ethereum-deposit';
+     const functionName=bitcoin?'approve-bitcoin-deposit':solana?'approve-solana-deposit':'approve-ethereum-deposit';
      const {data,error}=await client.functions.invoke(functionName,{body:{deposit_id:row.id}});
      if(error)throw error;
      if(!data?.success)throw new Error(data?.error||'Deposit approval was not completed.');
      const result=data.result||{};
      $('detectedDepositApprovalNote').textContent='Approved and credited: '+String(result.amount||row.amount)+' '+String(result.asset_code||row.asset_code)+'. New balance: '+String(result.new_balance??'updated')+'.';
-     $('detectedDepositsMessage').textContent='Deposit approved and credited after '+(solana?'Solana finality and wallet receipt':'Ethereum finality')+' were verified.';
+     $('detectedDepositsMessage').textContent='Deposit approved after '+(bitcoin?'Bitcoin six-confirmation and exact-output verification':solana?'Solana finality and wallet receipt verification':'Ethereum finality verification')+'.';
      selectedDetectedDeposit=null;selectedDepositUser=null;
      await loadDetectedDeposits();
    }catch(error){
