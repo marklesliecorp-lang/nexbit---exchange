@@ -90,7 +90,79 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
   const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
   const message=document.getElementById('authMessage');
   const qty=value=>Number(value||0).toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:18});
-  const usd=value=>'
+  const usd=value=>'(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+  async function init(){
+    const {data:{user},error}=await client.auth.getUser();
+    if(error||!user){window.location.replace('login.html');return;}
+    const {data:balances,error:balanceError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance,updated_at').eq('user_id',user.id).order('asset_code');
+    if(balanceError)throw balanceError;
+    const rows=balances||[],usdRow=rows.find(r=>r.asset_code==='USD'),usdAmount=Number(usdRow?.balance||0);
+    document.getElementById('walletTotalBalance').textContent=usd(usdAmount);
+    document.getElementById('walletAvailableBalance').textContent=usd(usdAmount);
+    document.getElementById('walletAssetCount').textContent=rows.filter(r=>Number(r.balance)>0).length;
+    document.getElementById('assetBreakdown').innerHTML=rows.length?rows.map(r=>'<div class="asset-row"><div><div class="asset-name">'+safe(r.asset_code)+'</div><div class="asset-desc">'+(r.asset_code==='USD'?'US Dollar account ledger':'Digital asset account ledger')+'</div></div><div class="asset-value">'+safe(qty(r.balance))+' '+safe(r.asset_code)+'<small>Updated '+safe(r.updated_at?new Date(r.updated_at).toLocaleString():'not yet updated')+'</small></div></div>').join(''):'<div class="empty"><strong>No asset balances yet</strong>Your account has no recorded asset balances.</div>';
+    message.textContent='Your secure session is active. Displayed amounts are internal ledger records, not proof of on-chain custody or transfers.';
+    document.getElementById('openDeposit').addEventListener('click',openDeposits);
+    document.getElementById('closeDeposit').addEventListener('click',()=>{document.getElementById('depositPanel').hidden=true;});
+  }
+  async function openDeposits(){
+    const panel=document.getElementById('depositPanel');
+    panel.hidden=false;
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+    const target=document.getElementById('depositAddresses');
+    target.innerHTML='<div class="empty">Loading available deposit addresses…</div>';
+    const {data,error}=await client.rpc('nexbit_list_active_deposit_addresses');
+    if(error){target.innerHTML='<div class="empty"><strong>Unable to load deposit addresses</strong>Please try again later.</div>';console.error(error);return;}
+    const rows=data||[];
+    const cards=supportedDeposits.map(([asset,network])=>{
+      const row=rows.find(r=>r.asset_code===asset&&String(r.network).toLowerCase()===network.toLowerCase());
+      if(!row)return '';
+      return '<article class="deposit-card"><h3>'+safe(asset)+'</h3><div class="deposit-network">Network: '+safe(network)+'</div><div class="deposit-address">'+safe(row.address)+'</div><button class="copy-address" type="button" data-copy="'+safe(row.address)+'">Copy address</button></article>';
+    }).filter(Boolean).join('');
+    target.innerHTML=cards?'<div class="deposit-grid">'+cards+'</div>':'<div class="empty"><strong>No deposit addresses available</strong>Please check back later. Supported options will appear here when the administrator activates their addresses.</div>';
+    target.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{
+      try{await navigator.clipboard.writeText(btn.dataset.copy);btn.textContent='Copied';}
+      catch(e){btn.textContent='Copy unavailable';}
+    }));
+
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT wallet session error:',error);message.textContent=error.message||'Could not load your asset balances.';});
+})();
+</script>
+</body>
+</html>+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+  const supportedDeposits=[['BTC','Bitcoin'],['ETH','Ethereum'],['USDT','Ethereum'],['USDT','TON'],['XRP','XRP Ledger'],['SOL','Solana']];
+  function safe(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+  async function init(){
+    const {data:{user},error}=await client.auth.getUser();
+    if(error||!user){window.location.replace('login.html');return;}
+    const {data:balances,error:balanceError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance,updated_at').eq('user_id',user.id).order('asset_code');
+    if(balanceError)throw balanceError;
+    const rows=balances||[],usdRow=rows.find(r=>r.asset_code==='USD'),usdAmount=Number(usdRow?.balance||0);
+    document.getElementById('walletTotalBalance').textContent=usd(usdAmount);
+    document.getElementById('walletAvailableBalance').textContent=usd(usdAmount);
+    document.getElementById('walletAssetCount').textContent=rows.filter(r=>Number(r.balance)>0).length;
+    document.getElementById('assetBreakdown').innerHTML=rows.length?rows.map(r=>'<div class="asset-row"><div><div class="asset-name">'+safe(r.asset_code)+'</div><div class="asset-desc">'+(r.asset_code==='USD'?'US Dollar account ledger':'Digital asset account ledger')+'</div></div><div class="asset-value">'+safe(qty(r.balance))+' '+safe(r.asset_code)+'<small>Updated '+safe(r.updated_at?new Date(r.updated_at).toLocaleString():'not yet updated')+'</small></div></div>').join(''):'<div class="empty"><strong>No asset balances yet</strong>Your account has no recorded asset balances.</div>';
+    message.textContent='Your secure session is active. Displayed amounts are internal ledger records, not proof of on-chain custody or transfers.';
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT wallet session error:',error);message.textContent=error.message||'Could not load your asset balances.';});
+})();
+</script>
+</body>
+</html>+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+  const supportedDeposits=[['BTC','Bitcoin'],['ETH','Ethereum'],['USDT','Ethereum'],['USDT','TON'],['XRP','XRP Ledger'],['SOL','Solana']];
   function safe(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
   async function init(){
     const {data:{user},error}=await client.auth.getUser();
