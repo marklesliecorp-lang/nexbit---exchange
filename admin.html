@@ -31,7 +31,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     <article class="stat"><small>Email verified</small><strong id="verifiedUsers">—</strong></article>
     <article class="stat"><small>New users · 30 days</small><strong id="newUsers">—</strong></article>
   </section>
-  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" data-panel="withdrawalsPanel">Withdrawals</button><button class="tab" type="button" data-panel="transfersPanel">Transfer Requests</button><button class="tab" type="button" data-panel="balancesPanel">Balances</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="detectedDepositsPanel">Detected Deposits</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" data-panel="withdrawalsPanel">Withdrawals</button><button class="tab" type="button" data-panel="transfersPanel">Transfer Requests</button><button class="tab" type="button" data-panel="balancesPanel">Balances</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
   <section class="panel" id="usersPanel">
     <div class="panel-head"><h2>Registered accounts</h2><div class="tools"><input id="search" type="search" placeholder="Search name or email"><button id="refresh" type="button">Refresh</button></div></div>
     <div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>ACCOUNT CREATED</th><th>LAST SIGN-IN</th><th>EMAIL STATUS</th><th>ACTION</th></tr></thead><tbody id="usersBody"><tr><td colspan="6" class="muted">Loading accounts…</td></tr></tbody></table></div>
@@ -53,6 +53,20 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     </form>
     <div class="table-wrap"><table style="min-width:760px"><thead><tr><th>ASSET</th><th>NETWORK</th><th>DEPOSIT ADDRESS</th><th>LABEL</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="depositBody"><tr><td colspan="6" class="muted">Loading addresses…</td></tr></tbody></table></div>
     <p id="depositMessage" role="status" aria-live="polite" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Loading saved deposit addresses…</p>
+  </section>
+  <section class="panel" id="detectedDepositsPanel" hidden>
+    <div class="panel-head"><div><h2>Detected deposits</h2><p class="sub">Incoming transfers awaiting manual review. Deposits are not automatically assigned or credited.</p></div><div class="tools"><select id="detectedDepositStatus" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="awaiting_review">Awaiting review</option><option value="credited">Credited</option><option value="ignored">Ignored</option><option value="">All statuses</option></select><button id="refreshDetectedDeposits" type="button">Refresh</button></div></div>
+    <div class="table-wrap"><table style="min-width:1050px"><thead><tr><th>DETECTED</th><th>ASSET</th><th>AMOUNT</th><th>NETWORK</th><th>CONFIRMATIONS</th><th>TRANSACTION HASH</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="detectedDepositsBody"><tr><td colspan="8" class="muted">Open Detected Deposits to load records.</td></tr></tbody></table></div>
+    <p id="detectedDepositsMessage" role="status" aria-live="polite" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Only deposits written by a trusted blockchain-monitoring service will appear here.</p>
+    <div id="detectedDepositReview" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:16px">
+      <div class="panel-head"><h2>Review detected deposit</h2><button id="closeDetectedDepositReview" type="button">Close</button></div>
+      <div id="detectedDepositDetails" style="font-size:12px;line-height:1.9;color:#d8cbbb;overflow-wrap:anywhere"></div>
+      <label for="depositUserSearch" style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px">Search for the person who made this deposit</label>
+      <input id="depositUserSearch" type="search" placeholder="Enter at least 2 characters of name or email" style="display:block;width:100%;max-width:460px">
+      <div id="depositUserResults" style="margin-top:10px;font-size:11px"></div>
+      <p id="depositUserSelection" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7"></p>
+      <p class="muted" style="font-size:10px;line-height:1.6">Selecting a user here is only a review preview. Assignment, blockchain verification and balance credit require a separate secure approval step.</p>
+    </div>
   </section>
   <section class="panel" id="transactionsPanel" hidden>
     <div class="panel-head"><div><h2>Transaction monitoring</h2><p class="sub">Search and monitor transaction records. This screen is read-only; it cannot move funds or change transaction status.</p></div><div class="tools"><input id="transactionSearch" type="search" placeholder="Email, user ID, reference, hash or asset"><button id="refreshTransactions" type="button">Refresh</button></div></div>
@@ -248,13 +262,82 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    $('withdrawalsPanel').hidden=tab.dataset.panel!=='withdrawalsPanel';
    $('transfersPanel').hidden=tab.dataset.panel!=='transfersPanel';
    $('balancesPanel').hidden=tab.dataset.panel!=='balancesPanel';
+   $('detectedDepositsPanel').hidden=tab.dataset.panel!=='detectedDepositsPanel';
    if(tab.dataset.panel==='depositPanel')loadDepositAddresses();
+   if(tab.dataset.panel==='detectedDepositsPanel')loadDetectedDeposits();
    if(tab.dataset.panel==='kycPanel')loadKycApplications();
    if(tab.dataset.panel==='transactionsPanel')loadTransactions();
    if(tab.dataset.panel==='withdrawalsPanel')loadWithdrawals();
    if(tab.dataset.panel==='transfersPanel')loadInternalTransfers();
    if(tab.dataset.panel==='balancesPanel'){loadBalances();loadBalanceHistory();}
  }));
+ let selectedDetectedDeposit=null;
+ let selectedDepositUser=null;
+ let detectedDepositSearchTimer=null;
+ async function loadDetectedDeposits(){
+   $('detectedDepositsMessage').textContent='Loading detected deposits…';
+   $('detectedDepositsBody').innerHTML='<tr><td colspan="8" class="muted">Loading…</td></tr>';
+   try{
+     const {data,error}=await client.rpc('admin_list_detected_deposits',{
+       p_status:$('detectedDepositStatus').value||null,p_limit:200
+     });
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){
+       $('detectedDepositsBody').innerHTML='<tr><td colspan="8" class="empty">No detected deposits found. Blockchain monitoring has not been connected yet, so this list may remain empty.</td></tr>';
+     }else{
+       $('detectedDepositsBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(date(r.detected_at))+'</td><td><span class="pill">'+escapeHtml(r.asset_code)+'</span></td><td>'+escapeHtml(String(r.amount))+'</td><td>'+escapeHtml(r.network)+'</td><td>'+escapeHtml(String(r.confirmations))+'</td><td style="max-width:220px;overflow-wrap:anywhere">'+escapeHtml(r.tx_hash)+'</td><td><span class="pill">'+escapeHtml(r.status.replaceAll('_',' '))+'</span></td><td><button class="view-btn" type="button" data-detected-deposit-index="'+i+'">Review</button></td></tr>').join('');
+       $('detectedDepositsBody').querySelectorAll('[data-detected-deposit-index]').forEach(b=>b.addEventListener('click',()=>openDetectedDepositReview(rows[Number(b.dataset.detectedDepositIndex)])));
+     }
+     $('detectedDepositsMessage').textContent='Showing '+rows.length+' deposit record(s). No balances were changed.';
+   }catch(error){
+     console.error('NEXBIT detected deposits error:',error);
+     $('detectedDepositsBody').innerHTML='<tr><td colspan="8" class="muted">Could not load detected deposits.</td></tr>';
+     $('detectedDepositsMessage').textContent=error.message||'Could not load deposits. Check the detected-deposit SQL setup.';
+   }
+ }
+ function openDetectedDepositReview(row){
+   selectedDetectedDeposit=row;selectedDepositUser=null;
+   $('depositUserSearch').value='';
+   $('depositUserResults').innerHTML='';
+   $('depositUserSelection').textContent='No user selected.';
+   $('detectedDepositDetails').innerHTML=
+     '<p><strong style="color:var(--gold2)">Deposit</strong><br>'+escapeHtml(row.amount)+' '+escapeHtml(row.asset_code)+' · '+escapeHtml(row.network)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Receiving address</strong><br>'+escapeHtml(row.deposit_address)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Transaction hash</strong><br>'+escapeHtml(row.tx_hash)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Confirmations reported</strong><br>'+escapeHtml(String(row.confirmations))+'</p>'+
+     '<p><strong style="color:var(--gold2)">Detected</strong><br>'+escapeHtml(date(row.detected_at))+'</p>'+
+     '<p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p>';
+   $('detectedDepositReview').hidden=false;
+   $('detectedDepositReview').scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ async function searchDepositUsers(){
+   const term=$('depositUserSearch').value.trim();
+   if(term.length<2){$('depositUserResults').innerHTML='<span class="muted">Enter at least two characters to search.</span>';return;}
+   $('depositUserResults').textContent='Searching registered users…';
+   try{
+     const {data,error}=await client.rpc('admin_search_deposit_users',{p_search:term,p_limit:20});
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){$('depositUserResults').innerHTML='<span class="muted">No matching registered users found.</span>';return;}
+     $('depositUserResults').innerHTML=rows.map((u,i)=>'<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 0;border-bottom:1px solid rgba(185,116,35,.12)"><span>'+escapeHtml(u.display_name||u.user_email||u.user_id)+' <span class="muted">('+escapeHtml(u.user_email||u.user_id)+')</span></span><button class="view-btn" type="button" data-deposit-user-index="'+i+'">Select</button></div>').join('');
+     $('depositUserResults').querySelectorAll('[data-deposit-user-index]').forEach(b=>b.addEventListener('click',()=>{
+       selectedDepositUser=rows[Number(b.dataset.depositUserIndex)];
+       $('depositUserSelection').textContent='Selected user: '+(selectedDepositUser.display_name||selectedDepositUser.user_email||selectedDepositUser.user_id)+' · '+(selectedDepositUser.user_email||selectedDepositUser.user_id);
+     }));
+   }catch(error){
+     $('depositUserResults').textContent=error.message||'Could not search registered users.';
+   }
+ }
+ $('refreshDetectedDeposits').addEventListener('click',loadDetectedDeposits);
+ $('detectedDepositStatus').addEventListener('change',loadDetectedDeposits);
+ $('depositUserSearch').addEventListener('input',()=>{
+   clearTimeout(detectedDepositSearchTimer);
+   detectedDepositSearchTimer=setTimeout(searchDepositUsers,300);
+ });
+ $('closeDetectedDepositReview').addEventListener('click',()=>{
+   $('detectedDepositReview').hidden=true;selectedDetectedDeposit=null;selectedDepositUser=null;
+ });
  let transactionTimer;
  async function loadTransactions(){
    $('transactionsMessage').textContent='Loading transaction records…';
