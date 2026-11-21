@@ -79,7 +79,8 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     <div class="section-head" style="margin-top:22px"><h2>Your withdrawal requests</h2><span>Recent requests</span></div>
     <div id="withdrawHistory"><div class="empty">Loading your requests…</div></div>
   </section>
-\n  <section class="stats" aria-label="Wallet summary">
+
+  <section class="stats" aria-label="Wallet summary">
     <article class="panel"><div class="label">Available USD balance</div><div class="stat-value" id="walletAvailableBalance">— — —</div><div class="stat-note">Available funds will display here.</div><span class="tag">Awaiting wallet connection</span></article>
     <article class="panel"><div class="label">Invested balance</div><div class="stat-value">— — —</div><div class="stat-note">Linked investment records will display here.</div><span class="tag">Awaiting records</span></article>
     <article class="panel"><div class="label">Asset types held</div><div class="stat-value" id="walletAssetCount">—</div><div class="stat-note">Number of asset codes with a positive balance.</div><span class="tag">Account ledger</span></article>
@@ -115,6 +116,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
   async function init(){
     const {data:{user},error}=await client.auth.getUser();
     if(error||!user){window.location.replace('login.html');return;}
+    // Wire wallet actions before loading balances so a balance-query error cannot disable the buttons.
     const {data:balances,error:balanceError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance,updated_at').eq('user_id',user.id).order('asset_code');
     if(balanceError)throw balanceError;
     const rows=balances||[],usdRow=rows.find(r=>r.asset_code==='USD'),usdAmount=Number(usdRow?.balance||0);
@@ -156,7 +158,8 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     const result=Array.isArray(data)?data[0]:data;msg.textContent='Request submitted. Reference: '+(result?.reference||'created')+'. It is awaiting administrator review; no funds have been sent.';
     document.getElementById('withdrawForm').reset();await loadWithdrawalHistory();
   }
-\n  async function openDeposits(){
+
+  async function openDeposits(){
     const panel=document.getElementById('depositPanel');
     panel.hidden=false;
     panel.scrollIntoView({behavior:'smooth',block:'start'});
