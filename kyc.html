@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000"><title>KYC Verification | NEXBIT</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{color-scheme:dark;--gold:#c78332;--gold2:#f0bd70;--line:rgba(185,116,35,.25);--muted:#92877a;--white:#f7f2e9}*{box-sizing:border-box}body{margin:0;background:#000;color:var(--white);font-family:Inter,Arial,sans-serif}header{padding:18px max(18px,calc((100% - 760px)/2));border-bottom:1px solid var(--line);font-weight:900;letter-spacing:.16em;color:var(--gold2)}main{max-width:760px;margin:30px auto;padding:0 16px}.panel{background:#090705;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:15px}h1{font-size:27px;margin:0 0 8px}.muted{color:var(--muted);font-size:12px;line-height:1.6}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:11px;color:#d6c3aa}.field input,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:#030303;color:#fff;font:inherit;font-size:12px}.field input[type=file]{padding:9px}.btn{background:linear-gradient(110deg,#9f5b1e,#e0a454);border:1px solid #d79a4e;color:#120b04;font-weight:800;padding:13px 17px;border-radius:9px;cursor:pointer}.btn:disabled{opacity:.5}.status{color:var(--gold2);font-size:12px;line-height:1.6;white-space:pre-wrap}
+</style></head><body><header>✦ NEXBIT</header><main><section class="panel"><h1>Identity verification</h1><p class="muted">Complete your details and upload clear, readable documents. Your files are stored privately and can only be accessed by you and authorized NEXBIT reviewers.</p><div id="existing" class="status">Checking your application…</div></section>
+<form id="kycForm" class="panel">
+<div class="field"><label for="legalName">Full legal name</label><input id="legalName" maxlength="120" autocomplete="name" required></div>
+<div class="field"><label for="address">Residential address</label><textarea id="address" rows="3" maxlength="500" autocomplete="street-address" required></textarea></div>
+<div class="field"><label for="phone">Phone number (include country code)</label><input id="phone" type="tel" maxlength="30" autocomplete="tel" placeholder="+234…" required></div>
+<div class="field"><label for="idFront">Government-issued ID — front (required)</label><input id="idFront" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required><span class="muted">JPG, PNG, WebP or PDF · Maximum 10 MB</span></div>
+<div class="field"><label for="idBack">Government-issued ID — back (if applicable)</label><input id="idBack" type="file" accept="image/jpeg,image/png,image/webp,application/pdf"><span class="muted">Upload the reverse side if your ID has one.</span></div>
+<div class="field"><label for="selfie">Recent selfie photograph (required)</label><input id="selfie" type="file" accept="image/jpeg,image/png,image/webp" required><span class="muted">A clear photo of your face. Image only · Maximum 10 MB</span></div>
+<button id="submit" class="btn" type="submit">Submit for verification</button><p id="message" class="status" role="status"></p>
+</form><p class="muted">Only submit documents you are authorized to share. Do not upload payment card details or passwords.</p></main>
+<script>
+(function(){
+const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
+const $=id=>document.getElementById(id);let user=null;
+async function init(){const {data,error}=await client.auth.getUser();user=data?.user;if(error||!user){location.replace('login.html');return;}
+const {data:rows,error:e}=await client.from('nexbit_kyc_submissions').select('status,admin_comment,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1);
+if(e){$('existing').textContent='KYC setup is not ready yet. Please try again later.';return;}
+if(rows?.length){const r=rows[0];$('existing').textContent='Latest application: '+r.status.replaceAll('_',' ')+(r.admin_comment?'\nReviewer comment: '+r.admin_comment:'');
+if(r.status==='pending'||r.status==='approved'){$('kycForm').hidden=true;return;}}
+}
+function validateFile(file,imagesOnly){if(!file)return true;const allowed=imagesOnly?['image/jpeg','image/png','image/webp']:['image/jpeg','image/png','image/webp','application/pdf'];return allowed.includes(file.type)&&file.size<=10*1024*1024;}
+async function upload(file,key){const ext=(file.name.split('.').pop()||'bin').toLowerCase().replace(/[^a-z0-9]/g,'');const path=user.id+'/'+crypto.randomUUID()+'/'+key+'.'+ext;const {error}=await client.storage.from('nexbit-kyc-documents').upload(path,file,{upsert:false,contentType:file.type});if(error)throw error;return path;}
+$('kycForm').addEventListener('submit',async e=>{e.preventDefault();if(!user)return;
+const front=$('idFront').files[0],back=$('idBack').files[0],selfie=$('selfie').files[0];
+if(!validateFile(front,false)||!validateFile(back,false)||!validateFile(selfie,true)){$('message').textContent='Check file types and make sure each file is no larger than 10 MB.';return;}
+$('submit').disabled=true;$('message').textContent='Uploading documents securely…';
+try{const paths={id_front:await upload(front,'id-front'),selfie:await upload(selfie,'selfie')};if(back)paths.id_back=await upload(back,'id-back');
+const {data,error}=await client.rpc('nexbit_submit_kyc',{p_legal_name:$('legalName').value.trim(),p_residential_address:$('address').value.trim(),p_phone_number:$('phone').value.trim(),p_document_paths:paths});
+if(error)throw error;$('message').textContent='Your KYC application has been submitted for review. Reference: '+data;$('kycForm').reset();$('kycForm').hidden=true;$('existing').textContent='Application status: pending review.';
+}catch(err){console.error(err);$('message').textContent=err.message||'Submission failed. Please try again.';}
+finally{$('submit').disabled=false;}
+});
+init().catch(e=>{$('existing').textContent=e.message||'Could not load your KYC status.';});
+})();
+</script></body></html>
