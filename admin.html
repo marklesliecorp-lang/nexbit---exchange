@@ -65,7 +65,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
       <input id="depositUserSearch" type="search" placeholder="Enter at least 2 characters of name or email" style="display:block;width:100%;max-width:460px">
       <div id="depositUserResults" style="margin-top:10px;font-size:11px"></div>
       <p id="depositUserSelection" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7"></p>
-      <p class="muted" style="font-size:10px;line-height:1.6">Selecting a user here is only a review preview. Assignment, blockchain verification and balance credit require a separate secure approval step.</p>
+      <p class="muted" style="font-size:10px;line-height:1.6">When you select a user, NEXBIT saves that account against this deposit. This does not approve the deposit or change anyone’s balance.</p>
     </div>
   </section>
   <section class="panel" id="transactionsPanel" hidden>
@@ -297,10 +297,10 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    }
  }
  function openDetectedDepositReview(row){
-   selectedDetectedDeposit=row;selectedDepositUser=null;
+   selectedDetectedDeposit=row;selectedDepositUser=row.assigned_user_id?{user_id:row.assigned_user_id,user_email:row.assigned_user_email||null,display_name:row.assigned_user_email||null}:null;
    $('depositUserSearch').value='';
    $('depositUserResults').innerHTML='';
-   $('depositUserSelection').textContent='No user selected.';
+   $('depositUserSelection').textContent=selectedDepositUser?'Already saved for this deposit: '+(selectedDepositUser.user_email||selectedDepositUser.user_id):'No user selected yet.';
    $('detectedDepositDetails').innerHTML=
      '<p><strong style="color:var(--gold2)">Deposit</strong><br>'+escapeHtml(row.amount)+' '+escapeHtml(row.asset_code)+' · '+escapeHtml(row.network)+'</p>'+
      '<p><strong style="color:var(--gold2)">Receiving address</strong><br>'+escapeHtml(row.deposit_address)+'</p>'+
@@ -321,9 +321,24 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
      const rows=data||[];
      if(!rows.length){$('depositUserResults').innerHTML='<span class="muted">No matching registered users found.</span>';return;}
      $('depositUserResults').innerHTML=rows.map((u,i)=>'<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 0;border-bottom:1px solid rgba(185,116,35,.12)"><span>'+escapeHtml(u.display_name||u.user_email||u.user_id)+' <span class="muted">('+escapeHtml(u.user_email||u.user_id)+')</span></span><button class="view-btn" type="button" data-deposit-user-index="'+i+'">Select</button></div>').join('');
-     $('depositUserResults').querySelectorAll('[data-deposit-user-index]').forEach(b=>b.addEventListener('click',()=>{
-       selectedDepositUser=rows[Number(b.dataset.depositUserIndex)];
-       $('depositUserSelection').textContent='Selected user: '+(selectedDepositUser.display_name||selectedDepositUser.user_email||selectedDepositUser.user_id)+' · '+(selectedDepositUser.user_email||selectedDepositUser.user_id);
+     $('depositUserResults').querySelectorAll('[data-deposit-user-index]').forEach(b=>b.addEventListener('click',async()=>{
+       if(!selectedDetectedDeposit){$('depositUserSelection').textContent='Open a deposit before selecting a user.';return;}
+       const user=rows[Number(b.dataset.depositUserIndex)];
+       b.disabled=true;
+       $('depositUserSelection').textContent='Saving this user against the deposit…';
+       try{
+         const {data,error}=await client.rpc('admin_assign_detected_deposit_user',{
+           p_deposit_id:selectedDetectedDeposit.id,
+           p_user_id:user.user_id
+         });
+         if(error)throw error;
+         selectedDepositUser=user;
+         $('depositUserSelection').textContent='Saved for this deposit: '+(user.display_name||user.user_email||user.user_id)+' · '+(user.user_email||user.user_id)+'. The deposit is still awaiting review and no balance has been credited.';
+         $('detectedDepositsMessage').textContent='User assignment saved. No balance was changed.';
+         await loadDetectedDeposits();
+       }catch(error){
+         $('depositUserSelection').textContent=error.message||'Could not save this user. Please try again.';
+       }finally{b.disabled=false;}
      }));
    }catch(error){
      $('depositUserResults').textContent=error.message||'Could not search registered users.';
