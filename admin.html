@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#000000">
 <title>NEXBIT Admin Console</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){window.supabaseLoadFailed=true;this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
 <style>
 #userDetail[hidden]{display:none!important}
 :root{color-scheme:dark;--gold:#c78332;--gold2:#f0bd70;--line:rgba(185,116,35,.25);--muted:#92877a;--white:#f7f2e9}
@@ -120,6 +120,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
 <section class="denied" id="denied" hidden><h1>Access restricted</h1><p>This account does not have NEXBIT administrator privileges.</p><button id="deniedLogout" type="button">Return to login</button></section>
 <script>
 (function(){
+  if(!window.supabase?.createClient){const notice=document.getElementById('message');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
+
  const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
  const adminEmail='markleslie.corp@gmail.com';
  const $=id=>document.getElementById(id);
