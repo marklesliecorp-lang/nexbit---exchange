@@ -91,7 +91,6 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     if(balanceError)throw balanceError;
     const amount=Number(balance?.balance||0);
     const formatted='
-  }
   document.getElementById('logoutButton').addEventListener('click',async function(){
     this.disabled=true;this.textContent='Logging out…';
     const {error}=await client.auth.signOut();
@@ -102,7 +101,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
 })();
 </script>
 </body>
-</html>+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
++amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     document.getElementById('walletTotalBalance').textContent=formatted;
     document.getElementById('walletAvailableBalance').textContent=formatted;
     document.getElementById('walletTotalAssets').textContent=formatted;
@@ -119,4 +118,3 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
 })();
 </script>
 </body>
-</html>
