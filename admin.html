@@ -70,7 +70,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  let loadedUsers=[];
  async function signOut(){await client.auth.signOut();window.location.replace('login.html');}
  $('logout').addEventListener('click',signOut);$('deniedLogout').addEventListener('click',signOut);
- $('closeDetails').addEventListener('click',()=>$('userDetail').hidden=true);\n $('userDetail').addEventListener('click',e=>{if(e.target===$('userDetail'))$('userDetail').hidden=true;});
+ $('closeDetails').addEventListener('click',()=>$('userDetail').hidden=true);
+ $('userDetail').addEventListener('click',e=>{if(e.target===$('userDetail'))$('userDetail').hidden=true;});
  async function loadUsers(){
    $('refresh').disabled=true;$('message').textContent='Loading registered accounts…';
    $('usersBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
