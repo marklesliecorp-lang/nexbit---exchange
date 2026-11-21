@@ -31,7 +31,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     <article class="stat"><small>Email verified</small><strong id="verifiedUsers">—</strong></article>
     <article class="stat"><small>New users · 30 days</small><strong id="newUsers">—</strong></article>
   </section>
-  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" disabled title="Not implemented yet">Transactions · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" disabled title="Not implemented yet">Transactions · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
   <section class="panel" id="usersPanel">
     <div class="panel-head"><h2>Registered accounts</h2><div class="tools"><input id="search" type="search" placeholder="Search name or email"><button id="refresh" type="button">Refresh</button></div></div>
     <div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>ACCOUNT CREATED</th><th>LAST SIGN-IN</th><th>EMAIL STATUS</th><th>ACTION</th></tr></thead><tbody id="usersBody"><tr><td colspan="6" class="muted">Loading accounts…</td></tr></tbody></table></div>
@@ -53,6 +53,19 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     </form>
     <div class="table-wrap"><table style="min-width:760px"><thead><tr><th>ASSET</th><th>NETWORK</th><th>DEPOSIT ADDRESS</th><th>LABEL</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="depositBody"><tr><td colspan="6" class="muted">Loading addresses…</td></tr></tbody></table></div>
     <p id="depositMessage" role="status" aria-live="polite" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Loading saved deposit addresses…</p>
+  </section>
+  <section class="panel" id="kycPanel" hidden>
+    <div class="panel-head"><div><h2>KYC verification applications</h2><p class="sub">Review personal details and privately view submitted identity documents.</p></div><div class="tools"><select id="kycFilter" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="resubmission_required">Resubmission required</option></select><button id="refreshKyc" type="button">Refresh</button></div></div>
+    <div class="table-wrap"><table style="min-width:760px"><thead><tr><th>APPLICANT</th><th>PHONE</th><th>SUBMITTED</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="kycBody"><tr><td colspan="5" class="muted">Open KYC Verification to load applications.</td></tr></tbody></table></div>
+    <p id="kycMessage" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">KYC applications are protected and visible only to the authorized administrator.</p>
+    <div id="kycReview" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:16px">
+      <div class="panel-head"><h2 id="kycReviewTitle">Application review</h2><button id="closeKycReview" type="button">Close</button></div>
+      <div id="kycApplicant" style="font-size:12px;line-height:1.9;color:#d8cbbb"></div>
+      <div id="kycDocuments" style="display:flex;flex-wrap:wrap;gap:8px;margin:14px 0"></div>
+      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="kycComment">Reviewer comment (required for rejection or resubmission)</label>
+      <textarea id="kycComment" rows="3" style="width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button id="approveKyc" type="button">Approve KYC</button><button id="rejectKyc" type="button">Reject</button><button id="requestKyc" type="button">Request resubmission</button></div>
+    </div>
   </section>
 </main>
 <div id="userDetail" hidden style="position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.82);padding:18px;display:grid;place-items:center">
@@ -170,8 +183,64 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    document.querySelectorAll('.tab[data-panel]').forEach(t=>t.classList.toggle('active',t===tab));
    $('usersPanel').hidden=tab.dataset.panel!=='usersPanel';
    $('depositPanel').hidden=tab.dataset.panel!=='depositPanel';
+   $('kycPanel').hidden=tab.dataset.panel!=='kycPanel';
    if(tab.dataset.panel==='depositPanel')loadDepositAddresses();
+   if(tab.dataset.panel==='kycPanel')loadKycApplications();
  }));
+ let selectedKyc=null;
+ async function loadKycApplications(){
+   $('kycMessage').textContent='Loading KYC applications…';
+   $('kycBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
+   try{
+     const filter=$('kycFilter').value||null;
+     const {data,error}=await client.rpc('admin_list_kyc_submissions',{p_status:filter});
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){$('kycBody').innerHTML='<tr><td colspan="5" class="empty">No KYC applications found for this filter.</td></tr>';}
+     else{
+       $('kycBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(r.legal_name)+'</td><td>'+escapeHtml(r.phone_number)+'</td><td>'+escapeHtml(date(r.created_at))+'</td><td><span class="pill">'+escapeHtml(r.status.replaceAll('_',' '))+'</span></td><td><button class="view-btn" type="button" data-kyc-index="'+i+'">Review</button></td></tr>').join('');
+       $('kycBody').querySelectorAll('[data-kyc-index]').forEach(b=>b.addEventListener('click',()=>openKycReview(rows[Number(b.dataset.kycIndex)])));
+     }
+     $('kycMessage').textContent='Showing '+rows.length+' application(s). Uploaded identity files are private.';
+   }catch(error){console.error('NEXBIT KYC list error:',error);$('kycBody').innerHTML='<tr><td colspan="5" class="muted">Could not load KYC applications.</td></tr>';$('kycMessage').textContent=error.message||'Run the KYC SQL setup in Supabase first.';}
+ }
+ async function openKycReview(row){
+   selectedKyc=row;$('kycReview').hidden=false;$('kycComment').value=row.admin_comment||'';
+   $('kycApplicant').innerHTML='<p><strong style="color:var(--gold2)">Full legal name</strong><br>'+escapeHtml(row.legal_name)+'</p><p><strong style="color:var(--gold2)">Residential address</strong><br>'+escapeHtml(row.residential_address)+'</p><p><strong style="color:var(--gold2)">Phone number</strong><br>'+escapeHtml(row.phone_number)+'</p><p><strong style="color:var(--gold2)">User ID</strong><br>'+escapeHtml(row.user_id)+'</p><p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p><p><strong style="color:var(--gold2)">Previous reviewer comment</strong><br>'+escapeHtml(row.admin_comment||'None')+'</p>';
+   $('kycDocuments').innerHTML='Opening secure document links…';
+   const labels={id_front:'Government ID — front',id_back:'Government ID — back',selfie:'Selfie'};
+   const entries=Object.entries(row.document_paths||{});
+   const links=[];
+   for(const [key,path] of entries){
+     const {data,error}=await client.storage.from('nexbit-kyc-documents').createSignedUrl(path,300);
+     if(error){links.push('<span class="pill">'+escapeHtml(labels[key]||key)+': unavailable</span>');continue;}
+     links.push('<a class="pill" target="_blank" rel="noopener noreferrer" href="'+escapeHtml(data.signedUrl)+'">'+escapeHtml(labels[key]||key)+' · Open (5 min)</a>');
+   }
+   $('kycDocuments').innerHTML=links.join('')||'<span class="muted">No uploaded documents found.</span>';
+   $('kycReview').scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ async function submitKycDecision(status){
+   if(!selectedKyc)return;
+   const comment=$('kycComment').value.trim();
+   if((status==='rejected'||status==='resubmission_required')&&comment.length<3){$('kycMessage').textContent='Please enter a clear comment before rejecting or requesting resubmission.';return;}
+   const label=status==='approved'?'approve this KYC application':status==='rejected'?'reject this KYC application':'request new documents for this KYC application';
+   if(!window.confirm('Are you sure you want to '+label+'? This decision will be recorded.'))return;
+   const buttons=['approveKyc','rejectKyc','requestKyc'].map($);
+   buttons.forEach(b=>b.disabled=true);
+   try{
+     const {error}=await client.rpc('admin_review_kyc',{p_id:selectedKyc.id,p_status:status,p_comment:comment||null});
+     if(error)throw error;
+     $('kycMessage').textContent='KYC review decision saved and recorded in the admin audit log.';
+     $('kycReview').hidden=true;selectedKyc=null;await loadKycApplications();
+   }catch(error){$('kycMessage').textContent=error.message||'Could not save the KYC review decision.';}
+   finally{buttons.forEach(b=>b.disabled=false);}
+ }
+ $('refreshKyc').addEventListener('click',loadKycApplications);
+ $('kycFilter').addEventListener('change',loadKycApplications);
+ $('closeKycReview').addEventListener('click',()=>{$('kycReview').hidden=true;selectedKyc=null;});
+ $('approveKyc').addEventListener('click',()=>submitKycDecision('approved'));
+ $('rejectKyc').addEventListener('click',()=>submitKycDecision('rejected'));
+ $('requestKyc').addEventListener('click',()=>submitKycDecision('resubmission_required'));
  async function init(){
    const {data:{user},error}=await client.auth.getUser();
    if(error||!user){window.location.replace('login.html');return;}
