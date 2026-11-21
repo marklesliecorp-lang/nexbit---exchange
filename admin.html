@@ -406,8 +406,6 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    $('adminApp').hidden=false;await loadUsers();
  }
  init().catch(error=>{console.error(error);$('message').textContent='Admin initialization failed. Please sign in again.';});
-})();
-
  let balanceTimer,selectedBalanceUser=null;
  const money=value=>'$'+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
  async function loadBalances(){
@@ -455,5 +453,6 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  $('balanceSearch').addEventListener('input',()=>{clearTimeout(balanceTimer);balanceTimer=setTimeout(()=>{loadBalances();loadBalanceHistory();},300);});
  $('closeBalanceEditor').addEventListener('click',()=>{$('balanceEditor').hidden=true;selectedBalanceUser=null;});
  $('saveBalanceAdjustment').addEventListener('click',saveBalanceAdjustment);
+})();
 </script>
 </body></html>
