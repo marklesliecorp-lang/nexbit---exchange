@@ -275,6 +275,11 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  }));
  let selectedDetectedDeposit=null;
  let selectedDepositUser=null;
+ function isSupportedDepositForApproval(row){
+   const network=String(row?.network||'').toLowerCase();
+   const asset=String(row?.asset_code||'').toUpperCase();
+   return row?.status==='awaiting_review' && ((network==='ethereum' && ['ETH','USDT'].includes(asset)) || (network==='solana' && asset==='SOL'));
+ }
  let detectedDepositSearchTimer=null;
  async function loadDetectedDeposits(){
    $('detectedDepositsMessage').textContent='Loading detected deposits…';
@@ -310,12 +315,12 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
      '<p><strong style="color:var(--gold2)">Confirmations reported</strong><br>'+escapeHtml(String(row.confirmations))+'</p>'+
      '<p><strong style="color:var(--gold2)">Detected</strong><br>'+escapeHtml(date(row.detected_at))+'</p>'+
      '<p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p>';
-   const canApprove = row.status === 'awaiting_review' && String(row.network).toLowerCase() === 'ethereum' && ['ETH','USDT'].includes(String(row.asset_code).toUpperCase());
+   const canApprove = isSupportedDepositForApproval(row);
    $('approveDetectedDeposit').hidden = !canApprove;
    $('approveDetectedDeposit').disabled = !canApprove || !selectedDepositUser;
    $('detectedDepositApprovalNote').textContent = canApprove
-     ? (selectedDepositUser ? 'Ready to check Ethereum finality before crediting.' : 'Select the correct user first. No balance will change until you approve.')
-     : 'Approval is currently available only for awaiting-review Ethereum ETH and USDT deposits.';
+     ? (selectedDepositUser ? (String(row.network).toLowerCase()==='solana' ? 'Ready to verify Solana finality and the exact wallet receipt before crediting.' : 'Ready to check Ethereum finality before crediting.') : 'Select the correct user first. No balance will change until you approve.')
+     : 'Approval is available only for awaiting-review Ethereum ETH/USDT and Solana SOL deposits.';
    $('detectedDepositReview').hidden=false;
    $('detectedDepositReview').scrollIntoView({behavior:'smooth',block:'nearest'});
  }
@@ -323,12 +328,16 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    if(!selectedDetectedDeposit || !selectedDepositUser)return;
    const row=selectedDetectedDeposit;
    if(row.status!=='awaiting_review')return;
-   if(!window.confirm('Approve '+row.amount+' '+row.asset_code+' for '+(selectedDepositUser.user_email||selectedDepositUser.user_id)+'? NEXBIT will first verify that the Ethereum transaction is finalized. If it is not finalized, no balance will be credited.'))return;
+   const network=String(row.network).toLowerCase();
+   if(!isSupportedDepositForApproval(row))return;
+   const solana=network==='solana';
+   if(!window.confirm('Approve '+row.amount+' '+row.asset_code+' for '+(selectedDepositUser.user_email||selectedDepositUser.user_id)+'? NEXBIT will verify '+(solana?'Solana finality and the exact amount received by the NEXBIT wallet':'Ethereum finality')+' first. If verification fails, no balance will be credited.'))return;
    const button=$('approveDetectedDeposit');
    button.disabled=true;
-   $('detectedDepositApprovalNote').textContent='Checking Ethereum finality…';
+   $('detectedDepositApprovalNote').textContent=solana?'Checking Solana finality and wallet receipt…':'Checking Ethereum finality…';
    try{
-     const {data,error}=await client.functions.invoke('approve-ethereum-deposit',{body:{deposit_id:row.id}});
+     const functionName=solana?'approve-solana-deposit':'approve-ethereum-deposit';
+     const {data,error}=await client.functions.invoke(functionName,{body:{deposit_id:row.id}});
      if(error)throw error;
      if(!data?.success)throw new Error(data?.error||'Deposit approval was not completed.');
      const result=data.result||{};
@@ -365,8 +374,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
          if(error)throw error;
          selectedDepositUser=user;
          $('depositUserSelection').textContent='Saved for this deposit: '+(user.display_name||user.user_email||user.user_id)+' · '+(user.user_email||user.user_id)+'. The deposit is still awaiting review and no balance has been credited.';
-         if(selectedDetectedDeposit.status==='awaiting_review' && String(selectedDetectedDeposit.network).toLowerCase()==='ethereum' && ['ETH','USDT'].includes(String(selectedDetectedDeposit.asset_code).toUpperCase())) $('approveDetectedDeposit').disabled=false;
-         $('detectedDepositApprovalNote').textContent='User selected. Approve when ready; Ethereum finality will be checked first.';
+         if(isSupportedDepositForApproval(selectedDetectedDeposit)) $('approveDetectedDeposit').disabled=false;
+         $('detectedDepositApprovalNote').textContent='User selected. Approve when ready; NEXBIT will verify the transaction before crediting.';
          $('detectedDepositsMessage').textContent='User assignment saved. No balance was changed.';
          await loadDetectedDeposits();
        }catch(error){
