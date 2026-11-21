@@ -63,25 +63,6 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     <div class="table-wrap"><table style="min-width:1050px"><thead><tr><th>DATE</th><th>USER EMAIL</th><th>TYPE</th><th>ASSET</th><th>AMOUNT</th><th>NETWORK</th><th>REFERENCE / HASH</th><th>STATUS</th></tr></thead><tbody id="transactionsBody"><tr><td colspan="8" class="muted">Open Transactions to load records.</td></tr></tbody></table></div>
     <p id="transactionsMessage" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Transaction records are available to authorized administrators only.</p>
   </section>
-  <section class="panel" id="balancesPanel" hidden>
-    <div class="panel-head"><div><h2>Account balance management</h2><p class="sub">Adjust internal USD balances. Every change requires confirmation and is permanently recorded.</p></div><div class="tools"><input id="balanceSearch" type="search" placeholder="Search email or user ID"><button id="refreshBalances" type="button">Refresh</button></div></div>
-    <div class="table-wrap"><table style="min-width:700px"><thead><tr><th>USER EMAIL</th><th>USER ID</th><th>CURRENT USD BALANCE</th><th>LAST UPDATED</th><th>ACTION</th></tr></thead><tbody id="balancesBody"><tr><td colspan="5" class="muted">Open Balances to load accounts.</td></tr></tbody></table></div>
-    <p id="balancesMessage" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Only internal USD account balances are managed here.</p>
-    <div id="balanceEditor" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:16px">
-      <div class="panel-head"><h2>Adjust account balance</h2><button id="closeBalanceEditor" type="button">Close</button></div>
-      <div id="balanceUserDetails" style="font-size:12px;line-height:1.9;color:#d8cbbb;overflow-wrap:anywhere"></div>
-      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="balanceDirection">Adjustment</label>
-      <select id="balanceDirection" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="add">Add to balance</option><option value="subtract">Subtract from balance</option></select>
-      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="balanceAmount">Amount (USD)</label>
-      <input id="balanceAmount" type="number" min="0.000000000001" max="1000000000000" step="0.000000000001" placeholder="Enter amount" style="display:block;width:100%">
-      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="balanceReason">Reason (required)</label>
-      <textarea id="balanceReason" rows="3" maxlength="500" placeholder="Explain why this balance adjustment is required" style="width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button id="saveBalanceAdjustment" type="button">Review adjustment</button></div>
-    </div>
-    <div style="margin-top:22px"><div class="panel-head"><h2>Balance adjustment history</h2></div>
-      <div class="table-wrap"><table style="min-width:900px"><thead><tr><th>DATE</th><th>USER</th><th>ADJUSTMENT</th><th>PREVIOUS</th><th>NEW BALANCE</th><th>REASON</th></tr></thead><tbody id="balanceHistoryBody"><tr><td colspan="6" class="muted">No history loaded.</td></tr></tbody></table></div>
-    </div>
-  </section>
   <section class="panel" id="withdrawalsPanel" hidden>
     <div class="panel-head"><div><h2>Withdrawal requests</h2><p class="sub">Review request details and destination addresses. Approval records a decision only; it does not send funds.</p></div><div class="tools"><input id="withdrawalSearch" type="search" placeholder="Email, user ID, reference, address or asset"><button id="refreshWithdrawals" type="button">Refresh</button></div></div>
     <div class="tools" style="margin-bottom:14px;flex-wrap:wrap">
@@ -96,6 +77,23 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
       <textarea id="withdrawalComment" rows="3" style="width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button id="approveWithdrawal" type="button">Approve request</button><button id="rejectWithdrawal" type="button">Reject request</button></div>
     </div>
+  </section>
+  <section class="panel" id="balancesPanel" hidden>
+    <div class="panel-head"><div><h2>Account balance management</h2><p class="sub">Manage internal USD balances. Every adjustment requires confirmation and is permanently recorded.</p></div><div class="tools"><input id="balanceSearch" type="search" placeholder="Search email or user ID"><button id="refreshBalances" type="button">Refresh</button></div></div>
+    <div class="table-wrap"><table style="min-width:700px"><thead><tr><th>USER EMAIL</th><th>USER ID</th><th>CURRENT USD BALANCE</th><th>LAST UPDATED</th><th>ACTION</th></tr></thead><tbody id="balancesBody"><tr><td colspan="5" class="muted">Open Balances to load accounts.</td></tr></tbody></table></div>
+    <p id="balancesMessage" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Only internal USD account balances are managed here.</p>
+    <div id="balanceEditor" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:16px">
+      <div class="panel-head"><h2>Adjust account balance</h2><button id="closeBalanceEditor" type="button">Close</button></div>
+      <div id="balanceUserDetails" style="font-size:12px;line-height:1.9;color:#d8cbbb;overflow-wrap:anywhere"></div>
+      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="balanceDirection">Adjustment</label>
+      <select id="balanceDirection" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="add">Add to balance</option><option value="subtract">Subtract from balance</option></select>
+      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="balanceAmount">Amount (USD)</label>
+      <input id="balanceAmount" type="number" min="0.000000000001" max="1000000000000" step="0.000000000001" placeholder="Enter amount" style="display:block;width:100%">
+      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="balanceReason">Reason (required)</label>
+      <textarea id="balanceReason" rows="3" maxlength="500" placeholder="Explain why this balance adjustment is needed" style="display:block;width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
+      <div style="display:flex;gap:8px;margin-top:12px"><button id="saveBalanceAdjustment" type="button">Confirm adjustment</button></div>
+    </div>
+    <div style="margin-top:22px"><h2 style="font-size:14px">Balance adjustment history</h2><div class="table-wrap"><table style="min-width:900px"><thead><tr><th>DATE</th><th>USER</th><th>ADJUSTMENT</th><th>PREVIOUS BALANCE</th><th>NEW BALANCE</th><th>REASON</th></tr></thead><tbody id="balanceHistoryBody"><tr><td colspan="6" class="muted">No history loaded.</td></tr></tbody></table></div></div>
   </section>
   <section class="panel" id="kycPanel" hidden>
     <div class="panel-head"><div><h2>KYC verification applications</h2><p class="sub">Review personal details and privately view submitted identity documents.</p></div><div class="tools"><select id="kycFilter" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="resubmission_required">Resubmission required</option></select><button id="refreshKyc" type="button">Refresh</button></div></div>
@@ -267,222 +265,6 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    clearTimeout(transactionTimer);
    transactionTimer=setTimeout(loadTransactions,300);
  });
- let balanceTimer;
- let selectedBalanceUser=null;
- const money=value=>'
- async function loadWithdrawals(){
-   $('withdrawalsMessage').textContent='Loading withdrawal requests…';
-   $('withdrawalsBody').innerHTML='<tr><td colspan="9" class="muted">Loading…</td></tr>';
-   try{
-     const {data,error}=await client.rpc('admin_list_withdrawal_requests',{
-       p_search:$('withdrawalSearch').value.trim()||null,
-       p_status:$('withdrawalStatus').value||null,
-       p_limit:200,p_offset:0
-     });
-     if(error)throw error;
-     const rows=data||[];
-     if(!rows.length){
-       $('withdrawalsBody').innerHTML='<tr><td colspan="9" class="empty">No withdrawal requests found. This queue will stay empty until a trusted withdrawal-submission service creates requests after checking available balances.</td></tr>';
-     }else{
-       $('withdrawalsBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(date(r.created_at))+'</td><td>'+escapeHtml(r.user_email||r.user_id)+'</td><td>'+escapeHtml(r.asset_code)+'</td><td>'+escapeHtml(String(r.amount))+'</td><td>'+escapeHtml(r.network)+'</td><td style="max-width:180px;overflow-wrap:anywhere">'+escapeHtml(r.destination_address)+'</td><td>'+escapeHtml(r.reference)+'</td><td><span class="pill">'+escapeHtml(r.status)+'</span></td><td><button class="view-btn" type="button" data-withdrawal-index="'+i+'">Review</button></td></tr>').join('');
-       $('withdrawalsBody').querySelectorAll('[data-withdrawal-index]').forEach(b=>b.addEventListener('click',()=>openWithdrawalReview(rows[Number(b.dataset.withdrawalIndex)])));
-     }
-     $('withdrawalsMessage').textContent='Showing '+rows.length+' request(s), up to 200. Review decisions are recorded in the admin audit log; no payout is initiated.';
-   }catch(error){
-     console.error('NEXBIT withdrawal list error:',error);
-     $('withdrawalsBody').innerHTML='<tr><td colspan="9" class="muted">Could not load withdrawal requests.</td></tr>';
-     $('withdrawalsMessage').textContent=error.message||'Run the withdrawal-management SQL in Supabase and refresh.';
-   }
- }
- function openWithdrawalReview(row){
-   selectedWithdrawal=row;
-   $('withdrawalComment').value=row.admin_comment||'';
-   $('withdrawalDetails').innerHTML=
-     '<p><strong style="color:var(--gold2)">User email</strong><br>'+escapeHtml(row.user_email||'Not available')+'</p>'+
-     '<p><strong style="color:var(--gold2)">User ID</strong><br>'+escapeHtml(row.user_id)+'</p>'+
-     '<p><strong style="color:var(--gold2)">Amount</strong><br>'+escapeHtml(String(row.amount))+' '+escapeHtml(row.asset_code)+'</p>'+
-     '<p><strong style="color:var(--gold2)">Network</strong><br>'+escapeHtml(row.network)+'</p>'+
-     '<p><strong style="color:var(--gold2)">Destination wallet</strong><br>'+escapeHtml(row.destination_address)+'</p>'+
-     '<p><strong style="color:var(--gold2)">Reference</strong><br>'+escapeHtml(row.reference)+'</p>'+
-     '<p><strong style="color:var(--gold2)">Submitted</strong><br>'+escapeHtml(date(row.created_at))+'</p>'+
-     '<p><strong style="color:var(--gold2)">User note</strong><br>'+escapeHtml(row.user_note||'None')+'</p>'+
-     '<p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p>'+
-     '<p><strong style="color:var(--gold2)">Previous admin comment</strong><br>'+escapeHtml(row.admin_comment||'None')+'</p>';
-   const canReview=row.status==='pending';
-   $('approveWithdrawal').hidden=!canReview;
-   $('rejectWithdrawal').hidden=!canReview;
-   $('withdrawalReview').hidden=false;
-   $('withdrawalReview').scrollIntoView({behavior:'smooth',block:'nearest'});
- }
- async function submitWithdrawalDecision(status){
-   if(!selectedWithdrawal)return;
-   const comment=$('withdrawalComment').value.trim();
-   if(status==='rejected'&&comment.length<3){
-     $('withdrawalsMessage').textContent='Please enter a clear comment before rejecting this withdrawal.';
-     return;
-   }
-   const action=status==='approved'?'approve':'reject';
-   if(!window.confirm('Confirm you want to '+action+' withdrawal '+selectedWithdrawal.reference+'? This records the review decision only. It will NOT send funds.'))return;
-   const buttons=['approveWithdrawal','rejectWithdrawal'].map($);
-   buttons.forEach(b=>b.disabled=true);
-   try{
-     const {error}=await client.rpc('admin_review_withdrawal_request',{
-       p_id:selectedWithdrawal.id,p_status:status,p_comment:comment||null
-     });
-     if(error)throw error;
-     $('withdrawalsMessage').textContent='Withdrawal review decision saved and recorded. No funds were sent.';
-     $('withdrawalReview').hidden=true;selectedWithdrawal=null;
-     await loadWithdrawals();
-   }catch(error){
-     $('withdrawalsMessage').textContent=error.message||'Could not save the withdrawal review decision.';
-   }finally{buttons.forEach(b=>b.disabled=false);}
- }
- $('refreshWithdrawals').addEventListener('click',loadWithdrawals);
- $('withdrawalStatus').addEventListener('change',loadWithdrawals);
- $('withdrawalSearch').addEventListener('input',()=>{
-   clearTimeout(withdrawalTimer);
-   withdrawalTimer=setTimeout(loadWithdrawals,300);
- });
- $('closeWithdrawalReview').addEventListener('click',()=>{$('withdrawalReview').hidden=true;selectedWithdrawal=null;});
- $('approveWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('approved'));
- $('rejectWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('rejected'));
- let selectedKyc=null;
- async function loadKycApplications(){
-   $('kycMessage').textContent='Loading KYC applications…';
-   $('kycBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
-   try{
-     const filter=$('kycFilter').value||null;
-     const {data,error}=await client.rpc('admin_list_kyc_submissions',{p_status:filter});
-     if(error)throw error;
-     const rows=data||[];
-     if(!rows.length){$('kycBody').innerHTML='<tr><td colspan="5" class="empty">No KYC applications found for this filter.</td></tr>';}
-     else{
-       $('kycBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(r.legal_name)+'</td><td>'+escapeHtml(r.phone_number)+'</td><td>'+escapeHtml(date(r.created_at))+'</td><td><span class="pill">'+escapeHtml(r.status.replaceAll('_',' '))+'</span></td><td><button class="view-btn" type="button" data-kyc-index="'+i+'">Review</button></td></tr>').join('');
-       $('kycBody').querySelectorAll('[data-kyc-index]').forEach(b=>b.addEventListener('click',()=>openKycReview(rows[Number(b.dataset.kycIndex)])));
-     }
-     $('kycMessage').textContent='Showing '+rows.length+' application(s). Uploaded identity files are private.';
-   }catch(error){console.error('NEXBIT KYC list error:',error);$('kycBody').innerHTML='<tr><td colspan="5" class="muted">Could not load KYC applications.</td></tr>';$('kycMessage').textContent=error.message||'Run the KYC SQL setup in Supabase first.';}
- }
- async function openKycReview(row){
-   selectedKyc=row;$('kycReview').hidden=false;$('kycComment').value=row.admin_comment||'';
-   $('kycApplicant').innerHTML='<p><strong style="color:var(--gold2)">Full legal name</strong><br>'+escapeHtml(row.legal_name)+'</p><p><strong style="color:var(--gold2)">Residential address</strong><br>'+escapeHtml(row.residential_address)+'</p><p><strong style="color:var(--gold2)">Phone number</strong><br>'+escapeHtml(row.phone_number)+'</p><p><strong style="color:var(--gold2)">User ID</strong><br>'+escapeHtml(row.user_id)+'</p><p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p><p><strong style="color:var(--gold2)">Previous reviewer comment</strong><br>'+escapeHtml(row.admin_comment||'None')+'</p>';
-   $('kycDocuments').innerHTML='Opening secure document links…';
-   const labels={id_front:'Government ID — front',id_back:'Government ID — back',selfie:'Selfie'};
-   const entries=Object.entries(row.document_paths||{});
-   const links=[];
-   for(const [key,path] of entries){
-     const {data,error}=await client.storage.from('nexbit-kyc-documents').createSignedUrl(path,300);
-     if(error){links.push('<span class="pill">'+escapeHtml(labels[key]||key)+': unavailable</span>');continue;}
-     links.push('<a class="pill" target="_blank" rel="noopener noreferrer" href="'+escapeHtml(data.signedUrl)+'">'+escapeHtml(labels[key]||key)+' · Open (5 min)</a>');
-   }
-   $('kycDocuments').innerHTML=links.join('')||'<span class="muted">No uploaded documents found.</span>';
-   $('kycReview').scrollIntoView({behavior:'smooth',block:'nearest'});
- }
- async function submitKycDecision(status){
-   if(!selectedKyc)return;
-   const comment=$('kycComment').value.trim();
-   if((status==='rejected'||status==='resubmission_required')&&comment.length<3){$('kycMessage').textContent='Please enter a clear comment before rejecting or requesting resubmission.';return;}
-   const label=status==='approved'?'approve this KYC application':status==='rejected'?'reject this KYC application':'request new documents for this KYC application';
-   if(!window.confirm('Are you sure you want to '+label+'? This decision will be recorded.'))return;
-   const buttons=['approveKyc','rejectKyc','requestKyc'].map($);
-   buttons.forEach(b=>b.disabled=true);
-   try{
-     const {error}=await client.rpc('admin_review_kyc',{p_id:selectedKyc.id,p_status:status,p_comment:comment||null});
-     if(error)throw error;
-     $('kycMessage').textContent='KYC review decision saved and recorded in the admin audit log.';
-     $('kycReview').hidden=true;selectedKyc=null;await loadKycApplications();
-   }catch(error){$('kycMessage').textContent=error.message||'Could not save the KYC review decision.';}
-   finally{buttons.forEach(b=>b.disabled=false);}
- }
- $('refreshKyc').addEventListener('click',loadKycApplications);
- $('kycFilter').addEventListener('change',loadKycApplications);
- $('closeKycReview').addEventListener('click',()=>{$('kycReview').hidden=true;selectedKyc=null;});
- $('approveKyc').addEventListener('click',()=>submitKycDecision('approved'));
- $('rejectKyc').addEventListener('click',()=>submitKycDecision('rejected'));
- $('requestKyc').addEventListener('click',()=>submitKycDecision('resubmission_required'));
- async function init(){
-   const {data:{user},error}=await client.auth.getUser();
-   if(error||!user){window.location.replace('login.html');return;}
-   if((user.email||'').toLowerCase()!==adminEmail||user.app_metadata?.role!=='admin'){
-     $('adminApp').hidden=true;$('denied').hidden=false;$('logout').hidden=true;return;
-   }
-   $('adminApp').hidden=false;await loadUsers();
- }
- init().catch(error=>{console.error(error);$('message').textContent='Admin initialization failed. Please sign in again.';});
-})();
-</script>
-</body>+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
- async function loadBalances(){
-   $('balancesMessage').textContent='Loading account balances…';
-   $('balancesBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
-   try{
-     const {data,error}=await client.rpc('admin_list_balances',{p_search:$('balanceSearch').value.trim()||null,p_limit:200});
-     if(error)throw error;
-     const rows=data||[];
-     if(!rows.length){$('balancesBody').innerHTML='<tr><td colspan="5" class="empty">No matching user accounts found.</td></tr>';}
-     else{
-       $('balancesBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(r.user_email||'—')+'</td><td style="overflow-wrap:anywhere">'+escapeHtml(r.user_id)+'</td><td>'+escapeHtml(money(r.balance))+'</td><td>'+escapeHtml(date(r.updated_at))+'</td><td><button class="view-btn" type="button" data-balance-index="'+i+'">Adjust</button></td></tr>').join('');
-       $('balancesBody').querySelectorAll('[data-balance-index]').forEach(b=>b.addEventListener('click',()=>openBalanceEditor(rows[Number(b.dataset.balanceIndex)])));
-     }
-     $('balancesMessage').textContent='Showing '+rows.length+' account(s). All adjustments are recorded in the permanent history below.';
-   }catch(error){
-     console.error('NEXBIT balance list error:',error);
-     $('balancesBody').innerHTML='<tr><td colspan="5" class="muted">Could not load balances.</td></tr>';
-     $('balancesMessage').textContent=error.message||'Run the balance-management SQL in Supabase and refresh.';
-   }
- }
- function openBalanceEditor(row){
-   selectedBalanceUser=row;
-   $('balanceAmount').value='';
-   $('balanceReason').value='';
-   $('balanceDirection').value='add';
-   $('balanceUserDetails').innerHTML='<p><strong style="color:var(--gold2)">Account</strong><br>'+escapeHtml(row.user_email||'Email unavailable')+'</p><p><strong style="color:var(--gold2)">User ID</strong><br>'+escapeHtml(row.user_id)+'</p><p><strong style="color:var(--gold2)">Current balance</strong><br>'+escapeHtml(money(row.balance))+'</p>';
-   $('balanceEditor').hidden=false;
-   $('balanceEditor').scrollIntoView({behavior:'smooth',block:'nearest'});
- }
- async function loadBalanceHistory(){
-   try{
-     const {data,error}=await client.rpc('admin_list_balance_history',{p_search:$('balanceSearch').value.trim()||null,p_limit:100});
-     if(error)throw error;
-     const rows=data||[];
-     $('balanceHistoryBody').innerHTML=rows.length?rows.map(r=>'<tr><td>'+escapeHtml(date(r.created_at))+'</td><td>'+escapeHtml(r.user_email||r.user_id)+'</td><td>'+escapeHtml((Number(r.adjustment)>=0?'+':'')+money(r.adjustment))+'</td><td>'+escapeHtml(money(r.previous_balance))+'</td><td>'+escapeHtml(money(r.new_balance))+'</td><td>'+escapeHtml(r.reason)+'</td></tr>').join(''):'<tr><td colspan="6" class="empty">No balance adjustments have been recorded.</td></tr>';
-   }catch(error){
-     $('balanceHistoryBody').innerHTML='<tr><td colspan="6" class="muted">Could not load adjustment history: '+escapeHtml(error.message||'SQL setup required')+'</td></tr>';
-   }
- }
- async function saveBalanceAdjustment(){
-   if(!selectedBalanceUser)return;
-   const amount=Number($('balanceAmount').value);
-   const reason=$('balanceReason').value.trim();
-   if(!Number.isFinite(amount)||amount<=0){$('balancesMessage').textContent='Enter an amount greater than zero.';return;}
-   if(reason.length<3){$('balancesMessage').textContent='Enter a reason of at least 3 characters.';return;}
-   const signed=$('balanceDirection').value==='subtract'?-amount:amount;
-   const oldBalance=Number(selectedBalanceUser.balance||0);
-   const newBalance=oldBalance+signed;
-   if(newBalance<0){$('balancesMessage').textContent='This adjustment would make the balance negative.';return;}
-   const action=signed>0?'ADD':'SUBTRACT';
-   const confirmText='CONFIRM BALANCE CHANGE\n\nAccount: '+(selectedBalanceUser.user_email||selectedBalanceUser.user_id)+'\nCurrent balance: '+money(oldBalance)+'\nAction: '+action+' '+money(amount)+'\nNew balance: '+money(newBalance)+'\nReason: '+reason+'\n\nThis changes the internal NEXBIT USD balance only. It does not send or receive cryptocurrency.';
-   if(!window.confirm(confirmText))return;
-   $('saveBalanceAdjustment').disabled=true;
-   $('balancesMessage').textContent='Saving balance adjustment…';
-   try{
-     const {data,error}=await client.rpc('admin_adjust_balance',{p_user_id:selectedBalanceUser.user_id,p_adjustment:signed,p_reason:reason});
-     if(error)throw error;
-     const result=Array.isArray(data)?data[0]:data;
-     $('balancesMessage').textContent='Balance updated. Previous: '+money(result?.previous_balance??oldBalance)+'. New: '+money(result?.new_balance??newBalance)+'. Adjustment recorded.';
-     $('balanceEditor').hidden=true;selectedBalanceUser=null;
-     await Promise.all([loadBalances(),loadBalanceHistory()]);
-   }catch(error){
-     $('balancesMessage').textContent=error.message||'Could not update this balance.';
-   }finally{$('saveBalanceAdjustment').disabled=false;}
- }
- $('refreshBalances').addEventListener('click',()=>{loadBalances();loadBalanceHistory();});
- $('balanceSearch').addEventListener('input',()=>{
-   clearTimeout(balanceTimer);
-   balanceTimer=setTimeout(()=>{loadBalances();loadBalanceHistory();},300);
- });
- $('closeBalanceEditor').addEventListener('click',()=>{$('balanceEditor').hidden=true;selectedBalanceUser=null;});
- $('saveBalanceAdjustment').addEventListener('click',saveBalanceAdjustment);
  let withdrawalTimer;
  let selectedWithdrawal=null;
  async function loadWithdrawals(){
@@ -561,7 +343,9 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  $('closeWithdrawalReview').addEventListener('click',()=>{$('withdrawalReview').hidden=true;selectedWithdrawal=null;});
  $('approveWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('approved'));
  $('rejectWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('rejected'));
- let selectedKyc=null;
+ let balanceTimer;
+ let selectedBalanceUser=null;
+ const money=value=>'
  async function loadKycApplications(){
    $('kycMessage').textContent='Loading KYC applications…';
    $('kycBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
@@ -626,4 +410,132 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  init().catch(error=>{console.error(error);$('message').textContent='Admin initialization failed. Please sign in again.';});
 })();
 </script>
-</body>
+</body></html>+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+ async function loadBalances(){
+   $('balancesMessage').textContent='Loading account balances…';
+   $('balancesBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
+   try{
+     const {data,error}=await client.rpc('admin_list_balances',{p_search:$('balanceSearch').value.trim()||null,p_limit:200});
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){$('balancesBody').innerHTML='<tr><td colspan="5" class="empty">No matching user accounts found.</td></tr>';}
+     else{
+       $('balancesBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(r.user_email||'—')+'</td><td style="overflow-wrap:anywhere">'+escapeHtml(r.user_id)+'</td><td>'+escapeHtml(money(r.balance))+'</td><td>'+escapeHtml(date(r.updated_at))+'</td><td><button class="view-btn" type="button" data-balance-index="'+i+'">Adjust</button></td></tr>').join('');
+       $('balancesBody').querySelectorAll('[data-balance-index]').forEach(b=>b.addEventListener('click',()=>openBalanceEditor(rows[Number(b.dataset.balanceIndex)])));
+     }
+     $('balancesMessage').textContent='Showing '+rows.length+' account(s). All adjustments are recorded in the permanent history below.';
+   }catch(error){
+     console.error('NEXBIT balance list error:',error);
+     $('balancesBody').innerHTML='<tr><td colspan="5" class="muted">Could not load balances.</td></tr>';
+     $('balancesMessage').textContent=error.message||'Confirm the balance-management SQL has been run in Supabase.';
+   }
+ }
+ function openBalanceEditor(row){
+   selectedBalanceUser=row;
+   $('balanceAmount').value='';$('balanceReason').value='';$('balanceDirection').value='add';
+   $('balanceUserDetails').innerHTML='<p><strong style="color:var(--gold2)">Account</strong><br>'+escapeHtml(row.user_email||'Email unavailable')+'</p><p><strong style="color:var(--gold2)">User ID</strong><br>'+escapeHtml(row.user_id)+'</p><p><strong style="color:var(--gold2)">Current balance</strong><br>'+escapeHtml(money(row.balance))+'</p>';
+   $('balanceEditor').hidden=false;
+   $('balanceEditor').scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ async function loadBalanceHistory(){
+   try{
+     const {data,error}=await client.rpc('admin_list_balance_history',{p_search:$('balanceSearch').value.trim()||null,p_limit:100});
+     if(error)throw error;
+     const rows=data||[];
+     $('balanceHistoryBody').innerHTML=rows.length?rows.map(r=>'<tr><td>'+escapeHtml(date(r.created_at))+'</td><td>'+escapeHtml(r.user_email||r.user_id)+'</td><td>'+escapeHtml((Number(r.adjustment)>=0?'+':'')+money(r.adjustment))+'</td><td>'+escapeHtml(money(r.previous_balance))+'</td><td>'+escapeHtml(money(r.new_balance))+'</td><td>'+escapeHtml(r.reason)+'</td></tr>').join(''):'<tr><td colspan="6" class="empty">No balance adjustments have been recorded.</td></tr>';
+   }catch(error){
+     $('balanceHistoryBody').innerHTML='<tr><td colspan="6" class="muted">Could not load adjustment history: '+escapeHtml(error.message||'SQL setup required')+'</td></tr>';
+   }
+ }
+ async function saveBalanceAdjustment(){
+   if(!selectedBalanceUser)return;
+   const amount=Number($('balanceAmount').value),reason=$('balanceReason').value.trim();
+   if(!Number.isFinite(amount)||amount<=0){$('balancesMessage').textContent='Enter an amount greater than zero.';return;}
+   if(reason.length<3){$('balancesMessage').textContent='Enter a reason of at least 3 characters.';return;}
+   const signed=$('balanceDirection').value==='subtract'?-amount:amount;
+   const oldBalance=Number(selectedBalanceUser.balance||0),newBalance=oldBalance+signed;
+   if(newBalance<0){$('balancesMessage').textContent='This adjustment would make the balance negative.';return;}
+   const action=signed>0?'ADD':'SUBTRACT';
+   const confirmText='CONFIRM BALANCE CHANGE\n\nAccount: '+(selectedBalanceUser.user_email||selectedBalanceUser.user_id)+'\nCurrent balance: '+money(oldBalance)+'\nAction: '+action+' '+money(amount)+'\nNew balance: '+money(newBalance)+'\nReason: '+reason+'\n\nThis changes the internal NEXBIT USD balance only. It does not send or receive cryptocurrency.';
+   if(!window.confirm(confirmText))return;
+   $('saveBalanceAdjustment').disabled=true;$('balancesMessage').textContent='Saving balance adjustment…';
+   try{
+     const {data,error}=await client.rpc('admin_adjust_balance',{p_user_id:selectedBalanceUser.user_id,p_adjustment:signed,p_reason:reason});
+     if(error)throw error;
+     const result=Array.isArray(data)?data[0]:data;
+     $('balancesMessage').textContent='Balance updated. Previous: '+money(result?.previous_balance??oldBalance)+'. New: '+money(result?.new_balance??newBalance)+'. Adjustment recorded.';
+     $('balanceEditor').hidden=true;selectedBalanceUser=null;
+     await Promise.all([loadBalances(),loadBalanceHistory()]);
+   }catch(error){$('balancesMessage').textContent=error.message||'Could not update this balance.';}
+   finally{$('saveBalanceAdjustment').disabled=false;}
+ }
+ $('refreshBalances').addEventListener('click',()=>{loadBalances();loadBalanceHistory();});
+ $('balanceSearch').addEventListener('input',()=>{clearTimeout(balanceTimer);balanceTimer=setTimeout(()=>{loadBalances();loadBalanceHistory();},300);});
+ $('closeBalanceEditor').addEventListener('click',()=>{$('balanceEditor').hidden=true;selectedBalanceUser=null;});
+ $('saveBalanceAdjustment').addEventListener('click',saveBalanceAdjustment);
+\n let selectedKyc=null;
+ async function loadKycApplications(){
+   $('kycMessage').textContent='Loading KYC applications…';
+   $('kycBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
+   try{
+     const filter=$('kycFilter').value||null;
+     const {data,error}=await client.rpc('admin_list_kyc_submissions',{p_status:filter});
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){$('kycBody').innerHTML='<tr><td colspan="5" class="empty">No KYC applications found for this filter.</td></tr>';}
+     else{
+       $('kycBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(r.legal_name)+'</td><td>'+escapeHtml(r.phone_number)+'</td><td>'+escapeHtml(date(r.created_at))+'</td><td><span class="pill">'+escapeHtml(r.status.replaceAll('_',' '))+'</span></td><td><button class="view-btn" type="button" data-kyc-index="'+i+'">Review</button></td></tr>').join('');
+       $('kycBody').querySelectorAll('[data-kyc-index]').forEach(b=>b.addEventListener('click',()=>openKycReview(rows[Number(b.dataset.kycIndex)])));
+     }
+     $('kycMessage').textContent='Showing '+rows.length+' application(s). Uploaded identity files are private.';
+   }catch(error){console.error('NEXBIT KYC list error:',error);$('kycBody').innerHTML='<tr><td colspan="5" class="muted">Could not load KYC applications.</td></tr>';$('kycMessage').textContent=error.message||'Run the KYC SQL setup in Supabase first.';}
+ }
+ async function openKycReview(row){
+   selectedKyc=row;$('kycReview').hidden=false;$('kycComment').value=row.admin_comment||'';
+   $('kycApplicant').innerHTML='<p><strong style="color:var(--gold2)">Full legal name</strong><br>'+escapeHtml(row.legal_name)+'</p><p><strong style="color:var(--gold2)">Residential address</strong><br>'+escapeHtml(row.residential_address)+'</p><p><strong style="color:var(--gold2)">Phone number</strong><br>'+escapeHtml(row.phone_number)+'</p><p><strong style="color:var(--gold2)">User ID</strong><br>'+escapeHtml(row.user_id)+'</p><p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p><p><strong style="color:var(--gold2)">Previous reviewer comment</strong><br>'+escapeHtml(row.admin_comment||'None')+'</p>';
+   $('kycDocuments').innerHTML='Opening secure document links…';
+   const labels={id_front:'Government ID — front',id_back:'Government ID — back',selfie:'Selfie'};
+   const entries=Object.entries(row.document_paths||{});
+   const links=[];
+   for(const [key,path] of entries){
+     const {data,error}=await client.storage.from('nexbit-kyc-documents').createSignedUrl(path,300);
+     if(error){links.push('<span class="pill">'+escapeHtml(labels[key]||key)+': unavailable</span>');continue;}
+     links.push('<a class="pill" target="_blank" rel="noopener noreferrer" href="'+escapeHtml(data.signedUrl)+'">'+escapeHtml(labels[key]||key)+' · Open (5 min)</a>');
+   }
+   $('kycDocuments').innerHTML=links.join('')||'<span class="muted">No uploaded documents found.</span>';
+   $('kycReview').scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ async function submitKycDecision(status){
+   if(!selectedKyc)return;
+   const comment=$('kycComment').value.trim();
+   if((status==='rejected'||status==='resubmission_required')&&comment.length<3){$('kycMessage').textContent='Please enter a clear comment before rejecting or requesting resubmission.';return;}
+   const label=status==='approved'?'approve this KYC application':status==='rejected'?'reject this KYC application':'request new documents for this KYC application';
+   if(!window.confirm('Are you sure you want to '+label+'? This decision will be recorded.'))return;
+   const buttons=['approveKyc','rejectKyc','requestKyc'].map($);
+   buttons.forEach(b=>b.disabled=true);
+   try{
+     const {error}=await client.rpc('admin_review_kyc',{p_id:selectedKyc.id,p_status:status,p_comment:comment||null});
+     if(error)throw error;
+     $('kycMessage').textContent='KYC review decision saved and recorded in the admin audit log.';
+     $('kycReview').hidden=true;selectedKyc=null;await loadKycApplications();
+   }catch(error){$('kycMessage').textContent=error.message||'Could not save the KYC review decision.';}
+   finally{buttons.forEach(b=>b.disabled=false);}
+ }
+ $('refreshKyc').addEventListener('click',loadKycApplications);
+ $('kycFilter').addEventListener('change',loadKycApplications);
+ $('closeKycReview').addEventListener('click',()=>{$('kycReview').hidden=true;selectedKyc=null;});
+ $('approveKyc').addEventListener('click',()=>submitKycDecision('approved'));
+ $('rejectKyc').addEventListener('click',()=>submitKycDecision('rejected'));
+ $('requestKyc').addEventListener('click',()=>submitKycDecision('resubmission_required'));
+ async function init(){
+   const {data:{user},error}=await client.auth.getUser();
+   if(error||!user){window.location.replace('login.html');return;}
+   if((user.email||'').toLowerCase()!==adminEmail||user.app_metadata?.role!=='admin'){
+     $('adminApp').hidden=true;$('denied').hidden=false;$('logout').hidden=true;return;
+   }
+   $('adminApp').hidden=false;await loadUsers();
+ }
+ init().catch(error=>{console.error(error);$('message').textContent='Admin initialization failed. Please sign in again.';});
+})();
+</script>
+</body></html>
