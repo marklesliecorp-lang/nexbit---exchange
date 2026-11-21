@@ -270,7 +270,6 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  let balanceTimer;
  let selectedBalanceUser=null;
  const money=value=>'
- let selectedWithdrawal=null;
  async function loadWithdrawals(){
    $('withdrawalsMessage').textContent='Loading withdrawal requests…';
    $('withdrawalsBody').innerHTML='<tr><td colspan="9" class="muted">Loading…</td></tr>';
@@ -412,7 +411,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  init().catch(error=>{console.error(error);$('message').textContent='Admin initialization failed. Please sign in again.';});
 })();
 </script>
-</body></html>+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+</body>+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
  async function loadBalances(){
    $('balancesMessage').textContent='Loading account balances…';
    $('balancesBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
@@ -484,7 +483,6 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  });
  $('closeBalanceEditor').addEventListener('click',()=>{$('balanceEditor').hidden=true;selectedBalanceUser=null;});
  $('saveBalanceAdjustment').addEventListener('click',saveBalanceAdjustment);
-
  let withdrawalTimer;
  let selectedWithdrawal=null;
  async function loadWithdrawals(){
@@ -628,4 +626,4 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  init().catch(error=>{console.error(error);$('message').textContent='Admin initialization failed. Please sign in again.';});
 })();
 </script>
-</body></html>
+</body>
