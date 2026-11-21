@@ -342,7 +342,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
      if(!data?.success)throw new Error(data?.error||'Deposit approval was not completed.');
      const result=data.result||{};
      $('detectedDepositApprovalNote').textContent='Approved and credited: '+String(result.amount||row.amount)+' '+String(result.asset_code||row.asset_code)+'. New balance: '+String(result.new_balance??'updated')+'.';
-     $('detectedDepositsMessage').textContent='Deposit approved and credited after Ethereum finality was verified.';
+     $('detectedDepositsMessage').textContent='Deposit approved and credited after '+(solana?'Solana finality and wallet receipt':'Ethereum finality')+' were verified.';
      selectedDetectedDeposit=null;selectedDepositUser=null;
      await loadDetectedDeposits();
    }catch(error){
