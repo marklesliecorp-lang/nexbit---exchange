@@ -85,7 +85,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
      $('totalUsers').textContent=Number(s?.total_users||0).toLocaleString();
      $('verifiedUsers').textContent=Number(s?.verified_users||0).toLocaleString();
      $('newUsers').textContent=Number(s?.new_users_30d||0).toLocaleString();
-     loadedUsers=users||[];\n     if(!users||users.length===0){$('usersBody').innerHTML='<tr><td colspan="6" class="empty">No matching accounts found.</td></tr>';}
+     loadedUsers=users||[];
+     if(!users||users.length===0){$('usersBody').innerHTML='<tr><td colspan="6" class="empty">No matching accounts found.</td></tr>';}
      else{
        $('usersBody').innerHTML=users.map((u,i)=>'<tr><td>'+escapeHtml(u.full_name||'—')+'</td><td>'+escapeHtml(u.email||'—')+'</td><td>'+escapeHtml(date(u.created_at))+'</td><td>'+escapeHtml(date(u.last_sign_in_at))+'</td><td><span class="pill">'+(u.email_confirmed_at?'Verified':'Not verified')+'</span></td><td><button class="view-btn" type="button" data-user-index="'+i+'">View</button></td></tr>').join('');
      }
