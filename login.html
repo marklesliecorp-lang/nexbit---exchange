@@ -110,7 +110,10 @@
           passwordField.value='';
           submit.innerHTML='LOGGED IN ✓';
           message.textContent='Login successful. Taking you to your dashboard…';
-          window.setTimeout(function(){ window.location.replace('dashboard.html'); }, 1200);
+          const signedInUser=data.user;
+          const isAdmin=signedInUser?.email?.toLowerCase()==='markleslie.corp@gmail.com' && signedInUser?.app_metadata?.role==='admin';
+          const destination=isAdmin?'admin.html':'dashboard.html';
+          window.setTimeout(function(){ window.location.replace(destination); }, 1200);
         }catch(error){
           console.error('NEXBIT login error:',error);
           message.textContent=error.message==='Invalid login credentials'
