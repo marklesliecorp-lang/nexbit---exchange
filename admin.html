@@ -66,6 +66,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
       <div id="depositUserResults" style="margin-top:10px;font-size:11px"></div>
       <p id="depositUserSelection" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7"></p>
       <p class="muted" style="font-size:10px;line-height:1.6">When you select a user, NEXBIT saves that account against this deposit. This does not approve the deposit or change anyone’s balance.</p>
+      <div style="margin-top:14px"><button id="approveDetectedDeposit" type="button" disabled>Approve &amp; credit user balance</button></div>
+      <p id="detectedDepositApprovalNote" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7"></p>
     </div>
   </section>
   <section class="panel" id="transactionsPanel" hidden>
@@ -284,7 +286,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
      if(error)throw error;
      const rows=data||[];
      if(!rows.length){
-       $('detectedDepositsBody').innerHTML='<tr><td colspan="8" class="empty">No detected deposits found. Blockchain monitoring has not been connected yet, so this list may remain empty.</td></tr>';
+       $('detectedDepositsBody').innerHTML='<tr><td colspan="8" class="empty">No detected deposits found yet. Deposits appear here after the Ethereum monitor detects an on-chain transfer.</td></tr>';
      }else{
        $('detectedDepositsBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(date(r.detected_at))+'</td><td><span class="pill">'+escapeHtml(r.asset_code)+'</span></td><td>'+escapeHtml(String(r.amount))+'</td><td>'+escapeHtml(r.network)+'</td><td>'+escapeHtml(String(r.confirmations))+'</td><td style="max-width:220px;overflow-wrap:anywhere">'+escapeHtml(r.tx_hash)+'</td><td><span class="pill">'+escapeHtml(r.status.replaceAll('_',' '))+'</span></td><td><button class="view-btn" type="button" data-detected-deposit-index="'+i+'">Review</button></td></tr>').join('');
        $('detectedDepositsBody').querySelectorAll('[data-detected-deposit-index]').forEach(b=>b.addEventListener('click',()=>openDetectedDepositReview(rows[Number(b.dataset.detectedDepositIndex)])));
@@ -308,9 +310,38 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
      '<p><strong style="color:var(--gold2)">Confirmations reported</strong><br>'+escapeHtml(String(row.confirmations))+'</p>'+
      '<p><strong style="color:var(--gold2)">Detected</strong><br>'+escapeHtml(date(row.detected_at))+'</p>'+
      '<p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p>';
+   const canApprove = row.status === 'awaiting_review' && String(row.network).toLowerCase() === 'ethereum' && ['ETH','USDT'].includes(String(row.asset_code).toUpperCase());
+   $('approveDetectedDeposit').hidden = !canApprove;
+   $('approveDetectedDeposit').disabled = !canApprove || !selectedDepositUser;
+   $('detectedDepositApprovalNote').textContent = canApprove
+     ? (selectedDepositUser ? 'Ready to check Ethereum finality before crediting.' : 'Select the correct user first. No balance will change until you approve.')
+     : 'Approval is currently available only for awaiting-review Ethereum ETH and USDT deposits.';
    $('detectedDepositReview').hidden=false;
    $('detectedDepositReview').scrollIntoView({behavior:'smooth',block:'nearest'});
  }
+ async function approveDetectedDeposit(){
+   if(!selectedDetectedDeposit || !selectedDepositUser)return;
+   const row=selectedDetectedDeposit;
+   if(row.status!=='awaiting_review')return;
+   if(!window.confirm('Approve '+row.amount+' '+row.asset_code+' for '+(selectedDepositUser.user_email||selectedDepositUser.user_id)+'? NEXBIT will first verify that the Ethereum transaction is finalized. If it is not finalized, no balance will be credited.'))return;
+   const button=$('approveDetectedDeposit');
+   button.disabled=true;
+   $('detectedDepositApprovalNote').textContent='Checking Ethereum finality…';
+   try{
+     const {data,error}=await client.functions.invoke('approve-ethereum-deposit',{body:{deposit_id:row.id}});
+     if(error)throw error;
+     if(!data?.success)throw new Error(data?.error||'Deposit approval was not completed.');
+     const result=data.result||{};
+     $('detectedDepositApprovalNote').textContent='Approved and credited: '+String(result.amount||row.amount)+' '+String(result.asset_code||row.asset_code)+'. New balance: '+String(result.new_balance??'updated')+'.';
+     $('detectedDepositsMessage').textContent='Deposit approved and credited after Ethereum finality was verified.';
+     selectedDetectedDeposit=null;selectedDepositUser=null;
+     await loadDetectedDeposits();
+   }catch(error){
+     $('detectedDepositApprovalNote').textContent=error.message||'Could not approve this deposit. No balance was credited.';
+     button.disabled=false;
+   }
+ }
+ $('approveDetectedDeposit').addEventListener('click',approveDetectedDeposit);
  async function searchDepositUsers(){
    const term=$('depositUserSearch').value.trim();
    if(term.length<2){$('depositUserResults').innerHTML='<span class="muted">Enter at least two characters to search.</span>';return;}
@@ -334,6 +365,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
          if(error)throw error;
          selectedDepositUser=user;
          $('depositUserSelection').textContent='Saved for this deposit: '+(user.display_name||user.user_email||user.user_id)+' · '+(user.user_email||user.user_id)+'. The deposit is still awaiting review and no balance has been credited.';
+         if(selectedDetectedDeposit.status==='awaiting_review' && String(selectedDetectedDeposit.network).toLowerCase()==='ethereum' && ['ETH','USDT'].includes(String(selectedDetectedDeposit.asset_code).toUpperCase())) $('approveDetectedDeposit').disabled=false;
+         $('detectedDepositApprovalNote').textContent='User selected. Approve when ready; Ethereum finality will be checked first.';
          $('detectedDepositsMessage').textContent='User assignment saved. No balance was changed.';
          await loadDetectedDeposits();
        }catch(error){
