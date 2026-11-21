@@ -281,7 +281,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    return row?.status==='awaiting_review' && (
      (network==='ethereum' && ['ETH','USDT'].includes(asset)) ||
      (network==='solana' && asset==='SOL') ||
-     (network==='bitcoin' && asset==='BTC')
+     (network==='bitcoin' && asset==='BTC') ||
+     (network==='xrp' && asset==='XRP')
    );
  }
  let detectedDepositSearchTimer=null;
@@ -323,8 +324,8 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    $('approveDetectedDeposit').hidden = !canApprove;
    $('approveDetectedDeposit').disabled = !canApprove || !selectedDepositUser;
    $('detectedDepositApprovalNote').textContent = canApprove
-     ? (selectedDepositUser ? (String(row.network).toLowerCase()==='solana' ? 'Ready to verify Solana finality and the exact wallet receipt before crediting.' : 'Ready to check Ethereum finality before crediting.') : 'Select the correct user first. No balance will change until you approve.')
-     : 'Approval is available only for awaiting-review supported Ethereum, Solana and Bitcoin deposits.';
+     ? (selectedDepositUser ? (String(row.network).toLowerCase()==='solana' ? 'Ready to verify Solana finality and the exact wallet receipt before crediting.' : String(row.network).toLowerCase()==='bitcoin' ? 'Ready to verify six Bitcoin confirmations and exact outputs before crediting.' : String(row.network).toLowerCase()==='xrp' ? 'Ready to verify the validated XRP payment and exact delivered amount before crediting.' : 'Ready to check Ethereum finality before crediting.') : 'Select the correct user first. No balance will change until you approve.')
+     : 'Approval is available only for awaiting-review supported Ethereum, Solana, Bitcoin and XRP deposits.';
    $('detectedDepositReview').hidden=false;
    $('detectedDepositReview').scrollIntoView({behavior:'smooth',block:'nearest'});
  }
@@ -336,19 +337,20 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    if(!isSupportedDepositForApproval(row))return;
    const solana=network==='solana';
    const bitcoin=network==='bitcoin';
-   const verification=bitcoin?'six Bitcoin confirmations and the exact BTC outputs to the NEXBIT wallet':solana?'Solana finality and the exact amount received by the NEXBIT wallet':'Ethereum finality';
+   const xrp=network==='xrp';
+   const verification=bitcoin?'six Bitcoin confirmations and the exact BTC outputs to the NEXBIT wallet':solana?'Solana finality and the exact amount received by the NEXBIT wallet':xrp?'a validated XRP Ledger payment and the exact XRP amount delivered to the NEXBIT wallet':'Ethereum finality';
    if(!window.confirm('Approve '+row.amount+' '+row.asset_code+' for '+(selectedDepositUser.user_email||selectedDepositUser.user_id)+'? NEXBIT will verify '+verification+' first. If verification fails, no balance will be credited.'))return;
    const button=$('approveDetectedDeposit');
    button.disabled=true;
-   $('detectedDepositApprovalNote').textContent=bitcoin?'Checking Bitcoin transaction and six confirmations…':solana?'Checking Solana finality and wallet receipt…':'Checking Ethereum finality…';
+   $('detectedDepositApprovalNote').textContent=bitcoin?'Checking Bitcoin transaction and six confirmations…':solana?'Checking Solana finality and wallet receipt…':xrp?'Checking the validated XRP transaction and delivered amount…':'Checking Ethereum finality…';
    try{
-     const functionName=bitcoin?'approve-bitcoin-deposit':solana?'approve-solana-deposit':'approve-ethereum-deposit';
+     const functionName=bitcoin?'approve-bitcoin-deposit':solana?'approve-solana-deposit':xrp?'approve-xrp-deposit':'approve-ethereum-deposit';
      const {data,error}=await client.functions.invoke(functionName,{body:{deposit_id:row.id}});
      if(error)throw error;
      if(!data?.success)throw new Error(data?.error||'Deposit approval was not completed.');
      const result=data.result||{};
      $('detectedDepositApprovalNote').textContent='Approved and credited: '+String(result.amount||row.amount)+' '+String(result.asset_code||row.asset_code)+'. New balance: '+String(result.new_balance??'updated')+'.';
-     $('detectedDepositsMessage').textContent='Deposit approved after '+(bitcoin?'Bitcoin six-confirmation and exact-output verification':solana?'Solana finality and wallet receipt verification':'Ethereum finality verification')+'.';
+     $('detectedDepositsMessage').textContent='Deposit approved after '+(bitcoin?'Bitcoin six-confirmation and exact-output verification':solana?'Solana finality and wallet receipt verification':xrp?'XRP Ledger validation and exact delivered-amount verification':'Ethereum finality verification')+'.';
      selectedDetectedDeposit=null;selectedDepositUser=null;
      await loadDetectedDeposits();
    }catch(error){
