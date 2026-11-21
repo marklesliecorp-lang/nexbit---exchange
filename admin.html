@@ -31,7 +31,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     <article class="stat"><small>Email verified</small><strong id="verifiedUsers">—</strong></article>
     <article class="stat"><small>New users · 30 days</small><strong id="newUsers">—</strong></article>
   </section>
-  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" data-panel="withdrawalsPanel">Withdrawals</button><button class="tab" type="button" data-panel="balancesPanel">Balances</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" data-panel="withdrawalsPanel">Withdrawals</button><button class="tab" type="button" data-panel="transfersPanel">Transfer Requests</button><button class="tab" type="button" data-panel="balancesPanel">Balances</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
   <section class="panel" id="usersPanel">
     <div class="panel-head"><h2>Registered accounts</h2><div class="tools"><input id="search" type="search" placeholder="Search name or email"><button id="refresh" type="button">Refresh</button></div></div>
     <div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>ACCOUNT CREATED</th><th>LAST SIGN-IN</th><th>EMAIL STATUS</th><th>ACTION</th></tr></thead><tbody id="usersBody"><tr><td colspan="6" class="muted">Loading accounts…</td></tr></tbody></table></div>
@@ -76,6 +76,21 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
       <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="withdrawalComment">Admin comment (required for rejection)</label>
       <textarea id="withdrawalComment" rows="3" style="width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button id="approveWithdrawal" type="button">Approve request</button><button id="rejectWithdrawal" type="button">Reject request</button></div>
+    </div>
+  </section>
+  <section class="panel" id="transfersPanel" hidden>
+    <div class="panel-head"><div><h2>Internal transfer requests</h2><p class="sub">Review requests between NEXBIT accounts. Approval debits the sender and credits the recipient in the internal ledger.</p></div><div class="tools"><input id="transferSearch" type="search" placeholder="Search sender, recipient, reference or asset"><button id="refreshTransfers" type="button">Refresh</button></div></div>
+    <div class="tools" style="margin-bottom:14px;flex-wrap:wrap">
+      <select id="transferStatus" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+    </div>
+    <div class="table-wrap"><table style="min-width:1050px"><thead><tr><th>SUBMITTED</th><th>SENDER</th><th>RECIPIENT</th><th>ASSET</th><th>AMOUNT</th><th>REFERENCE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="transfersBody"><tr><td colspan="8" class="muted">Open Transfer Requests to load requests.</td></tr></tbody></table></div>
+    <p id="transfersMessage" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Only the authorized administrator can approve or reject requests.</p>
+    <div id="transferReview" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:16px">
+      <div class="panel-head"><h2>Transfer request review</h2><button id="closeTransferReview" type="button">Close</button></div>
+      <div id="transferDetails" style="font-size:12px;line-height:1.9;color:#d8cbbb;overflow-wrap:anywhere"></div>
+      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="transferComment">Admin comment (required for rejection)</label>
+      <textarea id="transferComment" rows="3" maxlength="500" style="width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button id="approveTransfer" type="button">Approve & move balance</button><button id="rejectTransfer" type="button">Reject request</button></div>
     </div>
   </section>
   <section class="panel" id="balancesPanel" hidden>
@@ -231,11 +246,13 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    $('kycPanel').hidden=tab.dataset.panel!=='kycPanel';
    $('transactionsPanel').hidden=tab.dataset.panel!=='transactionsPanel';
    $('withdrawalsPanel').hidden=tab.dataset.panel!=='withdrawalsPanel';
+   $('transfersPanel').hidden=tab.dataset.panel!=='transfersPanel';
    $('balancesPanel').hidden=tab.dataset.panel!=='balancesPanel';
    if(tab.dataset.panel==='depositPanel')loadDepositAddresses();
    if(tab.dataset.panel==='kycPanel')loadKycApplications();
    if(tab.dataset.panel==='transactionsPanel')loadTransactions();
    if(tab.dataset.panel==='withdrawalsPanel')loadWithdrawals();
+   if(tab.dataset.panel==='transfersPanel')loadInternalTransfers();
    if(tab.dataset.panel==='balancesPanel'){loadBalances();loadBalanceHistory();}
  }));
  let transactionTimer;
@@ -347,6 +364,82 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  $('closeWithdrawalReview').addEventListener('click',()=>{$('withdrawalReview').hidden=true;selectedWithdrawal=null;});
  $('approveWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('approved'));
  $('rejectWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('rejected'));
+ let transferTimer,selectedTransfer=null;
+ async function loadInternalTransfers(){
+   $('transfersMessage').textContent='Loading internal transfer requests…';
+   $('transfersBody').innerHTML='<tr><td colspan="8" class="muted">Loading…</td></tr>';
+   try{
+     const {data,error}=await client.rpc('admin_list_internal_transfer_requests',{
+       p_search:$('transferSearch').value.trim()||null,
+       p_status:$('transferStatus').value||null,
+       p_limit:300
+     });
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){
+       $('transfersBody').innerHTML='<tr><td colspan="8" class="empty">No transfer requests found.</td></tr>';
+     }else{
+       $('transfersBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(date(r.created_at))+'</td><td>'+escapeHtml(r.sender_email||r.sender_user_id)+'</td><td>'+escapeHtml(r.recipient_email||r.recipient_user_id)+'</td><td>'+escapeHtml(r.asset_code)+'</td><td>'+escapeHtml(String(r.amount))+'</td><td>'+escapeHtml(r.reference)+'</td><td><span class="pill">'+escapeHtml(r.status)+'</span></td><td><button class="view-btn" type="button" data-transfer-index="'+i+'">Review</button></td></tr>').join('');
+       $('transfersBody').querySelectorAll('[data-transfer-index]').forEach(b=>b.addEventListener('click',()=>openTransferReview(rows[Number(b.dataset.transferIndex)])));
+     }
+     $('transfersMessage').textContent='Showing '+rows.length+' request(s). Pending amounts are reserved. Only approval moves balances.';
+   }catch(error){
+     console.error('NEXBIT internal transfer list error:',error);
+     $('transfersBody').innerHTML='<tr><td colspan="8" class="muted">Could not load transfer requests.</td></tr>';
+     $('transfersMessage').textContent=error.message||'Run the internal-transfer approval SQL in Supabase and refresh.';
+   }
+ }
+ function openTransferReview(row){
+   selectedTransfer=row;
+   $('transferComment').value=row.admin_comment||'';
+   $('transferDetails').innerHTML=
+     '<p><strong style="color:var(--gold2)">Sender</strong><br>'+escapeHtml(row.sender_email||'Email unavailable')+'</p>'+
+     '<p><strong style="color:var(--gold2)">Sender user ID</strong><br>'+escapeHtml(row.sender_user_id)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Recipient</strong><br>'+escapeHtml(row.recipient_email||'Email unavailable')+'</p>'+
+     '<p><strong style="color:var(--gold2)">Recipient user ID</strong><br>'+escapeHtml(row.recipient_user_id)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Amount</strong><br>'+escapeHtml(String(row.amount))+' '+escapeHtml(row.asset_code)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Reference</strong><br>'+escapeHtml(row.reference)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Submitted</strong><br>'+escapeHtml(date(row.created_at))+'</p>'+
+     '<p><strong style="color:var(--gold2)">Status</strong><br>'+escapeHtml(row.status)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Previous admin comment</strong><br>'+escapeHtml(row.admin_comment||'None')+'</p>';
+   const canReview=row.status==='pending';
+   $('approveTransfer').hidden=!canReview;
+   $('rejectTransfer').hidden=!canReview;
+   $('transferReview').hidden=false;
+   $('transferReview').scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ async function submitTransferDecision(status){
+   if(!selectedTransfer)return;
+   const comment=$('transferComment').value.trim();
+   if(status==='rejected'&&comment.length<3){
+     $('transfersMessage').textContent='Enter a reason of at least 3 characters before rejecting.';
+     return;
+   }
+   const action=status==='approved'?'approve and move the internal balance for':'reject';
+   if(!window.confirm('Confirm you want to '+action+' transfer '+selectedTransfer.reference+'? '+(status==='approved'?'This immediately debits the sender and credits the recipient in the NEXBIT internal ledger.':'No balance will move; the reserved amount will be released.')))return;
+   const buttons=['approveTransfer','rejectTransfer'].map($);
+   buttons.forEach(b=>b.disabled=true);
+   try{
+     const {data,error}=await client.rpc('admin_review_internal_transfer',{
+       p_id:selectedTransfer.id,p_status:status,p_comment:comment||null
+     });
+     if(error)throw error;
+     const result=Array.isArray(data)?data[0]:data;
+     $('transfersMessage').textContent=status==='approved'
+       ?'Transfer approved. Sender new balance: '+result.sender_new_balance+' '+selectedTransfer.asset_code+'. Recipient new balance: '+result.recipient_new_balance+' '+selectedTransfer.asset_code+'.'
+       :'Transfer rejected. No balances moved; the reserved amount is released.';
+     $('transferReview').hidden=true;selectedTransfer=null;
+     await loadInternalTransfers();
+   }catch(error){
+     $('transfersMessage').textContent=error.message||'Could not save the transfer decision.';
+   }finally{buttons.forEach(b=>b.disabled=false);}
+ }
+ $('refreshTransfers').addEventListener('click',loadInternalTransfers);
+ $('transferStatus').addEventListener('change',loadInternalTransfers);
+ $('transferSearch').addEventListener('input',()=>{clearTimeout(transferTimer);transferTimer=setTimeout(loadInternalTransfers,300);});
+ $('closeTransferReview').addEventListener('click',()=>{$('transferReview').hidden=true;selectedTransfer=null;});
+ $('approveTransfer').addEventListener('click',()=>submitTransferDecision('approved'));
+ $('rejectTransfer').addEventListener('click',()=>submitTransferDecision('rejected'));
  let selectedKyc=null;
  async function loadKycApplications(){
    $('kycMessage').textContent='Loading KYC applications…';
