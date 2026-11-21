@@ -117,6 +117,11 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     const {data:{user},error}=await client.auth.getUser();
     if(error||!user){window.location.replace('login.html');return;}
     // Wire wallet actions before loading balances so a balance-query error cannot disable the buttons.
+    document.getElementById('openDeposit').addEventListener('click',openDeposits);
+    document.getElementById('closeDeposit').addEventListener('click',()=>{document.getElementById('depositPanel').hidden=true;});
+    document.getElementById('openWithdraw').addEventListener('click',openWithdrawals);
+    document.getElementById('closeWithdraw').addEventListener('click',()=>{document.getElementById('withdrawPanel').hidden=true;});
+    document.getElementById('withdrawForm').addEventListener('submit',submitWithdrawal);
     const {data:balances,error:balanceError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance,updated_at').eq('user_id',user.id).order('asset_code');
     if(balanceError)throw balanceError;
     const rows=balances||[],usdRow=rows.find(r=>r.asset_code==='USD'),usdAmount=Number(usdRow?.balance||0);
@@ -125,11 +130,6 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     document.getElementById('walletAssetCount').textContent=rows.filter(r=>Number(r.balance)>0).length;
     document.getElementById('assetBreakdown').innerHTML=rows.length?rows.map(r=>'<div class="asset-row"><div><div class="asset-name">'+safe(r.asset_code)+'</div><div class="asset-desc">'+(r.asset_code==='USD'?'US Dollar account ledger':'Digital asset account ledger')+'</div></div><div class="asset-value">'+safe(qty(r.balance))+' '+safe(r.asset_code)+'<small>Updated '+safe(r.updated_at?new Date(r.updated_at).toLocaleString():'not yet updated')+'</small></div></div>').join(''):'<div class="empty"><strong>No asset balances yet</strong>Your account has no recorded asset balances.</div>';
     message.textContent='Your secure session is active. Displayed amounts are internal ledger records, not proof of on-chain custody or transfers.';
-    document.getElementById('openDeposit').addEventListener('click',openDeposits);
-    document.getElementById('closeDeposit').addEventListener('click',()=>{document.getElementById('depositPanel').hidden=true;});
-    document.getElementById('openWithdraw').addEventListener('click',openWithdrawals);
-    document.getElementById('closeWithdraw').addEventListener('click',()=>{document.getElementById('withdrawPanel').hidden=true;});
-    document.getElementById('withdrawForm').addEventListener('submit',submitWithdrawal);
     const assetSelect=document.getElementById('withdrawAsset');
     rows.filter(r=>Number(r.balance)>0).forEach(r=>{const option=document.createElement('option');option.value=r.asset_code;option.textContent=r.asset_code+' — available ledger balance: '+qty(r.balance);assetSelect.appendChild(option);});
     if(new URLSearchParams(window.location.search).get('open')==='deposit')openDeposits();
