@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){window.supabaseLoadFailed=true;this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
   <style>
     :root{color-scheme:dark;--gold:#e0b653;--gold-bright:#ffe4a0;--muted:#a7a196}
     *{box-sizing:border-box}
@@ -77,6 +77,8 @@
   </main>
   <script>
     (function(){
+  if(!window.supabase?.createClient){const notice=document.getElementById('loginMessage');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
+
       const form=document.getElementById('nexbitLoginForm');
       const emailField=document.getElementById('loginEmail');
       const passwordField=document.getElementById('loginPassword');
