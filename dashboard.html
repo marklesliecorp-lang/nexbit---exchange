@@ -47,10 +47,10 @@
       <div class="balance-row"><div class="balance" id="dashboardBalance">— — —</div><div class="currency">USD</div></div>
       <div class="balance-note">Your verified account overview <strong>•</strong> Your recorded internal USD account balance.</div>
       <div class="actions">
-        <a class="action" href="wallet.html?open=deposit" style="cursor:pointer"><span class="symbol">＋</span>Deposit</a>
-        <div class="action"><span class="symbol">↗</span>Withdraw</div>
-        <div class="action"><span class="symbol">⇄</span>Transfer</div>
-        <div class="action"><span class="symbol">◷</span>History</div>
+        <a class="action" href="deposit.html" style="cursor:pointer"><span class="symbol">＋</span>Deposit</a>
+        <a class="action" href="withdraw.html" style="cursor:pointer"><span class="symbol">↗</span>Withdraw</a>
+        <a class="action" href="transfer.html" style="cursor:pointer"><span class="symbol">⇄</span>Transfer</a>
+        <a class="action" href="history.html" style="cursor:pointer"><span class="symbol">◷</span>History</a>
       </div>
     </article>
     <div class="side-stack">
@@ -65,7 +65,7 @@
   <div class="notice">Wallet balances, deposits, withdrawals, transfers, investment returns and market prices are not active yet. No financial activity is processed from this dashboard at this stage.</div>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 </main>
-<nav class="bottom-nav" aria-label="Main navigation"><a href="dashboard.html"><span>⌂</span>Home</a><a href="#market"><span>⌁</span>Markets</a><a href="#investments"><span>◈</span>Invest</a><a href="wallet.html"><span>▣</span>Assets</a><a href="account.html"><span>◎</span>Account</a></nav>
+<nav class="bottom-nav" aria-label="Main navigation"><a href="dashboard.html"><span>⌂</span>Home</a><a href="index.html#markets"><span>⌁</span>Markets</a><a href="index.html#investment-packages"><span>◈</span>Invest</a><a href="wallet.html"><span>▣</span>Assets</a><a href="account.html"><span>◎</span>Account</a></nav>
 <script>
 (function(){
   if(!window.supabase?.createClient){const notice=document.getElementById('authMessage');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
