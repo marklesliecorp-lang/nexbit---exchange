@@ -52,8 +52,8 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     <div class="actions" aria-label="Wallet actions">
       <button class="action action-button" id="openDeposit" type="button"><span>＋</span>Deposit</button>
       <button class="action action-button" id="openWithdraw" type="button"><span>↗</span>Withdraw</button>
-      <div class="action"><span>⇄</span>Transfer</div>
-      <div class="action"><span>◷</span>History</div>
+      <button class="action action-button" id="openTransfer" type="button"><span>⇄</span>Transfer</button>
+      <button class="action action-button" id="openHistory" type="button"><span>◷</span>History</button>
     </div>
   </section>
 
@@ -78,6 +78,16 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     <p class="message" id="withdrawMessage" role="status" aria-live="polite"></p>
     <div class="section-head" style="margin-top:22px"><h2>Your withdrawal requests</h2><span>Recent requests</span></div>
     <div id="withdrawHistory"><div class="empty">Loading your requests…</div></div>
+  </section>
+
+
+  <section class="panel deposit-panel" id="transferPanel" hidden>
+    <div class="section-head"><div><h2>Transfer</h2><span>Internal account transfers</span></div><button class="deposit-back" id="closeTransfer" type="button">Close</button></div>
+    <div class="empty"><strong>Transfers are not enabled yet</strong>No funds can be moved between accounts from this page. Transfer functionality requires a secure, verified backend before it can be activated.</div>
+  </section>
+  <section class="panel deposit-panel" id="historyPanel" hidden>
+    <div class="section-head"><div><h2>Wallet history</h2><span>Account activity</span></div><button class="deposit-back" id="closeHistory" type="button">Close</button></div>
+    <div class="empty"><strong>Transaction history is not connected yet</strong>Verified deposit, withdrawal and transfer records will appear here after the corresponding backend services are connected. Withdrawal requests can currently be viewed in the withdrawal section.</div>
   </section>
 
   <section class="stats" aria-label="Wallet summary">
@@ -107,21 +117,16 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
 </nav>
 <script>
 (function(){
-  const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
+  const client=window.supabase?.createClient ? window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N') : null;
   const message=document.getElementById('authMessage');
   const qty=value=>Number(value||0).toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:18});
   const usd=value=>'$'+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
   const supportedDeposits=[['BTC','Bitcoin'],['ETH','Ethereum'],['USDT','Ethereum'],['USDT','TON'],['XRP','XRP Ledger'],['SOL','Solana']];
   function safe(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
   async function init(){
+    if(!client){message.textContent='Wallet service could not load. Please refresh the page or try again later.';return;}
     const {data:{user},error}=await client.auth.getUser();
     if(error||!user){window.location.replace('login.html');return;}
-    // Wire wallet actions before loading balances so a balance-query error cannot disable the buttons.
-    document.getElementById('openDeposit').addEventListener('click',openDeposits);
-    document.getElementById('closeDeposit').addEventListener('click',()=>{document.getElementById('depositPanel').hidden=true;});
-    document.getElementById('openWithdraw').addEventListener('click',openWithdrawals);
-    document.getElementById('closeWithdraw').addEventListener('click',()=>{document.getElementById('withdrawPanel').hidden=true;});
-    document.getElementById('withdrawForm').addEventListener('submit',submitWithdrawal);
     const {data:balances,error:balanceError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance,updated_at').eq('user_id',user.id).order('asset_code');
     if(balanceError)throw balanceError;
     const rows=balances||[],usdRow=rows.find(r=>r.asset_code==='USD'),usdAmount=Number(usdRow?.balance||0);
@@ -140,14 +145,16 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     await loadWithdrawalHistory();
   }
   async function loadWithdrawalHistory(){
-    const target=document.getElementById('withdrawHistory');target.innerHTML='<div class="empty">Loading your requests…</div>';
+    const target=document.getElementById('withdrawHistory');
+    if(!client){target.innerHTML='<div class="empty"><strong>Wallet service unavailable</strong>Refresh the page and try again.</div>';return;}target.innerHTML='<div class="empty">Loading your requests…</div>';
     const {data,error}=await client.rpc('nexbit_list_my_withdrawal_requests',{p_limit:50});
     if(error){target.innerHTML='<div class="empty"><strong>Unable to load withdrawal history</strong>Please refresh and try again.</div>';console.error(error);return;}
     const rows=data||[];
     target.innerHTML=rows.length?rows.map(r=>'<div class="withdraw-history-row"><div><strong>'+safe(r.amount)+' '+safe(r.asset_code)+' · '+safe(r.network)+'</strong><span>'+safe(r.reference)+' · '+safe(new Date(r.created_at).toLocaleString())+'</span>'+(r.admin_comment?'<div class="asset-desc">Admin note: '+safe(r.admin_comment)+'</div>':'')+'</div><div class="withdraw-status">'+safe(r.status)+'</div></div>').join(''):'<div class="empty">You have not submitted any withdrawal requests.</div>';
   }
   async function submitWithdrawal(event){
-    event.preventDefault();const button=document.getElementById('withdrawSubmit'),msg=document.getElementById('withdrawMessage');
+    event.preventDefault();
+    if(!client){document.getElementById('withdrawMessage').textContent='Wallet service is unavailable. Refresh and try again.';return;}const button=document.getElementById('withdrawSubmit'),msg=document.getElementById('withdrawMessage');
     const asset=document.getElementById('withdrawAsset').value,amount=document.getElementById('withdrawAmount').value,network=document.getElementById('withdrawNetwork').value.trim(),address=document.getElementById('withdrawAddress').value.trim(),note=document.getElementById('withdrawNote').value.trim();
     if(!asset||!amount||Number(amount)<=0||!network||!address){msg.textContent='Complete all required fields with a valid amount.';return;}
     if(!window.confirm('Submit a withdrawal request for '+amount+' '+asset+' on '+network+' to the address you entered? Please verify the destination carefully.'))return;
@@ -165,6 +172,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     panel.scrollIntoView({behavior:'smooth',block:'start'});
     const target=document.getElementById('depositAddresses');
     target.innerHTML='<div class="empty">Loading available deposit addresses…</div>';
+    if(!client){target.innerHTML='<div class="empty"><strong>Wallet service unavailable</strong>Refresh the page and try again.</div>';return;}
     const {data,error}=await client.rpc('nexbit_list_active_deposit_addresses');
     if(error){target.innerHTML='<div class="empty"><strong>Unable to load deposit addresses</strong>Please try again later.</div>';console.error(error);return;}
     const rows=data||[];
@@ -180,6 +188,17 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     }));
 
   }
+  const showPanel=id=>{const el=document.getElementById(id);el.hidden=false;el.scrollIntoView({behavior:'smooth',block:'start'});};
+  const hidePanel=id=>{document.getElementById(id).hidden=true;};
+  document.getElementById('openDeposit').addEventListener('click',openDeposits);
+  document.getElementById('closeDeposit').addEventListener('click',()=>hidePanel('depositPanel'));
+  document.getElementById('openWithdraw').addEventListener('click',openWithdrawals);
+  document.getElementById('closeWithdraw').addEventListener('click',()=>hidePanel('withdrawPanel'));
+  document.getElementById('openTransfer').addEventListener('click',()=>showPanel('transferPanel'));
+  document.getElementById('closeTransfer').addEventListener('click',()=>hidePanel('transferPanel'));
+  document.getElementById('openHistory').addEventListener('click',()=>showPanel('historyPanel'));
+  document.getElementById('closeHistory').addEventListener('click',()=>hidePanel('historyPanel'));
+  document.getElementById('withdrawForm').addEventListener('submit',submitWithdrawal);
   document.getElementById('logoutButton').addEventListener('click',async function(){
     this.disabled=true;this.textContent='Logging out…';
     const {error}=await client.auth.signOut();
