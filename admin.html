@@ -30,11 +30,28 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     <article class="stat"><small>Email verified</small><strong id="verifiedUsers">—</strong></article>
     <article class="stat"><small>New users · 30 days</small><strong id="newUsers">—</strong></article>
   </section>
-  <nav class="tabs"><button class="tab active" type="button">User Management</button><button class="tab" type="button" disabled title="Not implemented yet">Transactions · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
-  <section class="panel">
+  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" disabled title="Not implemented yet">Transactions · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <section class="panel" id="usersPanel">
     <div class="panel-head"><h2>Registered accounts</h2><div class="tools"><input id="search" type="search" placeholder="Search name or email"><button id="refresh" type="button">Refresh</button></div></div>
     <div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>ACCOUNT CREATED</th><th>LAST SIGN-IN</th><th>EMAIL STATUS</th><th>ACTION</th></tr></thead><tbody id="usersBody"><tr><td colspan="6" class="muted">Loading accounts…</td></tr></tbody></table></div>
     <p id="message" role="status" aria-live="polite">Connecting to the protected user directory…</p>
+  </section>
+  <section class="panel" id="depositPanel" hidden>
+    <div class="panel-head"><div><h2>Deposit address management</h2><p class="sub">Manage the addresses displayed for supported assets and networks.</p></div><button id="newDeposit" type="button">＋ Add address</button></div>
+    <form id="depositForm" style="display:none;border:1px solid var(--line);border-radius:10px;padding:15px;margin-bottom:16px">
+      <h3 id="depositFormTitle" style="font-size:13px;margin:0 0 12px">Add deposit address</h3>
+      <input id="depositId" type="hidden">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+        <label style="font-size:10px;color:var(--muted)">Asset code<input id="depositAsset" required maxlength="12" placeholder="e.g. USDT" style="display:block;width:100%;margin-top:6px"></label>
+        <label style="font-size:10px;color:var(--muted)">Network<input id="depositNetwork" required maxlength="40" placeholder="e.g. TRC20" style="display:block;width:100%;margin-top:6px"></label>
+        <label style="font-size:10px;color:var(--muted);grid-column:1/-1">Deposit address<input id="depositAddress" required minlength="8" maxlength="256" placeholder="Enter the exact wallet address" style="display:block;width:100%;margin-top:6px"></label>
+        <label style="font-size:10px;color:var(--muted);grid-column:1/-1">Label (optional)<input id="depositLabel" maxlength="120" placeholder="e.g. Main USDT TRC20 wallet" style="display:block;width:100%;margin-top:6px"></label>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:13px"><button id="saveDeposit" type="submit">Save address</button><button id="cancelDeposit" type="button">Cancel</button></div>
+      <p id="depositFormMessage" role="status" style="font-size:10px;color:var(--gold2)"></p>
+    </form>
+    <div class="table-wrap"><table style="min-width:760px"><thead><tr><th>ASSET</th><th>NETWORK</th><th>DEPOSIT ADDRESS</th><th>LABEL</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="depositBody"><tr><td colspan="6" class="muted">Loading addresses…</td></tr></tbody></table></div>
+    <p id="depositMessage" role="status" aria-live="polite" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Loading saved deposit addresses…</p>
   </section>
 </main>
 <div id="userDetail" hidden style="position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.82);padding:18px;display:grid;place-items:center">
@@ -49,9 +66,11 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
  const adminEmail='markleslie.corp@gmail.com';
  const $=id=>document.getElementById(id);
- const date=value=>value?new Date(value).toLocaleString():'Never';\n let loadedUsers=[];
+ const date=value=>value?new Date(value).toLocaleString():'Never';
+ let loadedUsers=[];
  async function signOut(){await client.auth.signOut();window.location.replace('login.html');}
- $('logout').addEventListener('click',signOut);$('deniedLogout').addEventListener('click',signOut);\n $('closeDetails').addEventListener('click',()=>$('userDetail').hidden=true);\n $('userDetail').addEventListener('click',e=>{if(e.target===$('userDetail'))$('userDetail').hidden=true;});
+ $('logout').addEventListener('click',signOut);$('deniedLogout').addEventListener('click',signOut);
+ $('closeDetails').addEventListener('click',()=>$('userDetail').hidden=true);\n $('userDetail').addEventListener('click',e=>{if(e.target===$('userDetail'))$('userDetail').hidden=true;});
  async function loadUsers(){
    $('refresh').disabled=true;$('message').textContent='Loading registered accounts…';
    $('usersBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
@@ -85,6 +104,71 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
  function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
  let searchTimer; $('search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(loadUsers,300);});
  $('refresh').addEventListener('click',loadUsers);
+ const depositFields=['depositId','depositAsset','depositNetwork','depositAddress','depositLabel'];
+ function resetDepositForm(){ $('depositForm').reset();$('depositId').value='';$('depositFormTitle').textContent='Add deposit address';$('depositFormMessage').textContent='';$('depositForm').style.display='none'; }
+ function openDepositForm(row){
+   $('depositForm').reset();$('depositId').value=row?.id||'';
+   $('depositAsset').value=row?.asset_code||'';$('depositNetwork').value=row?.network||'';
+   $('depositAddress').value=row?.address||'';$('depositLabel').value=row?.label||'';
+   $('depositFormTitle').textContent=row?'Edit deposit address':'Add deposit address';
+   $('depositFormMessage').textContent='';$('depositForm').style.display='block';
+   $('depositForm').scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ async function loadDepositAddresses(){
+   $('depositMessage').textContent='Loading saved deposit addresses…';
+   $('depositBody').innerHTML='<tr><td colspan="6" class="muted">Loading…</td></tr>';
+   try{
+     const {data,error}=await client.rpc('admin_list_deposit_addresses');
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){$('depositBody').innerHTML='<tr><td colspan="6" class="empty">No deposit addresses have been added.</td></tr>';}
+     else{
+       $('depositBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(r.asset_code)+'</td><td>'+escapeHtml(r.network)+'</td><td style="max-width:260px;overflow-wrap:anywhere">'+escapeHtml(r.address)+'</td><td>'+escapeHtml(r.label||'—')+'</td><td><span class="pill">'+(r.is_active?'Active':'Inactive')+'</span></td><td><button class="view-btn" type="button" data-deposit-edit="'+i+'">Edit</button> <button class="view-btn" type="button" data-deposit-toggle="'+i+'">'+(r.is_active?'Deactivate':'Activate')+'</button></td></tr>').join('');
+       $('depositBody').querySelectorAll('[data-deposit-edit]').forEach(b=>b.addEventListener('click',()=>openDepositForm(rows[Number(b.dataset.depositEdit)])));
+       $('depositBody').querySelectorAll('[data-deposit-toggle]').forEach(b=>b.addEventListener('click',async()=>{
+         const r=rows[Number(b.dataset.depositToggle)];if(!r)return;
+         const next=!r.is_active;
+         if(!window.confirm((next?'Activate':'Deactivate')+' this '+r.asset_code+' '+r.network+' deposit address?'))return;
+         b.disabled=true;
+         try{
+           const {error}=await client.rpc('admin_set_deposit_address_active',{p_id:r.id,p_is_active:next});
+           if(error)throw error;
+           $('depositMessage').textContent='Address status updated.';await loadDepositAddresses();
+         }catch(err){$('depositMessage').textContent=err.message||'Could not update address status.';b.disabled=false;}
+       }));
+     }
+     $('depositMessage').textContent='Showing '+rows.length+' saved deposit address(es). Changes are recorded in the admin audit log.';
+   }catch(error){
+     console.error('NEXBIT deposit address error:',error);
+     $('depositBody').innerHTML='<tr><td colspan="6" class="muted">Could not load deposit addresses.</td></tr>';
+     $('depositMessage').textContent=error.message||'Confirm the deposit-address SQL has been run in Supabase.';
+   }
+ }
+ $('newDeposit').addEventListener('click',()=>openDepositForm(null));
+ $('cancelDeposit').addEventListener('click',resetDepositForm);
+ $('depositForm').addEventListener('submit',async event=>{
+   event.preventDefault();
+   const id=$('depositId').value||null;
+   const asset=$('depositAsset').value.trim().toUpperCase();
+   const network=$('depositNetwork').value.trim();
+   const address=$('depositAddress').value.trim();
+   const label=$('depositLabel').value.trim();
+   if(!window.confirm((id?'Save changes to':'Add')+' this '+asset+' '+network+' deposit address?'))return;
+   $('saveDeposit').disabled=true;$('depositFormMessage').textContent='Saving…';
+   try{
+     const {error}=await client.rpc('admin_save_deposit_address',{p_id:id,p_asset_code:asset,p_network:network,p_address:address,p_label:label});
+     if(error)throw error;
+     resetDepositForm();$('depositMessage').textContent='Deposit address saved and recorded in the audit log.';
+     await loadDepositAddresses();
+   }catch(error){$('depositFormMessage').textContent=error.message||'Could not save this address.';}
+   finally{$('saveDeposit').disabled=false;}
+ });
+ document.querySelectorAll('.tab[data-panel]').forEach(tab=>tab.addEventListener('click',()=>{
+   document.querySelectorAll('.tab[data-panel]').forEach(t=>t.classList.toggle('active',t===tab));
+   $('usersPanel').hidden=tab.dataset.panel!=='usersPanel';
+   $('depositPanel').hidden=tab.dataset.panel!=='depositPanel';
+   if(tab.dataset.panel==='depositPanel')loadDepositAddresses();
+ }));
  async function init(){
    const {data:{user},error}=await client.auth.getUser();
    if(error||!user){window.location.replace('login.html');return;}
