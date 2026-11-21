@@ -1,62 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#000000">
-<title>Admin Console | NEXBIT</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#000000">
+<title>NEXBIT Admin Console</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{color-scheme:dark;--gold:#c78332;--gold2:#f0bd70;--line:rgba(185,116,35,.25);--muted:#92877a;--white:#f7f2e9}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#000;color:var(--white);font-family:Inter,Arial,sans-serif}a{color:inherit;text-decoration:none}
-header{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1120px)/2));background:#050403}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#000;color:var(--white);font-family:Inter,Arial,sans-serif}button,input{font:inherit}a{color:inherit;text-decoration:none}
+header{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100% - 1160px)/2));background:#050403;position:sticky;top:0;z-index:5}
 .brand{font-size:21px;font-weight:900;letter-spacing:.16em;color:var(--gold2);text-shadow:0 0 15px rgba(199,126,48,.45)}.brand span{color:var(--gold)}
-button{border:1px solid var(--line);border-radius:9px;background:#100c07;color:var(--gold2);padding:11px 14px;font-weight:700;font-size:11px;cursor:pointer}
-main{max-width:1120px;margin:0 auto;padding:36px 20px}.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:800;margin:0 0 9px}h1{font-size:clamp(26px,4vw,36px);margin:0;letter-spacing:-.04em}.sub{font-size:12px;color:var(--muted);margin:9px 0 25px}
-.notice{border:1px solid var(--line);background:linear-gradient(120deg,#100b06,#050403);border-radius:13px;padding:17px 18px;color:#c9b79f;font-size:11px;line-height:1.7;margin-bottom:17px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#0b0907,#030303);padding:20px;min-height:130px}.card small{color:var(--muted);font-size:10px}.card h2{font-size:15px;margin:13px 0 7px}.card p{font-size:10px;line-height:1.6;color:var(--muted);margin:0}.status{display:inline-block;color:var(--gold2);font-size:9px;border:1px solid var(--line);border-radius:20px;padding:5px 8px;margin-top:12px}
-#message{font-size:11px;color:var(--gold2);margin-top:20px;line-height:1.7}.denied{max-width:520px;margin:12vh auto;padding:26px;border:1px solid #5b3020;border-radius:14px;background:#0b0503;text-align:center}.denied h1{font-size:23px}.denied p{color:#c3a995;font-size:12px;line-height:1.7}
-@media(max-width:700px){header{padding:0 15px}main{padding:27px 15px}.grid{grid-template-columns:1fr}.card{min-height:0}}
+button{border:1px solid var(--line);border-radius:9px;background:#100c07;color:var(--gold2);padding:10px 14px;font-size:11px;font-weight:750;cursor:pointer}button:disabled{opacity:.55;cursor:wait}
+main{max-width:1160px;margin:0 auto;padding:32px 20px}.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--gold);font-weight:800;margin:0 0 9px}h1{font-size:clamp(26px,4vw,35px);margin:0;letter-spacing:-.04em}.sub{font-size:12px;color:var(--muted);margin:9px 0 24px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:18px}.stat,.panel{border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#0b0907,#030303);padding:18px}.stat small{font-size:10px;color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:10px;color:var(--gold2)}
+.tabs{display:flex;gap:8px;overflow:auto;margin:0 0 14px}.tab{white-space:nowrap}.tab.active{background:#38220e;border-color:#b7772d}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.panel-head h2{font-size:15px;margin:0}.tools{display:flex;gap:8px;align-items:center}
+input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#050403;color:var(--white);font-size:11px;outline:none}input:focus{border-color:var(--gold2)}
+.table-wrap{overflow:auto;border:1px solid rgba(185,116,35,.13);border-radius:9px}table{width:100%;border-collapse:collapse;min-width:760px}th,td{text-align:left;padding:13px 12px;border-bottom:1px solid rgba(185,116,35,.12);font-size:10px}th{color:var(--gold2);font-weight:800;background:#090705}td{color:#d8cbbb}tr:last-child td{border-bottom:0}.muted{color:var(--muted)}.pill{display:inline-block;padding:5px 8px;border:1px solid var(--line);border-radius:20px;color:var(--gold2);font-size:9px}
+#message{font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0}.empty{text-align:center;padding:30px 12px;color:var(--muted);font-size:11px}
+.denied{max-width:520px;margin:12vh auto;padding:26px;border:1px solid #5b3020;border-radius:14px;background:#0b0503;text-align:center}.denied h1{font-size:23px}.denied p{color:#c3a995;font-size:12px;line-height:1.7}
+@media(max-width:650px){header{padding:0 15px}main{padding:25px 14px}.stats{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.tools{width:100%}.tools input{flex:1;width:100%}.stat{padding:15px}}
 </style>
 </head>
 <body>
-<header><a class="brand" href="dashboard.html"><span>✦</span> NEXBIT</a><button id="logout" type="button">Log out</button></header>
+<header><a class="brand" href="dashboard.html"><span>✦</span> NEXBIT <span style="font-size:10px;letter-spacing:.12em">ADMIN</span></a><button id="logout" type="button">Log out</button></header>
 <main id="adminApp" hidden>
-  <p class="eyebrow">RESTRICTED CONTROL PANEL</p>
-  <h1>Admin dashboard</h1>
-  <p class="sub">Platform administration for authorized NEXBIT operators.</p>
-  <div class="notice">Administrator access is active for this signed-in session. User records, balances and financial actions are not available until their database permissions and audited workflows are implemented.</div>
-  <section class="grid">
-    <article class="card"><small>ACCOUNT MANAGEMENT</small><h2>Users</h2><p>User search, account status and verification review will be added after secure admin database policies are in place.</p><span class="status">Not connected</span></article>
-    <article class="card"><small>WALLET OPERATIONS</small><h2>Wallets & transactions</h2><p>Wallet balances and transaction records will require protected server-side actions and audit logs.</p><span class="status">Not connected</span></article>
-    <article class="card"><small>PLATFORM OVERSIGHT</small><h2>Activity & security</h2><p>Administrative activity history and security monitoring will be added in a later stage.</p><span class="status">Not connected</span></article>
+  <p class="eyebrow">RESTRICTED CONTROL PANEL</p><h1>Admin dashboard</h1><p class="sub">Platform oversight · Authorized administrator</p>
+  <section class="stats">
+    <article class="stat"><small>Total registered users</small><strong id="totalUsers">—</strong></article>
+    <article class="stat"><small>Email verified</small><strong id="verifiedUsers">—</strong></article>
+    <article class="stat"><small>New users · 30 days</small><strong id="newUsers">—</strong></article>
   </section>
-  <p id="message" role="status" aria-live="polite">Verifying administrator access…</p>
+  <nav class="tabs"><button class="tab active" type="button">User Management</button><button class="tab" type="button" disabled title="Not implemented yet">Transactions · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <section class="panel">
+    <div class="panel-head"><h2>Registered accounts</h2><div class="tools"><input id="search" type="search" placeholder="Search name or email"><button id="refresh" type="button">Refresh</button></div></div>
+    <div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>ACCOUNT CREATED</th><th>LAST SIGN-IN</th><th>EMAIL STATUS</th></tr></thead><tbody id="usersBody"><tr><td colspan="5" class="muted">Loading accounts…</td></tr></tbody></table></div>
+    <p id="message" role="status" aria-live="polite">Connecting to the protected user directory…</p>
+  </section>
 </main>
-<section class="denied" id="denied" hidden><h1>Access restricted</h1><p>This account does not have NEXBIT administrator privileges. If you believe this is an error, contact the platform owner.</p><button id="deniedLogout" type="button">Return to login</button></section>
+<section class="denied" id="denied" hidden><h1>Access restricted</h1><p>This account does not have NEXBIT administrator privileges.</p><button id="deniedLogout" type="button">Return to login</button></section>
 <script>
 (function(){
-  const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
-  const adminEmail='markleslie.corp@gmail.com';
-  async function signOut(){await client.auth.signOut();window.location.replace('login.html');}
-  document.getElementById('logout').addEventListener('click',signOut);
-  document.getElementById('deniedLogout').addEventListener('click',signOut);
-  async function init(){
-    const {data:{user},error}=await client.auth.getUser();
-    if(error||!user){window.location.replace('login.html');return;}
-    const role=user.app_metadata&&user.app_metadata.role;
-    const email=(user.email||'').toLowerCase();
-    if(email!==adminEmail||role!=='admin'){
-      document.getElementById('adminApp').hidden=true;
-      document.getElementById('denied').hidden=false;
-      document.getElementById('logout').hidden=true;
-      return;
-    }
-    document.getElementById('adminApp').hidden=false;
-    document.getElementById('message').textContent='Administrator verified: '+user.email;
-  }
-  init().catch(function(err){console.error('NEXBIT admin verification failed:',err);window.location.replace('login.html');});
+ const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
+ const adminEmail='markleslie.corp@gmail.com';
+ const $=id=>document.getElementById(id);
+ const date=value=>value?new Date(value).toLocaleString():'Never';
+ async function signOut(){await client.auth.signOut();window.location.replace('login.html');}
+ $('logout').addEventListener('click',signOut);$('deniedLogout').addEventListener('click',signOut);
+ async function loadUsers(){
+   $('refresh').disabled=true;$('message').textContent='Loading registered accounts…';
+   $('usersBody').innerHTML='<tr><td colspan="5" class="muted">Loading…</td></tr>';
+   try{
+     const term=$('search').value.trim();
+     const [{data:users,error:userError},{data:stats,error:statsError}]=await Promise.all([
+       client.rpc('admin_list_users',{p_search:term||null,p_limit:100,p_offset:0}),
+       client.rpc('admin_user_stats')
+     ]);
+     if(userError)throw userError;if(statsError)throw statsError;
+     const s=Array.isArray(stats)?stats[0]:stats;
+     $('totalUsers').textContent=Number(s?.total_users||0).toLocaleString();
+     $('verifiedUsers').textContent=Number(s?.verified_users||0).toLocaleString();
+     $('newUsers').textContent=Number(s?.new_users_30d||0).toLocaleString();
+     if(!users||users.length===0){$('usersBody').innerHTML='<tr><td colspan="5" class="empty">No matching accounts found.</td></tr>';}
+     else{
+       $('usersBody').innerHTML=users.map(u=>'<tr><td>'+escapeHtml(u.full_name||'—')+'</td><td>'+escapeHtml(u.email||'—')+'</td><td>'+escapeHtml(date(u.created_at))+'</td><td>'+escapeHtml(date(u.last_sign_in_at))+'</td><td><span class="pill">'+(u.email_confirmed_at?'Verified':'Not verified')+'</span></td></tr>').join('');
+     }
+     $('message').textContent='Showing '+(users?.length||0)+' account(s). Search checks names and email addresses.';
+   }catch(error){
+     console.error('NEXBIT admin user list error:',error);
+     $('usersBody').innerHTML='<tr><td colspan="5" class="muted">User directory is not ready.</td></tr>';
+     $('message').textContent=error.message||'Could not load users. Confirm the SQL setup has been completed.';
+   }finally{$('refresh').disabled=false;}
+ }
+ function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ let searchTimer; $('search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(loadUsers,300);});
+ $('refresh').addEventListener('click',loadUsers);
+ async function init(){
+   const {data:{user},error}=await client.auth.getUser();
+   if(error||!user){window.location.replace('login.html');return;}
+   if((user.email||'').toLowerCase()!==adminEmail||user.app_metadata?.role!=='admin'){
+     $('adminApp').hidden=true;$('denied').hidden=false;$('logout').hidden=true;return;
+   }
+   $('adminApp').hidden=false;await loadUsers();
+ }
+ init().catch(error=>{console.error(error);$('message').textContent='Admin initialization failed. Please sign in again.';});
 })();
 </script>
-</body>
-</html>
+</body></html>
