@@ -5060,3 +5060,138 @@ footer {
 .verify-footnote { margin:23px 5px 0; color:#817b70; font-size:9px; line-height:1.7; }
 @media(max-width:560px) { .nexbit-verify-section{padding:38px 15px}.verify-card{padding:29px 19px 25px}.verify-brand{font-size:25px;margin-bottom:27px} }
 @media(prefers-reduced-motion:reduce){.verify-brand,.verify-glow{animation:none}.verify-resend{transition:none}}
+
+
+/* NEXBIT TRENDING MARKETS — COMPACT EXCHANGE TABLE */
+.markets-section {
+  background: #080808;
+  padding: 64px 5%;
+}
+.markets-section .section-heading {
+  max-width: 760px;
+  margin: 0 auto 28px;
+}
+.markets-section .section-heading h2 {
+  color: #fff;
+}
+.markets-section .section-heading h2::after {
+  background: #d4af37;
+}
+.market-cards {
+  display: block;
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
+  border: 1px solid rgba(212,175,55,.22);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #101010;
+}
+.market-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(130px, 1fr) minmax(105px, .75fr) 145px;
+  align-items: center;
+  gap: 18px;
+  min-height: 82px;
+  padding: 14px 22px;
+  border: 0;
+  border-bottom: 1px solid #26231b;
+  border-radius: 0;
+  background: #101010;
+  box-shadow: none;
+  transition: background .2s ease;
+}
+.market-card:last-child { border-bottom: 0; }
+.market-card::before { display: none; }
+.market-card:hover {
+  transform: none;
+  border-color: #26231b;
+  background: #17150f;
+  box-shadow: inset 3px 0 0 #d4af37;
+}
+.market-card-top,
+.market-card-price-line,
+.market-card-bottom { display: contents; }
+.market-card-asset {
+  grid-column: 1;
+  justify-content: flex-start;
+  gap: 13px;
+}
+.market-coin-logo {
+  width: 39px;
+  height: 39px;
+  flex-basis: 39px;
+  padding: 4px;
+  background: #f5f5f5;
+  box-shadow: none;
+}
+.market-coin-name {
+  color: #f4f4f4;
+  font-size: 14px;
+  font-weight: 750;
+}
+.market-coin-symbol {
+  margin-top: 3px;
+  color: #858585;
+  font-size: 10px;
+}
+.market-card-tag { display: none; }
+.market-card-price {
+  grid-column: 2;
+  color: #f2f2f2;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.market-change {
+  grid-column: 3;
+  justify-self: start;
+  padding: 6px 9px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.market-change.up {
+  color: #25c58a;
+  background: rgba(37,197,138,.09);
+}
+.market-change.down {
+  color: #f06464;
+  background: rgba(240,100,100,.09);
+}
+.market-live-dot {
+  grid-column: 4;
+  justify-self: end;
+  color: #858585;
+  font-size: 9px;
+  letter-spacing: .06em;
+}
+.market-live-dot::before { background: #d4af37; box-shadow: 0 0 7px rgba(212,175,55,.35); }
+.markets-stats {
+  max-width: 1050px;
+  margin: 28px auto 0;
+  border-color: rgba(212,175,55,.18);
+  background: #0e0e0e;
+}
+.markets-stats div { border-color: #242424; }
+.markets-stats strong { color: #d4af37; }
+.markets-stats span { color: #929292; }
+.demo-note { color: #777; }
+@media (max-width: 650px) {
+  .markets-section { padding: 46px 4%; }
+  .market-card {
+    grid-template-columns: minmax(0, 1.25fr) minmax(95px, .9fr) auto;
+    gap: 9px;
+    min-height: 72px;
+    padding: 12px 11px;
+  }
+  .market-coin-logo { width: 33px; height: 33px; flex-basis: 33px; }
+  .market-card-asset { gap: 8px; }
+  .market-coin-name { font-size: 12px; }
+  .market-coin-symbol { font-size: 9px; }
+  .market-card-price { font-size: 12px; }
+  .market-change { font-size: 10px; padding: 5px 6px; }
+  .market-live-dot { display: none; }
+  .markets-stats { margin-top: 20px; }
+}
