@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261118-email-verification">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){window.supabaseLoadFailed=true;this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
 </head>
 <body>
   <main class="nexbit-verify-section">
@@ -35,6 +35,8 @@
   </main>
 <script>
 (function () {
+  if(!window.supabase?.createClient){const notice=document.getElementById('verifyMessage');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
+
   const supabaseClient = window.supabase.createClient(
     'https://cubzhenuumvsogysmaeo.supabase.co',
     'sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N'
