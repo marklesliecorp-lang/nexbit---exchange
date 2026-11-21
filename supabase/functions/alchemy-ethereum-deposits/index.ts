@@ -125,6 +125,7 @@ Deno.serve(async (request) => {
   const activities = Array.isArray(payload.event.activity) ? payload.event.activity : [];
 
   for (const activity of activities) {
+    if (activity.log?.removed === true) continue;
     const recipient = normalizeAddress(activity.toAddress);
     if (!recipient || !activity.hash) continue;
 
@@ -151,7 +152,7 @@ Deno.serve(async (request) => {
         normalizeAddress(row.address) === recipient
       );
     } else if ((category === "token" || category === "erc20") &&
-        contractAddress === USDT_ETH_CONTRACT) {
+        activity.log?.logIndex && contractAddress === USDT_ETH_CONTRACT) {
       assetCode = "USDT";
       matchingAddress = configuredAddresses.find((row: any) =>
         String(row.asset_code).toUpperCase() === "USDT" &&
@@ -182,7 +183,7 @@ Deno.serve(async (request) => {
         return normalizeAddress(log.address) === USDT_ETH_CONTRACT &&
           String(topics[0] || "").toLowerCase() === TRANSFER_TOPIC &&
           topicAddress(topics[2]) === recipient &&
-          (!activity.log?.logIndex || String(log.logIndex).toLowerCase() === String(activity.log.logIndex).toLowerCase());
+          String(log.logIndex).toLowerCase() === String(activity.log.logIndex).toLowerCase();
       });
       if (!transferLog) continue;
       const rawAmount = hexToBigInt(transferLog.data);
