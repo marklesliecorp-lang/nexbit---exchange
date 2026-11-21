@@ -44,7 +44,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
 
   <section class="panel balance-panel">
     <div class="label">Total wallet balance</div>
-    <div class="balance-row"><div class="balance" id="walletTotalBalance">— — —</div><div class="currency">USD</div></div>
+    <div class="balance-row"><div class="balance">— — —</div><div class="currency">USD</div></div>
     <p class="balance-note">Your wallet balance will appear here once secure wallet services and verified account records are connected.</p>
     <div class="actions" aria-label="Wallet actions">
       <div class="action"><span>＋</span>Deposit</div>
@@ -55,14 +55,14 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
   </section>
 
   <section class="stats" aria-label="Wallet summary">
-    <article class="panel"><div class="label">Available balance</div><div class="stat-value" id="walletAvailableBalance">— — —</div><div class="stat-note">Available internal USD balance.</div><span class="tag">Awaiting wallet connection</span></article>
-    <article class="panel"><div class="label">Invested balance</div><div class="stat-value">$0.00</div><div class="stat-note">Investment records are not connected.</div><span class="tag">Awaiting records</span></article>
-    <article class="panel"><div class="label">Total assets</div><div class="stat-value" id="walletTotalAssets">— — —</div><div class="stat-note">Total recorded USD balance.</div><span class="tag">Awaiting records</span></article>
+    <article class="panel"><div class="label">Available balance</div><div class="stat-value">— — —</div><div class="stat-note">Available funds will display here.</div><span class="tag">Awaiting wallet connection</span></article>
+    <article class="panel"><div class="label">Invested balance</div><div class="stat-value">— — —</div><div class="stat-note">Linked investment records will display here.</div><span class="tag">Awaiting records</span></article>
+    <article class="panel"><div class="label">Total assets</div><div class="stat-value">— — —</div><div class="stat-note">Your verified asset total will display here.</div><span class="tag">Awaiting records</span></article>
   </section>
 
   <section class="panel section">
     <div class="section-head"><h2>Asset breakdown</h2><span>Account holdings</span></div>
-    <div class="asset-row"><div><div class="asset-name">USD balance</div><div class="asset-desc">US Dollar wallet</div></div><div class="asset-value" id="walletUsdAsset">—<small>Loading balance</small></div></div>
+    <div class="asset-row"><div><div class="asset-name">USD balance</div><div class="asset-desc">US Dollar wallet</div></div><div class="asset-value">—<small>Not connected</small></div></div>
     <div class="asset-row"><div><div class="asset-name">Digital assets</div><div class="asset-desc">Supported cryptocurrencies</div></div><div class="asset-value">—<small>Not connected</small></div></div>
   </section>
 
@@ -70,7 +70,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     <div class="section-head"><h2>Recent transactions</h2><span>Latest activity</span></div>
     <div class="empty"><strong>No transactions to display</strong>Your deposits, withdrawals and transfers will appear here once secure wallet services are implemented.</div>
   </section>
-  <div class="notice">Your USD balance is loaded from your protected NEXBIT account record. Deposit, withdrawal, transfer, trading and investment services are not active.</div>
+  <div class="notice">Wallet actions are currently display-only. No deposits, withdrawals, transfers, trades or investment transactions can be initiated from this page. Figures are intentionally left blank until they can be loaded from verified records.</div>
   <p class="message" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 </main>
 <nav class="bottom-nav" aria-label="Main navigation">
@@ -91,6 +91,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     if(balanceError)throw balanceError;
     const amount=Number(balance?.balance||0);
     const formatted='
+  }
   document.getElementById('logoutButton').addEventListener('click',async function(){
     this.disabled=true;this.textContent='Logging out…';
     const {error}=await client.auth.signOut();
@@ -101,7 +102,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
 })();
 </script>
 </body>
-+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+</html>+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     document.getElementById('walletTotalBalance').textContent=formatted;
     document.getElementById('walletAvailableBalance').textContent=formatted;
     document.getElementById('walletTotalAssets').textContent=formatted;
@@ -118,3 +119,4 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
 })();
 </script>
 </body>
+</html>
