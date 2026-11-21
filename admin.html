@@ -31,7 +31,7 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     <article class="stat"><small>Email verified</small><strong id="verifiedUsers">—</strong></article>
     <article class="stat"><small>New users · 30 days</small><strong id="newUsers">—</strong></article>
   </section>
-  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" data-panel="withdrawalsPanel">Withdrawals</button><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
   <section class="panel" id="usersPanel">
     <div class="panel-head"><h2>Registered accounts</h2><div class="tools"><input id="search" type="search" placeholder="Search name or email"><button id="refresh" type="button">Refresh</button></div></div>
     <div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>ACCOUNT CREATED</th><th>LAST SIGN-IN</th><th>EMAIL STATUS</th><th>ACTION</th></tr></thead><tbody id="usersBody"><tr><td colspan="6" class="muted">Loading accounts…</td></tr></tbody></table></div>
@@ -62,6 +62,21 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
     </div>
     <div class="table-wrap"><table style="min-width:1050px"><thead><tr><th>DATE</th><th>USER EMAIL</th><th>TYPE</th><th>ASSET</th><th>AMOUNT</th><th>NETWORK</th><th>REFERENCE / HASH</th><th>STATUS</th></tr></thead><tbody id="transactionsBody"><tr><td colspan="8" class="muted">Open Transactions to load records.</td></tr></tbody></table></div>
     <p id="transactionsMessage" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Transaction records are available to authorized administrators only.</p>
+  </section>
+  <section class="panel" id="withdrawalsPanel" hidden>
+    <div class="panel-head"><div><h2>Withdrawal requests</h2><p class="sub">Review request details and destination addresses. Approval records a decision only; it does not send funds.</p></div><div class="tools"><input id="withdrawalSearch" type="search" placeholder="Email, user ID, reference, address or asset"><button id="refreshWithdrawals" type="button">Refresh</button></div></div>
+    <div class="tools" style="margin-bottom:14px;flex-wrap:wrap">
+      <select id="withdrawalStatus" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="cancelled">Cancelled</option></select>
+    </div>
+    <div class="table-wrap"><table style="min-width:1120px"><thead><tr><th>SUBMITTED</th><th>USER</th><th>ASSET</th><th>AMOUNT</th><th>NETWORK</th><th>DESTINATION</th><th>REFERENCE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="withdrawalsBody"><tr><td colspan="9" class="muted">Open Withdrawals to load requests.</td></tr></tbody></table></div>
+    <p id="withdrawalsMessage" role="status" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:14px 0">Withdrawal requests are visible only to the authorized administrator.</p>
+    <div id="withdrawalReview" hidden style="margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:16px">
+      <div class="panel-head"><h2>Withdrawal review</h2><button id="closeWithdrawalReview" type="button">Close</button></div>
+      <div id="withdrawalDetails" style="font-size:12px;line-height:1.9;color:#d8cbbb;overflow-wrap:anywhere"></div>
+      <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="withdrawalComment">Admin comment (required for rejection)</label>
+      <textarea id="withdrawalComment" rows="3" style="width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button id="approveWithdrawal" type="button">Approve request</button><button id="rejectWithdrawal" type="button">Reject request</button></div>
+    </div>
   </section>
   <section class="panel" id="kycPanel" hidden>
     <div class="panel-head"><div><h2>KYC verification applications</h2><p class="sub">Review personal details and privately view submitted identity documents.</p></div><div class="tools"><select id="kycFilter" style="height:39px;background:#050403;color:#f7f2e9;border:1px solid var(--line);border-radius:8px;padding:0 8px"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="resubmission_required">Resubmission required</option></select><button id="refreshKyc" type="button">Refresh</button></div></div>
@@ -194,9 +209,11 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    $('depositPanel').hidden=tab.dataset.panel!=='depositPanel';
    $('kycPanel').hidden=tab.dataset.panel!=='kycPanel';
    $('transactionsPanel').hidden=tab.dataset.panel!=='transactionsPanel';
+   $('withdrawalsPanel').hidden=tab.dataset.panel!=='withdrawalsPanel';
    if(tab.dataset.panel==='depositPanel')loadDepositAddresses();
    if(tab.dataset.panel==='kycPanel')loadKycApplications();
    if(tab.dataset.panel==='transactionsPanel')loadTransactions();
+   if(tab.dataset.panel==='withdrawalsPanel')loadWithdrawals();
  }));
  let transactionTimer;
  async function loadTransactions(){
@@ -229,6 +246,84 @@ input{width:min(100%,340px);height:39px;padding:0 12px;border:1px solid var(--li
    clearTimeout(transactionTimer);
    transactionTimer=setTimeout(loadTransactions,300);
  });
+ let withdrawalTimer;
+ let selectedWithdrawal=null;
+ async function loadWithdrawals(){
+   $('withdrawalsMessage').textContent='Loading withdrawal requests…';
+   $('withdrawalsBody').innerHTML='<tr><td colspan="9" class="muted">Loading…</td></tr>';
+   try{
+     const {data,error}=await client.rpc('admin_list_withdrawal_requests',{
+       p_search:$('withdrawalSearch').value.trim()||null,
+       p_status:$('withdrawalStatus').value||null,
+       p_limit:200,p_offset:0
+     });
+     if(error)throw error;
+     const rows=data||[];
+     if(!rows.length){
+       $('withdrawalsBody').innerHTML='<tr><td colspan="9" class="empty">No withdrawal requests found. This queue will stay empty until a trusted withdrawal-submission service creates requests after checking available balances.</td></tr>';
+     }else{
+       $('withdrawalsBody').innerHTML=rows.map((r,i)=>'<tr><td>'+escapeHtml(date(r.created_at))+'</td><td>'+escapeHtml(r.user_email||r.user_id)+'</td><td>'+escapeHtml(r.asset_code)+'</td><td>'+escapeHtml(String(r.amount))+'</td><td>'+escapeHtml(r.network)+'</td><td style="max-width:180px;overflow-wrap:anywhere">'+escapeHtml(r.destination_address)+'</td><td>'+escapeHtml(r.reference)+'</td><td><span class="pill">'+escapeHtml(r.status)+'</span></td><td><button class="view-btn" type="button" data-withdrawal-index="'+i+'">Review</button></td></tr>').join('');
+       $('withdrawalsBody').querySelectorAll('[data-withdrawal-index]').forEach(b=>b.addEventListener('click',()=>openWithdrawalReview(rows[Number(b.dataset.withdrawalIndex)])));
+     }
+     $('withdrawalsMessage').textContent='Showing '+rows.length+' request(s), up to 200. Review decisions are recorded in the admin audit log; no payout is initiated.';
+   }catch(error){
+     console.error('NEXBIT withdrawal list error:',error);
+     $('withdrawalsBody').innerHTML='<tr><td colspan="9" class="muted">Could not load withdrawal requests.</td></tr>';
+     $('withdrawalsMessage').textContent=error.message||'Run the withdrawal-management SQL in Supabase and refresh.';
+   }
+ }
+ function openWithdrawalReview(row){
+   selectedWithdrawal=row;
+   $('withdrawalComment').value=row.admin_comment||'';
+   $('withdrawalDetails').innerHTML=
+     '<p><strong style="color:var(--gold2)">User email</strong><br>'+escapeHtml(row.user_email||'Not available')+'</p>'+
+     '<p><strong style="color:var(--gold2)">User ID</strong><br>'+escapeHtml(row.user_id)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Amount</strong><br>'+escapeHtml(String(row.amount))+' '+escapeHtml(row.asset_code)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Network</strong><br>'+escapeHtml(row.network)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Destination wallet</strong><br>'+escapeHtml(row.destination_address)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Reference</strong><br>'+escapeHtml(row.reference)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Submitted</strong><br>'+escapeHtml(date(row.created_at))+'</p>'+
+     '<p><strong style="color:var(--gold2)">User note</strong><br>'+escapeHtml(row.user_note||'None')+'</p>'+
+     '<p><strong style="color:var(--gold2)">Current status</strong><br>'+escapeHtml(row.status)+'</p>'+
+     '<p><strong style="color:var(--gold2)">Previous admin comment</strong><br>'+escapeHtml(row.admin_comment||'None')+'</p>';
+   const canReview=row.status==='pending';
+   $('approveWithdrawal').hidden=!canReview;
+   $('rejectWithdrawal').hidden=!canReview;
+   $('withdrawalReview').hidden=false;
+   $('withdrawalReview').scrollIntoView({behavior:'smooth',block:'nearest'});
+ }
+ async function submitWithdrawalDecision(status){
+   if(!selectedWithdrawal)return;
+   const comment=$('withdrawalComment').value.trim();
+   if(status==='rejected'&&comment.length<3){
+     $('withdrawalsMessage').textContent='Please enter a clear comment before rejecting this withdrawal.';
+     return;
+   }
+   const action=status==='approved'?'approve':'reject';
+   if(!window.confirm('Confirm you want to '+action+' withdrawal '+selectedWithdrawal.reference+'? This records the review decision only. It will NOT send funds.'))return;
+   const buttons=['approveWithdrawal','rejectWithdrawal'].map($);
+   buttons.forEach(b=>b.disabled=true);
+   try{
+     const {error}=await client.rpc('admin_review_withdrawal_request',{
+       p_id:selectedWithdrawal.id,p_status:status,p_comment:comment||null
+     });
+     if(error)throw error;
+     $('withdrawalsMessage').textContent='Withdrawal review decision saved and recorded. No funds were sent.';
+     $('withdrawalReview').hidden=true;selectedWithdrawal=null;
+     await loadWithdrawals();
+   }catch(error){
+     $('withdrawalsMessage').textContent=error.message||'Could not save the withdrawal review decision.';
+   }finally{buttons.forEach(b=>b.disabled=false);}
+ }
+ $('refreshWithdrawals').addEventListener('click',loadWithdrawals);
+ $('withdrawalStatus').addEventListener('change',loadWithdrawals);
+ $('withdrawalSearch').addEventListener('input',()=>{
+   clearTimeout(withdrawalTimer);
+   withdrawalTimer=setTimeout(loadWithdrawals,300);
+ });
+ $('closeWithdrawalReview').addEventListener('click',()=>{$('withdrawalReview').hidden=true;selectedWithdrawal=null;});
+ $('approveWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('approved'));
+ $('rejectWithdrawal').addEventListener('click',()=>submitWithdrawalDecision('rejected'));
  let selectedKyc=null;
  async function loadKycApplications(){
    $('kycMessage').textContent='Loading KYC applications…';
