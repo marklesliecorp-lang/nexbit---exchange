@@ -106,6 +106,7 @@ main{max-width:1120px;margin:0 auto;padding:34px 22px}.eyebrow{font-size:10px;le
     message.textContent='Your secure session is active. Displayed amounts are internal ledger records, not proof of on-chain custody or transfers.';
     document.getElementById('openDeposit').addEventListener('click',openDeposits);
     document.getElementById('closeDeposit').addEventListener('click',()=>{document.getElementById('depositPanel').hidden=true;});
+    if(new URLSearchParams(window.location.search).get('open')==='deposit')openDeposits();
   }
   async function openDeposits(){
     const panel=document.getElementById('depositPanel');
