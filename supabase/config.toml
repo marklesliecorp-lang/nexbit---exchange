@@ -1,0 +1,3 @@
+# Supabase Edge Function configuration for external Alchemy webhooks.
+[functions.alchemy-ethereum-deposits]
+verify_jwt = false
