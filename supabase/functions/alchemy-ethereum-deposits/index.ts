@@ -142,7 +142,7 @@ Deno.serve(async (request) => {
     const category = String(activity.category || "").toLowerCase();
     const contractAddress = normalizeAddress(activity.rawContract?.address);
 
-    if ((category === "external" || category === "internal") &&
+    if (category === "external" &&
         String(activity.asset || "").toUpperCase() === "ETH") {
       assetCode = "ETH";
       matchingAddress = configuredAddresses.find((row: any) =>
