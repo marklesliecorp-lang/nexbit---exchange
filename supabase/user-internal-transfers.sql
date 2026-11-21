@@ -80,7 +80,7 @@ begin
   if v_sender is null then raise exception 'Please sign in before requesting a transfer'; end if;
   if v_email !~ '^[^[:space:]@]+@[^[:space:]@]+\.[^[:space:]@]+$' then raise exception 'Enter the recipient’s registered email address'; end if;
   if v_asset !~ '^[A-Z0-9]{2,12}$' then raise exception 'Select a valid asset'; end if;
-  if p_amount is null or p_amount<=0 or p_amount>1000000000000000000 or p_amount<>round(p_amount,12) then
+  if p_amount is null or p_amount<=0 or p_amount>999999999999999999 or p_amount<>round(p_amount,12) then
     raise exception 'Enter a positive amount with no more than 12 decimal places';
   end if;
 
