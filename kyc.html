@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000"><title>KYC Verification | NEXBIT</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000"><title>KYC Verification | NEXBIT</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){window.supabaseLoadFailed=true;this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
 <style>
 :root{color-scheme:dark;--gold:#c78332;--gold2:#f0bd70;--line:rgba(185,116,35,.25);--muted:#92877a;--white:#f7f2e9}*{box-sizing:border-box}body{margin:0;background:#000;color:var(--white);font-family:Inter,Arial,sans-serif}header{padding:18px max(18px,calc((100% - 760px)/2));border-bottom:1px solid var(--line);font-weight:900;letter-spacing:.16em;color:var(--gold2)}main{max-width:760px;margin:30px auto;padding:0 16px}.panel{background:#090705;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:15px}h1{font-size:27px;margin:0 0 8px}.muted{color:var(--muted);font-size:12px;line-height:1.6}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:11px;color:#d6c3aa}.field input,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:#030303;color:#fff;font:inherit;font-size:12px}.field input[type=file]{padding:9px}.btn{background:linear-gradient(110deg,#9f5b1e,#e0a454);border:1px solid #d79a4e;color:#120b04;font-weight:800;padding:13px 17px;border-radius:9px;cursor:pointer}.btn:disabled{opacity:.5}.status{color:var(--gold2);font-size:12px;line-height:1.6;white-space:pre-wrap}
 </style></head><body><header>✦ NEXBIT</header><main><section class="panel"><h1>Identity verification</h1><p class="muted">Complete your details and upload clear, readable documents. Your files are stored privately and can only be accessed by you and authorized NEXBIT reviewers.</p><div id="existing" class="status">Checking your application…</div></section>
@@ -14,6 +14,8 @@
 </form><p class="muted">Only submit documents you are authorized to share. Do not upload payment card details or passwords.</p></main>
 <script>
 (function(){
+  if(!window.supabase?.createClient){const notice=document.getElementById('existing');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
+
 const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
 const $=id=>document.getElementById(id);let user=null;
 async function init(){const {data,error}=await client.auth.getUser();user=data?.user;if(error||!user){location.replace('login.html');return;}
