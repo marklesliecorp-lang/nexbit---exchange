@@ -1756,6 +1756,11 @@ html,body{
         const {data:rows,error}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id);
         if(error)throw error;
         const holdings=(rows||[]).filter(row=>Number(row.balance)>0);
+        const pricedHoldings=holdings.filter(row=>String(row.asset_code||'').toUpperCase()!=='USD');
+        if(!pricedHoldings.length){
+          window.updateTodayPnl(0,0);
+          return;
+        }
         const quotes=await loadPnlMarketQuotes();
         let totalPnl=0,totalValue=0,unpriced=[];
         holdings.forEach(row=>{
