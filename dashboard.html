@@ -1157,8 +1157,7 @@ body { background-attachment: initial; }
           if(Number.isFinite(time)&&Number.isFinite(next))portfolioPoints.push({time,value:next});
         });
       }
-      const last=portfolioPoints[portfolioPoints.length-1];
-      if(!last||last.value!==amount)portfolioPoints.push({time:Date.now(),value:amount});
+      portfolioPoints.push({time:Date.now(),value:amount});
       drawPortfolioGraph();
     }
     rangeButtons.forEach(button=>button.addEventListener('click',()=>{
@@ -1175,9 +1174,10 @@ body { background-attachment: initial; }
         amount=next;
         document.getElementById('dashboardBalance').textContent=formattedBalance();
         document.getElementById('portfolioBalance').textContent=formattedBalance();
-        portfolioPoints.push({time:Date.now(),value:amount});
-        drawPortfolioGraph();
       }
+      portfolioPoints.push({time:Date.now(),value:amount});
+      if(portfolioPoints.length>10000)portfolioPoints=portfolioPoints.slice(-10000);
+      drawPortfolioGraph();
     }
     window.setInterval(refreshLiveBalance,15000);
 
