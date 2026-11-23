@@ -474,6 +474,57 @@ body { background-attachment: initial; }
  .market-category{padding:8px}
 }
 
+
+/* Match the supplied Bybit mobile proportions */
+@media(max-width:760px){
+ .topbar{height:60px;padding:0 15px;gap:9px}
+ .brand{font-size:16px}
+ .dashboard-search{height:36px;padding:0 10px;font-size:11px;gap:7px}
+ .dashboard-search span:first-child{font-size:19px}
+ .top-actions{gap:9px}
+ .header-icon{font-size:18px}
+ .dashboard-tabs{padding:8px 15px 9px;gap:8px}
+ .dashboard-tabs a{padding:9px 16px;font-size:13px}
+ .layout{padding:7px 20px 90px}
+ .balance-panel{padding:13px 0 8px}
+ .panel-label{font-size:14px}
+ .balance{font-size:clamp(35px,9vw,43px)}
+ .currency{font-size:14px}
+ .asset-deposit{padding:12px 23px;font-size:14px}
+ .pnl-line,.pnl-line strong{font-size:12px}
+ .actions{margin-top:17px;row-gap:14px;column-gap:4px}
+ .action{min-height:72px;font-size:12px;gap:5px}
+ .action .symbol{width:48px;height:48px;font-size:21px}
+ .promo-panel{min-height:96px;margin-top:17px;padding:13px 15px;gap:10px;border-radius:16px}
+ .promo-mark{width:56px;height:56px;flex-basis:56px;font-size:27px}
+ .promo-kicker{font-size:9px}
+ .promo-panel h2{font-size:14px;margin:4px 0 3px}
+ .promo-panel p{font-size:9px}
+ .promo-panel>a{font-size:10px}
+ .market-categories{gap:8px;margin-top:11px}
+ .market-category{min-height:81px;padding:12px;border-radius:14px}
+ .market-category span{font-size:14px}
+ .market-category strong{font-size:11px}
+ .market-category strong b{font-size:17px}
+ .market-category small{font-size:9px}
+ .market-watch-panel{margin-top:13px;padding:14px}
+ .market-watch-panel .section-head{margin-bottom:10px}
+ .market-watch-panel .section-head h2{font-size:13px}
+ .market-watch-panel .section-head a{font-size:10px}
+ .market-row{padding:9px 0;font-size:10px;gap:12px}
+ .coin small,.market-note{font-size:9px}
+ .bottom-nav{padding:9px 4px calc(9px + env(safe-area-inset-bottom))}
+ .bottom-nav a{font-size:10px}
+ .bottom-nav a span{font-size:19px;margin-bottom:3px}
+}
+@media(max-width:390px){
+ .layout{padding-left:15px;padding-right:15px}
+ .dashboard-tabs{padding-left:15px;padding-right:15px}
+ .action{font-size:11px}
+ .action .symbol{width:46px;height:46px}
+ .market-category{padding:10px}
+}
+
 </style>
 </head>
 <body>
