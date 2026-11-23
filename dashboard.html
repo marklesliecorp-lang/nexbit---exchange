@@ -1020,7 +1020,7 @@ body { background-attachment: initial; }
 .market-watch-list{display:grid;gap:0}
 .market-watch-list .market-row{display:flex !important;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 !important;border-top:1px solid rgba(220,220,220,.11) !important}
 .market-identity{display:flex;align-items:center;gap:11px;min-width:0}
-.market-coin-logo{width:35px;height:35px;flex:0 0 35px;border-radius:50%;display:grid;place-items:center;font-size:21px;font-weight:700}
+.market-coin-logo{width:35px;height:35px;flex:0 0 35px;border-radius:50%;display:grid;place-items:center;font-size:21px;font-weight:700}\n.real-coin-logo{display:block;object-fit:contain;background:transparent;border:0;border-radius:50%;padding:0}
 .btc-logo{background:radial-gradient(circle at 28% 22%,rgba(255,255,255,.2),transparent 48%),linear-gradient(145deg,#444,#171717);color:#ededed;border:1px solid rgba(220,220,220,.16)}
 .eth-logo{background:radial-gradient(circle at 28% 22%,rgba(255,255,255,.16),transparent 48%),linear-gradient(145deg,#383838,#141414);color:#dedede;font-size:18px;border:1px solid rgba(220,220,220,.16)}
 .sol-logo{background:radial-gradient(circle at 28% 22%,rgba(255,255,255,.15),transparent 48%),linear-gradient(145deg,#343434,#111);border:1px solid rgba(220,220,220,.16);display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 8px}
@@ -1097,9 +1097,9 @@ body { background-attachment: initial; }
   <section class="panel market-watch-panel" aria-label="Live cryptocurrency market watch">
   <div class="section-head market-watch-heading"><h2>Market Watch</h2><div class="market-watch-meta"><span class="market-live-dot"></span><span id="marketWatchStatus">LIVE</span><a href="index.html#markets">View markets <span aria-hidden="true">›</span></a></div></div>
   <div class="market-list market-watch-list">
-    <div class="market-row" data-market="bitcoin"><div class="market-identity"><span class="market-coin-logo btc-logo">₿</span><span class="coin">Bitcoin <small>BTC</small></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="ethereum"><div class="market-identity"><span class="market-coin-logo eth-logo">◆</span><span class="coin">Ethereum <small>ETH</small></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="solana"><span class="market-identity"><span class="market-coin-logo sol-logo"><i></i><i></i><i></i></span><span class="coin">Solana <small>SOL</small></span></span><span class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></span></div>
+    <div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin <small>BTC</small></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum <small>ETH</small></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="solana"><span class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana <small>SOL</small></span></span><span class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></span></div>
   </div>
 </section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
