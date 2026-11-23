@@ -674,30 +674,30 @@ body { background-attachment: initial; }
 @media(max-width:760px){.brand-logo{width:25px;height:25px;flex-basis:25px}.brand-copy strong{font-size:15px}.brand-copy small{font-size:6px}}
 
 
-/* Mobile bottom navigation — rounded five-item dock matching reference */
+/* Mobile bottom navigation — compact black dock matching supplied reference */
 @media(max-width:760px){
- body{padding-bottom:205px}
+ body{padding-bottom:112px}
  .bottom-nav{
    display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;
-   position:fixed;left:0;right:0;bottom:62px;z-index:20;
-   height:128px;padding:25px 8px 12px;
-   background:#030303;border:1px solid rgba(255,255,255,.09);
-   border-radius:62px;box-shadow:0 -5px 24px rgba(0,0,0,.35);
-   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+   position:fixed;left:0;right:0;bottom:34px;z-index:20;
+   height:64px;padding:10px 8px 6px;
+   background:#020202;border:1px solid rgba(255,255,255,.09);
+   border-radius:36px;box-shadow:0 -3px 16px rgba(0,0,0,.28);
+   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
  }
  .bottom-nav a{
    min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-   gap:8px;color:#696b70;font-size:12px;font-weight:700;line-height:1.1;
+   gap:5px;color:#686a6f;font-size:11px;font-weight:650;line-height:1.1;
    text-align:center;text-decoration:none;white-space:nowrap;
  }
- .bottom-nav a svg{width:25px;height:25px;display:block;color:#696b70;flex:0 0 auto}
+ .bottom-nav a svg{width:20px;height:20px;display:block;color:#686a6f;flex:0 0 auto}
  .bottom-nav a.active{color:#fff}
  .bottom-nav a.active svg{color:#fff}
 }
 @media(max-width:390px){
  .bottom-nav{padding-left:4px;padding-right:4px}
- .bottom-nav a{font-size:11px}
- .bottom-nav a svg{width:24px;height:24px}
+ .bottom-nav a{font-size:10px;gap:5px}
+ .bottom-nav a svg{width:19px;height:19px}
 }
 
 </style>
