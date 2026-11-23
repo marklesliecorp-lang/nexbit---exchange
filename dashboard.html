@@ -978,6 +978,18 @@ body { background-attachment: initial; }
 #todayPnl.pnl-loss{color:#ef4444 !important}
 #todayPnl.pnl-neutral{color:#f5f5f5 !important}
 
+/* Live portfolio graph controls and rendering */
+.portfolio-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.portfolio-heading h2{margin:0 0 5px;font-size:14px;color:#eee}
+.portfolio-heading strong{font-size:25px;color:#f5f5f5;letter-spacing:-.04em}
+.portfolio-filters{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.portfolio-filters button{border:0;background:transparent;color:#888;padding:6px 8px;border-radius:15px;font-size:10px;font-weight:700;cursor:pointer}
+.portfolio-filters button.selected{background:#ededed;color:#080808}
+.portfolio-chart{height:115px;margin-top:12px;overflow:hidden}
+.portfolio-chart svg{width:100%;height:100%;display:block}
+.portfolio-axis{display:flex;justify-content:space-between;color:#777;font-size:9px;margin-top:5px}
+.portfolio-note{font-size:10px;color:#888;margin:8px 0 0}
+@media(max-width:760px){.portfolio-heading strong{font-size:23px}.portfolio-chart{height:100px}.portfolio-filters{gap:1px}.portfolio-filters button{padding:6px 7px;font-size:9px}}
 </style>
 </head>
 <body>
@@ -1020,16 +1032,14 @@ body { background-attachment: initial; }
     <a class="action" href="index.html#markets"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Buy</a>
   </nav>
   <section class="panel portfolio-overview" aria-label="Portfolio overview">
-    <div class="portfolio-heading"><div><h2>Portfolio Overview</h2><strong id="portfolioBalance">$0.00</strong></div><div class="portfolio-filters" aria-label="Portfolio time range"><span class="selected">1D</span><span>1W</span><span>1M</span><span>3M</span><span>1Y</span></div></div>
-    <div class="portfolio-chart" role="img" aria-label="Illustrative chart; historical portfolio data is not connected">
-      <svg viewBox="0 0 600 150" preserveAspectRatio="none">
-        <defs><linearGradient id="portfolioFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eeeeee" stop-opacity=".20"/><stop offset="1" stop-color="#eeeeee" stop-opacity="0"/></linearGradient></defs>
-        <path d="M0 120 C30 112 42 115 65 108 S105 96 130 104 S165 78 195 89 S225 70 250 81 S285 54 310 69 S345 45 370 59 S405 34 430 48 S465 29 490 42 S530 20 555 33 S580 18 600 15 L600 150 L0 150 Z" fill="url(#portfolioFill)"/>
-        <path d="M0 120 C30 112 42 115 65 108 S105 96 130 104 S165 78 195 89 S225 70 250 81 S285 54 310 69 S345 45 370 59 S405 34 430 48 S465 29 490 42 S530 20 555 33 S580 18 600 15" fill="none" stroke="#e8e8e8" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
-      </svg>
+    <div class="portfolio-heading"><div><h2>Portfolio Overview</h2><strong id="portfolioBalance">$0.00</strong></div><div class="portfolio-filters" aria-label="Portfolio time range">
+      <button type="button" class="selected" data-range="1H">1H</button><button type="button" data-range="24H">24H</button><button type="button" data-range="7D">7D</button><button type="button" data-range="1M">1M</button><button type="button" data-range="1Y">1Y</button><button type="button" data-range="ALL">ALL</button>
+    </div></div>
+    <div class="portfolio-chart" role="img" aria-label="Live account balance history">
+      <svg id="portfolioGraphSvg" viewBox="0 0 600 150" preserveAspectRatio="none" aria-hidden="true"></svg>
     </div>
-    <div class="portfolio-axis"><span>12AM</span><span>6AM</span><span>12PM</span><span>6PM</span><span>12AM</span></div>
-    <p class="portfolio-note">Illustrative chart only — historical performance data is not connected yet.</p>
+    <div class="portfolio-axis" id="portfolioAxis"><span>Now</span></div>
+    <p class="portfolio-note" id="portfolioNote">Live account value. The graph updates when your account balance changes.</p>
   </section>
   <section class="promo-panel">
     <div class="promo-mark">✦</div><div><span class="promo-kicker">NEXBIT MARKETS</span><h2>Explore the crypto market</h2><p>View available market information and investment options.</p></div><a href="index.html#markets">Explore</a>
@@ -1092,10 +1102,84 @@ body { background-attachment: initial; }
       return;
     }
 
-    const amount=Number(balance?.balance||0);
-    const formattedBalance=String.fromCharCode(36)+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
-    document.getElementById('dashboardBalance').textContent=formattedBalance;
-    document.getElementById('portfolioBalance').textContent=formattedBalance;
+    let amount=Number(balance?.balance||0);
+    const formattedBalance=()=>String.fromCharCode(36)+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    document.getElementById('dashboardBalance').textContent=formattedBalance();
+    document.getElementById('portfolioBalance').textContent=formattedBalance();
+
+    const graphSvg=document.getElementById('portfolioGraphSvg');
+    const graphNote=document.getElementById('portfolioNote');
+    const graphAxis=document.getElementById('portfolioAxis');
+    const rangeButtons=[...document.querySelectorAll('.portfolio-filters [data-range]')];
+    const rangeMs={'1H':3600000,'24H':86400000,'7D':604800000,'1M':2592000000,'1Y':31536000000,'ALL':Infinity};
+    let selectedRange='1H';
+    let portfolioPoints=[];
+    function drawPortfolioGraph(){
+      if(!graphSvg)return;
+      const now=Date.now();
+      const windowMs=rangeMs[selectedRange];
+      const cutoff=Number.isFinite(windowMs)?now-windowMs:0;
+      const points=portfolioPoints.filter(p=>p.time>=cutoff&&p.time<=now+60000).sort((a,b)=>a.time-b.time);
+      graphSvg.replaceChildren();
+      const ns='http://www.w3.org/2000/svg';
+      [35,75,115].forEach(y=>{const line=document.createElementNS(ns,'line');line.setAttribute('x1','0');line.setAttribute('x2','600');line.setAttribute('y1',String(y));line.setAttribute('y2',String(y));line.setAttribute('stroke','#292929');line.setAttribute('stroke-width','1');line.setAttribute('stroke-dasharray','3 6');graphSvg.appendChild(line);});
+      if(!points.length){
+        const note=document.createElementNS(ns,'text');note.setAttribute('x','300');note.setAttribute('y','82');note.setAttribute('text-anchor','middle');note.setAttribute('fill','#888');note.setAttribute('font-size','12');note.textContent='Waiting for account history';graphSvg.appendChild(note);return;
+      }
+      const values=points.map(p=>p.value);
+      const min=Math.min(...values),max=Math.max(...values),span=max-min||Math.max(Math.abs(max)*.01,1);
+      const xFor=p=>Number.isFinite(windowMs)?Math.max(0,Math.min(600,(p.time-cutoff)/windowMs*600)):((p.time-points[0].time)/(Math.max(1,now-points[0].time))*600);
+      const yFor=v=>130-((v-min)/span)*100;
+      const coords=points.map(p=>[xFor(p),yFor(p.value)]);
+      const positive=values[values.length-1]>=values[0];
+      const stroke=positive?'#22c55e':'#ef4444';
+      if(coords.length>1){
+        const d=coords.map((p,i)=>(i?'L':'M')+p[0].toFixed(2)+' '+p[1].toFixed(2)).join(' ');
+        const area=document.createElementNS(ns,'path');area.setAttribute('d',d+' L '+coords[coords.length-1][0]+' 150 L '+coords[0][0]+' 150 Z');area.setAttribute('fill',stroke);area.setAttribute('fill-opacity','.10');graphSvg.appendChild(area);
+        const path=document.createElementNS(ns,'path');path.setAttribute('d',d);path.setAttribute('fill','none');path.setAttribute('stroke',stroke);path.setAttribute('stroke-width','3');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');path.setAttribute('vector-effect','non-scaling-stroke');graphSvg.appendChild(path);
+      }
+      const last=coords[coords.length-1];const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',String(last[0]));dot.setAttribute('cy',String(last[1]));dot.setAttribute('r','4');dot.setAttribute('fill',stroke);graphSvg.appendChild(dot);
+      if(graphNote)graphNote.textContent=points.length>1?'Live account balance history · updates automatically':'Live account value · history will build as your balance changes';
+      if(graphAxis){
+        const labels=selectedRange==='1H'?['60m ago','30m ago','Now']:selectedRange==='24H'?['24h ago','12h ago','Now']:selectedRange==='7D'?['7d ago','3d ago','Now']:selectedRange==='1M'?['1m ago','15d ago','Now']:selectedRange==='1Y'?['1y ago','6m ago','Now']:['Oldest','History','Now'];
+        graphAxis.innerHTML=labels.map(label=>'<span>'+label+'</span>').join('');
+      }
+    }
+    async function loadPortfolioHistory(){
+      const {data,error}=await client.from('nexbit_balance_ledger').select('previous_balance,new_balance,created_at').eq('user_id',user.id).order('created_at',{ascending:true}).limit(500);
+      if(error){console.warn('NEXBIT portfolio history unavailable:',error.message);portfolioPoints=[];}
+      else if(data?.length){
+        portfolioPoints=[];
+        data.forEach(row=>{
+          const time=new Date(row.created_at).getTime();
+          const previous=Number(row.previous_balance),next=Number(row.new_balance);
+          if(Number.isFinite(time)&&Number.isFinite(previous))portfolioPoints.push({time:time-1,value:previous});
+          if(Number.isFinite(time)&&Number.isFinite(next))portfolioPoints.push({time,value:next});
+        });
+      }
+      const last=portfolioPoints[portfolioPoints.length-1];
+      if(!last||last.value!==amount)portfolioPoints.push({time:Date.now(),value:amount});
+      drawPortfolioGraph();
+    }
+    rangeButtons.forEach(button=>button.addEventListener('click',()=>{
+      selectedRange=button.dataset.range;
+      rangeButtons.forEach(item=>item.classList.toggle('selected',item===button));
+      drawPortfolioGraph();
+    }));
+    await loadPortfolioHistory();
+    async function refreshLiveBalance(){
+      const {data:latest,error}=await client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle();
+      if(error){console.warn('NEXBIT live balance refresh failed:',error.message);return;}
+      const next=Number(latest?.balance||0);
+      if(next!==amount){
+        amount=next;
+        document.getElementById('dashboardBalance').textContent=formattedBalance();
+        document.getElementById('portfolioBalance').textContent=formattedBalance();
+        portfolioPoints.push({time:Date.now(),value:amount});
+        drawPortfolioGraph();
+      }
+    }
+    window.setInterval(refreshLiveBalance,15000);
 
     window.updateTodayPnl=function(profitLoss,percent){
       const pnl=document.getElementById('todayPnl');
