@@ -1092,8 +1092,10 @@ body { background-attachment: initial; }
     }
 
     let amount=Number(balance?.balance||0);
-    const formattedBalance=()=>String.fromCharCode(36)+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
-    document.getElementById('dashboardBalance').textContent=formattedBalance();
+    const formatUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    document.getElementById('dashboardBalance').textContent=formatUSD(amount);
+    document.getElementById('availableBalance').textContent=formatUSD(amount);
+    document.getElementById('lockedBalance').textContent=formatUSD(0);
 
     window.updateTodayPnl=function(profitLoss,percent){
       const pnl=document.getElementById('todayPnl');
