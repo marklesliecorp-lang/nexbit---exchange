@@ -1699,8 +1699,8 @@ html,body{
     const assetsBalance=document.getElementById('assetsViewBalance');
     if(assetsBalance)assetsBalance.textContent=formatUSD(amount);
     const assetsBreakdown=document.getElementById('assetsViewBreakdown');
+    const {data:assetRows,error:assetRowsError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
     if(assetsBreakdown){
-      const {data:assetRows,error:assetRowsError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
       if(assetRowsError){
         assetsBreakdown.innerHTML='<div class="asset-view-empty">Asset balances are temporarily unavailable.</div>';
       }else if(assetRows?.length){
@@ -1731,7 +1731,27 @@ html,body{
         pnl.className='pnl-neutral';
       }
     };
-    window.updateTodayPnl(0,0);
+    async function loadUSDT24hPnl(){
+      const pnl=document.getElementById('todayPnl');
+      if(!pnl)return;
+      if(assetRowsError){pnl.textContent='Unavailable';pnl.className='pnl-neutral';return;}
+      const usdtBalance=Number((assetRows||[]).find(row=>String(row.asset_code).toUpperCase()==='USDT')?.balance||0);
+      if(!Number.isFinite(usdtBalance)||usdtBalance<=0){window.updateTodayPnl(0,0);return;}
+      try{
+        const response=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd&include_24hr_change=true',{cache:'no-store'});
+        if(!response.ok)throw new Error('USDT market price unavailable');
+        const data=await response.json(),quote=data?.tether;
+        const currentPrice=Number(quote?.usd),change=Number(quote?.usd_24h_change);
+        if(!Number.isFinite(currentPrice)||currentPrice<=0||!Number.isFinite(change)||change<=-100)throw new Error('Invalid USDT market data');
+        const previousPrice=currentPrice/(1+change/100);
+        window.updateTodayPnl(usdtBalance*(currentPrice-previousPrice),change);
+      }catch(error){
+        console.warn('NEXBIT USDT 24-hour P&L unavailable:',error);
+        pnl.textContent='Unavailable';pnl.className='pnl-neutral';
+      }
+    }
+    loadUSDT24hPnl();
+    setInterval(loadUSDT24hPnl,60000);
     message.textContent='Your secure session is active.';
   }
 
