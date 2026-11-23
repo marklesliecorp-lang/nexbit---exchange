@@ -150,24 +150,7 @@
 
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){window.supabaseLoadFailed=true;this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
-  <script>
-(function(){
-  const key='nexbitReturnToLoginAfterDashboardBack';
-  function redirectIfReturningFromDashboard(){
-    try{
-      if(sessionStorage.getItem(key)==='1'){
-        document.documentElement.style.visibility='hidden';
-        window.location.replace('login.html');
-        return true;
-      }
-    }catch(error){}
-    return false;
-  }
-  if(redirectIfReturningFromDashboard())return;
-  window.addEventListener('pageshow',redirectIfReturningFromDashboard);
-})();
-</script>
-</head>
+  </head>
 <body class="nexbit-intro-active">
   <div class="nexbit-intro-screen" id="nexbitIntroScreen" aria-label="NEXBIT">
     <div class="nexbit-intro-wordmark" aria-hidden="true">
