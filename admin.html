@@ -162,6 +162,7 @@ tr:last-child td{border-bottom:0}
       <label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="balanceReason">Reason (required)</label>
       <textarea id="balanceReason" rows="3" maxlength="500" placeholder="Explain why this balance adjustment is needed" style="display:block;width:100%;background:#050403;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:12px"></textarea>
       <div style="display:flex;gap:8px;margin-top:12px"><button id="saveBalanceAdjustment" type="button">Confirm adjustment</button></div>
+      <p id="balanceAdjustmentMessage" role="status" aria-live="polite" style="font-size:11px;color:var(--gold2);line-height:1.7;margin:10px 0 0"></p>
     </div>
     <div style="margin-top:22px"><h2 style="font-size:14px">Asset balance adjustment history</h2><div class="table-wrap"><table style="min-width:1000px"><thead><tr><th>DATE</th><th>USER</th><th>ASSET</th><th>ADJUSTMENT</th><th>PREVIOUS</th><th>NEW</th><th>REASON</th></tr></thead><tbody id="balanceHistoryBody"><tr><td colspan="7" class="muted">No history loaded.</td></tr></tbody></table></div></div>
   </section>
@@ -739,23 +740,27 @@ tr:last-child td{border-bottom:0}
      $('balanceHistoryBody').innerHTML=rows.length?rows.map(r=>'<tr><td>'+escapeHtml(date(r.created_at))+'</td><td>'+escapeHtml(r.user_email||r.user_id)+'</td><td>'+escapeHtml(r.asset_code)+'</td><td>'+escapeHtml((Number(r.adjustment)>=0?'+':'')+quantity(r.adjustment)+' '+r.asset_code)+'</td><td>'+escapeHtml(quantity(r.previous_balance))+'</td><td>'+escapeHtml(quantity(r.new_balance))+'</td><td>'+escapeHtml(r.reason)+'</td></tr>').join(''):'<tr><td colspan="7" class="empty">No asset balance adjustments have been recorded.</td></tr>';
    }catch(error){$('balanceHistoryBody').innerHTML='<tr><td colspan="7" class="muted">Could not load adjustment history: '+escapeHtml(error.message||'SQL setup required')+'</td></tr>';}
  }
+ function setBalanceAdjustmentMessage(message){
+   $('balanceAdjustmentMessage').textContent=message;
+   $('balancesMessage').textContent=message;
+ }
  async function saveBalanceAdjustment(){
-   if(!selectedBalanceUser)return;
+   if(!selectedBalanceUser){setBalanceAdjustmentMessage('Select a user account before adjusting a balance.');return;}
    const amount=Number($('balanceAmount').value),reason=$('balanceReason').value.trim(),asset=$('balanceAsset').value.trim().toUpperCase();
-   if(!/^[A-Z0-9]{2,12}$/.test(asset)){$('balancesMessage').textContent='Enter a valid asset code, such as BTC, ETH, USDT or USD.';return;}
-   if(!Number.isFinite(amount)||amount<=0){$('balancesMessage').textContent='Enter an amount greater than zero.';return;}
-   if(reason.length<3){$('balancesMessage').textContent='Enter a reason of at least 3 characters.';return;}
+   if(!/^[A-Z0-9]{2,12}$/.test(asset)){setBalanceAdjustmentMessage('Enter a valid asset code, such as BTC, ETH, USDT or USD.');return;}
+   if(!Number.isFinite(amount)||amount<=0){setBalanceAdjustmentMessage('Enter an amount greater than zero.');return;}
+   if(reason.length<3){setBalanceAdjustmentMessage('Enter a reason of at least 3 characters.');return;}
    const signed=$('balanceDirection').value==='subtract'?-amount:amount;
    const oldBalance=asset===$('balanceAsset').value.trim().toUpperCase()?selectedAssetBalance:null;
    const confirmText='CONFIRM ASSET BALANCE CHANGE\n\nAccount: '+(selectedBalanceUser.user_email||selectedBalanceUser.user_id)+'\nAsset: '+asset+'\nAction: '+(signed>0?'ADD ':'SUBTRACT ')+quantity(amount)+' '+asset+(oldBalance===null?'':'\nCurrent balance: '+quantity(oldBalance)+' '+asset+'\nNew balance: '+quantity(oldBalance+signed)+' '+asset)+'\nReason: '+reason+'\n\nThis changes an internal NEXBIT ledger only. It does not send or receive cryptocurrency on a blockchain.';
    if(!window.confirm(confirmText))return;
-   $('saveBalanceAdjustment').disabled=true;$('balancesMessage').textContent='Saving asset balance adjustment…';
+   $('saveBalanceAdjustment').disabled=true;setBalanceAdjustmentMessage('Saving asset balance adjustment…');
    try{
      const {data,error}=await client.rpc('admin_adjust_asset_balance',{p_user_id:selectedBalanceUser.user_id,p_asset_code:asset,p_adjustment:signed,p_reason:reason});
      if(error)throw error;const result=Array.isArray(data)?data[0]:data;
-     $('balancesMessage').textContent='Balance updated: '+quantity(result?.new_balance)+' '+asset+'. Adjustment recorded.';
+     setBalanceAdjustmentMessage('Balance updated: '+quantity(result?.new_balance)+' '+asset+'. Adjustment recorded.');
      $('balanceEditor').hidden=true;selectedBalanceUser=null;await Promise.all([loadBalances(),loadBalanceHistory()]);
-   }catch(error){$('balancesMessage').textContent=error.message||'Could not update this asset balance.';}
+   }catch(error){setBalanceAdjustmentMessage(error.message||'Could not update this asset balance.');}
    finally{$('saveBalanceAdjustment').disabled=false;}
  }
  $('refreshBalances').addEventListener('click',()=>{loadBalances();loadBalanceHistory();});
