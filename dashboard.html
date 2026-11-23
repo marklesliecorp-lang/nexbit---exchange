@@ -856,6 +856,19 @@ body { background-attachment: initial; }
   .layout{padding-top:0 !important;}
 }
 
+/* Spread Total Balance and Deposit to the opposite sides on mobile */
+@media(max-width:760px){
+  .dashboard-balance-grid .balance-panel{
+    padding-left:0 !important;
+    padding-right:0 !important;
+    column-gap:28px !important;
+  }
+  .dashboard-balance-grid .balance-panel>.asset-deposit{
+    justify-self:end !important;
+    margin-left:0 !important;
+  }
+}
+
 /* Match the Bybit-style yellow Deposit button */
 .dashboard-balance-grid .asset-deposit{
   background:#f7a600 !important;
