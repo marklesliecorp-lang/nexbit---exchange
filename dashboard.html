@@ -1002,13 +1002,14 @@ body { background-attachment: initial; }
   color:#bfc7d1 !important;
   text-shadow:0 0 7px rgba(205,216,230,.16);
 }
+/* Final override: keep the complete NEXBIT wordmark silver, with no gold gradient. */
 .brand-copy strong{
-  background:linear-gradient(105deg,#f5f7fa 0%,#c7ccd2 28%,#f4d49b 54%,#fff0cf 68%,#bfc5cc 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent !important;
-  -webkit-text-fill-color:transparent;
-  text-shadow:0 0 5px rgba(220,228,238,.55),0 0 11px rgba(232,190,125,.42),0 0 22px rgba(190,153,103,.28);
+  background:none !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  color:#edf1f6 !important;
+  -webkit-text-fill-color:#edf1f6 !important;
+  text-shadow:0 0 1px rgba(255,255,255,.8),0 0 8px rgba(205,216,230,.24) !important;
 }
 
 /* NEXBIT live Market Watch — compact Bybit-inspired rows */
