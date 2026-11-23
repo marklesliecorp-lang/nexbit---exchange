@@ -1328,7 +1328,6 @@ html,body{
 (function(){
   const cryptoPanel=document.getElementById('cryptoMarkets');
   const stockPanel=document.getElementById('stockMarkets');
-  const status=document.getElementById('marketWatchStatus');
   if(!cryptoPanel||!stockPanel)return;
   document.querySelectorAll('[data-market-more]').forEach(button=>{
     const list=document.getElementById(button.dataset.marketMore);
@@ -1372,12 +1371,11 @@ html,body{
     }catch(error){console.warn('NEXBIT crypto snapshot unavailable:',error);return false;}
   }
   let socket=null,retryDelay=1500,retryTimer=null,cryptoLive=false;
-  function setStatus(){if(status)status.textContent=cryptoLive?'CRYPTO LIVE · STOCKS VIA TRADINGVIEW':'CRYPTO RECONNECTING · STOCKS VIA TRADINGVIEW';}
   function connectCrypto(){
     if(retryTimer)clearTimeout(retryTimer);
     const streams=[...rowsBySymbol.keys()].map(symbol=>symbol+'@ticker').join('/');
     socket=new WebSocket('wss://stream.binance.com:9443/stream?streams='+streams);
-    socket.onopen=()=>{cryptoLive=true;retryDelay=1500;setStatus();};
+    socket.onopen=()=>{cryptoLive=true;retryDelay=1500;};
     socket.onmessage=event=>{
       try{
         const packet=JSON.parse(event.data),q=packet.data||packet,row=rowsBySymbol.get(String(q.s||'').toLowerCase());
@@ -1385,9 +1383,9 @@ html,body{
         paint(row,q.c,q.P,'[data-market-price]','[data-market-change]');setVolume(row,q.q);
       }catch(error){console.warn('NEXBIT crypto stream message error:',error);}
     };
-    socket.onerror=()=>{cryptoLive=false;setStatus();};
+    socket.onerror=()=>{cryptoLive=false;};
     socket.onclose=()=>{
-      cryptoLive=false;setStatus();retryTimer=setTimeout(connectCrypto,retryDelay);retryDelay=Math.min(retryDelay*2,30000);
+      cryptoLive=false;retryTimer=setTimeout(connectCrypto,retryDelay);retryDelay=Math.min(retryDelay*2,30000);
     };
   }
   loadCryptoSnapshot();connectCrypto();
