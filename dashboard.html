@@ -973,6 +973,12 @@ body { background-attachment: initial; }
   .portfolio-overview{border-radius:16px}
 }
 
+
+/* Dynamic profit and loss colors */
+#todayPnl.pnl-profit{color:#22c55e !important}
+#todayPnl.pnl-loss{color:#ef4444 !important}
+#todayPnl.pnl-neutral{color:#f5f5f5 !important}
+
 </style>
 </head>
 <body>
@@ -1084,6 +1090,59 @@ body { background-attachment: initial; }
     const formattedBalance=String.fromCharCode(36)+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     document.getElementById('dashboardBalance').textContent=formattedBalance;
     document.getElementById('portfolioBalance').textContent=formattedBalance;
+
+    // Format P&L only when a real P&L amount and percentage are supplied.
+    window.updateTodayPnl=function(profitLoss,percent){
+      const pnl=document.getElementById('todayPnl');
+      const value=Number(profitLoss);
+      const rate=Number(percent);
+      if(!pnl||!Number.isFinite(value)||!Number.isFinite(rate))return;
+      const money=Math.abs(value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+      const rateText=Math.abs(rate).toFixed(2)+'%';
+      if(value>0){
+        pnl.textContent='+
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT dashboard initialization error:',error);message.textContent='Your session is active, but some dashboard information could not be loaded. Please refresh.';});
+})();
+</script>
+
+
+
+</body>
+</html>
++money+' USD (+'+rateText+')';
+        pnl.className='pnl-profit';
+      }else if(value<0){
+        pnl.textContent='-
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT dashboard initialization error:',error);message.textContent='Your session is active, but some dashboard information could not be loaded. Please refresh.';});
+})();
+</script>
+
+
+
+</body>
+</html>
++money+' USD (-'+rateText+')';
+        pnl.className='pnl-loss';
+      }else{
+        pnl.textContent='$0.00 USD (0.00%)';
+        pnl.className='pnl-neutral';
+      }
+    };
+    window.updateTodayPnl(0,0);
     message.textContent='Your secure session is active.';
   }
   document.getElementById('logoutButton').addEventListener('click',async function(){
