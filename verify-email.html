@@ -10,14 +10,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261118-email-verification">
+  <style>
+    .nexbit-verify-section{background:linear-gradient(145deg,#050609 0%,#090b10 48%,#030405 100%)}
+    .verify-grid{z-index:0;opacity:.11;background-image:linear-gradient(rgba(218,226,239,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(218,226,239,.12) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at center,#000 5%,transparent 78%)}
+    .verify-glow{z-index:0;width:500px;height:500px;filter:blur(42px);opacity:1;mix-blend-mode:screen}
+    .verify-glow-gold{top:1%;left:calc(50% - 560px);background:radial-gradient(circle,rgba(255,218,139,.78) 0%,rgba(232,181,83,.55) 22%,rgba(208,151,55,.28) 48%,rgba(208,151,55,.08) 66%,transparent 76%)}
+    .verify-glow-silver{right:calc(50% - 560px);bottom:-2%;background:radial-gradient(circle,rgba(221,235,255,.72) 0%,rgba(164,195,239,.48) 24%,rgba(126,160,211,.25) 49%,rgba(126,160,211,.07) 67%,transparent 77%);animation:signupGlowDrift 10s ease-in-out infinite alternate}
+    .verify-shell{position:relative;z-index:1}
+    .verify-brand{color:#e6eaf0;text-shadow:0 0 9px rgba(220,229,241,.48),0 0 25px rgba(185,199,219,.3),0 0 48px rgba(217,174,83,.18);animation:none}
+    .verify-card{position:relative;overflow:hidden;border:1px solid rgba(221,230,243,.2);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.035) 48%,rgba(12,15,21,.52));box-shadow:0 28px 85px rgba(0,0,0,.62),0 0 55px rgba(150,174,207,.1),0 0 34px rgba(213,169,83,.08),inset 0 1px 0 rgba(255,255,255,.16);backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}
+    .verify-card:before{content:"";position:absolute;inset:0 12% auto;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),rgba(225,190,119,.55),transparent);pointer-events:none}
+    .verify-email{border:1px solid rgba(207,218,235,.18);border-radius:11px;background:rgba(3,6,11,.38)}
+    .verify-resend{border:1px solid rgba(255,255,255,.2);border-radius:11px;background:linear-gradient(110deg,#f0d99e 0%,#d6b36b 48%,#b98c43 100%);box-shadow:0 8px 28px rgba(199,157,78,.23),inset 0 1px 0 rgba(255,255,255,.55)}
+    @media(max-width:560px){.verify-glow{width:340px;height:340px;filter:blur(34px)}.verify-glow-gold{left:-145px;top:5%}.verify-glow-silver{right:-145px;bottom:3%}}
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){window.supabaseLoadFailed=true;this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
 </head>
 <body>
   <main class="nexbit-verify-section">
     <div class="verify-grid" aria-hidden="true"></div>
-    <div class="verify-glow" aria-hidden="true"></div>
+    <div class="verify-glow verify-glow-gold" aria-hidden="true"></div><div class="verify-glow verify-glow-silver" aria-hidden="true"></div>
     <div class="verify-shell">
-      <a class="verify-brand" href="index.html" aria-label="NEXBIT home"><span class="verify-brand-mark">✦</span><span>NEXBIT</span></a>
+      <a class="verify-brand" href="index.html" aria-label="NEXBIT home"><span>NEXBIT</span></a>
       <section class="verify-card" aria-labelledby="verifyHeading">
         <div class="verify-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><path d="m8 3 4-2 4 2"/></svg>
