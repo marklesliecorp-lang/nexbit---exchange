@@ -1324,7 +1324,7 @@ html,body{
     <article class="panel balance-panel">
       <div class="asset-heading"><div class="panel-label">Total Balance <span class="eye">◉</span></div></div>
       <a class="asset-deposit" href="deposit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 18v3h16v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Deposit</a>
-      <div class="balance-row"><div class="balance" id="dashboardBalance">$0.00</div><div class="currency">USD⌄</div></div>
+      <div class="balance-row"><div class="balance" id="dashboardBalance">Loading…</div><div class="currency">USD⌄</div></div>
       <div class="pnl-line">Today's P&amp;L <strong id="todayPnl">$0.00 USD (0.00%)</strong></div>
     </article>
     <div class="side-stack balance-breakdown">
@@ -1688,16 +1688,15 @@ html,body{
     if(balanceError){
       console.warn('NEXBIT balance could not be loaded:',balanceError.message);
       document.getElementById('dashboardBalance').textContent='Unavailable';
+      const assetsBalance=document.getElementById('assetsViewBalance');
+      if(assetsBalance)assetsBalance.textContent='Unavailable';
       message.textContent='You are signed in. Your balance is temporarily unavailable.';
       return;
     }
 
     let amount=Number(balance?.balance||0);
     const formatUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
-    document.getElementById('dashboardBalance').textContent=formatUSD(amount);
     document.getElementById('availableBalance').textContent=formatUSD(amount);
-    const assetsBalance=document.getElementById('assetsViewBalance');
-    if(assetsBalance)assetsBalance.textContent=formatUSD(amount);
     const assetsBreakdown=document.getElementById('assetsViewBreakdown');
     const {data:assetRows,error:assetRowsError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
     if(assetsBreakdown){
@@ -1815,6 +1814,10 @@ html,body{
       }catch(error){
         console.warn('NEXBIT account P&L refresh unavailable:',error);
         pnl.textContent='Unavailable';pnl.className='pnl-neutral';
+        const dashboardTotal=document.getElementById('dashboardBalance');
+        if(dashboardTotal)dashboardTotal.textContent='Unavailable';
+        const assetsBalance=document.getElementById('assetsViewBalance');
+        if(assetsBalance)assetsBalance.textContent='Unavailable';
       }finally{
         pnlRefreshBusy=false;
       }
