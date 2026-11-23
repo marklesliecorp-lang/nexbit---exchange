@@ -124,8 +124,6 @@
       const emailField=document.getElementById('loginEmail');
       const passwordField=document.getElementById('loginPassword');
       const toggle=document.getElementById('togglePassword');
-      const signupLink=document.querySelector('.signup-note a');
-      if(signupLink) signupLink.addEventListener('click',function(){try{sessionStorage.removeItem('nexbitReturnToLoginAfterDashboardBack');}catch(error){}});
       const submit=document.getElementById('loginSubmit');
       const message=document.getElementById('loginMessage');
       const supabaseClient=window.supabase.createClient(
@@ -155,13 +153,12 @@
           passwordField.value='';
           submit.innerHTML='LOGGED IN ✓';
           message.textContent='Login successful. Taking you to your dashboard…';
-          try{sessionStorage.removeItem('nexbitReturnToLoginAfterDashboardBack');}catch(error){}
           const signedInUser=data.user;
           const isAdmin=signedInUser?.email?.toLowerCase()==='markleslie.corp@gmail.com' && signedInUser?.app_metadata?.role==='admin';
           const destination=isAdmin?'admin.html':'dashboard.html';
           const transition=document.getElementById('nexbitLoginTransition');
           if(transition) transition.classList.add('is-active');
-          window.setTimeout(function(){ window.location.assign(destination); }, 3000);
+          window.setTimeout(function(){ window.location.assign(destination); }, 2000);
         }catch(error){
           console.error('NEXBIT login error:',error);
           message.textContent=error.message==='Invalid login credentials'
