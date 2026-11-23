@@ -118,6 +118,30 @@
       .signup-glow{width:340px;height:340px;filter:blur(85px)}
     }
 
+  
+    /* Keep the rounded ambient light shapes visibly above the section backdrop */
+    .signup-glow,.signup-light-grid{z-index:0}
+    .signup-glow{
+      width:520px;height:520px;
+      filter:blur(88px);
+      opacity:1;
+      mix-blend-mode:screen;
+    }
+    .signup-glow-one{
+      top:2%;left:calc(50% - 520px);
+      background:radial-gradient(circle,rgba(232,185,91,.48) 0%,rgba(216,164,66,.27) 30%,rgba(216,164,66,.1) 53%,transparent 72%);
+    }
+    .signup-glow-two{
+      right:calc(50% - 520px);bottom:-4%;
+      background:radial-gradient(circle,rgba(173,198,232,.43) 0%,rgba(151,179,219,.24) 32%,rgba(151,179,219,.09) 55%,transparent 73%);
+    }
+    .signup-shell{z-index:1}
+    @media(max-width:520px){
+      .signup-glow{width:390px;height:390px;filter:blur(76px)}
+      .signup-glow-one{left:-205px;top:4%}
+      .signup-glow-two{right:-205px;bottom:2%}
+    }
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){window.supabaseLoadFailed=true;this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
 </head>
@@ -134,7 +158,6 @@
     <div class="signup-light-grid" aria-hidden="true"></div>
     <div class="signup-shell">
       <div class="signup-brand">
-        <span class="signup-brand-mark">✦</span>
         <span>NEXBIT</span>
       </div>
       <p class="signup-kicker">YOUR NEXT MOVE STARTS HERE</p>
