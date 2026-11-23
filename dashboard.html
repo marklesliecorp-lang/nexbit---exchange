@@ -1687,9 +1687,6 @@ html,body{
 
     if(balanceError){
       console.warn('NEXBIT balance could not be loaded:',balanceError.message);
-      document.getElementById('dashboardBalance').textContent='Unavailable';
-      const assetsBalance=document.getElementById('assetsViewBalance');
-      if(assetsBalance)assetsBalance.textContent='Unavailable';
       message.textContent='You are signed in. Your balance is temporarily unavailable.';
       return;
     }
@@ -1791,10 +1788,6 @@ html,body{
           totalValue+=Number(amount);
         }
         const money=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-        const dashboardTotal=document.getElementById('dashboardBalance');
-        if(dashboardTotal)dashboardTotal.textContent=money(portfolioValue);
-        const assetsBalance=document.getElementById('assetsViewBalance');
-        if(assetsBalance)assetsBalance.textContent=money(portfolioValue);
         const assetsBreakdown=document.getElementById('assetsViewBreakdown');
         if(assetsBreakdown){
           assetsBreakdown.innerHTML=assetDisplay.length?assetDisplay.map(item=>{
@@ -1809,15 +1802,17 @@ html,body{
           pnl.className='pnl-neutral';
           return;
         }
+        const formatPortfolioUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+        const dashboardTotal=document.getElementById('dashboardBalance');
+        if(dashboardTotal)dashboardTotal.textContent=formatPortfolioUSD(portfolioValue);
+        const assetsBalance=document.getElementById('assetsViewBalance');
+        if(assetsBalance)assetsBalance.textContent=formatPortfolioUSD(portfolioValue);
         const percent=totalValue>0?(totalPnl/totalValue)*100:0;
         window.updateTodayPnl(totalPnl,percent);
       }catch(error){
         console.warn('NEXBIT account P&L refresh unavailable:',error);
         pnl.textContent='Unavailable';pnl.className='pnl-neutral';
-        const dashboardTotal=document.getElementById('dashboardBalance');
-        if(dashboardTotal)dashboardTotal.textContent='Unavailable';
-        const assetsBalance=document.getElementById('assetsViewBalance');
-        if(assetsBalance)assetsBalance.textContent='Unavailable';
+
       }finally{
         pnlRefreshBusy=false;
       }
