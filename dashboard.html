@@ -1259,6 +1259,45 @@ html,body{
   .bottom-nav a svg{width:20px !important;height:20px !important;color:inherit !important}
   .bottom-nav a.active,.bottom-nav a.active span,.bottom-nav a.active svg{color:#fff !important}
 }
+
+/* Investment view: package cards inside the dashboard navigation */
+.investment-dashboard-view{padding:0 0 110px}
+.investment-dashboard-view .nexbit-investments{padding:44px 18px 30px;background:radial-gradient(ellipse at 50% 0%,rgba(190,150,65,.12),transparent 55%),linear-gradient(180deg,#101010,#080808);color:#fff}
+.investment-dashboard-view .investment-container{max-width:1100px;margin:0 auto}
+.investment-dashboard-view .investment-heading{text-align:center;max-width:560px;margin:0 auto 28px}
+.investment-dashboard-view .investment-eyebrow{color:#d9b65e;font-size:10px;font-weight:800;letter-spacing:3px}
+.investment-dashboard-view .investment-heading h2{font-size:clamp(25px,4vw,36px);line-height:1.2;margin:14px 0;font-weight:850}
+.investment-dashboard-view .investment-heading h2 span{color:#dfbb65}
+.investment-dashboard-view .investment-heading p{color:#aaa;font-size:12px;line-height:1.7}
+.investment-dashboard-view .investment-heading-line{width:65px;height:3px;background:linear-gradient(90deg,transparent,#d9b65e,transparent);margin:20px auto 0}
+.investment-dashboard-view .investment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:900px;margin:0 auto;align-items:stretch}
+.investment-dashboard-view .investment-card{position:relative;display:flex;flex-direction:column;min-width:0;overflow:hidden;padding:19px 17px;border-radius:14px;background:linear-gradient(145deg,#202019,#11110e);border:1px solid rgba(205,174,105,.35)}
+.investment-dashboard-view .silver-card{background:linear-gradient(145deg,#22262c,#111316);border-color:rgba(190,199,211,.4)}
+.investment-dashboard-view .gold-card{background:linear-gradient(145deg,#302511,#17130b 70%);border:1.5px solid #d6ad50}
+.investment-dashboard-view .diamond-card{background:linear-gradient(145deg,#20252d,#101216 70%);border:1.5px solid #c8d1df}
+.investment-dashboard-view .gold-glow{position:absolute;width:150px;height:150px;top:-90px;right:-60px;background:rgba(224,181,76,.15);filter:blur(45px);pointer-events:none}
+.investment-dashboard-view .investment-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.investment-dashboard-view .package-number{font-size:9px;letter-spacing:1.5px;font-weight:800;color:#d8b66a}
+.investment-dashboard-view .silver-card .package-number{color:#c5ceda}
+.investment-dashboard-view .premium-label{background:linear-gradient(135deg,#f3d88e,#c29436);color:#1b1408;padding:6px 9px;border-radius:20px;font-size:8px;letter-spacing:1px;font-weight:900}
+.investment-dashboard-view .diamond-label{background:linear-gradient(135deg,#eef2f7,#aeb9c8)}
+.investment-dashboard-view .investment-card h3{font-size:22px;margin:15px 0 5px;color:#f4e5c0}
+.investment-dashboard-view .silver-card h3{color:#e0e5ec}.investment-dashboard-view .gold-card h3{color:#f0ce79}.investment-dashboard-view .diamond-card h3{color:#e4ebf5}
+.investment-dashboard-view .package-description{color:#a7a7a7;font-size:10px;line-height:1.5;margin:0 0 12px}
+.investment-dashboard-view .package-price{padding:10px 0}
+.investment-dashboard-view .price-label{display:block;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#aaa;margin-bottom:7px}
+.investment-dashboard-view .package-price strong{font-size:clamp(18px,2.3vw,24px);white-space:normal;color:#fff}
+.investment-dashboard-view .package-price strong small{color:#d9b65e;font-size:15px}
+.investment-dashboard-view .gold-card .package-price strong{color:#f5d88c}
+.investment-dashboard-view .package-divider{height:1px;background:rgba(255,255,255,.12);margin:7px 0 12px}
+.investment-dashboard-view .package-features{list-style:none;padding:0;margin:0 0 16px;flex:1;display:grid;grid-template-columns:1fr;gap:0}
+.investment-dashboard-view .package-features li{display:flex;align-items:center;gap:8px;color:#c5c5c5;font-size:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.055)}
+.investment-dashboard-view .package-features li span{color:#dfbd70;font-weight:900}
+.investment-dashboard-view .silver-card .package-features li span{color:#c6d0de}
+.investment-dashboard-view .package-button{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;padding:11px 8px;border-radius:8px;text-decoration:none;font-size:10px;font-weight:800;margin-top:auto}
+.investment-dashboard-view .basic-button{border:1px solid #c7a75e;color:#e6c77f}.investment-dashboard-view .silver-button{border:1px solid #b9c3d0;color:#dbe2eb}
+.investment-dashboard-view .gold-button{background:linear-gradient(120deg,#f1d58d,#c49536);color:#1b1408}.investment-dashboard-view .diamond-button{background:linear-gradient(120deg,#eef2f7,#aeb9c8);color:#12161d}
+@media(max-width:600px){.investment-dashboard-view .nexbit-investments{padding:32px 13px 24px}.investment-dashboard-view .investment-grid{grid-template-columns:1fr;max-width:390px;gap:12px}.investment-dashboard-view .investment-card{padding:16px 17px}.investment-dashboard-view .investment-card h3{font-size:21px;margin:10px 0 4px}.investment-dashboard-view .package-description{display:none}.investment-dashboard-view .package-price{padding:7px 0}.investment-dashboard-view .package-features{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px}.investment-dashboard-view .package-features li{font-size:10px;padding:6px 0;line-height:1.35}}
 </style>
 </head>
 <body>
@@ -1441,6 +1480,49 @@ html,body{
   </section>
 </section>
 
+<section class="dashboard-subview investment-dashboard-view" id="investmentView" hidden aria-label="Investment">
+  <section class="nexbit-investments" id="investment-packages">
+    <div class="investment-container">
+      <div class="investment-heading">
+        <span class="investment-eyebrow">THE NEXBIT ADVANTAGE</span>
+        <h2>Explore Our <span>Investment Packages</span></h2>
+        <p>Discover the available NEXBIT packages and explore the features, support and opportunities associated with each level. Choose the package that matches your intended participation and risk tolerance.</p>
+        <div class="investment-heading-line"></div>
+      </div>
+      <div class="investment-grid">
+        <article class="investment-card basic-card">
+          <div class="investment-card-top"><span class="package-number">01 / BASIC</span></div>
+          <h3 class="package-title">Basic</h3><p class="package-description">Your starting point for exploring NEXBIT.</p>
+          <div class="package-price"><span class="price-label">Investment Range</span><strong>$600 <small>–</small> $2,600</strong></div><div class="package-divider"></div>
+          <ul class="package-features"><li><span>✓</span> Advertised ROI: 1% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li></ul>
+          <a href="signup.html" class="package-button basic-button">Select This Package <span>→</span></a>
+        </article>
+        <article class="investment-card silver-card">
+          <div class="investment-card-top"><span class="package-number">02 / SILVER</span></div>
+          <h3 class="package-title">Silver</h3><p class="package-description">An elevated package with additional benefits.</p>
+          <div class="package-price"><span class="price-label">Investment Range</span><strong>$5,000 <small>–</small> $9,999</strong></div><div class="package-divider"></div>
+          <ul class="package-features"><li><span>✓</span> Advertised ROI: 1.5% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li></ul>
+          <a href="signup.html" class="package-button silver-button">Select This Package <span>→</span></a>
+        </article>
+        <article class="investment-card gold-card">
+          <div class="gold-glow"></div><div class="investment-card-top"><span class="package-number">03 / GOLD</span><span class="premium-label">PREMIUM</span></div>
+          <h3 class="package-title">Gold</h3><p class="package-description">The highest-tier package in the NEXBIT collection.</p>
+          <div class="package-price"><span class="price-label">Investment Range</span><strong>$10,000 <small>–</small> $19,000</strong></div><div class="package-divider"></div>
+          <ul class="package-features"><li><span>✓</span> Advertised ROI: 10.5% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li></ul>
+          <a href="signup.html" class="package-button gold-button">Select This Package <span>→</span></a>
+        </article>
+        <article class="investment-card diamond-card">
+          <div class="investment-card-top"><span class="package-number">04 / DIAMOND</span><span class="premium-label diamond-label">ELITE</span></div>
+          <h3 class="package-title">Diamond</h3><p class="package-description">An exclusive package for the highest investment level.</p>
+          <div class="package-price"><span class="price-label">Investment Range</span><strong>$20,000 <small>–</small> $50,000</strong></div><div class="package-divider"></div>
+          <ul class="package-features"><li><span>✓</span> Advertised ROI: 20% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li></ul>
+          <a href="signup.html" class="package-button diamond-button">Select This Package <span>→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+</section>
+
 <section class="trade-view" id="tradeView" hidden aria-label="Trade">
   <div class="trade-topline">
     <h1 class="trade-title">Trade</h1>
@@ -1479,7 +1561,7 @@ html,body{
   <a class="active" href="#home" data-dashboard-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
   <a href="#markets" data-dashboard-view="markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
   <a href="#trade" data-dashboard-view="trade"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
-  <a href="packages.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
+  <a href="#investment" data-dashboard-view="investment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
   <a href="#assets" data-dashboard-view="assets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
 </nav>
 <script>
@@ -1489,19 +1571,21 @@ html,body{
   const trade=document.getElementById('tradeView');
   const markets=document.getElementById('marketsView');
   const assets=document.getElementById('assetsView');
+  const investment=document.getElementById('investmentView');
   const marketPanel=document.querySelector('.market-watch-panel');
   const homeMount=document.getElementById('homeMarketPanelMount');
   const mount=document.getElementById('marketsPanelMount');
   const nav=[...document.querySelectorAll('[data-dashboard-view]')];
-  if(!home||!trade||!markets||!assets||!nav.length)return;
+  if(!home||!trade||!markets||!assets||!investment||!nav.length)return;
   function show(view){
-    const valid=['home','markets','trade','assets'].includes(view)?view:'home';
+    const valid=['home','markets','trade','investment','assets'].includes(view)?view:'home';
     const target=valid==='markets'?mount:homeMount;
     if(marketPanel&&target&&marketPanel.parentElement!==target)target.appendChild(marketPanel);
     home.hidden=valid!=='home';
     markets.hidden=valid!=='markets';
     trade.hidden=valid!=='trade';
     assets.hidden=valid!=='assets';
+    investment.hidden=valid!=='investment';
     nav.forEach(link=>{
       const active=link.dataset.dashboardView===valid;
       link.classList.toggle('active',active);
