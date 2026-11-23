@@ -1050,6 +1050,40 @@ body { background-attachment: initial; }
 .market-watch-tab{border:0;border-radius:18px;padding:8px 17px;background:#202020;color:#999;font:700 11px Inter,Arial,sans-serif;cursor:pointer}
 .market-watch-tab.active{background:#f1f1f1;color:#080808}
 .market-watch-list[hidden]{display:none !important}
+
+/* Restore the black watercolor atmosphere across the dashboard */
+html,body{
+  background-color:#000 !important;
+  background-image:
+    radial-gradient(ellipse at 12% 9%,rgba(255,255,255,.055),transparent 34%),
+    radial-gradient(ellipse at 88% 24%,rgba(145,145,145,.045),transparent 38%),
+    radial-gradient(ellipse at 42% 78%,rgba(210,210,210,.028),transparent 42%),
+    radial-gradient(ellipse at 95% 96%,rgba(110,110,110,.04),transparent 34%) !important;
+  background-attachment:fixed !important;
+}
+.topbar{
+  background:
+    radial-gradient(ellipse at 18% 0%,rgba(255,255,255,.045),transparent 55%),
+    linear-gradient(110deg,rgba(12,12,12,.97),rgba(2,2,2,.98)) !important;
+}
+.promo-panel,.market-category{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 12% 8%,rgba(255,255,255,.09),transparent 52%),
+    radial-gradient(ellipse at 92% 92%,rgba(155,155,155,.065),transparent 54%),
+    linear-gradient(140deg,#191919,#050505 70%,#101010) !important;
+  border:1px solid rgba(220,220,220,.15) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 26px rgba(0,0,0,.28) !important;
+}
+.promo-mark{
+  background:
+    radial-gradient(circle at 28% 22%,rgba(255,255,255,.23),transparent 48%),
+    radial-gradient(circle at 78% 82%,rgba(155,155,155,.16),transparent 55%),
+    linear-gradient(145deg,#303030,#101010) !important;
+  color:#f2f2f2 !important;
+}
+
 </style>
 </head>
 <body>
