@@ -1308,10 +1308,9 @@ html,body{
 }
 .investment-dashboard-view{padding-top:34px!important;overflow:visible!important;position:relative;isolation:isolate}
 .investment-dashboard-view .investment-overview{position:relative;z-index:1;overflow:visible;margin-top:8px}
-.investment-dashboard-view .investment-overview-heading{position:relative;z-index:2;margin-bottom:17px;padding-top:2px}
-.investment-dashboard-view .investment-overview-eyebrow{display:block;color:#c8b17a;font-size:9px;font-weight:800;letter-spacing:2.2px}
-.investment-dashboard-view .investment-overview-heading h2,
-.investment-dashboard-view .investment-current-heading h2{margin:7px 0 0;color:#f3f4f6;font-size:clamp(19px,3vw,24px);font-weight:750;letter-spacing:-.035em}
+.investment-dashboard-view .investment-overview-eyebrow{display:block;color:#c8b17a;font-size:9px;font-weight:800;letter-spacing:2.2px;margin:0 0 7px}
+.investment-dashboard-view .investment-overview-title,
+.investment-dashboard-view .investment-current-heading h2{margin:0 0 17px;color:#f3f4f6;font-size:clamp(19px,3vw,24px);font-weight:750;letter-spacing:-.035em}
 .investment-dashboard-view .investment-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .investment-dashboard-view .investment-summary-card{min-width:0;min-height:116px;padding:16px;border:1px solid rgba(218,228,245,.12);border-radius:13px;background:rgba(5,8,14,.42);display:flex;flex-direction:column;justify-content:center;gap:8px}
 .investment-dashboard-view .investment-summary-label{color:#aab2c0;font-size:11px;font-weight:600}
@@ -1516,10 +1515,8 @@ html,body{
 
 <section class="dashboard-subview investment-dashboard-view" id="investmentView" hidden aria-label="Investment">
   <section class="investment-overview" aria-labelledby="investmentOverviewTitle">
-    <div class="investment-overview-heading">
-      <span class="investment-overview-eyebrow">YOUR PORTFOLIO</span>
-      <h2 id="investmentOverviewTitle">Investment Overview</h2>
-    </div>
+    <span class="investment-overview-eyebrow">YOUR PORTFOLIO</span>
+    <h2 class="investment-overview-title" id="investmentOverviewTitle">Investment Overview</h2>
     <div class="investment-summary-grid">
       <article class="investment-summary-card investment-summary-total">
         <span class="investment-summary-label">Total invested</span>
