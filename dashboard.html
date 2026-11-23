@@ -1731,27 +1731,59 @@ html,body{
         pnl.className='pnl-neutral';
       }
     };
-    async function loadUSDT24hPnl(){
+    const pnlMarketIds={BTC:'bitcoin',ETH:'ethereum',SOL:'solana',BNB:'binancecoin',XRP:'ripple',DOGE:'dogecoin',ADA:'cardano',BCH:'bitcoin-cash',USDT:'tether'};
+    let pnlQuotes={},pnlQuotesAt=0,pnlRefreshBusy=false;
+    async function loadPnlMarketQuotes(){
+      const now=Date.now();
+      if(now-pnlQuotesAt<30000&&Object.keys(pnlQuotes).length)return pnlQuotes;
+      const ids=[...new Set(Object.values(pnlMarketIds))].join(',');
+      const response=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+encodeURIComponent(ids)+'&vs_currencies=usd&include_24hr_change=true',{cache:'no-store'});
+      if(!response.ok)throw new Error('Portfolio market prices unavailable');
+      const data=await response.json(),next={};
+      Object.entries(pnlMarketIds).forEach(([asset,id])=>{
+        const price=Number(data?.[id]?.usd),change=Number(data?.[id]?.usd_24h_change);
+        if(Number.isFinite(price)&&price>0&&Number.isFinite(change)&&change>-100)next[asset]={price,change};
+      });
+      if(!Object.keys(next).length)throw new Error('No valid portfolio market prices');
+      pnlQuotes=next;pnlQuotesAt=now;
+      return pnlQuotes;
+    }
+    async function loadAccountPnl(){
       const pnl=document.getElementById('todayPnl');
-      if(!pnl)return;
-      if(assetRowsError){pnl.textContent='Unavailable';pnl.className='pnl-neutral';return;}
-      const usdtBalance=Number((assetRows||[]).find(row=>String(row.asset_code).toUpperCase()==='USDT')?.balance||0);
-      if(!Number.isFinite(usdtBalance)||usdtBalance<=0){window.updateTodayPnl(0,0);return;}
+      if(!pnl||pnlRefreshBusy)return;
+      pnlRefreshBusy=true;
       try{
-        const response=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd&include_24hr_change=true',{cache:'no-store'});
-        if(!response.ok)throw new Error('USDT market price unavailable');
-        const data=await response.json(),quote=data?.tether;
-        const currentPrice=Number(quote?.usd),change=Number(quote?.usd_24h_change);
-        if(!Number.isFinite(currentPrice)||currentPrice<=0||!Number.isFinite(change)||change<=-100)throw new Error('Invalid USDT market data');
-        const previousPrice=currentPrice/(1+change/100);
-        window.updateTodayPnl(usdtBalance*(currentPrice-previousPrice),change);
+        const {data:rows,error}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id);
+        if(error)throw error;
+        const holdings=(rows||[]).filter(row=>Number(row.balance)>0);
+        const quotes=await loadPnlMarketQuotes();
+        let totalPnl=0,totalValue=0,unpriced=[];
+        holdings.forEach(row=>{
+          const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance);
+          if(!Number.isFinite(quantity)||quantity<=0)return;
+          if(asset==='USD'){totalValue+=quantity;return;}
+          const quote=quotes[asset];
+          if(!quote){unpriced.push(asset);return;}
+          const previousPrice=quote.price/(1+quote.change/100);
+          totalPnl+=quantity*(quote.price-previousPrice);
+          totalValue+=quantity*quote.price;
+        });
+        if(unpriced.length){
+          pnl.textContent='Partial — '+unpriced.join(', ')+' unpriced';
+          pnl.className='pnl-neutral';
+          return;
+        }
+        const percent=totalValue>0?(totalPnl/totalValue)*100:0;
+        window.updateTodayPnl(totalPnl,percent);
       }catch(error){
-        console.warn('NEXBIT USDT 24-hour P&L unavailable:',error);
+        console.warn('NEXBIT account P&L refresh unavailable:',error);
         pnl.textContent='Unavailable';pnl.className='pnl-neutral';
+      }finally{
+        pnlRefreshBusy=false;
       }
     }
-    loadUSDT24hPnl();
-    setInterval(loadUSDT24hPnl,60000);
+    loadAccountPnl();
+    setInterval(loadAccountPnl,3000);
     message.textContent='Your secure session is active.';
   }
 
