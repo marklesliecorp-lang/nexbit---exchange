@@ -1170,6 +1170,41 @@ html,body{
  .nexbit-promo-prev{left:7px}.nexbit-promo-next{right:7px}
 }
 @media(prefers-reduced-motion:reduce){.nexbit-promo-track{transition:none}}
+
+/* Integrated Trade screen — keeps the dashboard shell and bottom navigation */
+[hidden]{display:none!important}
+.trade-view{max-width:1240px;margin:0 auto;padding:16px 20px 96px}
+.trade-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.trade-title{margin:0;font-size:19px;font-weight:750;color:#f3f5f8}
+.trade-pair-select,.trade-control{min-height:40px;border:1px solid rgba(218,228,245,.2);border-radius:10px;background:rgba(255,255,255,.055);color:#f4f5f7;padding:0 12px;font:inherit;font-size:12px;outline:none}
+.trade-pair-select:focus,.trade-control:focus{border-color:#d9e1ec}
+.trade-chart-card,.trade-setup-card{border:1px solid rgba(218,228,245,.16);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));box-shadow:0 16px 42px rgba(0,0,0,.24);overflow:hidden}
+.trade-chart-frame{width:100%;height:420px;border:0;display:block;background:#080b10}
+.trade-setup-card{margin-top:14px;padding:16px}
+.trade-setup-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.trade-setup-heading h2{font-size:14px;margin:0;color:#f2f4f7}
+.trade-order-tabs,.trade-type-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.trade-order-tabs button,.trade-type-tabs button{min-height:40px;border:1px solid rgba(218,228,245,.16);border-radius:9px;background:rgba(255,255,255,.045);color:#aeb7c6;font:inherit;font-size:12px;font-weight:700}
+.trade-order-tabs button[aria-pressed="true"]{background:rgba(42,190,130,.16);border-color:rgba(42,190,130,.55);color:#63e0aa}
+.trade-order-tabs button[data-side="sell"][aria-pressed="true"]{background:rgba(232,91,105,.15);border-color:rgba(232,91,105,.5);color:#ff8994}
+.trade-type-tabs{margin-top:12px}
+.trade-type-tabs button[aria-pressed="true"]{border-color:rgba(220,228,240,.5);color:#f3f5f8;background:rgba(255,255,255,.1)}
+.trade-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.trade-field label{display:block;font-size:10px;color:#aeb7c6;margin-bottom:7px}
+.trade-field .trade-control{width:100%;min-width:0}
+.trade-available{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding-top:13px;border-top:1px solid rgba(218,228,245,.12);font-size:11px;color:#aeb7c6}
+.trade-available strong{color:#e8edf4}
+.trade-notice{margin:13px 0 0;color:#98a4b5;font-size:10px;line-height:1.6}
+.bottom-nav a[aria-current="page"]{color:#f4f6fa}
+.bottom-nav a[aria-current="page"] span{color:#f0c978}
+@media(max-width:760px){
+ .trade-view{padding:14px 13px 94px}
+ .trade-title{font-size:17px}
+ .trade-chart-frame{height:360px}
+ .trade-setup-card{padding:13px}
+}
+@media(max-width:390px){.trade-chart-frame{height:330px}.trade-fields{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1321,14 +1356,101 @@ html,body{
   </section>
 </section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
+
 </main>
+<section class="trade-view" id="tradeView" hidden aria-label="Trade">
+  <div class="trade-topline">
+    <h1 class="trade-title">Trade</h1>
+    <select class="trade-pair-select" id="tradePair" aria-label="Trading pair">
+      <option value="BINANCE:BTCUSDT">BTC/USDT</option>
+      <option value="BINANCE:ETHUSDT">ETH/USDT</option>
+      <option value="BINANCE:SOLUSDT">SOL/USDT</option>
+      <option value="BINANCE:BNBUSDT">BNB/USDT</option>
+      <option value="BINANCE:XRPUSDT">XRP/USDT</option>
+    </select>
+  </div>
+  <div class="trade-chart-card">
+    <iframe class="trade-chart-frame" id="tradeChart" title="Live TradingView market chart for BTC/USDT" loading="lazy" allowfullscreen src="https://www.tradingview.com/widgetembed/?symbol=BINANCE%3ABTCUSDT&interval=15&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=%23080b10&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en"></iframe>
+  </div>
+  <section class="trade-setup-card" aria-labelledby="tradeSetupTitle">
+    <div class="trade-setup-heading"><h2 id="tradeSetupTitle">Order Setup</h2></div>
+    <div class="trade-order-tabs" role="group" aria-label="Order side">
+      <button type="button" data-side="buy" aria-pressed="true">Buy / Long</button>
+      <button type="button" data-side="sell" aria-pressed="false">Sell / Short</button>
+    </div>
+    <div class="trade-type-tabs" role="group" aria-label="Order type">
+      <button type="button" data-order-type="market" aria-pressed="true">Market</button>
+      <button type="button" data-order-type="limit" aria-pressed="false">Limit</button>
+    </div>
+    <div class="trade-fields">
+      <div class="trade-field" id="tradePriceField" hidden>
+        <label for="tradeLimitPrice">Limit Price (USDT)</label>
+        <input class="trade-control" id="tradeLimitPrice" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter limit price">
+      </div>
+      <div class="trade-field">
+        <label for="tradeQuantity">Quantity (base asset)</label>
+        <input class="trade-control" id="tradeQuantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter quantity">
+      </div>
+      <div class="trade-field">
+        <label for="tradeTotal">Estimated Total (USDT)</label>
+        <input class="trade-control" id="tradeTotal" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter total" readonly>
+      </div>
+    </div>
+    <div class="trade-available"><span>Available Balance</span><strong id="tradeAvailableBalance">Loading…</strong></div>
+    <p class="trade-notice">Trading interface preview. Order execution is not connected yet.</p>
+  </section>
+
 <nav class="bottom-nav" aria-label="Main navigation">
-  <a class="active" href="dashboard.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
+  <a class="active" href="#home" data-dashboard-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
   <a href="index.html#markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
-  <a href="transfer.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
+  <a href="#trade" data-dashboard-view="trade"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
   <a href="packages.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
   <a href="wallet.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
 </nav>
+<script>
+/* NEXBIT app-style bottom navigation: switch dashboard/trade views without reloading */
+(function(){
+  const home=document.getElementById('overview');
+  const trade=document.getElementById('tradeView');
+  const nav=[...document.querySelectorAll('[data-dashboard-view]')];
+  if(!home||!trade||!nav.length)return;
+  function show(view){
+    const isTrade=view==='trade';
+    home.hidden=isTrade;
+    trade.hidden=!isTrade;
+    nav.forEach(link=>{
+      const active=link.dataset.dashboardView===(isTrade?'trade':'home');
+      link.classList.toggle('active',active);
+      if(active)link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    });
+    if(isTrade)window.scrollTo({top:0,behavior:'instant'});
+  }
+  nav.forEach(link=>link.addEventListener('click',event=>{
+    event.preventDefault();
+    show(link.dataset.dashboardView);
+  }));
+  const pair=document.getElementById('tradePair');
+  const chart=document.getElementById('tradeChart');
+  const title=chart&&chart.title;
+  if(pair&&chart)pair.addEventListener('change',()=>{
+    const symbol=pair.value;
+    const url='https://www.tradingview.com/widgetembed/?symbol='+encodeURIComponent(symbol)+'&interval=15&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=%23080b10&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en';
+    chart.src=url;
+    chart.title='Live TradingView market chart for '+pair.options[pair.selectedIndex].text;
+  });
+  const sideButtons=[...document.querySelectorAll('[data-side]')];
+  sideButtons.forEach(button=>button.addEventListener('click',()=>{
+    sideButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+  }));
+  const typeButtons=[...document.querySelectorAll('[data-order-type]')];
+  const priceField=document.getElementById('tradePriceField');
+  typeButtons.forEach(button=>button.addEventListener('click',()=>{
+    typeButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+    if(priceField)priceField.hidden=button.dataset.orderType!=='limit';
+  }));
+})();
+</script>
 <script>
 (function(){
   if(!window.supabase?.createClient){
