@@ -1341,27 +1341,32 @@ html,body{
   const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
   const message=document.getElementById('authMessage');
 
-  // Browser Back from the dashboard signs the user out and returns to login.
-  // A restored dashboard page also re-checks the session before it can be used.
+  // Safari Back exits the dashboard, clears this device's session, and returns to login.
+  // The session guard also runs whenever Safari displays or restores this page.
   let leavingDashboard=false;
-  history.pushState({nexbitDashboard:true},'',location.href);
+  history.replaceState({nexbitDashboardPage:true},'',location.href);
+  history.pushState({nexbitDashboardGuard:true},'',location.href);
+
   window.addEventListener('popstate',async function(){
     if(leavingDashboard)return;
     leavingDashboard=true;
+    document.documentElement.style.visibility='hidden';
     try{
-      const {error}=await client.auth.signOut();
-      if(error) await client.auth.signOut({scope:'local'});
+      // Local sign-out does not depend on a network round-trip.
+      await client.auth.signOut({scope:'local'});
     }catch(error){
-      console.warn('NEXBIT browser-back sign-out fallback:',error);
-      try{await client.auth.signOut({scope:'local'});}catch(localError){console.error('NEXBIT local sign-out failed:',localError);}
+      console.error('NEXBIT Safari back sign-out error:',error);
+    }finally{
+      window.location.replace('login.html');
     }
-    window.location.replace('login.html');
   });
-  window.addEventListener('pageshow',async function(event){
-    if(!event.persisted)return;
+
+  window.addEventListener('pageshow',async function(){
     try{
       const {data:{session},error}=await client.auth.getSession();
-      if(error||!session?.user)window.location.replace('login.html');
+      if(error||!session?.user){
+        window.location.replace('login.html');
+      }
     }catch(error){
       console.error('NEXBIT restored-session check failed:',error);
       window.location.replace('login.html');
