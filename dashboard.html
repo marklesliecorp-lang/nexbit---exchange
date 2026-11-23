@@ -1327,7 +1327,52 @@ html,body{
 
 <section class="dashboard-subview" id="marketsView" hidden aria-label="Markets">
   <div class="subview-heading"><h1>Markets</h1><p>Live cryptocurrency prices and stock market quotes</p></div>
-  <div id="marketsPanelMount"></div>
+  <div id="marketsPanelMount"></div>  <section class="market-watch-panel" aria-label="Market Watch">
+  <div class="section-head market-watch-heading"><h2>Market Watch</h2></div>
+  <section class="market-watch-group" aria-labelledby="cryptoMarketTitle">
+    <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
+    <div class="market-list market-watch-list" id="cryptoMarkets">
+    <div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin <small>BTC/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum <small>ETH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="solana"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana <small>SOL/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="binancecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png" alt="BNB logo"><span class="coin">BNB <small>BNB/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="ripple"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png" alt="XRP logo"><span class="coin">XRP <small>XRP/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="dogecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png" alt="Dogecoin logo"><span class="coin">Dogecoin <small>DOGE/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="cardano"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/975/large/cardano.png" alt="Cardano logo"><span class="coin">Cardano <small>ADA/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash <small>BCH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+  </div>
+    <button class="market-see-more" type="button" data-market-more="cryptoMarkets" aria-expanded="false">See more</button>
+  </section>
+  <section class="market-watch-group" aria-labelledby="stockMarketTitle">
+    <div class="market-watch-group-heading"><h3 id="stockMarketTitle">Stocks</h3><span>US EQUITIES</span></div>
+    <div class="tradingview-widget-container nexbit-stock-widget" id="stockMarkets">
+      <div class="tradingview-widget-container__widget"></div>
+      <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+      {
+        "width": "100%",
+        "height": "300",
+        "symbolsGroups": [
+          {
+            "name": "NEXBIT US Stocks",
+            "symbols": [
+              {"name": "NASDAQ:AAPL", "displayName": "Apple"},
+              {"name": "NASDAQ:NVDA", "displayName": "NVIDIA"},
+              {"name": "NASDAQ:TSLA", "displayName": "Tesla"},
+              {"name": "NASDAQ:MSFT", "displayName": "Microsoft"},
+              {"name": "NASDAQ:AMZN", "displayName": "Amazon"}
+            ]
+          }
+        ],
+        "showSymbolLogo": true,
+        "isTransparent": false,
+        "colorTheme": "dark",
+        "locale": "en",
+        "showFloatingTooltip": false
+      }
+      </script>
+    </div>
+  </section>
 </section>
 <section class="dashboard-subview" id="assetsView" hidden aria-label="Assets">
   <div class="subview-heading"><h1>Assets</h1><p>Your wallet balance and account activity</p></div>
