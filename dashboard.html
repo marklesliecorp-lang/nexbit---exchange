@@ -930,7 +930,10 @@ body { background-attachment: initial; }
     const {data:balance,error:balanceError}=await client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle();
     if(balanceError)throw balanceError;
     const amount=Number(balance?.balance||0);
-    const formattedBalance='
+    const formattedBalance=String.fromCharCode(36)+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    document.getElementById('dashboardBalance').textContent=formattedBalance;
+    document.getElementById('portfolioBalance').textContent=formattedBalance;
+    message.textContent='Your secure session is active.';
   }
   document.getElementById('logoutButton').addEventListener('click',async function(){
     this.disabled=true;this.textContent='Logging out…';
