@@ -1129,6 +1129,36 @@ html,body{
 .nexbit-stock-widget iframe{background:#050505 !important;color-scheme:dark}
 .nexbit-stock-widget .tradingview-widget-copyright{padding:4px 8px 2px;text-align:right;font-size:10px;opacity:.72;background:#050505 !important}
 .nexbit-stock-widget .tradingview-widget-copyright a{color:#aeb4bd !important;text-decoration:none}
+
+/* NEXBIT dashboard promotional slider */
+.nexbit-promo-slider{position:relative;margin:18px 0 0;overflow:hidden;border:1px solid rgba(205,215,225,.2);border-radius:12px;background:#050607;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);height:174px}
+.nexbit-promo-track{height:100%;display:flex;transition:transform .65s cubic-bezier(.22,.75,.25,1);will-change:transform}
+.nexbit-promo-slide{position:relative;isolation:isolate;flex:0 0 100%;height:100%;overflow:hidden;background:#07090b}
+.nexbit-promo-slide img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;opacity:.76}
+.nexbit-promo-slide:after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.91) 34%,rgba(2,4,6,.42) 67%,rgba(2,4,6,.08) 100%),radial-gradient(ellipse at 15% 0%,rgba(205,220,235,.18),transparent 46%)}
+.nexbit-promo-copy{position:relative;z-index:1;height:100%;width:min(60%,460px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:16px 22px;color:#f4f5f7}
+.nexbit-promo-brand{font-size:9px;letter-spacing:.17em;font-weight:800;color:#c4cbd3;margin-bottom:7px}
+.nexbit-promo-copy h2{font-size:clamp(19px,2.5vw,25px);line-height:1.05;letter-spacing:-.025em;margin:0 0 7px;color:#fff}
+.nexbit-promo-copy p{font-size:12px;line-height:1.35;color:#d0d4da;margin:0 0 12px;max-width:290px}
+.nexbit-promo-link{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(220,230,240,.72);border-radius:5px;padding:7px 12px;color:#fff;text-decoration:none;font-size:10px;font-weight:750;background:rgba(5,8,12,.38)}
+.nexbit-promo-controls{position:absolute;z-index:3;right:13px;bottom:12px;display:flex;align-items:center;gap:7px}
+.nexbit-promo-dot{width:7px;height:7px;border:0;border-radius:50%;padding:0;background:rgba(230,235,240,.42);cursor:pointer}
+.nexbit-promo-dot[aria-current="true"]{width:19px;border-radius:8px;background:#f0f2f4}
+.nexbit-promo-arrow{position:absolute;z-index:3;top:50%;transform:translateY(-50%);width:28px;height:28px;border:1px solid rgba(220,230,240,.24);border-radius:50%;background:rgba(4,6,9,.65);color:#fff;font-size:18px;line-height:1;cursor:pointer}
+.nexbit-promo-prev{left:10px}.nexbit-promo-next{right:10px}
+.nexbit-card-photo{object-position:center 55%}
+@media(max-width:760px){
+ .nexbit-promo-slider{height:158px;margin-top:15px;border-radius:10px}
+ .nexbit-promo-copy{width:72%;padding:13px 15px}
+ .nexbit-promo-copy h2{font-size:19px}
+ .nexbit-promo-copy p{font-size:10px;max-width:215px;margin-bottom:9px}
+ .nexbit-promo-brand{font-size:8px;margin-bottom:6px}
+ .nexbit-promo-link{font-size:9px;padding:6px 10px}
+ .nexbit-promo-controls{right:10px;bottom:10px;gap:6px}
+ .nexbit-promo-arrow{width:25px;height:25px;font-size:16px}
+ .nexbit-promo-prev{left:7px}.nexbit-promo-next{right:7px}
+}
+@media(prefers-reduced-motion:reduce){.nexbit-promo-track{transition:none}}
 </style>
 </head>
 <body>
@@ -1170,6 +1200,34 @@ html,body{
     <a class="action" href="history.html"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>History</a>
     <a class="action" href="index.html#markets"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Buy</a>
   </nav>
+  <section class="nexbit-promo-slider" id="nexbitPromoSlider" aria-label="NEXBIT promotions">
+    <div class="nexbit-promo-track" id="nexbitPromoTrack">
+      <article class="nexbit-promo-slide">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=82" alt="Friends together sharing a moment">
+        <div class="nexbit-promo-copy"><span class="nexbit-promo-brand">NEXBIT</span><h2>Referral</h2><p>Earn $100 for every friend you refer.</p><a class="nexbit-promo-link" href="referral.html">Refer Now <span>→</span></a></div>
+      </article>
+      <article class="nexbit-promo-slide">
+        <img class="nexbit-card-photo" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1400&q=82" alt="A bank card being used for a payment">
+        <div class="nexbit-promo-copy"><span class="nexbit-promo-brand">NEXBIT</span><h2>NEXBIT Card</h2><p>Spend with ease using your NEXBIT Card.</p><a class="nexbit-promo-link" href="card.html">Get Your Card <span>→</span></a></div>
+      </article>
+      <article class="nexbit-promo-slide">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=82" alt="Investment analytics displayed on a screen">
+        <div class="nexbit-promo-copy"><span class="nexbit-promo-brand">NEXBIT</span><h2>Explore Investment Opportunities</h2><p>Discover flexible investment plans and grow your wealth with NEXBIT.</p><a class="nexbit-promo-link" href="index.html#investment-packages">Invest Now <span>→</span></a></div>
+      </article>
+      <article class="nexbit-promo-slide">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1400&q=82" alt="Financial market charts on a trading screen">
+        <div class="nexbit-promo-copy"><span class="nexbit-promo-brand">NEXBIT</span><h2>Market Opportunities</h2><p>Stay ahead with market insights and trends.</p><a class="nexbit-promo-link" href="#market-watch-panel">Explore Markets <span>→</span></a></div>
+      </article>
+    </div>
+    <button class="nexbit-promo-arrow nexbit-promo-prev" type="button" aria-label="Previous promotion">‹</button>
+    <button class="nexbit-promo-arrow nexbit-promo-next" type="button" aria-label="Next promotion">›</button>
+    <div class="nexbit-promo-controls" aria-label="Choose promotion">
+      <button class="nexbit-promo-dot" type="button" aria-label="Promotion 1" aria-current="true"></button>
+      <button class="nexbit-promo-dot" type="button" aria-label="Promotion 2" aria-current="false"></button>
+      <button class="nexbit-promo-dot" type="button" aria-label="Promotion 3" aria-current="false"></button>
+      <button class="nexbit-promo-dot" type="button" aria-label="Promotion 4" aria-current="false"></button>
+    </div>
+  </section>
   <section class="promo-panel">
     <div class="promo-mark">✦</div><div><span class="promo-kicker">NEXBIT MARKETS</span><h2>Explore the crypto market</h2><p>View available market information and investment options.</p></div><a href="index.html#markets">Explore</a>
   </section>
@@ -1389,7 +1447,36 @@ html,body{
     };
   }
   loadCryptoSnapshot();connectCrypto();
-})();</script>
+})();
+/* NEXBIT promotional banner rotation */
+(function(){
+  const root=document.getElementById('nexbitPromoSlider');
+  if(!root)return;
+  const track=root.querySelector('#nexbitPromoTrack');
+  const dots=[...root.querySelectorAll('.nexbit-promo-dot')];
+  const slides=[...track.children];
+  const prev=root.querySelector('.nexbit-promo-prev');
+  const next=root.querySelector('.nexbit-promo-next');
+  let active=0,timer=null,startX=0;
+  function show(index){
+    active=(index+slides.length)%slides.length;
+    track.style.transform='translateX(-'+(active*100)+'%)';
+    dots.forEach((dot,i)=>dot.setAttribute('aria-current',i===active?'true':'false'));
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null;}}
+  function start(){stop();timer=setInterval(()=>show(active+1),5500);}
+  prev.addEventListener('click',()=>{show(active-1);start();});
+  next.addEventListener('click',()=>{show(active+1);start();});
+  dots.forEach((dot,i)=>dot.addEventListener('click',()=>{show(i);start();}));
+  root.addEventListener('mouseenter',stop);
+  root.addEventListener('mouseleave',start);
+  root.addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX;stop();},{passive:true});
+  root.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>40)show(active+(dx<0?1:-1));start();},{passive:true});
+  document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)start();
+  show(0);
+})();
+</script>
 
 </body>
 </html>
