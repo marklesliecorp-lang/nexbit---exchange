@@ -1298,6 +1298,38 @@ html,body{
 .investment-dashboard-view .basic-button{border:1px solid #c7a75e;color:#e6c77f}.investment-dashboard-view .silver-button{border:1px solid #b9c3d0;color:#dbe2eb}
 .investment-dashboard-view .gold-button{background:linear-gradient(120deg,#f1d58d,#c49536);color:#1b1408}.investment-dashboard-view .diamond-button{background:linear-gradient(120deg,#eef2f7,#aeb9c8);color:#12161d}
 @media(max-width:600px){.investment-dashboard-view .nexbit-investments{padding:32px 13px 24px}.investment-dashboard-view .investment-grid{grid-template-columns:1fr;max-width:390px;gap:12px}.investment-dashboard-view .investment-card{padding:16px 17px}.investment-dashboard-view .investment-card h3{font-size:21px;margin:10px 0 4px}.investment-dashboard-view .package-description{display:none}.investment-dashboard-view .package-price{padding:7px 0}.investment-dashboard-view .package-features{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px}.investment-dashboard-view .package-features li{font-size:10px;padding:6px 0;line-height:1.35}}
+
+/* Investment overview and current-plan panels */
+.investment-dashboard-view .investment-overview,
+.investment-dashboard-view .investment-current-plans{
+  max-width:1100px;margin:0 auto 24px;padding:22px;border:1px solid rgba(218,228,245,.15);
+  border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018) 65%,rgba(16,23,34,.35));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 16px 38px rgba(0,0,0,.22);
+}
+.investment-dashboard-view .investment-overview-heading{margin-bottom:17px}
+.investment-dashboard-view .investment-overview-eyebrow{display:block;color:#c8b17a;font-size:9px;font-weight:800;letter-spacing:2.2px}
+.investment-dashboard-view .investment-overview-heading h2,
+.investment-dashboard-view .investment-current-heading h2{margin:7px 0 0;color:#f3f4f6;font-size:clamp(19px,3vw,24px);font-weight:750;letter-spacing:-.035em}
+.investment-dashboard-view .investment-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.investment-dashboard-view .investment-summary-card{min-width:0;min-height:116px;padding:16px;border:1px solid rgba(218,228,245,.12);border-radius:13px;background:rgba(5,8,14,.42);display:flex;flex-direction:column;justify-content:center;gap:8px}
+.investment-dashboard-view .investment-summary-label{color:#aab2c0;font-size:11px;font-weight:600}
+.investment-dashboard-view .investment-summary-card strong{color:#f5f5f5;font-size:clamp(22px,3vw,29px);font-weight:750;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.investment-dashboard-view .investment-summary-returns strong{color:#d9c18a}
+.investment-dashboard-view .investment-summary-card small{color:#7f8998;font-size:9px;line-height:1.4}
+.investment-dashboard-view .investment-current-plans{margin-bottom:27px}
+.investment-dashboard-view .investment-current-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+.investment-dashboard-view .investment-current-list{display:grid;gap:12px}
+.investment-dashboard-view .investment-empty-state{min-height:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px 14px;border:1px dashed rgba(218,228,245,.19);border-radius:13px;background:rgba(255,255,255,.018)}
+.investment-dashboard-view .investment-empty-icon{width:35px;height:35px;display:grid;place-items:center;margin-bottom:9px;border-radius:50%;background:rgba(218,228,245,.07);color:#d9c18a;font-size:21px}
+.investment-dashboard-view .investment-empty-state strong{color:#e7eaf0;font-size:12px;font-weight:700}
+.investment-dashboard-view .investment-empty-state p{max-width:330px;margin:6px 0 0;color:#8e98a8;font-size:10px;line-height:1.6}
+@media(max-width:600px){
+  .investment-dashboard-view .investment-overview,.investment-dashboard-view .investment-current-plans{padding:16px 14px;border-radius:15px;margin-bottom:16px}
+  .investment-dashboard-view .investment-summary-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .investment-dashboard-view .investment-summary-card{min-height:104px;padding:13px}
+  .investment-dashboard-view .investment-summary-card:first-child{grid-column:1/-1;min-height:112px}
+  .investment-dashboard-view .investment-summary-card strong{font-size:25px}
+}
 </style>
 </head>
 <body>
@@ -1481,6 +1513,46 @@ html,body{
 </section>
 
 <section class="dashboard-subview investment-dashboard-view" id="investmentView" hidden aria-label="Investment">
+  <section class="investment-overview" aria-labelledby="investmentOverviewTitle">
+    <div class="investment-overview-heading">
+      <span class="investment-overview-eyebrow">YOUR PORTFOLIO</span>
+      <h2 id="investmentOverviewTitle">Investment Overview</h2>
+    </div>
+    <div class="investment-summary-grid">
+      <article class="investment-summary-card investment-summary-total">
+        <span class="investment-summary-label">Total invested</span>
+        <strong id="investmentTotalInvested">—</strong>
+        <small>Awaiting investment records</small>
+      </article>
+      <article class="investment-summary-card investment-summary-returns">
+        <span class="investment-summary-label">Expected returns</span>
+        <strong id="investmentExpectedReturns">—</strong>
+        <small>Awaiting active plan details</small>
+      </article>
+      <article class="investment-summary-card investment-summary-count">
+        <span class="investment-summary-label">Current plans</span>
+        <strong id="investmentCurrentPlans">—</strong>
+        <small>Awaiting active plan records</small>
+      </article>
+    </div>
+  </section>
+
+  <section class="investment-current-plans" aria-labelledby="investmentCurrentPlansTitle">
+    <div class="investment-current-heading">
+      <div>
+        <span class="investment-overview-eyebrow">YOUR INVESTMENTS</span>
+        <h2 id="investmentCurrentPlansTitle">Current Plans</h2>
+      </div>
+    </div>
+    <div id="investmentCurrentPlansList" class="investment-current-list" aria-live="polite">
+      <div class="investment-empty-state">
+        <span class="investment-empty-icon" aria-hidden="true">◇</span>
+        <strong>No investment records available</strong>
+        <p>Your active plans will appear here when investment records are connected.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="nexbit-investments" id="investment-packages">
     <div class="investment-container">
       <div class="investment-heading">
