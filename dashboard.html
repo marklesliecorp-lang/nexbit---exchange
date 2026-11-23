@@ -1350,6 +1350,7 @@ html,body{
   window.addEventListener('popstate',async function(){
     if(leavingDashboard)return;
     leavingDashboard=true;
+    try{sessionStorage.setItem('nexbitReturnToLoginAfterDashboardBack','1');}catch(error){}
     document.documentElement.style.visibility='hidden';
     try{
       // Local sign-out does not depend on a network round-trip.
