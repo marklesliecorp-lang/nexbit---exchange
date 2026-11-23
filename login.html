@@ -61,7 +61,8 @@
     .field:focus{border-color:rgba(221,190,125,.78);box-shadow:0 0 0 3px rgba(221,190,125,.12),0 0 20px rgba(221,190,125,.08)}
     .submit{border:1px solid rgba(255,255,255,.2);border-radius:11px;background:linear-gradient(110deg,#f0d99e 0%,#d6b36b 48%,#b98c43 100%);box-shadow:0 8px 28px rgba(199,157,78,.23),inset 0 1px 0 rgba(255,255,255,.55)}
     @media(max-width:520px){.orb{width:340px;height:340px;filter:blur(34px)}.orb.one{left:-145px;top:5%}.orb.two{right:-145px;bottom:3%}}
-\n
+
+
     /* NEXBIT transition shown after successful login */
     .nexbit-login-transition{position:fixed;z-index:99999;inset:0;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease}
     .nexbit-login-transition.is-active{opacity:1;visibility:visible;pointer-events:auto}
@@ -78,7 +79,8 @@
     @keyframes nexbitLoginLetterRise{to{opacity:1;transform:translateY(0) scale(1)}}
     @keyframes nexbitLoginLetterFloat{from{translate:0 -5px}to{translate:0 6px}}
     @media(prefers-reduced-motion:reduce){.nexbit-login-transition .nexbit-intro-letter{animation:none;opacity:1;transform:none}.nexbit-login-transition{transition:none}}
-\n  </style>
+
+  </style>
 </head>
 <body>
   <main class="login-page">
@@ -152,7 +154,9 @@
           const signedInUser=data.user;
           const isAdmin=signedInUser?.email?.toLowerCase()==='markleslie.corp@gmail.com' && signedInUser?.app_metadata?.role==='admin';
           const destination=isAdmin?'admin.html':'dashboard.html';
-          const transition=document.getElementById('nexbitLoginTransition');\n          if(transition) transition.classList.add('is-active');\n          window.setTimeout(function(){ window.location.replace(destination); }, 3000);
+          const transition=document.getElementById('nexbitLoginTransition');
+          if(transition) transition.classList.add('is-active');
+          window.setTimeout(function(){ window.location.replace(destination); }, 3000);
         }catch(error){
           console.error('NEXBIT login error:',error);
           message.textContent=error.message==='Invalid login credentials'
