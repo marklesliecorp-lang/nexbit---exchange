@@ -1046,10 +1046,6 @@ body { background-attachment: initial; }
 }
 
 
-.market-watch-tabs{display:flex;gap:8px;padding:3px 0 10px;border-bottom:1px solid rgba(220,220,220,.11)}
-.market-watch-tab{border:0;border-radius:18px;padding:8px 17px;background:#202020;color:#999;font:700 11px Inter,Arial,sans-serif;cursor:pointer}
-.market-watch-tab.active{background:#f1f1f1;color:#080808}
-.market-watch-list[hidden]{display:none !important}
 
 /* Restore the black watercolor atmosphere across the dashboard */
 html,body{
@@ -1088,6 +1084,19 @@ html,body{
 /* Subtle 24-hour volume details beneath each crypto name */
 .market-watch-list .coin{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
 .market-watch-list .market-volume{display:block;margin-top:2px;color:#777 !important;font-size:9px;font-style:normal;font-weight:500;letter-spacing:.015em;line-height:1.2}
+
+/* Separate always-visible crypto and stock market cards */
+.market-watch-panel{display:grid !important;gap:13px !important;margin-top:16px !important;padding:0 !important;background:transparent !important;border:0 !important;border-radius:0 !important;box-shadow:none !important}
+.market-watch-panel>.market-watch-heading{margin:0 2px 0 !important}
+.market-watch-group{min-width:0;padding:16px 18px 10px;border:1px solid rgba(220,220,220,.15);border-radius:16px;background:radial-gradient(ellipse at 8% 0%,rgba(255,255,255,.075),transparent 48%),radial-gradient(ellipse at 96% 100%,rgba(155,155,155,.055),transparent 52%),linear-gradient(145deg,#171717,#050505 68%,#0c0c0c);box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 26px rgba(0,0,0,.28)}
+.market-watch-group-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 0 7px}
+.market-watch-group-heading h3{margin:0;color:#f3f3f3;font-size:13px;font-weight:750}
+.market-watch-group-heading>span{color:#858585;font-size:9px;font-weight:750;letter-spacing:.08em}
+.market-watch-group .market-watch-list .market-row:nth-child(n+5){display:none !important}
+.market-watch-group .market-watch-list.expanded .market-row:nth-child(n+5){display:flex !important}
+.market-see-more{display:block;width:100%;margin:4px 0 2px;padding:9px 10px;border:1px solid rgba(220,220,220,.12);border-radius:9px;background:rgba(255,255,255,.035);color:#c7c7c7;font:600 10px Inter,Arial,sans-serif;cursor:pointer}
+.market-see-more:active{background:rgba(255,255,255,.08)}
+@media(max-width:760px){.market-watch-panel{margin-top:14px !important;gap:11px !important}.market-watch-group{padding:14px 14px 8px;border-radius:15px}.market-watch-group-heading h3{font-size:12px}}
 </style>
 </head>
 <body>
@@ -1138,13 +1147,11 @@ html,body{
     <a class="market-category" href="wallet.html"><span>Assets</span><strong>My Wallet <b>›</b></strong><small>Account assets</small></a>
     <a class="market-category" href="history.html"><span>Activity</span><strong>Transaction History <b>›</b></strong><small>Review account activity</small></a>
   </section>
-  <section class="panel market-watch-panel" aria-label="Market Watch">
+  <section class="market-watch-panel" aria-label="Market Watch">
   <div class="section-head market-watch-heading"><h2>Market Watch</h2><div class="market-watch-meta"><span class="market-live-dot"></span><span id="marketWatchStatus">LOADING</span></div></div>
-  <div class="market-watch-tabs" role="tablist" aria-label="Market type">
-    <button class="market-watch-tab active" id="cryptoTab" type="button" role="tab" aria-selected="true" aria-controls="cryptoMarkets">Crypto</button>
-    <button class="market-watch-tab" id="stocksTab" type="button" role="tab" aria-selected="false" aria-controls="stockMarkets">Stocks</button>
-  </div>
-  <div class="market-list market-watch-list" id="cryptoMarkets" role="tabpanel" aria-labelledby="cryptoTab">
+  <section class="market-watch-group" aria-labelledby="cryptoMarketTitle">
+    <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
+    <div class="market-list market-watch-list" id="cryptoMarkets">
     <div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin <small>BTC</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
     <div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum <small>ETH</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
     <div class="market-row" data-market="solana"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana <small>SOL</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
@@ -1154,13 +1161,20 @@ html,body{
     <div class="market-row" data-market="cardano"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/975/large/cardano.png" alt="Cardano logo"><span class="coin">Cardano <small>ADA</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
     <div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash <small>BCH</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
   </div>
-  <div class="market-list market-watch-list" id="stockMarkets" role="tabpanel" aria-labelledby="stocksTab" hidden>
+    <button class="market-see-more" type="button" data-market-more="cryptoMarkets" aria-expanded="false">See more</button>
+  </section>
+  <section class="market-watch-group" aria-labelledby="stockMarketTitle">
+    <div class="market-watch-group-heading"><h3 id="stockMarketTitle">Stocks</h3><span>US EQUITIES</span></div>
+    <div class="market-list market-watch-list" id="stockMarkets">
     <div class="market-row" data-stock="AAPL"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://s3-symbol-logo.tradingview.com/apple.svg" alt="Apple logo"><span class="coin">Apple <small>AAPL</small></span></div><div class="market-values"><strong class="price" data-stock-price>Loading…</strong><span class="market-note" data-stock-change>—</span></div></div>
     <div class="market-row" data-stock="NVDA"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://s3-symbol-logo.tradingview.com/nvidia.svg" alt="NVIDIA logo"><span class="coin">NVIDIA <small>NVDA</small></span></div><div class="market-values"><strong class="price" data-stock-price>Loading…</strong><span class="market-note" data-stock-change>—</span></div></div>
     <div class="market-row" data-stock="TSLA"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://s3-symbol-logo.tradingview.com/tesla.svg" alt="Tesla logo"><span class="coin">Tesla <small>TSLA</small></span></div><div class="market-values"><strong class="price" data-stock-price>Loading…</strong><span class="market-note" data-stock-change>—</span></div></div>
     <div class="market-row" data-stock="MSFT"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://s3-symbol-logo.tradingview.com/microsoft.svg" alt="Microsoft logo"><span class="coin">Microsoft <small>MSFT</small></span></div><div class="market-values"><strong class="price" data-stock-price>Loading…</strong><span class="market-note" data-stock-change>—</span></div></div>
     <div class="market-row" data-stock="AMZN"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://s3-symbol-logo.tradingview.com/amazon.svg" alt="Amazon logo"><span class="coin">Amazon <small>AMZN</small></span></div><div class="market-values"><strong class="price" data-stock-price>Loading…</strong><span class="market-note" data-stock-change>—</span></div></div>
   </div>
+
+    <button class="market-see-more" type="button" data-market-more="stockMarkets" aria-expanded="false">See more</button>
+  </section>
 </section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 </main>
@@ -1265,19 +1279,17 @@ html,body{
 (function(){
   const cryptoPanel=document.getElementById('cryptoMarkets');
   const stockPanel=document.getElementById('stockMarkets');
-  const cryptoTab=document.getElementById('cryptoTab');
-  const stocksTab=document.getElementById('stocksTab');
   const status=document.getElementById('marketWatchStatus');
-  if(!cryptoPanel||!stockPanel||!cryptoTab||!stocksTab)return;
-  function selectTab(which){
-    const stocks=which==='stocks';
-    cryptoPanel.hidden=stocks;stockPanel.hidden=!stocks;
-    cryptoTab.classList.toggle('active',!stocks);stocksTab.classList.toggle('active',stocks);
-    cryptoTab.setAttribute('aria-selected',String(!stocks));stocksTab.setAttribute('aria-selected',String(stocks));
-    if(status)status.textContent=stocks?'STOCKS':'CRYPTO';
-  }
-  cryptoTab.addEventListener('click',()=>selectTab('crypto'));
-  stocksTab.addEventListener('click',()=>selectTab('stocks'));
+  if(!cryptoPanel||!stockPanel)return;
+  document.querySelectorAll('[data-market-more]').forEach(button=>{
+    const list=document.getElementById(button.dataset.marketMore);
+    if(!list)return;
+    button.addEventListener('click',()=>{
+      const expanded=list.classList.toggle('expanded');
+      button.textContent=expanded?'See less':'See more';
+      button.setAttribute('aria-expanded',String(expanded));
+    });
+  });
   const formatPrice=value=>String.fromCharCode(36)+Number(value).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:Number(value)<1?6:2});
   function paint(row,price,change,priceSelector,changeSelector){
     if(!row||!Number.isFinite(Number(price))||!Number.isFinite(Number(change)))return false;
@@ -1336,7 +1348,7 @@ html,body{
     const results=await Promise.all([loadCrypto(),loadStocks()]);
     if(status)status.textContent=results.every(Boolean)?'LIVE':results.some(Boolean)?'PARTIAL':'UNAVAILABLE';
   }
-  selectTab('crypto');refresh();window.setInterval(refresh,30000);
+  refresh();window.setInterval(refresh,30000);
 })();
 </script>
 
