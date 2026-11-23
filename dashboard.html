@@ -825,6 +825,31 @@ body { background-attachment: initial; }
 }
 
 
+
+/* Give the balance and Deposit action clear breathing room */
+.dashboard-balance-grid .balance-panel{
+  column-gap:24px;
+}
+.dashboard-balance-grid .balance-panel>.asset-deposit{
+  margin-left:12px;
+}
+@media(max-width:760px){
+  .dashboard-balance-grid .balance-panel{
+    column-gap:20px;
+  }
+  .dashboard-balance-grid .balance-panel>.asset-deposit{
+    margin-left:8px;
+  }
+}
+@media(max-width:390px){
+  .dashboard-balance-grid .balance-panel{
+    column-gap:14px;
+  }
+  .dashboard-balance-grid .balance-panel>.asset-deposit{
+    margin-left:4px;
+  }
+}
+
 /* Match the Bybit-style yellow Deposit button */
 .dashboard-balance-grid .asset-deposit{
   background:#f7a600 !important;
