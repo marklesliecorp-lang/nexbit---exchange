@@ -883,6 +883,96 @@ body { background-attachment: initial; }
 
 
 
+
+
+/* Watercolor treatment for balances, quick actions and portfolio overview */
+.mini-balance-card{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(186,231,255,.17), transparent 52%),
+    radial-gradient(ellipse at 92% 92%, rgba(164,220,255,.12), transparent 54%),
+    linear-gradient(140deg, rgba(20,30,40,.82), rgba(5,8,12,.96) 72%, rgba(10,14,20,.92));
+  border:1px solid rgba(190,226,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 10px 26px rgba(0,0,0,.22);
+}
+.mini-balance-card:nth-child(2){
+  background:
+    radial-gradient(ellipse at 88% 12%, rgba(181,235,255,.16), transparent 54%),
+    radial-gradient(ellipse at 8% 92%, rgba(174,207,255,.12), transparent 56%),
+    linear-gradient(140deg, rgba(17,27,39,.84), rgba(4,7,12,.97) 72%, rgba(9,13,20,.94));
+}
+.mini-balance-icon{
+  background:
+    radial-gradient(circle at 28% 22%, rgba(255,255,255,.30), transparent 48%),
+    linear-gradient(145deg, rgba(174,226,255,.19), rgba(120,173,225,.08));
+  border:1px solid rgba(194,229,255,.22);
+  color:#c8edff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.mini-balance-card span{color:#c3d9e8}
+.mini-balance-card strong{color:#f3f8ff}
+.dashboard-quick-actions .action{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 18% 8%, rgba(188,231,255,.15), transparent 58%),
+    radial-gradient(ellipse at 90% 100%, rgba(160,202,255,.10), transparent 56%),
+    linear-gradient(145deg, rgba(17,25,35,.88), rgba(4,6,10,.98) 75%);
+  border:1px solid rgba(188,224,255,.19);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 7px 20px rgba(0,0,0,.2);
+  color:#edf7ff;
+}
+.dashboard-quick-actions .action:nth-child(even){
+  background:
+    radial-gradient(ellipse at 82% 12%, rgba(179,232,255,.15), transparent 58%),
+    radial-gradient(ellipse at 8% 100%, rgba(169,205,255,.10), transparent 56%),
+    linear-gradient(145deg, rgba(15,24,35,.9), rgba(3,6,10,.98) 75%);
+}
+.dashboard-quick-actions .symbol{
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255,255,255,.25), transparent 48%),
+    linear-gradient(145deg, rgba(172,225,255,.20), rgba(126,176,231,.08));
+  border:1px solid rgba(193,229,255,.24);
+  color:#d2efff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10);
+}
+.portfolio-overview{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(188,231,255,.16), transparent 48%),
+    radial-gradient(ellipse at 96% 100%, rgba(156,202,255,.12), transparent 52%),
+    radial-gradient(ellipse at 55% 42%, rgba(216,242,255,.045), transparent 62%),
+    linear-gradient(145deg, rgba(17,26,37,.91), #030609 68%, rgba(8,13,20,.97));
+  border:1px solid rgba(190,226,255,.22);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 12px 30px rgba(0,0,0,.25);
+}
+.portfolio-heading h2{color:#eaf6ff}
+.portfolio-heading strong{color:#f5fbff}
+.portfolio-filters span{
+  background:rgba(176,218,248,.075);
+  border:1px solid rgba(190,226,255,.13);
+  color:#c5dced;
+}
+.portfolio-filters span.selected{
+  background:linear-gradient(135deg, rgba(205,238,255,.96), rgba(158,207,247,.94));
+  border-color:rgba(221,244,255,.75);
+  color:#07111b;
+}
+.portfolio-chart svg defs linearGradient stop:first-child{stop-color:#bde8ff !important;stop-opacity:.25 !important}
+.portfolio-chart svg defs linearGradient stop:last-child{stop-color:#9bcfff !important;stop-opacity:0 !important}
+.portfolio-chart svg path[fill="none"]{
+  stroke:#c4eaff !important;
+  filter:drop-shadow(0 0 5px rgba(160,215,255,.28));
+}
+.portfolio-axis{color:#a9c6dc}
+.portfolio-note{color:#91aabd}
+@media(max-width:760px){
+  .mini-balance-card,.dashboard-quick-actions .action{border-radius:13px}
+  .portfolio-overview{border-radius:16px}
+}
+
 </style>
 </head>
 <body>
