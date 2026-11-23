@@ -701,20 +701,19 @@ body { background-attachment: initial; }
 }
 
 
-/* Fixed bottom navigation integrated flush with the screen edge */
+/* Fixed floating bottom navigation — stays visible while scrolling */
 @media (max-width:760px){
   body{padding-bottom:76px}
   .bottom-nav{
-    height:calc(52px + env(safe-area-inset-bottom)) !important;
-    padding:6px 5px calc(6px + env(safe-area-inset-bottom)) !important;
-    bottom:0 !important;
-    left:0 !important;
-    right:0 !important;
+    height:46px !important;
+    padding:6px 5px 4px !important;
+    bottom:12px !important;
+    left:12px !important;
+    right:12px !important;
     background:#050505 !important;
-    border:0 !important;
-    border-top:1px solid #242424 !important;
-    border-radius:0 !important;
-    box-shadow:none !important;
+    border:1px solid #242424 !important;
+    border-radius:26px !important;
+    box-shadow:0 2px 12px rgba(0,0,0,.35) !important;
     gap:0 !important;
     transform:none !important;
     transition:none !important;
