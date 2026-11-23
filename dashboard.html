@@ -1097,6 +1097,31 @@ html,body{
 .market-see-more{display:block;width:100%;margin:4px 0 2px;padding:9px 10px;border:1px solid rgba(220,220,220,.12);border-radius:9px;background:rgba(255,255,255,.035);color:#c7c7c7;font:600 10px Inter,Arial,sans-serif;cursor:pointer}
 .market-see-more:active{background:rgba(255,255,255,.08)}
 @media(max-width:760px){.market-watch-panel{margin-top:14px !important;gap:11px !important}.market-watch-group{padding:14px 14px 8px;border-radius:15px}.market-watch-group-heading h3{font-size:12px}}
+
+/* Market Watch palette: black watercolor with silver highlights only */
+.market-watch-group{
+  border-color:rgba(205,212,220,.2) !important;
+  background:
+    radial-gradient(ellipse at 9% 5%,rgba(235,239,244,.13),transparent 38%),
+    radial-gradient(ellipse at 88% 22%,rgba(170,180,192,.105),transparent 42%),
+    radial-gradient(ellipse at 52% 110%,rgba(215,220,228,.085),transparent 48%),
+    linear-gradient(145deg,#17191c 0%,#050505 58%,#0b0c0e 100%) !important;
+  box-shadow:inset 0 1px 0 rgba(235,239,244,.09),0 10px 26px rgba(0,0,0,.3) !important;
+}
+.market-watch-group-heading h3{color:#f3f3f3 !important}
+.market-watch-group-heading>span{color:#aeb4bd !important}
+.market-watch-group .coin{color:#f0f1f3 !important}
+.market-watch-group .coin small{color:#aeb4bd !important}
+.market-watch-group .market-volume{color:#858b94 !important}
+.market-watch-group .market-row{border-top-color:rgba(205,212,220,.13) !important}
+.market-watch-group .price{color:#f1f2f4 !important}
+.market-watch-group .market-see-more{
+  border-color:rgba(205,212,220,.18) !important;
+  background:linear-gradient(120deg,rgba(225,230,237,.075),rgba(255,255,255,.018)) !important;
+  color:#d5d9df !important;
+}
+.market-watch-group .market-see-more:active{background:rgba(225,230,237,.12) !important}
+
 </style>
 </head>
 <body>
@@ -1152,14 +1177,14 @@ html,body{
   <section class="market-watch-group" aria-labelledby="cryptoMarketTitle">
     <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
     <div class="market-list market-watch-list" id="cryptoMarkets">
-    <div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin <small>BTC</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum <small>ETH</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="solana"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana <small>SOL</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="binancecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png" alt="BNB logo"><span class="coin">BNB <small>BNB</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="ripple"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png" alt="XRP logo"><span class="coin">XRP <small>XRP</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="dogecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png" alt="Dogecoin logo"><span class="coin">Dogecoin <small>DOGE</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="cardano"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/975/large/cardano.png" alt="Cardano logo"><span class="coin">Cardano <small>ADA</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash <small>BCH</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin <small>BTC/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum <small>ETH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="solana"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana <small>SOL/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="binancecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png" alt="BNB logo"><span class="coin">BNB <small>BNB/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="ripple"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png" alt="XRP logo"><span class="coin">XRP <small>XRP/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="dogecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png" alt="Dogecoin logo"><span class="coin">Dogecoin <small>DOGE/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="cardano"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/975/large/cardano.png" alt="Cardano logo"><span class="coin">Cardano <small>ADA/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
+    <div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash <small>BCH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
   </div>
     <button class="market-see-more" type="button" data-market-more="cryptoMarkets" aria-expanded="false">See more</button>
   </section>
