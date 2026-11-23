@@ -732,6 +732,34 @@ body { background-attachment: initial; }
   .bottom-nav a span{font-size:8px !important}
 }
 
+
+/* Approved dashboard refresh: balance, five quick actions and portfolio overview */
+.balance-panel .asset-heading .panel-label{color:#d8d8d8}
+.balance-panel .asset-deposit{background:#ededed;color:#080808}
+.actions{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.action{min-height:86px;color:#ededed}
+.action .symbol{background:#191919;color:#f1f1f1;border:1px solid #303030}
+.portfolio-overview{margin-top:16px;padding:18px 20px;background:#101010;border-color:#292929}
+.portfolio-overview .section-head{margin-bottom:8px}
+.portfolio-overview .section-head h2{font-size:15px}
+.portfolio-period{font-size:10px;color:#bcbcbc;border:1px solid #333;border-radius:20px;padding:6px 11px}
+.portfolio-total{font-size:28px;font-weight:750;letter-spacing:-.04em;color:#f5f5f5;margin:4px 0 2px}
+.portfolio-chart{height:94px;margin-top:8px;overflow:hidden}
+.portfolio-chart svg{width:100%;height:100%;display:block}
+.portfolio-note{font-size:10px;color:#888;margin:8px 0 0}
+@media(max-width:760px){
+ .actions{grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;margin-top:17px}
+ .action{min-width:0;min-height:72px;font-size:9px;gap:5px}
+ .action .symbol{width:42px;height:42px;font-size:19px}
+ .portfolio-overview{margin-top:14px;padding:15px}
+ .portfolio-total{font-size:25px}
+ .portfolio-chart{height:82px}
+}
+@media(max-width:390px){
+ .action{font-size:8px}
+ .action .symbol{width:38px;height:38px;font-size:17px}
+}
+
 </style>
 </head>
 <body>
@@ -756,25 +784,34 @@ body { background-attachment: initial; }
 <main class="layout" id="overview">
   <section class="grid">
     <article class="panel balance-panel">
-      <div class="asset-heading"><div class="panel-label">Total Assets <span class="eye">◉</span></div></div>
+      <div class="asset-heading"><div class="panel-label">Total Balance <span class="eye">◉</span></div></div>
       <a class="asset-deposit" href="deposit.html">Deposit</a>
       <div class="balance-row"><div class="balance" id="dashboardBalance">— — —</div><div class="currency">USD⌄</div></div>
       <div class="pnl-line">Today's P&amp;L <strong>— — — USD (—)</strong></div>
       <div class="actions">
-        <a class="action" href="index.html#markets"><span class="symbol">▣</span>Buy Crypto</a>
-        <a class="action" href="deposit.html"><span class="symbol">⇦</span>Deposit</a>
-        <a class="action" href="index.html#investment-packages"><span class="symbol">◉</span>Invest</a>
+        <a class="action" href="deposit.html"><span class="symbol">↓</span>Deposit</a>
+        <a class="action" href="withdraw.html"><span class="symbol">↑</span>Withdraw</a>
         <a class="action" href="transfer.html"><span class="symbol">⇄</span>Transfer</a>
-        <a class="action" href="wallet.html"><span class="symbol">▢</span>Wallet</a>
-        <a class="action" href="history.html"><span class="symbol">⟳</span>History</a>
-        <a class="action" href="withdraw.html"><span class="symbol">⇧</span>Withdraw</a>
-        <a class="action" href="account.html"><span class="symbol">•••</span>Account</a>
+        <a class="action" href="history.html"><span class="symbol">◷</span>History</a>
+        <a class="action" href="index.html#markets"><span class="symbol">＋</span>Buy</a>
       </div>
     </article>
     <div class="side-stack">
       <article class="panel"><div class="panel-label">Total invested</div><div class="mini-stat"><strong>— — —</strong><span class="status">Coming soon</span></div><div class="balance-note">Investment records will show here.</div></article>
       <article class="panel"><div class="panel-label">Account status</div><div class="mini-stat"><strong style="font-size:17px">Verified</strong><span class="status">Email confirmed</span></div><div class="balance-note" id="accountEmail">Loading account…</div></article>
     </div>
+  </section>
+  <section class="panel portfolio-overview" aria-label="Portfolio overview">
+    <div class="section-head"><h2>Portfolio Overview</h2><span class="portfolio-period">Balance</span></div>
+    <div class="portfolio-total" id="portfolioBalance">— — —</div>
+    <div class="portfolio-chart" aria-hidden="true">
+      <svg viewBox="0 0 600 112" preserveAspectRatio="none">
+        <defs><linearGradient id="portfolioFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eeeeee" stop-opacity=".22"/><stop offset="1" stop-color="#eeeeee" stop-opacity="0"/></linearGradient></defs>
+        <path d="M0 88 C35 84 42 76 75 80 S120 58 150 68 S194 45 225 55 S270 30 300 45 S345 26 375 37 S420 18 450 31 S490 13 520 24 S565 8 600 13 L600 112 L0 112 Z" fill="url(#portfolioFill)"/>
+        <path d="M0 88 C35 84 42 76 75 80 S120 58 150 68 S194 45 225 55 S270 30 300 45 S345 26 375 37 S420 18 450 31 S490 13 520 24 S565 8 600 13" fill="none" stroke="#e5e5e5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+      </svg>
+    </div>
+    <p class="portfolio-note">Historical portfolio performance is not connected yet.</p>
   </section>
   <section class="promo-panel">
     <div class="promo-mark">✦</div><div><span class="promo-kicker">NEXBIT MARKETS</span><h2>Explore the crypto market</h2><p>View available market information and investment options.</p></div><a href="index.html#markets">Explore</a>
@@ -829,7 +866,40 @@ body { background-attachment: initial; }
     const {data:balance,error:balanceError}=await client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle();
     if(balanceError)throw balanceError;
     const amount=Number(balance?.balance||0);
-    document.getElementById('dashboardBalance').textContent='$'+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    document.getElementById('dashboardBalance').textContent='
+    message.textContent='Your secure session is active.';
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT dashboard session error:',error);window.location.replace('login.html');});
+})();
+</script>
+
+
+
+</body>
+</html>+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    document.getElementById('portfolioBalance').textContent='
+    message.textContent='Your secure session is active.';
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT dashboard session error:',error);window.location.replace('login.html');});
+})();
+</script>
+
+
+
+</body>
+</html>+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     message.textContent='Your secure session is active.';
   }
   document.getElementById('logoutButton').addEventListener('click',async function(){
