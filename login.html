@@ -46,14 +46,29 @@
     @keyframes drift{from{transform:translate(-12px,-8px) scale(.92)}to{transform:translate(18px,15px) scale(1.12)}}
     @media(max-width:520px){.login-page{padding:30px 15px}.brand{font-size:26px;margin-bottom:25px}.login-card{padding:24px 18px;border-radius:15px}.orb{width:250px;height:250px;filter:blur(75px)}}
     @media(prefers-reduced-motion:reduce){.brand,.orb{animation:none}.submit{transition:none}}
-  </style>
+
+    /* Premium glass treatment to match signup */
+    .login-page{background:linear-gradient(145deg,#050609 0%,#090b10 48%,#030405 100%)}
+    .login-grid{z-index:0;opacity:.11;background-image:linear-gradient(rgba(218,226,239,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(218,226,239,.12) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at center,#000 5%,transparent 78%)}
+    .orb{z-index:0;width:500px;height:500px;filter:blur(42px);opacity:1;mix-blend-mode:screen}
+    .orb.one{top:1%;left:calc(50% - 560px);background:radial-gradient(circle,rgba(255,218,139,.78) 0%,rgba(232,181,83,.55) 22%,rgba(208,151,55,.28) 48%,rgba(208,151,55,.08) 66%,transparent 76%)}
+    .orb.two{right:calc(50% - 560px);bottom:-2%;background:radial-gradient(circle,rgba(221,235,255,.72) 0%,rgba(164,195,239,.48) 24%,rgba(126,160,211,.25) 49%,rgba(126,160,211,.07) 67%,transparent 77%)}
+    .login-shell{z-index:1}
+    .brand{color:#e6eaf0;text-shadow:0 0 9px rgba(220,229,241,.48),0 0 25px rgba(185,199,219,.3),0 0 48px rgba(217,174,83,.18);animation:none}
+    .login-card{position:relative;overflow:hidden;padding:clamp(22px,5vw,30px);border:1px solid rgba(221,230,243,.2);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.035) 48%,rgba(12,15,21,.52));box-shadow:0 28px 85px rgba(0,0,0,.62),0 0 55px rgba(150,174,207,.1),0 0 34px rgba(213,169,83,.08),inset 0 1px 0 rgba(255,255,255,.16);backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}
+    .login-card:before{content:"";position:absolute;inset:0 12% auto;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),rgba(225,190,119,.55),transparent);pointer-events:none}
+    .field{border:1px solid rgba(207,218,235,.18);border-radius:11px;background:rgba(3,6,11,.38);box-shadow:inset 0 1px 2px rgba(0,0,0,.22)}
+    .field:focus{border-color:rgba(221,190,125,.78);box-shadow:0 0 0 3px rgba(221,190,125,.12),0 0 20px rgba(221,190,125,.08)}
+    .submit{border:1px solid rgba(255,255,255,.2);border-radius:11px;background:linear-gradient(110deg,#f0d99e 0%,#d6b36b 48%,#b98c43 100%);box-shadow:0 8px 28px rgba(199,157,78,.23),inset 0 1px 0 rgba(255,255,255,.55)}
+    @media(max-width:520px){.orb{width:340px;height:340px;filter:blur(34px)}.orb.one{left:-145px;top:5%}.orb.two{right:-145px;bottom:3%}}
+\n  </style>
 </head>
 <body>
   <main class="login-page">
     <div class="login-grid" aria-hidden="true"></div>
     <div class="orb one" aria-hidden="true"></div><div class="orb two" aria-hidden="true"></div>
     <section class="login-shell" aria-labelledby="loginTitle">
-      <a class="brand" href="index.html" aria-label="NEXBIT home"><span class="brand-mark">✦</span><span>NEXBIT</span></a>
+      <a class="brand" href="index.html" aria-label="NEXBIT home"><span>NEXBIT</span></a>
       <p class="eyebrow">WELCOME BACK</p>
       <h1 id="loginTitle">Log in to your account</h1>
       <p class="intro">Your NEXBIT account is just one step away.</p>
