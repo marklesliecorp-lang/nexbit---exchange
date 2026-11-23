@@ -904,31 +904,33 @@ body { background-attachment: initial; }
   const message=document.getElementById('authMessage');
   const emailNode=document.getElementById('accountEmail');
   async function init(){
-    const {data:{user},error}=await client.auth.getUser();
-    if(error||!user){window.location.replace('login.html');return;}
-
+    const {data:{session},error:sessionError}=await client.auth.getSession();
+    if(sessionError){
+      console.error('NEXBIT session check error:',sessionError.message);
+      message.textContent='We could not verify your session. Please refresh and try again.';
+      return;
+    }
+    if(!session?.user){
+      window.location.replace('login.html');
+      return;
+    }
+    const user=session.user;
     emailNode.textContent=user.email||'Signed-in account';
 
-    let profileName='';
-    const {data:profile,error:profileError}=await client
-      .from('profiles')
-      .select('full_name')
-      .eq('id',user.id)
+    const {data:balance,error:balanceError}=await client
+      .from('nexbit_account_balances')
+      .select('balance')
+      .eq('user_id',user.id)
       .maybeSingle();
 
-    if(profileError){
-      console.warn('NEXBIT profile could not be loaded:',profileError.message);
-    }else if(profile&&typeof profile.full_name==='string'){
-      profileName=profile.full_name.trim();
+    if(balanceError){
+      console.warn('NEXBIT balance could not be loaded:',balanceError.message);
+      document.getElementById('dashboardBalance').textContent='Unavailable';
+      document.getElementById('portfolioBalance').textContent='Unavailable';
+      message.textContent='You are signed in. Your balance is temporarily unavailable.';
+      return;
     }
 
-    const metadataName=user.user_metadata&&typeof user.user_metadata.full_name==='string'
-      ?user.user_metadata.full_name.trim()
-      :'';
-    const displayName=(profileName||metadataName).split(/\s+/)[0];
-
-    const {data:balance,error:balanceError}=await client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle();
-    if(balanceError)throw balanceError;
     const amount=Number(balance?.balance||0);
     const formattedBalance=String.fromCharCode(36)+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     document.getElementById('dashboardBalance').textContent=formattedBalance;
@@ -941,7 +943,7 @@ body { background-attachment: initial; }
     if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
     window.location.replace('login.html');
   });
-  init().catch(function(error){console.error('NEXBIT dashboard session error:',error);window.location.replace('login.html');});
+  init().catch(function(error){console.error('NEXBIT dashboard initialization error:',error);message.textContent='Your session is active, but some dashboard information could not be loaded. Please refresh.';});
 })();
 </script>
 
