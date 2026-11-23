@@ -1220,6 +1220,45 @@ html,body{
 .asset-view-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.asset-view-section-head h2{margin:0;font-size:15px}.asset-view-section-head a{font-size:11px;color:#f0c978}
 .asset-view-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-top:1px solid #292929;font-size:12px}.asset-view-row strong{text-align:right}.asset-view-empty{padding:17px 0;color:#9299a6;font-size:11px;line-height:1.6}
 @media(max-width:760px){.dashboard-subview{padding:16px 15px 105px}.asset-view-card{padding:17px}.asset-view-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.subview-heading h1{font-size:23px}}
+
+/* Keep bottom navigation visible on phones held in landscape */
+@media (max-width:1024px), (max-height:500px) and (pointer:coarse){
+  body{padding-bottom:76px}
+  .bottom-nav{
+    display:grid !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    position:fixed !important;
+    height:46px !important;
+    z-index:9999 !important;
+    padding:6px 5px 4px !important;
+    bottom:12px !important;
+    left:12px !important;
+    right:12px !important;
+    grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+    background:#050505 !important;
+    border:1px solid #242424 !important;
+    border-radius:26px !important;
+    box-shadow:0 2px 12px rgba(0,0,0,.35) !important;
+    gap:0 !important;
+    transform:none !important;
+    transition:none !important;
+  }
+  .bottom-nav a{
+    min-width:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    color:#858585 !important;
+    font-weight:500 !important;
+    line-height:1 !important;
+    gap:2px !important;
+  }
+  .bottom-nav a span{color:inherit !important;font-size:9px !important}
+  .bottom-nav a svg{width:20px !important;height:20px !important;color:inherit !important}
+  .bottom-nav a.active,.bottom-nav a.active span,.bottom-nav a.active svg{color:#fff !important}
+}
 </style>
 </head>
 <body>
