@@ -1197,9 +1197,7 @@ body { background-attachment: initial; }
   const rows=[...document.querySelectorAll('.market-watch-list [data-market]')];
   if(!rows.length)return;
   const status=document.getElementById('marketWatchStatus');
-  const formatPrice=value=>'
-</html>
-+Number(value).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:Number(value)<1?6:2});
+  const formatPrice=value=>String.fromCharCode(36)+Number(value).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:Number(value)<1?6:2});
   function renderMarket(id,price,change){
     const row=rows.find(item=>item.dataset.market===id);
     if(!row||!Number.isFinite(Number(price))||!Number.isFinite(Number(change)))return;
