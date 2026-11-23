@@ -701,7 +701,7 @@ body { background-attachment: initial; }
 }
 
 
-/* Final mobile bottom-nav overrides: very compact, neutral colors */
+/* Final mobile bottom-nav overrides: reduce labels only; preserve icon size */
 @media (max-width:760px){
   body{padding-bottom:76px}
   .bottom-nav{
@@ -719,18 +719,16 @@ body { background-attachment: initial; }
   .bottom-nav.nav-hidden{transform:translateY(150%)}
   .bottom-nav a{
     color:#858585 !important;
-    font-size:7px !important;
     font-weight:500 !important;
     line-height:1 !important;
     gap:2px !important;
   }
-  .bottom-nav a span{color:inherit !important}
-  .bottom-nav a svg{width:14px !important;height:14px !important;color:inherit !important}
+  .bottom-nav a span{color:inherit !important;font-size:9px !important}
+  .bottom-nav a svg{width:20px !important;height:20px !important;color:inherit !important}
   .bottom-nav a.active,.bottom-nav a.active span,.bottom-nav a.active svg{color:#fff !important}
 }
 @media (max-width:390px){
-  .bottom-nav a{font-size:6px !important;gap:2px !important}
-  .bottom-nav a svg{width:13px !important;height:13px !important}
+  .bottom-nav a span{font-size:8px !important}
 }
 
 </style>
