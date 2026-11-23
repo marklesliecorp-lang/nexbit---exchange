@@ -1205,6 +1205,17 @@ html,body{
 }
 @media(max-width:390px){.trade-chart-frame{height:330px}.trade-fields{grid-template-columns:1fr}}
 
+
+.dashboard-subview{max-width:1240px;margin:0 auto;padding:18px 22px 110px}
+.subview-heading{margin:5px 0 20px}.subview-heading h1{margin:0;font-size:26px;font-weight:750;letter-spacing:-.04em}.subview-heading p{margin:7px 0 0;color:#9299a6;font-size:12px}
+#marketsPanelMount .market-watch-panel{margin-top:0}
+.asset-view-card{background:#111;border:1px solid #242424;border-radius:17px;padding:20px;margin-bottom:14px}
+.asset-view-label{font-size:12px;color:#9299a6}.asset-view-balance{display:block;font-size:34px;margin-top:9px;letter-spacing:-.04em}
+.asset-view-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:20px}
+.asset-view-actions a{display:flex;justify-content:center;align-items:center;min-height:43px;border-radius:10px;background:#1b1b1b;color:#eee;font-size:11px;font-weight:700}
+.asset-view-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.asset-view-section-head h2{margin:0;font-size:15px}.asset-view-section-head a{font-size:11px;color:#f0c978}
+.asset-view-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-top:1px solid #292929;font-size:12px}.asset-view-row strong{text-align:right}.asset-view-empty{padding:17px 0;color:#9299a6;font-size:11px;line-height:1.6}
+@media(max-width:760px){.dashboard-subview{padding:16px 15px 105px}.asset-view-card{padding:17px}.asset-view-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.subview-heading h1{font-size:23px}}
 </style>
 </head>
 <body>
@@ -1308,56 +1319,36 @@ html,body{
     <a class="market-category" href="wallet.html"><span>Assets</span><strong>My Wallet <b>›</b></strong><small>Account assets</small></a>
     <a class="market-category" href="history.html"><span>Activity</span><strong>Transaction History <b>›</b></strong><small>Review account activity</small></a>
   </section>
-  <section class="market-watch-panel" aria-label="Market Watch">
-  <div class="section-head market-watch-heading"><h2>Market Watch</h2></div>
-  <section class="market-watch-group" aria-labelledby="cryptoMarketTitle">
-    <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
-    <div class="market-list market-watch-list" id="cryptoMarkets">
-    <div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin <small>BTC/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum <small>ETH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="solana"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana <small>SOL/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="binancecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png" alt="BNB logo"><span class="coin">BNB <small>BNB/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="ripple"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png" alt="XRP logo"><span class="coin">XRP <small>XRP/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="dogecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png" alt="Dogecoin logo"><span class="coin">Dogecoin <small>DOGE/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="cardano"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/975/large/cardano.png" alt="Cardano logo"><span class="coin">Cardano <small>ADA/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-    <div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash <small>BCH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
-  </div>
-    <button class="market-see-more" type="button" data-market-more="cryptoMarkets" aria-expanded="false">See more</button>
-  </section>
-  <section class="market-watch-group" aria-labelledby="stockMarketTitle">
-    <div class="market-watch-group-heading"><h3 id="stockMarketTitle">Stocks</h3><span>US EQUITIES</span></div>
-    <div class="tradingview-widget-container nexbit-stock-widget" id="stockMarkets">
-      <div class="tradingview-widget-container__widget"></div>
-      <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
-      {
-        "width": "100%",
-        "height": "300",
-        "symbolsGroups": [
-          {
-            "name": "NEXBIT US Stocks",
-            "symbols": [
-              {"name": "NASDAQ:AAPL", "displayName": "Apple"},
-              {"name": "NASDAQ:NVDA", "displayName": "NVIDIA"},
-              {"name": "NASDAQ:TSLA", "displayName": "Tesla"},
-              {"name": "NASDAQ:MSFT", "displayName": "Microsoft"},
-              {"name": "NASDAQ:AMZN", "displayName": "Amazon"}
-            ]
-          }
-        ],
-        "showSymbolLogo": true,
-        "isTransparent": false,
-        "colorTheme": "dark",
-        "locale": "en",
-        "showFloatingTooltip": false
-      }
-      </script>
-    </div>
-  </section>
+
 </section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 
 </main>
+
+<section class="dashboard-subview" id="marketsView" hidden aria-label="Markets">
+  <div class="subview-heading"><h1>Markets</h1><p>Live cryptocurrency prices and stock market quotes</p></div>
+  <div id="marketsPanelMount"></div>
+</section>
+<section class="dashboard-subview" id="assetsView" hidden aria-label="Assets">
+  <div class="subview-heading"><h1>Assets</h1><p>Your wallet balance and account activity</p></div>
+  <section class="asset-view-card">
+    <div class="asset-view-label">Total wallet balance</div>
+    <strong class="asset-view-balance" id="assetsViewBalance">Loading…</strong>
+    <div class="asset-view-actions">
+      <a href="deposit.html">Deposit</a><a href="withdraw.html">Withdraw</a>
+      <a href="transfer.html">Transfer</a><a href="history.html">History</a>
+    </div>
+  </section>
+  <section class="asset-view-card">
+    <div class="asset-view-section-head"><h2>Asset balances</h2><a href="wallet.html">Full wallet</a></div>
+    <div id="assetsViewBreakdown"><div class="asset-view-empty">Loading asset balances…</div></div>
+  </section>
+  <section class="asset-view-card">
+    <div class="asset-view-section-head"><h2>Recent activity</h2><a href="history.html">View history</a></div>
+    <div class="asset-view-empty">Your account activity and transaction records are available in History.</div>
+  </section>
+</section>
+
 <section class="trade-view" id="tradeView" hidden aria-label="Trade">
   <div class="trade-topline">
     <h1 class="trade-title">Trade</h1>
@@ -1383,18 +1374,9 @@ html,body{
       <button type="button" data-order-type="limit" aria-pressed="false">Limit</button>
     </div>
     <div class="trade-fields">
-      <div class="trade-field" id="tradePriceField" hidden>
-        <label for="tradeLimitPrice">Limit Price (USDT)</label>
-        <input class="trade-control" id="tradeLimitPrice" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter limit price">
-      </div>
-      <div class="trade-field">
-        <label for="tradeQuantity">Quantity (base asset)</label>
-        <input class="trade-control" id="tradeQuantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter quantity">
-      </div>
-      <div class="trade-field" id="tradeTotalField" hidden>
-        <label for="tradeTotal">Estimated Total (USDT)</label>
-        <input class="trade-control" id="tradeTotal" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter total" readonly>
-      </div>
+      <div class="trade-field" id="tradePriceField" hidden><label for="tradeLimitPrice">Limit Price (USDT)</label><input class="trade-control" id="tradeLimitPrice" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter limit price"></div>
+      <div class="trade-field"><label for="tradeQuantity">Quantity (base asset)</label><input class="trade-control" id="tradeQuantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter quantity"></div>
+      <div class="trade-field" id="tradeTotalField" hidden><label for="tradeTotal">Estimated Total (USDT)</label><input class="trade-control" id="tradeTotal" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter total" readonly></div>
     </div>
     <div class="trade-available"><span>Available Balance</span><strong id="tradeAvailableBalance">Loading…</strong></div>
     <p class="trade-notice">Trading interface preview. Order execution is not connected yet.</p>
@@ -1403,29 +1385,36 @@ html,body{
 
 <nav class="bottom-nav" aria-label="Main navigation">
   <a class="active" href="#home" data-dashboard-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
-  <a href="index.html#markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
+  <a href="#markets" data-dashboard-view="markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
   <a href="#trade" data-dashboard-view="trade"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
   <a href="packages.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
-  <a href="wallet.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
+  <a href="#assets" data-dashboard-view="assets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
 </nav>
 <script>
 /* NEXBIT app-style bottom navigation: switch dashboard/trade views without reloading */
 (function(){
   const home=document.getElementById('overview');
   const trade=document.getElementById('tradeView');
+  const markets=document.getElementById('marketsView');
+  const assets=document.getElementById('assetsView');
+  const marketPanel=document.querySelector('.market-watch-panel');
+  const mount=document.getElementById('marketsPanelMount');
   const nav=[...document.querySelectorAll('[data-dashboard-view]')];
-  if(!home||!trade||!nav.length)return;
+  if(!home||!trade||!markets||!assets||!nav.length)return;
+  if(marketPanel&&mount)mount.appendChild(marketPanel);
   function show(view){
-    const isTrade=view==='trade';
-    home.hidden=isTrade;
-    trade.hidden=!isTrade;
+    const valid=['home','markets','trade','assets'].includes(view)?view:'home';
+    home.hidden=valid!=='home';
+    markets.hidden=valid!=='markets';
+    trade.hidden=valid!=='trade';
+    assets.hidden=valid!=='assets';
     nav.forEach(link=>{
-      const active=link.dataset.dashboardView===(isTrade?'trade':'home');
+      const active=link.dataset.dashboardView===valid;
       link.classList.toggle('active',active);
       if(active)link.setAttribute('aria-current','page');
       else link.removeAttribute('aria-current');
     });
-    if(isTrade)window.scrollTo(0,0);
+    window.scrollTo(0,0);
   }
   nav.forEach(link=>link.addEventListener('click',event=>{
     event.preventDefault();
@@ -1528,6 +1517,19 @@ html,body{
     const formatUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     document.getElementById('dashboardBalance').textContent=formatUSD(amount);
     document.getElementById('availableBalance').textContent=formatUSD(amount);
+    const assetsBalance=document.getElementById('assetsViewBalance');
+    if(assetsBalance)assetsBalance.textContent=formatUSD(amount);
+    const assetsBreakdown=document.getElementById('assetsViewBreakdown');
+    if(assetsBreakdown){
+      const {data:assetRows,error:assetRowsError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
+      if(assetRowsError){
+        assetsBreakdown.innerHTML='<div class="asset-view-empty">Asset balances are temporarily unavailable.</div>';
+      }else if(assetRows?.length){
+        assetsBreakdown.innerHTML=assetRows.map(row=>'<div class="asset-view-row"><span>'+String(row.asset_code).replace(/[&<>"]/g,'')+'</span><strong>'+Number(row.balance||0).toLocaleString(undefined,{maximumFractionDigits:8})+' '+String(row.asset_code).replace(/[&<>"]/g,'')+'</strong></div>').join('');
+      }else{
+        assetsBreakdown.innerHTML='<div class="asset-view-empty">No asset balances have been recorded yet.</div>';
+      }
+    }
     const tradeBalance=document.getElementById('tradeAvailableBalance');
     if(tradeBalance)tradeBalance.textContent=formatUSD(amount);
     document.getElementById('lockedBalance').textContent=formatUSD(0);
