@@ -1327,11 +1327,8 @@ html,body{
 </section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 
-</main>
-
-<section class="dashboard-subview" id="marketsView" hidden aria-label="Markets">
-  <div class="subview-heading"><h1>Markets</h1><p>Live cryptocurrency prices and stock market quotes</p></div>
-  <div id="marketsPanelMount"></div>  <section class="market-watch-panel" aria-label="Market Watch">
+  <div id="homeMarketPanelMount">
+<section class="market-watch-panel" aria-label="Market Watch">
   <div class="section-head market-watch-heading"><h2>Market Watch</h2></div>
   <section class="market-watch-group" aria-labelledby="cryptoMarketTitle">
     <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
@@ -1378,6 +1375,13 @@ html,body{
     </div>
   </section>
 </section>
+  </div>
+
+</main>
+
+<section class="dashboard-subview" id="marketsView" hidden aria-label="Markets">
+  <div class="subview-heading"><h1>Markets</h1><p>Live cryptocurrency prices and stock market quotes</p></div>
+  <div id="marketsPanelMount"></div>  
 <section class="dashboard-subview" id="assetsView" hidden aria-label="Assets">
   <div class="subview-heading"><h1>Assets</h1><p>Your wallet balance and account activity</p></div>
   <section class="asset-view-card">
@@ -1447,12 +1451,14 @@ html,body{
   const markets=document.getElementById('marketsView');
   const assets=document.getElementById('assetsView');
   const marketPanel=document.querySelector('.market-watch-panel');
+  const homeMount=document.getElementById('homeMarketPanelMount');
   const mount=document.getElementById('marketsPanelMount');
   const nav=[...document.querySelectorAll('[data-dashboard-view]')];
   if(!home||!trade||!markets||!assets||!nav.length)return;
-  if(marketPanel&&mount)mount.appendChild(marketPanel);
   function show(view){
     const valid=['home','markets','trade','assets'].includes(view)?view:'home';
+    const target=valid==='markets'?mount:homeMount;
+    if(marketPanel&&target&&marketPanel.parentElement!==target)target.appendChild(marketPanel);
     home.hidden=valid!=='home';
     markets.hidden=valid!=='markets';
     trade.hidden=valid!=='trade';
@@ -1469,6 +1475,7 @@ html,body{
     event.preventDefault();
     show(link.dataset.dashboardView);
   }));
+  show('home');
   const pair=document.getElementById('tradePair');
   const chart=document.getElementById('tradeChart');
   if(pair&&chart)pair.addEventListener('change',()=>{
