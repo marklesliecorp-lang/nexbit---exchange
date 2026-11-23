@@ -213,31 +213,134 @@ body { background-attachment: initial; }
  .action .symbol{width:43px;height:43px}
 }
 
+
+/* Trading-app layout inspired by the supplied Bybit reference */
+.topbar{height:76px;gap:22px;padding-left:max(24px,calc((100% - 1240px)/2));padding-right:max(24px,calc((100% - 1240px)/2));border:0;background:#000}
+.brand{flex:0 0 auto;font-size:22px}
+.dashboard-search{height:48px;max-width:520px;flex:1;display:flex;align-items:center;gap:12px;padding:0 18px;border-radius:28px;background:#191a1e;color:#777b82;font-size:14px;font-weight:650}
+.dashboard-search span:first-child{font-size:25px;color:#eee}
+.dashboard-search b{margin-left:auto;color:#b9bbc0}
+.top-actions{gap:16px}
+.header-icon{font-size:22px;color:#f5f5f5}
+.profile-btn{background:#171717;border:0;color:#eee;border-radius:20px}
+.dashboard-tabs{padding-top:8px;padding-bottom:10px;gap:9px}
+.dashboard-tabs a{background:#171719;color:#777b82;padding:11px 21px;font-size:14px}
+.dashboard-tabs a.active{background:#f7f7f7;color:#080808}
+.dashboard-tabs .tab-menu{margin-left:auto;background:transparent;color:#fff;font-size:20px;padding-left:14px;padding-right:14px}
+.layout{padding-top:10px}
+.grid{display:block}
+.balance-panel{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;min-height:0;padding:17px 2px 15px;background:#000;border:0;border-radius:0;overflow:visible}
+.balance-panel>.asset-heading,.balance-panel>.balance-row,.balance-panel>.pnl-line{grid-column:1}
+.asset-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.panel-label{font-size:15px;color:#85878c}
+.eye{font-size:16px;color:#777}
+.balance-row{margin-top:8px;gap:8px}
+.balance{font-size:clamp(42px,7vw,58px);font-weight:750;letter-spacing:-.055em}
+.currency{font-size:17px;color:#777;font-weight:650}
+.asset-deposit{grid-column:2;grid-row:1 / span 3;align-self:center;background:#ff9d2e;color:#050505;border-radius:30px;padding:17px 35px;font-size:16px}
+.pnl-line{font-size:14px;color:#777;font-weight:650;margin-top:5px}
+.pnl-line strong{color:#f5f5f5;font-size:15px;margin-left:8px}
+.actions{grid-column:1/-1;grid-template-columns:repeat(8,minmax(0,1fr));gap:7px;margin-top:24px}
+.action{min-height:105px;gap:9px;font-size:12px;color:#f4f4f4;background:transparent;border:0;border-radius:0}
+.action .symbol{height:58px;width:58px;border-radius:50%;background:#171719;color:#fff;font-size:25px}
+.promo-panel{margin-top:18px;min-height:132px;border-radius:24px;background:#151515;display:flex;align-items:center;gap:22px;padding:22px 28px}
+.promo-mark{width:88px;height:88px;flex:0 0 88px;border-radius:18px;background:radial-gradient(circle,#3c2a17,#1b1712 68%,#151515);display:grid;place-items:center;color:#f4a33a;font-size:42px}
+.promo-kicker{font-size:11px;color:#777b82;font-weight:700}
+.promo-panel h2{margin:8px 0 5px;font-size:19px}
+.promo-panel p{margin:0;color:#92949a;font-size:12px}
+.promo-panel>a{margin-left:auto;white-space:nowrap;color:#ffad46;font-size:13px;font-weight:750}
+.market-categories{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:14px}
+.market-category{min-height:125px;background:#151515;border-radius:18px;padding:19px;display:flex;flex-direction:column;justify-content:space-between}
+.market-category span{font-size:15px;font-weight:750}
+.market-category strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.market-category strong b{font-size:21px;font-weight:400}
+.market-category small{font-size:10px;color:#888}
+.market-watch-panel{margin-top:16px;background:#151515;border:0;border-radius:18px}
+.market-watch-panel .market-row{border-color:#242424}
+.market-watch-panel .market-note{color:#858585}
+.lower{display:none}
+.notice{display:none}
+.bottom-nav{background:rgba(5,5,5,.96);border-top:1px solid #252525}
+.bottom-nav a{font-size:11px}
+.bottom-nav a span{font-size:21px}
+@media(max-width:760px){
+ .topbar{height:74px;padding:0 15px;gap:12px}
+ .brand{font-size:18px;letter-spacing:.1em}
+ .dashboard-search{height:45px;min-width:0;padding:0 12px;font-size:12px;gap:8px}
+ .dashboard-search span:first-child{font-size:22px}
+ .top-actions{gap:11px}
+ .header-icon{font-size:19px}
+ .profile-btn{display:none}
+ .dashboard-tabs{padding:8px 15px 10px;gap:8px}
+ .dashboard-tabs a{font-size:13px;padding:10px 17px}
+ .dashboard-tabs .tab-menu{margin-left:0}
+ .layout{padding:5px 15px 95px}
+ .balance-panel{padding:18px 0 10px;grid-template-columns:minmax(0,1fr) auto}
+ .panel-label{font-size:14px}
+ .balance{font-size:clamp(42px,11vw,58px)}
+ .currency{font-size:15px}
+ .asset-deposit{padding:15px 25px;font-size:14px}
+ .pnl-line{font-size:13px}
+ .pnl-line strong{font-size:13px;margin-left:5px}
+ .actions{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:17px;column-gap:3px;margin-top:24px}
+ .action{min-height:83px;font-size:11px;gap:6px}
+ .action .symbol{width:56px;height:56px;font-size:23px}
+ .promo-panel{margin-top:18px;min-height:122px;padding:16px;border-radius:20px;gap:13px}
+ .promo-mark{width:68px;height:68px;flex-basis:68px;font-size:32px}
+ .promo-panel h2{font-size:16px;line-height:1.35}
+ .promo-panel p{font-size:10px;line-height:1.5}
+ .promo-panel>a{font-size:11px}
+ .market-categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+ .market-category{min-height:125px;padding:17px;border-radius:17px}
+ .market-category span{font-size:14px}
+ .market-category strong{font-size:13px}
+ .market-watch-panel{margin-top:14px;padding:18px}
+ .bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);padding:10px 5px calc(10px + env(safe-area-inset-bottom))}
+}
+@media(max-width:390px){
+ .dashboard-search{font-size:11px}
+ .top-actions{gap:8px}
+ .market-category{padding:14px}
+ .promo-panel{gap:10px}
+ .promo-panel>a{display:none}
+}
+
 </style>
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="index.html" aria-label="NEXBIT home"><span>✦</span> NEXBIT</a>
-  <div class="top-actions"><button class="icon-btn" type="button" aria-label="Notifications">♧</button><button class="profile-btn" id="logoutButton" type="button">Log out ↗</button></div>
+  <a class="brand" href="dashboard.html" aria-label="NEXBIT home"><span>✦</span> NEXBIT</a>
+  <a class="dashboard-search" href="index.html#markets"><span>⌕</span><span>Search markets</span><b>↗</b></a>
+  <div class="top-actions">
+    <a class="header-icon" href="account.html" aria-label="Account">♙</a>
+    <a class="header-icon" href="history.html" aria-label="History">◷</a>
+    <button class="profile-btn" id="logoutButton" type="button">Log out</button>
+  </div>
 </header>
 <nav class="dashboard-tabs" aria-label="Dashboard sections">
-  <a class="active" href="#overview">Overview</a>
-  <a href="index.html#markets">Markets</a>
+  <a class="active" href="#overview">All</a>
+  <a href="index.html#markets">Crypto</a>
   <a href="index.html#investment-packages">Invest</a>
   <a href="wallet.html">Assets</a>
+  <a href="history.html">History</a>
+  <a href="account.html">Account</a>
+  <a class="tab-menu" href="account.html" aria-label="More">☰</a>
 </nav>
 <main class="layout" id="overview">
   <section class="grid">
     <article class="panel balance-panel">
-      <div class="panel-label">Total account balance</div>
-      <div class="balance-row"><div class="balance" id="dashboardBalance">— — —</div><div class="currency">USD</div></div>
-      <a class="asset-deposit" href="deposit.html">Deposit <span aria-hidden="true">↗</span></a>
-      <div class="balance-note">Your verified account overview <strong>•</strong> Your recorded internal USD account balance.</div>
+      <div class="asset-heading"><div class="panel-label">Total Assets <span class="eye">◉</span></div><a class="asset-deposit" href="deposit.html">Deposit</a></div>
+      <div class="balance-row"><div class="balance" id="dashboardBalance">— — —</div><div class="currency">USD⌄</div></div>
+      <div class="pnl-line">Today's P&amp;L <strong>— — — USD (—)</strong></div>
       <div class="actions">
-        <a class="action" href="deposit.html" style="cursor:pointer"><span class="symbol">＋</span>Deposit</a>
-        <a class="action" href="withdraw.html" style="cursor:pointer"><span class="symbol">↗</span>Withdraw</a>
-        <a class="action" href="transfer.html" style="cursor:pointer"><span class="symbol">⇄</span>Transfer</a>
-        <a class="action" href="history.html" style="cursor:pointer"><span class="symbol">◷</span>History</a>
+        <a class="action" href="index.html#markets"><span class="symbol">▣</span>Buy Crypto</a>
+        <a class="action" href="deposit.html"><span class="symbol">⇦</span>Deposit</a>
+        <a class="action" href="index.html#investment-packages"><span class="symbol">◉</span>Invest</a>
+        <a class="action" href="transfer.html"><span class="symbol">⇄</span>Transfer</a>
+        <a class="action" href="wallet.html"><span class="symbol">▢</span>Wallet</a>
+        <a class="action" href="history.html"><span class="symbol">⟳</span>History</a>
+        <a class="action" href="withdraw.html"><span class="symbol">↗</span>Withdraw</a>
+        <a class="action" href="account.html"><span class="symbol">•••</span>Account</a>
       </div>
     </article>
     <div class="side-stack">
@@ -245,23 +348,26 @@ body { background-attachment: initial; }
       <article class="panel"><div class="panel-label">Account status</div><div class="mini-stat"><strong style="font-size:17px">Verified</strong><span class="status">Email confirmed</span></div><div class="balance-note" id="accountEmail">Loading account…</div></article>
     </div>
   </section>
-  <section class="lower">
-    <article class="panel"><div class="section-head"><h2>My investments</h2><span class="status">Coming soon</span></div><div class="empty"><strong>No investment records yet</strong>Your active plans and investment history will appear here when investment services are connected.</div></article>
-    <article class="panel"><div class="section-head"><h2>Market watch</h2><span class="market-note">Preview</span></div><div class="market-list"><div class="market-row"><div class="coin">BTC <small>Bitcoin</small></div><div class="price">—</div><div class="market-note">Live data pending</div></div><div class="market-row"><div class="coin">ETH <small>Ethereum</small></div><div class="price">—</div><div class="market-note">Live data pending</div></div><div class="market-row"><div class="coin">SOL <small>Solana</small></div><div class="price">—</div><div class="market-note">Live data pending</div></div></div></article>
+  <section class="promo-panel">
+    <div class="promo-mark">✦</div><div><span class="promo-kicker">NEXBIT MARKETS</span><h2>Explore the crypto market</h2><p>View available market information and investment options.</p></div><a href="index.html#markets">Explore ↗</a>
   </section>
-  <div class="notice">Wallet balances, deposits, withdrawals, transfers, investment returns and market prices are not active yet. No financial activity is processed from this dashboard at this stage.</div>
+  <section class="market-categories">
+    <a class="market-category" href="index.html#markets"><span>Crypto</span><strong>Explore Markets <b>›</b></strong><small>Market information</small></a>
+    <a class="market-category" href="index.html#investment-packages"><span>Invest</span><strong>Investment Options <b>›</b></strong><small>Explore available plans</small></a>
+    <a class="market-category" href="wallet.html"><span>Assets</span><strong>My Wallet <b>›</b></strong><small>Account assets</small></a>
+    <a class="market-category" href="history.html"><span>Activity</span><strong>Transaction History <b>›</b></strong><small>Review account activity</small></a>
+  </section>
+  <section class="panel market-watch-panel"><div class="section-head"><h2>Market Watch</h2><a href="index.html#markets">View markets ›</a></div><div class="market-list"><div class="market-row"><div class="coin">BTC <small>Bitcoin</small></div><div class="price">—</div><div class="market-note">—</div></div><div class="market-row"><div class="coin">ETH <small>Ethereum</small></div><div class="price">—</div><div class="market-note">—</div></div><div class="market-row"><div class="coin">SOL <small>Solana</small></div><div class="price">—</div><div class="market-note">—</div></div></div></section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 </main>
-<nav class="bottom-nav" aria-label="Main navigation"><a href="dashboard.html"><span>⌂</span>Home</a><a href="index.html#markets"><span>⌁</span>Markets</a><a href="index.html#investment-packages"><span>◈</span>Invest</a><a href="wallet.html"><span>▣</span>Assets</a><a href="account.html"><span>◎</span>Account</a></nav>
+<nav class="bottom-nav" aria-label="Main navigation"><a href="dashboard.html"><span>⌂</span>Home</a><a href="index.html#markets"><span>⌁</span>Markets</a><a href="transfer.html"><span>⇄</span>Trade</a><a href="index.html#investment-packages"><span>⌁</span>Invest</a><a href="wallet.html"><span>▣</span>Assets</a></nav>
 <script>
 (function(){
   if(!window.supabase?.createClient){const notice=document.getElementById('authMessage');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
 
   const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
   const message=document.getElementById('authMessage');
-  const nameNode=document.getElementById('userName');
   const emailNode=document.getElementById('accountEmail');
-  document.getElementById('todayLabel').textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
   async function init(){
     const {data:{user},error}=await client.auth.getUser();
     if(error||!user){window.location.replace('login.html');return;}
@@ -285,7 +391,6 @@ body { background-attachment: initial; }
       ?user.user_metadata.full_name.trim()
       :'';
     const displayName=(profileName||metadataName).split(/\s+/)[0];
-    nameNode.textContent=displayName?', '+displayName:'';
 
     const {data:balance,error:balanceError}=await client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle();
     if(balanceError)throw balanceError;
