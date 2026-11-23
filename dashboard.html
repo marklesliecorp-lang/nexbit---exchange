@@ -1391,7 +1391,7 @@ html,body{
         <label for="tradeQuantity">Quantity (base asset)</label>
         <input class="trade-control" id="tradeQuantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter quantity">
       </div>
-      <div class="trade-field">
+      <div class="trade-field" id="tradeTotalField" hidden>
         <label for="tradeTotal">Estimated Total (USDT)</label>
         <input class="trade-control" id="tradeTotal" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter total" readonly>
       </div>
@@ -1399,6 +1399,7 @@ html,body{
     <div class="trade-available"><span>Available Balance</span><strong id="tradeAvailableBalance">Loading…</strong></div>
     <p class="trade-notice">Trading interface preview. Order execution is not connected yet.</p>
   </section>
+</section>
 
 <nav class="bottom-nav" aria-label="Main navigation">
   <a class="active" href="#home" data-dashboard-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
@@ -1424,7 +1425,7 @@ html,body{
       if(active)link.setAttribute('aria-current','page');
       else link.removeAttribute('aria-current');
     });
-    if(isTrade)window.scrollTo({top:0,behavior:'instant'});
+    if(isTrade)window.scrollTo(0,0);
   }
   nav.forEach(link=>link.addEventListener('click',event=>{
     event.preventDefault();
@@ -1432,7 +1433,6 @@ html,body{
   }));
   const pair=document.getElementById('tradePair');
   const chart=document.getElementById('tradeChart');
-  const title=chart&&chart.title;
   if(pair&&chart)pair.addEventListener('change',()=>{
     const symbol=pair.value;
     const url='https://www.tradingview.com/widgetembed/?symbol='+encodeURIComponent(symbol)+'&interval=15&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=%23080b10&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en';
@@ -1445,9 +1445,23 @@ html,body{
   }));
   const typeButtons=[...document.querySelectorAll('[data-order-type]')];
   const priceField=document.getElementById('tradePriceField');
+  const quantity=document.getElementById('tradeQuantity');
+  const limitPrice=document.getElementById('tradeLimitPrice');
+  const total=document.getElementById('tradeTotal');
+  function updateLimitTotal(){
+    if(!quantity||!limitPrice||!total)return;
+    const q=Number(quantity.value),p=Number(limitPrice.value);
+    total.value=quantity.value&&limitPrice.value&&q>0&&p>0?(q*p).toFixed(2):'';
+  }
+  if(quantity)quantity.addEventListener('input',updateLimitTotal);
+  if(limitPrice)limitPrice.addEventListener('input',updateLimitTotal);
   typeButtons.forEach(button=>button.addEventListener('click',()=>{
     typeButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
-    if(priceField)priceField.hidden=button.dataset.orderType!=='limit';
+    const isLimit=button.dataset.orderType==='limit';
+    if(priceField)priceField.hidden=!isLimit;
+    const totalField=document.getElementById('tradeTotalField');
+    if(totalField)totalField.hidden=!isLimit;
+    updateLimitTotal();
   }));
 })();
 </script>
@@ -1514,6 +1528,8 @@ html,body{
     const formatUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     document.getElementById('dashboardBalance').textContent=formatUSD(amount);
     document.getElementById('availableBalance').textContent=formatUSD(amount);
+    const tradeBalance=document.getElementById('tradeAvailableBalance');
+    if(tradeBalance)tradeBalance.textContent=formatUSD(amount);
     document.getElementById('lockedBalance').textContent=formatUSD(0);
 
     window.updateTodayPnl=function(profitLoss,percent){
