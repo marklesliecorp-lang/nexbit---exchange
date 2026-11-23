@@ -1757,7 +1757,11 @@ html,body{
         if(error)throw error;
         const holdings=(rows||[]).filter(row=>Number(row.balance)>0);
         const pricedHoldings=holdings.filter(row=>String(row.asset_code||'').toUpperCase()!=='USD');
-        const quotes=pricedHoldings.length?{...(await loadPnlMarketQuotes())}:{};
+        let quotes={};
+        if(pricedHoldings.length){
+          try{quotes={...(await loadPnlMarketQuotes())};}
+          catch(priceError){console.warn('NEXBIT fallback to live market quotes:',priceError);}
+        }
         const liveQuotes=window.NEXBIT_LIVE_QUOTES||{};
         Object.entries(liveQuotes).forEach(([asset,quote])=>{
           if(Date.now()-quote.updatedAt<15000&&Number.isFinite(quote.price)&&Number.isFinite(quote.change)&&quote.change>-100){
