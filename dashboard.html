@@ -1146,7 +1146,7 @@ html,body{
 .nexbit-promo-dot[aria-current="true"]{width:19px;border-radius:8px;background:#f0f2f4}
 .nexbit-promo-arrow{position:absolute;z-index:3;top:50%;transform:translateY(-50%);width:28px;height:28px;border:1px solid rgba(220,230,240,.24);border-radius:50%;background:rgba(4,6,9,.65);color:#fff;font-size:18px;line-height:1;cursor:pointer}
 .nexbit-promo-prev{left:10px}.nexbit-promo-next{right:10px}
-.nexbit-card-photo{object-position:center 55%}
+.nexbit-card-art{position:absolute;z-index:-2;right:1.5%;top:-16%;width:66%;height:132%;overflow:visible;filter:drop-shadow(0 12px 24px rgba(0,0,0,.55))}.nexbit-card-photo{object-position:center 55%}
 @media(max-width:760px){
  .nexbit-promo-slider{height:158px;margin-top:15px;border-radius:10px}
  .nexbit-promo-copy{width:72%;padding:13px 15px}
@@ -1207,7 +1207,32 @@ html,body{
         <div class="nexbit-promo-copy"><span class="nexbit-promo-brand">NEXBIT</span><h2>Referral</h2><p>Earn $100 for every friend you refer.</p><a class="nexbit-promo-link" href="account.html">Refer Now <span>→</span></a></div>
       </article>
       <article class="nexbit-promo-slide">
-        <img class="nexbit-card-photo" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1400&q=82" alt="A bank card being used for a payment">
+        <svg class="nexbit-card-art" viewBox="0 0 760 480" role="img" aria-label="Black NEXBIT Mastercard with Mastercard logo">
+          <defs>
+            <linearGradient id="nexbitCardMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#454b53"/><stop offset=".28" stop-color="#15191f"/><stop offset=".62" stop-color="#080a0e"/><stop offset="1" stop-color="#343a42"/></linearGradient>
+            <linearGradient id="nexbitCardShine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".24"/><stop offset=".38" stop-color="#fff" stop-opacity=".025"/><stop offset="1" stop-color="#fff" stop-opacity=".11"/></linearGradient>
+            <linearGradient id="nexbitChip" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5e7e9"/><stop offset="1" stop-color="#777e87"/></linearGradient>
+            <filter id="nexbitCardShadow" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="18"/></filter>
+          </defs>
+          <g transform="translate(48 54) rotate(-7 330 180)">
+            <rect x="8" y="24" width="650" height="390" rx="34" fill="#000" opacity=".75" filter="url(#nexbitCardShadow)"/>
+            <rect x="0" y="0" width="650" height="390" rx="32" fill="url(#nexbitCardMetal)" stroke="#aeb5bd" stroke-opacity=".65" stroke-width="2"/>
+            <rect x="2" y="2" width="646" height="386" rx="30" fill="url(#nexbitCardShine)"/>
+            <path d="M18 110 Q220 -5 480 12 L635 12 L635 115 Q365 185 18 145Z" fill="#fff" opacity=".035"/>
+            <text x="48" y="76" fill="#f4f5f6" font-size="24" font-family="Arial,sans-serif" font-weight="700" letter-spacing="5">NEXBIT</text>
+            <rect x="48" y="140" width="76" height="58" rx="9" fill="url(#nexbitChip)" stroke="#d8dce0" stroke-width="2"/>
+            <path d="M73 141v57M99 141v57M49 169h74M60 151h52M60 188h52" fill="none" stroke="#555d66" stroke-width="2" opacity=".8"/>
+            <path d="M155 169q28 15 0 30M168 160q43 24 0 48" fill="none" stroke="#d5d9de" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+            <text x="48" y="280" fill="#dfe3e8" font-size="18" font-family="Arial,sans-serif" letter-spacing="4">NEXBIT CARD</text>
+            <text x="48" y="326" fill="#aeb5be" font-size="15" font-family="Arial,sans-serif" letter-spacing="3">••••  ••••  ••••  2026</text>
+            <g transform="translate(485 275)">
+              <circle cx="0" cy="0" r="43" fill="#eb001b"/>
+              <circle cx="50" cy="0" r="43" fill="#f79e1b"/>
+              <path d="M25 -35a43 43 0 0 1 0 70a43 43 0 0 1 0-70" fill="#ff5f00"/>
+            </g>
+            <text x="542" y="350" fill="#f4f5f6" font-size="12" font-family="Arial,sans-serif" text-anchor="middle" letter-spacing="1">mastercard</text>
+          </g>
+        </svg>
         <div class="nexbit-promo-copy"><span class="nexbit-promo-brand">NEXBIT</span><h2>NEXBIT Card</h2><p>Spend with ease using your NEXBIT Card.</p><a class="nexbit-promo-link" href="wallet.html">Get Your Card <span>→</span></a></div>
       </article>
       <article class="nexbit-promo-slide">
@@ -1464,7 +1489,7 @@ html,body{
     dots.forEach((dot,i)=>dot.setAttribute('aria-current',i===active?'true':'false'));
   }
   function stop(){if(timer){clearInterval(timer);timer=null;}}
-  function start(){stop();timer=setInterval(()=>show(active+1),5500);}
+  function start(){stop();timer=setInterval(()=>show(active+1),3000);}
   prev.addEventListener('click',()=>{show(active-1);start();});
   next.addEventListener('click',()=>{show(active+1);start();});
   dots.forEach((dot,i)=>dot.addEventListener('click',()=>{show(i);start();}));
