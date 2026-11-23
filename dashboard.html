@@ -157,6 +157,62 @@ html, body {
 }
 body { background-attachment: initial; }
 
+
+/* NEXBIT dashboard refresh — black trading-app layout */
+.dashboard-tabs{max-width:1240px;margin:0 auto;padding:16px 22px 0;display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+.dashboard-tabs::-webkit-scrollbar{display:none}
+.dashboard-tabs a{flex:0 0 auto;padding:10px 20px;border-radius:999px;background:#151515;color:#9b9b9b;font-size:13px;font-weight:700}
+.dashboard-tabs a.active{background:#f5f5f5;color:#080808}
+.layout{padding-top:20px}
+.welcome{margin-bottom:18px}
+.welcome .eyebrow{margin-bottom:6px}
+.welcome h1{font-size:clamp(23px,3.5vw,30px)}
+.welcome p.sub{margin-top:5px}
+.date-label{font-size:10px}
+.grid{grid-template-columns:minmax(0,1.6fr) minmax(250px,.9fr);gap:14px}
+.panel{background:#111;border:1px solid #202020;border-radius:18px;box-shadow:none}
+.balance-panel{min-height:0;padding:23px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+.balance-panel:after{display:none}
+.balance-panel>.panel-label,.balance-panel>.balance-row,.balance-panel>.balance-note{grid-column:1}
+.balance-row{margin-top:8px}
+.balance{font-size:clamp(34px,5vw,48px)}
+.balance-note{margin-top:4px}
+.asset-deposit{grid-column:2;grid-row:1 / span 3;align-self:center;display:inline-flex;align-items:center;gap:9px;padding:15px 25px;border-radius:999px;background:#f59d2a;color:#080808;font-size:14px;font-weight:800}
+.asset-deposit span{font-size:17px}
+.actions{grid-column:1 / -1;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+.action{min-height:94px;border:0;border-radius:13px;background:transparent;gap:9px;color:#f2f2f2;font-size:12px}
+.action .symbol{width:54px;height:54px;display:grid;place-items:center;border-radius:50%;background:#191919;color:#fff;font-size:23px}
+.side-stack{gap:14px}
+.mini-stat{margin-top:13px}
+.status{border-color:#343434;background:#1b1b1b;color:#d6b66e}
+.lower{gap:14px;margin-top:14px}
+.section-head h2{font-size:15px}
+.market-row{border-top-color:#282828}
+.coin small,.market-note{color:#888}
+.empty{border-color:#333;background:#151515}
+.notice{border-color:#282828;background:#0c0c0c;color:#858585}
+.bottom-nav{background:rgba(8,8,8,.94);border-top-color:#252525}
+@media(max-width:760px){
+ .dashboard-tabs{padding:13px 15px 0;gap:8px}
+ .dashboard-tabs a{padding:9px 16px;font-size:12px}
+ .layout{padding-top:18px}
+ .welcome{margin-bottom:15px}
+ .grid{grid-template-columns:1fr}
+ .balance-panel{grid-template-columns:minmax(0,1fr) auto;padding:18px}
+ .asset-deposit{padding:13px 19px;font-size:13px}
+ .actions{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:19px}
+ .action{min-height:82px;font-size:10px}
+ .action .symbol{width:48px;height:48px;font-size:21px}
+ .side-stack{grid-template-columns:1fr 1fr}
+}
+@media(max-width:390px){
+ .balance-panel{grid-template-columns:1fr}
+ .asset-deposit{grid-column:1;grid-row:auto;justify-self:start;margin-top:14px}
+ .actions{grid-column:1}
+ .action{font-size:9px}
+ .action .symbol{width:43px;height:43px}
+}
+
 </style>
 </head>
 <body>
@@ -164,7 +220,13 @@ body { background-attachment: initial; }
   <a class="brand" href="index.html" aria-label="NEXBIT home"><span>✦</span> NEXBIT</a>
   <div class="top-actions"><button class="icon-btn" type="button" aria-label="Notifications">♧</button><button class="profile-btn" id="logoutButton" type="button">Log out ↗</button></div>
 </header>
-<main class="layout">
+<nav class="dashboard-tabs" aria-label="Dashboard sections">
+  <a class="active" href="#overview">Overview</a>
+  <a href="index.html#markets">Markets</a>
+  <a href="index.html#investment-packages">Invest</a>
+  <a href="wallet.html">Assets</a>
+</nav>
+<main class="layout" id="overview">
   <section class="welcome">
     <div><p class="eyebrow">ACCOUNT OVERVIEW</p><h1>Welcome back<span id="userName"></span></h1><p class="sub">Here’s an overview of your NEXBIT account.</p></div>
     <div class="date-label" id="todayLabel"></div>
@@ -173,6 +235,7 @@ body { background-attachment: initial; }
     <article class="panel balance-panel">
       <div class="panel-label">Total account balance</div>
       <div class="balance-row"><div class="balance" id="dashboardBalance">— — —</div><div class="currency">USD</div></div>
+      <a class="asset-deposit" href="deposit.html">Deposit <span aria-hidden="true">↗</span></a>
       <div class="balance-note">Your verified account overview <strong>•</strong> Your recorded internal USD account balance.</div>
       <div class="actions">
         <a class="action" href="deposit.html" style="cursor:pointer"><span class="symbol">＋</span>Deposit</a>
