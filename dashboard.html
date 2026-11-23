@@ -1757,28 +1757,50 @@ html,body{
         if(error)throw error;
         const holdings=(rows||[]).filter(row=>Number(row.balance)>0);
         const pricedHoldings=holdings.filter(row=>String(row.asset_code||'').toUpperCase()!=='USD');
-        if(!pricedHoldings.length){
-          window.updateTodayPnl(0,0);
-          return;
-        }
-        const quotes={...(await loadPnlMarketQuotes())};
+        const quotes=pricedHoldings.length?{...(await loadPnlMarketQuotes())}:{};
         const liveQuotes=window.NEXBIT_LIVE_QUOTES||{};
         Object.entries(liveQuotes).forEach(([asset,quote])=>{
           if(Date.now()-quote.updatedAt<15000&&Number.isFinite(quote.price)&&Number.isFinite(quote.change)&&quote.change>-100){
             quotes[asset]={price:quote.price,change:quote.change};
           }
         });
-        let totalPnl=0,totalValue=0,unpriced=[];
+        let totalPnl=0,totalValue=0,portfolioValue=0,unpriced=[];
+        const assetDisplay=[];
+        const hasUsdAsset=holdings.some(row=>String(row.asset_code||'').toUpperCase()==='USD');
         holdings.forEach(row=>{
           const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance);
           if(!Number.isFinite(quantity)||quantity<=0)return;
-          if(asset==='USD'){totalValue+=quantity;return;}
-          const quote=quotes[asset];
-          if(!quote){unpriced.push(asset);return;}
-          const previousPrice=quote.price/(1+quote.change/100);
-          totalPnl+=quantity*(quote.price-previousPrice);
-          totalValue+=quantity*quote.price;
+          let price=1;
+          if(asset!=='USD'){
+            const quote=quotes[asset];
+            if(!quote){unpriced.push(asset);assetDisplay.push({asset,quantity,value:null});return;}
+            price=quote.price;
+            const previousPrice=price/(1+quote.change/100);
+            totalPnl+=quantity*(price-previousPrice);
+          }
+          const value=quantity*price;
+          portfolioValue+=value;
+          totalValue+=value;
+          assetDisplay.push({asset,quantity,value});
         });
+        if(!hasUsdAsset&&Number.isFinite(Number(amount))&&Number(amount)>0){
+          portfolioValue+=Number(amount);
+          totalValue+=Number(amount);
+        }
+        const money=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+        const dashboardTotal=document.getElementById('dashboardBalance');
+        if(dashboardTotal)dashboardTotal.textContent=unpriced.length?'Partial — '+money(portfolioValue):money(portfolioValue);
+        const assetsBalance=document.getElementById('assetsViewBalance');
+        if(assetsBalance)assetsBalance.textContent=unpriced.length?'Partial — '+money(portfolioValue):money(portfolioValue);
+        const assetsBreakdown=document.getElementById('assetsViewBreakdown');
+        if(assetsBreakdown){
+          assetsBreakdown.innerHTML=assetDisplay.length?assetDisplay.map(item=>{
+            const safeAsset=item.asset.replace(/[&<>"']/g,'');
+            const quantity=item.quantity.toLocaleString(undefined,{maximumFractionDigits:8});
+            const value=item.value===null?'Price unavailable':money(item.value);
+            return '<div class="asset-view-row"><span>'+safeAsset+'<small style="display:block;opacity:.7;font-size:11px;font-weight:400">'+quantity+' '+safeAsset+'</small></span><strong>'+value+'</strong></div>';
+          }).join(''):'<div class="asset-view-empty">No asset balances have been recorded yet.</div>';
+        }
         if(unpriced.length){
           pnl.textContent='Partial — '+unpriced.join(', ')+' unpriced';
           pnl.className='pnl-neutral';
