@@ -1123,10 +1123,11 @@ html,body{
 .market-watch-group .market-see-more:active{background:rgba(225,230,237,.12) !important}
 
 
-/* TradingView stocks widget: keep it inside the existing NEXBIT silver/black market card. */
-.nexbit-stock-widget{width:100%;min-height:300px;overflow:hidden;background:transparent !important;color:#e6e8eb}
-.nexbit-stock-widget .tradingview-widget-container__widget{width:100%;min-height:270px}
-.nexbit-stock-widget .tradingview-widget-copyright{padding:4px 8px 2px;text-align:right;font-size:10px;opacity:.72}
+/* TradingView stocks widget: force the host area to match NEXBIT's black/silver market card. */
+.nexbit-stock-widget{width:100%;min-height:300px;overflow:hidden;background:#050505 !important;color:#e6e8eb;border-radius:10px}
+.nexbit-stock-widget .tradingview-widget-container__widget{width:100%;min-height:270px;background:#050505 !important}
+.nexbit-stock-widget iframe{background:#050505 !important;color-scheme:dark}
+.nexbit-stock-widget .tradingview-widget-copyright{padding:4px 8px 2px;text-align:right;font-size:10px;opacity:.72;background:#050505 !important}
 .nexbit-stock-widget .tradingview-widget-copyright a{color:#aeb4bd !important;text-decoration:none}
 </style>
 </head>
