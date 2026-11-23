@@ -1761,7 +1761,13 @@ html,body{
           window.updateTodayPnl(0,0);
           return;
         }
-        const quotes=await loadPnlMarketQuotes();
+        const quotes={...(await loadPnlMarketQuotes())};
+        const liveQuotes=window.NEXBIT_LIVE_QUOTES||{};
+        Object.entries(liveQuotes).forEach(([asset,quote])=>{
+          if(Date.now()-quote.updatedAt<15000&&Number.isFinite(quote.price)&&Number.isFinite(quote.change)&&quote.change>-100){
+            quotes[asset]={price:quote.price,change:quote.change};
+          }
+        });
         let totalPnl=0,totalValue=0,unpriced=[];
         holdings.forEach(row=>{
           const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance);
@@ -1868,7 +1874,13 @@ html,body{
     socket.onopen=()=>{cryptoLive=true;retryDelay=1500;};
     socket.onmessage=event=>{
       try{
-        const packet=JSON.parse(event.data),q=packet.data||packet,row=rowsBySymbol.get(String(q.s||'').toLowerCase());
+        const packet=JSON.parse(event.data),q=packet.data||packet,symbol=String(q.s||'').toLowerCase(),row=rowsBySymbol.get(symbol);
+        const assetBySymbol={btcusdt:'BTC',ethusdt:'ETH',solusdt:'SOL',bnbusdt:'BNB',xrpusdt:'XRP',dogeusdt:'DOGE',adausdt:'ADA',bchusdt:'BCH'};
+        const asset=assetBySymbol[symbol],livePrice=Number(q.c),liveChange=Number(q.P);
+        if(asset&&Number.isFinite(livePrice)&&livePrice>0&&Number.isFinite(liveChange)&&liveChange>-100){
+          window.NEXBIT_LIVE_QUOTES=window.NEXBIT_LIVE_QUOTES||{};
+          window.NEXBIT_LIVE_QUOTES[asset]={price:livePrice,change:liveChange,updatedAt:Date.now()};
+        }
         if(!row)return;
         paint(row,q.c,q.P,'[data-market-price]','[data-market-change]');setVolume(row,q.q);
       }catch(error){console.warn('NEXBIT crypto stream message error:',error);}
