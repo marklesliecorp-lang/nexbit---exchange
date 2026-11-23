@@ -760,6 +760,70 @@ body { background-attachment: initial; }
  .action .symbol{width:38px;height:38px;font-size:17px}
 }
 
+
+/* Approved mobile dashboard layout */
+.dashboard-balance-grid{grid-template-columns:minmax(0,1.65fr) minmax(220px,.85fr);gap:14px;align-items:stretch}
+.dashboard-balance-grid .balance-panel{min-height:188px;padding:22px 24px;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto}
+.dashboard-balance-grid .balance-panel>.asset-heading{grid-column:1;grid-row:1}
+.dashboard-balance-grid .balance-panel>.balance-row{grid-column:1;grid-row:2}
+.dashboard-balance-grid .balance-panel>.pnl-line{grid-column:1;grid-row:3}
+.dashboard-balance-grid .balance-panel>.asset-deposit{grid-column:2;grid-row:1 / 4;display:inline-flex;align-items:center;gap:8px;background:#ededed;color:#080808;padding:13px 20px;border-radius:30px;font-size:13px;font-weight:750}
+.asset-deposit svg{width:18px;height:18px}
+.balance-breakdown{display:grid;grid-template-columns:1fr;gap:12px}
+.mini-balance-card{display:flex;align-items:center;gap:13px;min-height:88px;padding:15px}
+.mini-balance-card>div:last-child{display:grid;gap:6px}
+.mini-balance-card span{font-size:11px;color:#bdbdbd}
+.mini-balance-card strong{font-size:19px;color:#f5f5f5}
+.mini-balance-icon{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;background:#1b1b1b;color:#e8e8e8}
+.mini-balance-icon svg{width:25px;height:25px}
+.dashboard-quick-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:16px 0 0}
+.dashboard-quick-actions .action{min-height:86px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px solid #252525;border-radius:14px;background:#111;color:#f3f3f3;font-size:11px;font-weight:650}
+.dashboard-quick-actions .symbol{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#1b1b1b;color:#e9e9e9}
+.dashboard-quick-actions .symbol svg{width:25px;height:25px;display:block}
+.portfolio-overview{margin-top:16px;padding:18px 20px;background:#101010;border-color:#292929}
+.portfolio-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.portfolio-heading h2{font-size:15px;font-weight:700;margin:0 0 13px;color:#f5f5f5}
+.portfolio-heading strong{font-size:28px;letter-spacing:-.04em;color:#f5f5f5}
+.portfolio-filters{display:flex;gap:6px;flex-wrap:nowrap}
+.portfolio-filters span{min-width:40px;text-align:center;padding:8px 10px;border-radius:20px;background:#1b1b1b;color:#c8c8c8;font-size:10px;font-weight:650}
+.portfolio-filters span.selected{background:#f1f1f1;color:#080808}
+.portfolio-chart{height:105px;margin-top:10px;overflow:hidden}
+.portfolio-chart svg{width:100%;height:100%;display:block}
+.portfolio-axis{display:flex;justify-content:space-between;color:#b6b6b6;font-size:9px;margin-top:3px}
+.portfolio-note{font-size:9px;color:#858585;margin:8px 0 0}
+@media(max-width:760px){
+ .dashboard-balance-grid{grid-template-columns:1fr;gap:10px}
+ .dashboard-balance-grid .balance-panel{min-height:0;padding:17px 16px;grid-template-columns:minmax(0,1fr) auto}
+ .dashboard-balance-grid .balance-panel>.asset-deposit{padding:12px 17px;font-size:12px}
+ .dashboard-balance-grid .balance{font-size:clamp(35px,9vw,43px)}
+ .balance-breakdown{grid-template-columns:1fr 1fr;gap:9px}
+ .mini-balance-card{min-height:78px;padding:11px;gap:9px}
+ .mini-balance-icon{width:39px;height:39px;flex-basis:39px}
+ .mini-balance-icon svg{width:21px;height:21px}
+ .mini-balance-card span{font-size:9px}
+ .mini-balance-card strong{font-size:15px}
+ .dashboard-quick-actions{gap:5px;margin-top:14px}
+ .dashboard-quick-actions .action{min-height:77px;gap:6px;font-size:9px;border-radius:12px}
+ .dashboard-quick-actions .symbol{width:44px;height:44px}
+ .dashboard-quick-actions .symbol svg{width:22px;height:22px}
+ .portfolio-overview{margin-top:14px;padding:15px}
+ .portfolio-heading{flex-direction:column;gap:12px}
+ .portfolio-heading h2{margin-bottom:8px}
+ .portfolio-heading strong{font-size:25px}
+ .portfolio-filters{width:100%;justify-content:space-between;gap:4px}
+ .portfolio-filters span{min-width:0;flex:1;padding:8px 5px;font-size:10px}
+ .portfolio-chart{height:92px}
+}
+@media(max-width:390px){
+ .dashboard-balance-grid .balance-panel>.asset-deposit{padding:10px 13px;font-size:11px}
+ .dashboard-quick-actions{gap:3px}
+ .dashboard-quick-actions .action{font-size:8px}
+ .dashboard-quick-actions .symbol{width:39px;height:39px}
+ .dashboard-quick-actions .symbol svg{width:20px;height:20px}
+ .mini-balance-card{padding:9px 7px}
+ .mini-balance-card strong{font-size:13px}
+}
+
 </style>
 </head>
 <body>
@@ -782,36 +846,36 @@ body { background-attachment: initial; }
   <a class="tab-menu" href="account.html" aria-label="More">☰</a>
 </nav>
 <main class="layout" id="overview">
-  <section class="grid">
+  <section class="grid dashboard-balance-grid">
     <article class="panel balance-panel">
       <div class="asset-heading"><div class="panel-label">Total Balance <span class="eye">◉</span></div></div>
-      <a class="asset-deposit" href="deposit.html">Deposit</a>
+      <a class="asset-deposit" href="deposit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 18v3h16v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Deposit</a>
       <div class="balance-row"><div class="balance" id="dashboardBalance">— — —</div><div class="currency">USD⌄</div></div>
       <div class="pnl-line">Today's P&amp;L <strong>— — — USD (—)</strong></div>
-      <div class="actions">
-        <a class="action" href="deposit.html"><span class="symbol">↓</span>Deposit</a>
-        <a class="action" href="withdraw.html"><span class="symbol">↑</span>Withdraw</a>
-        <a class="action" href="transfer.html"><span class="symbol">⇄</span>Transfer</a>
-        <a class="action" href="history.html"><span class="symbol">◷</span>History</a>
-        <a class="action" href="index.html#markets"><span class="symbol">＋</span>Buy</a>
-      </div>
     </article>
-    <div class="side-stack">
-      <article class="panel"><div class="panel-label">Total invested</div><div class="mini-stat"><strong>— — —</strong><span class="status">Coming soon</span></div><div class="balance-note">Investment records will show here.</div></article>
-      <article class="panel"><div class="panel-label">Account status</div><div class="mini-stat"><strong style="font-size:17px">Verified</strong><span class="status">Email confirmed</span></div><div class="balance-note" id="accountEmail">Loading account…</div></article>
+    <div class="side-stack balance-breakdown">
+      <article class="panel mini-balance-card"><div class="mini-balance-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h13M3 9h17m-4 5h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span>Available Balance</span><strong id="availableBalance">— — —</strong></div></article>
+      <article class="panel mini-balance-card"><div class="mini-balance-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div><span>Locked Balance</span><strong id="lockedBalance">— — —</strong></div></article>
     </div>
   </section>
+  <nav class="actions dashboard-quick-actions" aria-label="Quick actions">
+    <a class="action" href="deposit.html"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 18v3h16v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Deposit</a>
+    <a class="action" href="withdraw.html"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9m-5 5 5-5 5 5M4 6V3h16v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Withdraw</a>
+    <a class="action" href="transfer.html"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Transfer</a>
+    <a class="action" href="history.html"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>History</a>
+    <a class="action" href="index.html#markets"><span class="symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Buy</a>
+  </nav>
   <section class="panel portfolio-overview" aria-label="Portfolio overview">
-    <div class="section-head"><h2>Portfolio Overview</h2><span class="portfolio-period">Balance</span></div>
-    <div class="portfolio-total" id="portfolioBalance">— — —</div>
-    <div class="portfolio-chart" aria-hidden="true">
-      <svg viewBox="0 0 600 112" preserveAspectRatio="none">
-        <defs><linearGradient id="portfolioFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eeeeee" stop-opacity=".22"/><stop offset="1" stop-color="#eeeeee" stop-opacity="0"/></linearGradient></defs>
-        <path d="M0 88 C35 84 42 76 75 80 S120 58 150 68 S194 45 225 55 S270 30 300 45 S345 26 375 37 S420 18 450 31 S490 13 520 24 S565 8 600 13 L600 112 L0 112 Z" fill="url(#portfolioFill)"/>
-        <path d="M0 88 C35 84 42 76 75 80 S120 58 150 68 S194 45 225 55 S270 30 300 45 S345 26 375 37 S420 18 450 31 S490 13 520 24 S565 8 600 13" fill="none" stroke="#e5e5e5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+    <div class="portfolio-heading"><div><h2>Portfolio Overview</h2><strong id="portfolioBalance">— — —</strong></div><div class="portfolio-filters" aria-label="Portfolio time range"><span class="selected">1D</span><span>1W</span><span>1M</span><span>3M</span><span>1Y</span></div></div>
+    <div class="portfolio-chart" role="img" aria-label="Illustrative chart; historical portfolio data is not connected">
+      <svg viewBox="0 0 600 150" preserveAspectRatio="none">
+        <defs><linearGradient id="portfolioFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eeeeee" stop-opacity=".20"/><stop offset="1" stop-color="#eeeeee" stop-opacity="0"/></linearGradient></defs>
+        <path d="M0 120 C30 112 42 115 65 108 S105 96 130 104 S165 78 195 89 S225 70 250 81 S285 54 310 69 S345 45 370 59 S405 34 430 48 S465 29 490 42 S530 20 555 33 S580 18 600 15 L600 150 L0 150 Z" fill="url(#portfolioFill)"/>
+        <path d="M0 120 C30 112 42 115 65 108 S105 96 130 104 S165 78 195 89 S225 70 250 81 S285 54 310 69 S345 45 370 59 S405 34 430 48 S465 29 490 42 S530 20 555 33 S580 18 600 15" fill="none" stroke="#e8e8e8" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
       </svg>
     </div>
-    <p class="portfolio-note">Historical portfolio performance is not connected yet.</p>
+    <div class="portfolio-axis"><span>12AM</span><span>6AM</span><span>12PM</span><span>6PM</span><span>12AM</span></div>
+    <p class="portfolio-note">Illustrative chart only — historical performance data is not connected yet.</p>
   </section>
   <section class="promo-panel">
     <div class="promo-mark">✦</div><div><span class="promo-kicker">NEXBIT MARKETS</span><h2>Explore the crypto market</h2><p>View available market information and investment options.</p></div><a href="index.html#markets">Explore</a>
@@ -866,7 +930,57 @@ body { background-attachment: initial; }
     const {data:balance,error:balanceError}=await client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle();
     if(balanceError)throw balanceError;
     const amount=Number(balance?.balance||0);
-    document.getElementById('dashboardBalance').textContent='
+    const formattedBalance='
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT dashboard session error:',error);window.location.replace('login.html');});
+})();
+</script>
+
+
+
+</body>
+</html>+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    document.getElementById('portfolioBalance').textContent='
+    message.textContent='Your secure session is active.';
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT dashboard session error:',error);window.location.replace('login.html');});
+})();
+</script>
+
+
+
+</body>
+</html>+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    message.textContent='Your secure session is active.';
+  }
+  document.getElementById('logoutButton').addEventListener('click',async function(){
+    this.disabled=true;this.textContent='Logging out…';
+    const {error}=await client.auth.signOut();
+    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    window.location.replace('login.html');
+  });
+  init().catch(function(error){console.error('NEXBIT dashboard session error:',error);window.location.replace('login.html');});
+})();
+</script>
+
+
+
+</body>
+</html>+amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    document.getElementById('dashboardBalance').textContent=formattedBalance;
+    document.getElementById('portfolioBalance').textContent=formattedBalance;
     message.textContent='Your secure session is active.';
   }
   document.getElementById('logoutButton').addEventListener('click',async function(){
