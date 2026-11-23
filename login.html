@@ -124,6 +124,8 @@
       const emailField=document.getElementById('loginEmail');
       const passwordField=document.getElementById('loginPassword');
       const toggle=document.getElementById('togglePassword');
+      const signupLink=document.querySelector('.signup-note a');
+      if(signupLink) signupLink.addEventListener('click',function(){try{sessionStorage.removeItem('nexbitReturnToLoginAfterDashboardBack');}catch(error){}});
       const submit=document.getElementById('loginSubmit');
       const message=document.getElementById('loginMessage');
       const supabaseClient=window.supabase.createClient(
@@ -153,6 +155,7 @@
           passwordField.value='';
           submit.innerHTML='LOGGED IN ✓';
           message.textContent='Login successful. Taking you to your dashboard…';
+          try{sessionStorage.removeItem('nexbitReturnToLoginAfterDashboardBack');}catch(error){}
           const signedInUser=data.user;
           const isAdmin=signedInUser?.email?.toLowerCase()==='markleslie.corp@gmail.com' && signedInUser?.app_metadata?.role==='admin';
           const destination=isAdmin?'admin.html':'dashboard.html';
