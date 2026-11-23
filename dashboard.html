@@ -673,6 +673,33 @@ body { background-attachment: initial; }
 .brand-copy small{font-size:7px;font-weight:800;letter-spacing:.34em;color:#b7a58d;text-shadow:0 0 8px rgba(230,157,74,.28)}
 @media(max-width:760px){.brand-logo{width:25px;height:25px;flex-basis:25px}.brand-copy strong{font-size:15px}.brand-copy small{font-size:6px}}
 
+
+/* Mobile bottom navigation — rounded five-item dock matching reference */
+@media(max-width:760px){
+ body{padding-bottom:205px}
+ .bottom-nav{
+   display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;
+   position:fixed;left:0;right:0;bottom:62px;z-index:20;
+   height:128px;padding:25px 8px 12px;
+   background:#030303;border:1px solid rgba(255,255,255,.09);
+   border-radius:62px;box-shadow:0 -5px 24px rgba(0,0,0,.35);
+   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+ }
+ .bottom-nav a{
+   min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+   gap:8px;color:#696b70;font-size:12px;font-weight:700;line-height:1.1;
+   text-align:center;text-decoration:none;white-space:nowrap;
+ }
+ .bottom-nav a svg{width:25px;height:25px;display:block;color:#696b70;flex:0 0 auto}
+ .bottom-nav a.active{color:#fff}
+ .bottom-nav a.active svg{color:#fff}
+}
+@media(max-width:390px){
+ .bottom-nav{padding-left:4px;padding-right:4px}
+ .bottom-nav a{font-size:11px}
+ .bottom-nav a svg{width:24px;height:24px}
+}
+
 </style>
 </head>
 <body>
@@ -729,7 +756,13 @@ body { background-attachment: initial; }
   <section class="panel market-watch-panel"><div class="section-head"><h2>Market Watch</h2><a href="index.html#markets">View markets ›</a></div><div class="market-list"><div class="market-row"><div class="coin">BTC <small>Bitcoin</small></div><div class="price">—</div><div class="market-note">—</div></div><div class="market-row"><div class="coin">ETH <small>Ethereum</small></div><div class="price">—</div><div class="market-note">—</div></div><div class="market-row"><div class="coin">SOL <small>Solana</small></div><div class="price">—</div><div class="market-note">—</div></div></div></section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 </main>
-<nav class="bottom-nav" aria-label="Main navigation"><a href="dashboard.html"><span>⌂</span>Home</a><a href="index.html#markets"><span>⌁</span>Markets</a><a href="transfer.html"><span>⇄</span>Trade</a><a href="index.html#investment-packages"><span>⌁</span>Invest</a><a href="wallet.html"><span>▣</span>Assets</a></nav>
+<nav class="bottom-nav" aria-label="Main navigation">
+  <a class="active" href="dashboard.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
+  <a href="index.html#markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
+  <a href="transfer.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
+  <a href="index.html#investment-packages"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>TradFi</span></a>
+  <a href="wallet.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
+</nav>
 <script>
 (function(){
   if(!window.supabase?.createClient){const notice=document.getElementById('authMessage');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
