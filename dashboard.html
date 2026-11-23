@@ -664,11 +664,20 @@ body { background-attachment: initial; }
 .market-watch-panel .coin small{color:#a9a9a9}
 .market-watch-panel .section-head a{color:#e5e5e5}
 
+
+/* Header branding — existing NEXBIT logo with glowing wordmark */
+.brand.brand-lockup{display:flex;align-items:center;gap:9px;letter-spacing:0;line-height:1;text-decoration:none}
+.brand-logo{width:29px;height:29px;flex:0 0 29px;object-fit:contain;display:block}
+.brand-copy{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.brand-copy strong{font-size:19px;font-weight:900;letter-spacing:.13em;color:#f3c987;text-shadow:0 0 5px rgba(255,204,132,.75),0 0 12px rgba(230,157,74,.7),0 0 25px rgba(202,126,45,.48)}
+.brand-copy small{font-size:7px;font-weight:800;letter-spacing:.34em;color:#b7a58d;text-shadow:0 0 8px rgba(230,157,74,.28)}
+@media(max-width:760px){.brand-logo{width:25px;height:25px;flex-basis:25px}.brand-copy strong{font-size:15px}.brand-copy small{font-size:6px}}
+
 </style>
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="dashboard.html" aria-label="NEXBIT home"><span>✦</span> NEXBIT</a>
+  <a class="brand brand-lockup" href="dashboard.html" aria-label="NEXBIT home"><img class="brand-logo" src="nexbit-logo.JPEG" alt=""><span class="brand-copy"><strong>NEXBIT</strong><small>EXCHANGE</small></span></a>
   <a class="dashboard-search" href="index.html#markets"><span>⌕</span><span>Search markets</span></a>
   <div class="top-actions">
     <a class="header-icon" href="account.html" aria-label="Account">♙</a>
