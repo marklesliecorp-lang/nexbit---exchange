@@ -1061,7 +1061,6 @@ body { background-attachment: initial; }
 
   const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
   const message=document.getElementById('authMessage');
-  const emailNode=document.getElementById('accountEmail');
 
   async function init(){
     const {data:{session},error:sessionError}=await client.auth.getSession();
@@ -1076,7 +1075,6 @@ body { background-attachment: initial; }
     }
 
     const user=session.user;
-    emailNode.textContent=user.email||'Signed-in account';
 
     const {data:balance,error:balanceError}=await client
       .from('nexbit_account_balances')
