@@ -1341,20 +1341,9 @@ html,body{
   const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
   const message=document.getElementById('authMessage');
 
-  // Safari Back exits the dashboard, clears this device's session, and returns to login.
-  // The session guard also runs whenever Safari displays or restores this page.
-  let leavingDashboard=false;
-  history.replaceState({nexbitDashboardPage:true},'',location.href);
-  history.pushState({nexbitDashboardGuard:true},'',location.href);
-
+  // Let Safari's native Back action return directly to the login page.
+  // Do not add duplicate history entries or force a second navigation.
   window.addEventListener('popstate',function(){
-    if(leavingDashboard)return;
-    leavingDashboard=true;
-    try{sessionStorage.setItem('nexbitReturnToLoginAfterDashboardBack','1');}catch(error){}
-    // Navigate immediately: waiting for sign-out lets Safari briefly display
-    // the previous Sign Up page and its intro animation during history traversal.
-    document.documentElement.style.visibility='hidden';
-    window.location.replace('login.html');
     client.auth.signOut({scope:'local'}).catch(function(error){
       console.error('NEXBIT Safari back sign-out error:',error);
     });
