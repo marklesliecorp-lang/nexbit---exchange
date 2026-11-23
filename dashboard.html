@@ -1052,11 +1052,17 @@ body { background-attachment: initial; }
 </nav>
 <script>
 (function(){
-  if(!window.supabase?.createClient){const notice=document.getElementById('authMessage');if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}console.error('NEXBIT: Supabase library failed to load.');return;}
+  if(!window.supabase?.createClient){
+    const notice=document.getElementById('authMessage');
+    if(notice){notice.textContent='Secure connection could not load. Please refresh or try again shortly.';notice.hidden=false;}
+    console.error('NEXBIT: Supabase library failed to load.');
+    return;
+  }
 
   const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
   const message=document.getElementById('authMessage');
   const emailNode=document.getElementById('accountEmail');
+
   async function init(){
     const {data:{session},error:sessionError}=await client.auth.getSession();
     if(sessionError){
@@ -1068,6 +1074,7 @@ body { background-attachment: initial; }
       window.location.replace('login.html');
       return;
     }
+
     const user=session.user;
     emailNode.textContent=user.email||'Signed-in account';
 
@@ -1090,7 +1097,6 @@ body { background-attachment: initial; }
     document.getElementById('dashboardBalance').textContent=formattedBalance;
     document.getElementById('portfolioBalance').textContent=formattedBalance;
 
-    // Format P&L only when a real P&L amount and percentage are supplied.
     window.updateTodayPnl=function(profitLoss,percent){
       const pnl=document.getElementById('todayPnl');
       const value=Number(profitLoss);
@@ -1099,19 +1105,40 @@ body { background-attachment: initial; }
       const money=Math.abs(value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
       const rateText=Math.abs(rate).toFixed(2)+'%';
       if(value>0){
-        pnl.textContent='+
+        pnl.textContent='+$'+money+' USD (+'+rateText+')';
+        pnl.className='pnl-profit';
+      }else if(value<0){
+        pnl.textContent='-$'+money+' USD (-'+rateText+')';
+        pnl.className='pnl-loss';
+      }else{
+        pnl.textContent='$0.00 USD (0.00%)';
+        pnl.className='pnl-neutral';
+      }
+    };
+    window.updateTodayPnl(0,0);
+    message.textContent='Your secure session is active.';
   }
-  document.getElementById('logoutButton').addEventListener('click',async function(){
-    this.disabled=true;this.textContent='Logging out…';
+
+  const logoutButton=document.getElementById('logoutButton');
+  logoutButton.addEventListener('click',async function(){
+    this.disabled=true;
+    this.textContent='Logging out…';
     const {error}=await client.auth.signOut();
-    if(error){message.textContent='Unable to log out. Please try again.';this.disabled=false;this.textContent='Log out ↗';return;}
+    if(error){
+      message.textContent='Unable to log out. Please try again.';
+      this.disabled=false;
+      this.textContent='Log out ↗';
+      return;
+    }
     window.location.replace('login.html');
   });
-  init().catch(function(error){console.error('NEXBIT dashboard initialization error:',error);message.textContent='Your session is active, but some dashboard information could not be loaded. Please refresh.';});
+
+  init().catch(function(error){
+    console.error('NEXBIT dashboard initialization error:',error);
+    message.textContent='Your session is active, but some dashboard information could not be loaded. Please refresh.';
+  });
 })();
 </script>
-
-
 
 </body>
 </html>
