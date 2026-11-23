@@ -1792,9 +1792,9 @@ html,body{
         }
         const money=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
         const dashboardTotal=document.getElementById('dashboardBalance');
-        if(dashboardTotal)dashboardTotal.textContent=unpriced.length?'Partial — '+money(portfolioValue):money(portfolioValue);
+        if(dashboardTotal)dashboardTotal.textContent=money(portfolioValue);
         const assetsBalance=document.getElementById('assetsViewBalance');
-        if(assetsBalance)assetsBalance.textContent=unpriced.length?'Partial — '+money(portfolioValue):money(portfolioValue);
+        if(assetsBalance)assetsBalance.textContent=money(portfolioValue);
         const assetsBreakdown=document.getElementById('assetsViewBreakdown');
         if(assetsBreakdown){
           assetsBreakdown.innerHTML=assetDisplay.length?assetDisplay.map(item=>{
@@ -1805,7 +1805,7 @@ html,body{
           }).join(''):'<div class="asset-view-empty">No asset balances have been recorded yet.</div>';
         }
         if(unpriced.length){
-          pnl.textContent='Partial — '+unpriced.join(', ')+' unpriced';
+          pnl.textContent='Unavailable';
           pnl.className='pnl-neutral';
           return;
         }
