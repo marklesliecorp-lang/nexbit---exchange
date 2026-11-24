@@ -1311,7 +1311,7 @@ html,body{
 .investment-dashboard-view .investment-overview-eyebrow{display:block;color:#c8b17a;font-size:9px;font-weight:800;letter-spacing:2.2px;margin:0 0 7px}
 .investment-dashboard-view .investment-overview-title,
 .investment-dashboard-view .investment-current-heading h2{margin:0 0 17px;color:#f3f4f6;font-size:clamp(19px,3vw,24px);font-weight:750;letter-spacing:-.035em}
-.investment-dashboard-view .investment-section-nav{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 18px}.investment-dashboard-view .investment-section-nav a{display:inline-flex;align-items:center;padding:9px 15px;border:1px solid rgba(218,228,245,.17);border-radius:999px;background:rgba(255,255,255,.045);color:#d8dce4;font-size:11px;font-weight:700;text-decoration:none}.investment-dashboard-view .investment-section-nav a:focus-visible{outline:2px solid #d9c18a;outline-offset:3px}.investment-dashboard-view .package-logo{width:30px;height:30px;display:inline-grid;place-items:center;vertical-align:middle;margin-right:8px;border-radius:50%;background:rgba(255,255,255,.08)}.investment-dashboard-view .package-logo svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.investment-dashboard-view .basic-logo{color:#e6c77f}.investment-dashboard-view .silver-logo{color:#dbe2eb}.investment-dashboard-view .gold-logo{color:#f0ce79}.investment-dashboard-view .diamond-logo{color:#e4ebf5}
+.investment-dashboard-view .investment-section-nav{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 18px}.investment-dashboard-view .investment-section-nav button{display:inline-flex;align-items:center;padding:9px 15px;border:1px solid rgba(218,228,245,.17);border-radius:999px;background:rgba(255,255,255,.045);color:#d8dce4;font-size:11px;font-weight:700;text-decoration:none;cursor:pointer}.investment-dashboard-view .investment-section-nav button.active,.investment-dashboard-view .investment-section-nav button[aria-pressed="true"]{border-color:rgba(217,193,138,.65);background:rgba(217,193,138,.12);color:#e8d3a5}.investment-dashboard-view .investment-section-nav button:focus-visible{outline:2px solid #d9c18a;outline-offset:3px}.investment-dashboard-view .package-logo{width:30px;height:30px;display:inline-grid;place-items:center;vertical-align:middle;margin-right:8px;border-radius:50%;background:rgba(255,255,255,.08)}.investment-dashboard-view .package-logo svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.investment-dashboard-view .basic-logo{color:#e6c77f}.investment-dashboard-view .silver-logo{color:#dbe2eb}.investment-dashboard-view .gold-logo{color:#f0ce79}.investment-dashboard-view .diamond-logo{color:#e4ebf5}
  .investment-dashboard-view .investment-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .investment-dashboard-view .investment-summary-card{min-width:0;min-height:116px;padding:16px;border:1px solid rgba(218,228,245,.12);border-radius:13px;background:rgba(5,8,14,.42);display:flex;flex-direction:column;justify-content:center;gap:8px}
 .investment-dashboard-view .investment-summary-label{color:#aab2c0;font-size:11px;font-weight:600}
@@ -1515,8 +1515,8 @@ html,body{
 </section>
 
 <section class="dashboard-subview investment-dashboard-view" id="investmentView" hidden aria-label="Investment">
-  <nav class="investment-section-nav" aria-label="Investment sections"><a href="#investment-active-plans">Active Plans</a><a href="#investment-packages">Available Packages</a></nav>
-  <section class="investment-overview" aria-labelledby="investmentOverviewTitle">
+  <nav class="investment-section-nav" aria-label="Investment sections"><button type="button" data-investment-section="overview" aria-pressed="true" class="active">Overview</button><button type="button" data-investment-section="active" aria-pressed="false">Active Plans</button><button type="button" data-investment-section="packages" aria-pressed="false">Available Packages</button></nav>
+  <section class="investment-overview" id="investment-overview-section" aria-labelledby="investmentOverviewTitle">
     <span class="investment-overview-eyebrow">YOUR PORTFOLIO</span>
     <h2 class="investment-overview-title" id="investmentOverviewTitle">Investment Overview</h2>
     <div class="investment-summary-grid">
@@ -1538,7 +1538,7 @@ html,body{
     </div>
   </section>
 
-  <section class="investment-current-plans" id="investment-active-plans" aria-labelledby="investmentCurrentPlansTitle">
+  <section class="investment-current-plans" id="investment-active-plans" hidden aria-labelledby="investmentCurrentPlansTitle">
     <div class="investment-current-heading">
       <div>
         <span class="investment-overview-eyebrow">YOUR INVESTMENTS</span>
@@ -1554,7 +1554,7 @@ html,body{
     </div>
   </section>
 
-  <section class="nexbit-investments" id="investment-packages">
+  <section class="nexbit-investments" id="investment-packages" hidden>
     <div class="investment-container">
       <div class="investment-heading">
         <span class="investment-eyebrow">THE NEXBIT ADVANTAGE</span>
@@ -1705,6 +1705,16 @@ html,body{
     updateLimitTotal();
   }));
 })();
+
+  const investmentSectionButtons=[...document.querySelectorAll("[data-investment-section]")];
+  const investmentSections={overview:document.getElementById("investment-overview-section"),active:document.getElementById("investment-active-plans"),packages:document.getElementById("investment-packages")};
+  function showInvestmentSection(name){
+    const selected=Object.prototype.hasOwnProperty.call(investmentSections,name)?name:"overview";
+    Object.entries(investmentSections).forEach(([key,section])=>{if(section)section.hidden=key!==selected;});
+    investmentSectionButtons.forEach(button=>{const active=button.dataset.investmentSection===selected;button.classList.toggle("active",active);button.setAttribute("aria-pressed",String(active));});
+  }
+  investmentSectionButtons.forEach(button=>button.addEventListener("click",()=>showInvestmentSection(button.dataset.investmentSection)));
+  showInvestmentSection("overview");
 </script>
 <script>
 (function(){
