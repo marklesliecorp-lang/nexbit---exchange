@@ -1344,6 +1344,12 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 </style>
 
 <script id="nexbit-dashboard-route-guard">if(/^\/dashboard(?:\/|\.html)?\/?$/.test(window.location.pathname)){document.documentElement.classList.add("nexbit-dashboard-route");}</script>
+<style id="nexbit-total-balance-size">
+/* Slightly reduce only the Total Balance figure */
+.dashboard-balance-grid .balance-panel .balance{font-size:clamp(32px,4.4vw,40px)!important}
+@media(max-width:760px){.dashboard-balance-grid .balance-panel .balance{font-size:32px!important}}
+@media(max-width:390px){.dashboard-balance-grid .balance-panel .balance{font-size:29px!important}}
+</style>
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
