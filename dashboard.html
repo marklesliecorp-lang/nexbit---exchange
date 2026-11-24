@@ -1299,6 +1299,33 @@ html,body{
 .investment-dashboard-view .gold-button{background:linear-gradient(120deg,#f1d58d,#c49536);color:#1b1408}.investment-dashboard-view .diamond-button{background:linear-gradient(120deg,#eef2f7,#aeb9c8);color:#12161d}
 @media(max-width:600px){.investment-dashboard-view .nexbit-investments{padding:32px 13px 24px}.investment-dashboard-view .investment-grid{grid-template-columns:1fr;max-width:390px;gap:12px}.investment-dashboard-view .investment-card{padding:16px 17px}.investment-dashboard-view .investment-card h3{font-size:21px;margin:10px 0 4px}.investment-dashboard-view .package-description{display:none}.investment-dashboard-view .package-price{padding:7px 0}.investment-dashboard-view .package-features{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px}.investment-dashboard-view .package-features li{font-size:10px;padding:6px 0;line-height:1.35}}
 
+/* Cryptocurrency package hero */
+.investment-dashboard-view .crypto-packages-hero{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;max-width:1100px;min-height:164px;margin:0 auto 18px;padding:22px 24px;overflow:hidden;border:1px solid rgba(130,111,255,.45);border-radius:20px;background:radial-gradient(ellipse at 82% 48%,rgba(73,52,190,.36),transparent 45%),linear-gradient(115deg,#090d20 0%,#10112d 55%,#080d1c 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 34px rgba(27,17,92,.22)}
+.investment-dashboard-view .crypto-packages-hero:after{content:"";position:absolute;inset:auto 0 0;height:2px;background:linear-gradient(90deg,#f0b64f,#7954ff,#27b9ff);opacity:.9}
+.investment-dashboard-view .crypto-packages-hero-copy{position:relative;z-index:2;max-width:62%}
+.investment-dashboard-view .crypto-packages-kicker{display:block;margin-bottom:8px;color:#c5a9ff;font-size:9px;font-weight:800;letter-spacing:1.7px}
+.investment-dashboard-view .crypto-packages-hero h2{margin:0;color:#f6f7ff;font-size:clamp(22px,4vw,32px);line-height:1.12;font-weight:800;letter-spacing:-.04em}
+.investment-dashboard-view .crypto-packages-hero h2 span{color:#b58aff}
+.investment-dashboard-view .crypto-packages-hero p{margin:9px 0 0;color:#aeb8d2;font-size:12px;line-height:1.5}
+.investment-dashboard-view .crypto-market-art{position:relative;flex:0 0 40%;height:126px}
+.investment-dashboard-view .crypto-bull{position:absolute;z-index:2;left:0;top:13px;font-size:68px;line-height:1;filter:drop-shadow(0 5px 12px rgba(29,130,255,.55))}
+.investment-dashboard-view .crypto-market-art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.investment-dashboard-view .crypto-candles{fill:#19b98a;stroke:#29d8a4;stroke-width:2;stroke-linecap:round}
+.investment-dashboard-view .crypto-trend{fill:none;stroke:#f5bd55;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.investment-dashboard-view .crypto-coin{fill:#e8a52e;stroke:#ffda83;stroke-width:3;filter:drop-shadow(0 3px 8px rgba(245,174,53,.4))}
+.investment-dashboard-view .crypto-coin-mark{fill:#271705;font-size:25px;font-weight:900}
+.investment-dashboard-view .package-features li{line-height:1.4}
+@media(max-width:600px){
+ .investment-dashboard-view .crypto-packages-hero{min-height:142px;padding:18px 15px;border-radius:16px;gap:4px}
+ .investment-dashboard-view .crypto-packages-hero-copy{max-width:66%}
+ .investment-dashboard-view .crypto-packages-kicker{font-size:8px;letter-spacing:1.2px}
+ .investment-dashboard-view .crypto-packages-hero h2{font-size:23px}
+ .investment-dashboard-view .crypto-packages-hero p{font-size:10px}
+ .investment-dashboard-view .crypto-market-art{flex-basis:34%;height:104px;margin-right:-7px}
+ .investment-dashboard-view .crypto-bull{top:17px;left:-5px;font-size:49px}
+ .investment-dashboard-view .crypto-coin{r:19}
+ .investment-dashboard-view .package-features{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 /* Investment overview and current-plan panels */
 .investment-dashboard-view .investment-overview,
 .investment-dashboard-view .investment-current-plans{
@@ -1547,11 +1574,29 @@ html,body{
   </section>
 
   <section class="nexbit-investments" id="investment-packages" hidden>
+    <div class="crypto-packages-hero">
+      <div class="crypto-packages-hero-copy">
+        <span class="crypto-packages-kicker">NEXBIT CRYPTO INVESTMENTS</span>
+        <h2>Cryptocurrency <span>Packages</span></h2>
+        <p>Explore our four cryptocurrency investment plans.</p>
+      </div>
+      <div class="crypto-market-art" aria-hidden="true">
+        <span class="crypto-bull">🐂</span>
+        <svg viewBox="0 0 220 130" role="presentation">
+          <g class="crypto-candles">
+            <path d="M22 38V93 M22 51H35V75H22Z M57 20V78 M57 35H70V61H57Z M92 43V108 M92 58H105V86H92Z M128 12V72 M128 27H141V54H128Z M164 29V92 M164 43H177V72H164Z M197 4V65 M197 19H210V47H197Z"/>
+          </g>
+          <path class="crypto-trend" d="m12 111 39-24 32 10 39-39 32 8 48-48"/>
+          <circle class="crypto-coin" cx="168" cy="94" r="24"/>
+          <text class="crypto-coin-mark" x="168" y="103" text-anchor="middle">₿</text>
+        </svg>
+      </div>
+    </div>
     <div class="investment-container">
       <div class="investment-heading">
-        <span class="investment-eyebrow">THE NEXBIT ADVANTAGE</span>
-        <h2>Explore Our <span>Investment Packages</span></h2>
-        <p>Discover the available NEXBIT packages and explore the features, support and opportunities associated with each level. Choose the package that matches your intended participation and risk tolerance.</p>
+        <span class="investment-eyebrow">AVAILABLE CRYPTO PLANS</span>
+        <h2>Choose Your <span>Package</span></h2>
+        <p>All four cryptocurrency packages have a 30-day duration.</p>
         <div class="investment-heading-line"></div>
       </div>
       <div class="investment-grid">
@@ -1559,28 +1604,28 @@ html,body{
           <div class="investment-card-top"><span class="package-number">01 / BASIC</span></div>
           <h3 class="package-title"><span class="package-logo basic-logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8 19 5.5v5.2c0 4.7-2.9 8.3-7 10.5-4.1-2.2-7-5.8-7-10.5V5.5L12 2.8Z"/><path d="m8.8 11.8 2.1 2.1 4.4-4.6"/></svg></span>Basic</h3><p class="package-description">Your starting point for exploring NEXBIT.</p>
           <div class="package-price"><span class="price-label">Investment Range</span><strong>$1,000 <small>–</small> $4,900</strong></div><div class="package-divider"></div>
-          <ul class="package-features"><li><span>✓</span> Advertised ROI: 1% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
+          <ul class="package-features"><li><span>✓</span> Daily ROI: 1%</li><li><span>✓</span> Monthly ROI: 30%</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
           <a href="signup.html" class="package-button basic-button">Select This Package <span>→</span></a>
         </article>
         <article class="investment-card silver-card">
           <div class="investment-card-top"><span class="package-number">02 / SILVER</span></div>
           <h3 class="package-title"><span class="package-logo silver-logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8 19 5.5v5.2c0 4.7-2.9 8.3-7 10.5-4.1-2.2-7-5.8-7-10.5V5.5L12 2.8Z"/><path d="m8.8 11.8 2.1 2.1 4.4-4.6"/></svg></span>Silver</h3><p class="package-description">An elevated package with additional benefits.</p>
           <div class="package-price"><span class="price-label">Investment Range</span><strong>$5,000 <small>–</small> $9,999</strong></div><div class="package-divider"></div>
-          <ul class="package-features"><li><span>✓</span> Advertised ROI: 1.5% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
+          <ul class="package-features"><li><span>✓</span> Daily ROI: 1.5%</li><li><span>✓</span> Monthly ROI: 45%</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
           <a href="signup.html" class="package-button silver-button">Select This Package <span>→</span></a>
         </article>
         <article class="investment-card gold-card">
           <div class="gold-glow"></div><div class="investment-card-top"><span class="package-number">03 / GOLD</span><span class="premium-label">PREMIUM</span></div>
           <h3 class="package-title"><span class="package-logo gold-logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8 19 5.5v5.2c0 4.7-2.9 8.3-7 10.5-4.1-2.2-7-5.8-7-10.5V5.5L12 2.8Z"/><path d="m8.8 11.8 2.1 2.1 4.4-4.6"/></svg></span>Gold</h3><p class="package-description">The highest-tier package in the NEXBIT collection.</p>
           <div class="package-price"><span class="price-label">Investment Range</span><strong>$10,000 <small>–</small> $19,000</strong></div><div class="package-divider"></div>
-          <ul class="package-features"><li><span>✓</span> Advertised ROI: 10.5% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
+          <ul class="package-features"><li><span>✓</span> Daily ROI: 10.5%</li><li><span>✓</span> Monthly ROI: 315%</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
           <a href="signup.html" class="package-button gold-button">Select This Package <span>→</span></a>
         </article>
         <article class="investment-card diamond-card">
           <div class="investment-card-top"><span class="package-number">04 / DIAMOND</span><span class="premium-label diamond-label">ELITE</span></div>
           <h3 class="package-title"><span class="package-logo diamond-logo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8 19 5.5v5.2c0 4.7-2.9 8.3-7 10.5-4.1-2.2-7-5.8-7-10.5V5.5L12 2.8Z"/><path d="m8.8 11.8 2.1 2.1 4.4-4.6"/></svg></span>Diamond</h3><p class="package-description">An exclusive package for the highest investment level.</p>
           <div class="package-price"><span class="price-label">Investment Range</span><strong>$20,000 <small>–</small> $50,000</strong></div><div class="package-divider"></div>
-          <ul class="package-features"><li><span>✓</span> Advertised ROI: 20% Daily</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
+          <ul class="package-features"><li><span>✓</span> Daily ROI: 20%</li><li><span>✓</span> Monthly ROI: 600%</li><li><span>✓</span> Referral Bonus: 5%</li><li><span>✓</span> Support: 24/7 Active</li><li><span>✓</span> Copy Trading: Yes</li><li><span>✓</span> Duration: 30 Days</li></ul>
           <a href="signup.html" class="package-button diamond-button">Select This Package <span>→</span></a>
         </article>
       </div>
