@@ -1324,6 +1324,22 @@ body .bottom-nav > a.active svg { color:#fff !important; }
     html body #nexbitBottomNav > a > svg { width: 15px !important; height: 15px !important; flex-basis: 15px !important; }
   }
 </style>
+<style id="nexbit-dashboard-category-nav">
+.dashboard-tabs{position:relative;align-items:center;overflow-x:auto;overflow-y:visible;scrollbar-width:none;white-space:nowrap}
+.dashboard-tabs a{position:relative}
+.dashboard-tabs .dashboard-tab-stocks{margin-top:0}
+.dashboard-tab-new{position:absolute;right:-7px;top:-13px;padding:3px 8px;border-radius:12px;background:#f4d58a;color:#111;font-size:10px;font-weight:800;line-height:1.2}
+.dashboard-tabs .tab-menu{display:flex;align-items:center;justify-content:center;flex:0 0 42px}
+#nexbitBottomNav>a{position:relative;min-height:44px!important;font-size:10px!important}
+#nexbitBottomNav>a>svg{width:18px!important;height:18px!important;flex-basis:18px!important}
+#nexbitBottomNav>a.active,#nexbitBottomNav>a[aria-current="page"]{background:#252525!important;border-radius:10px!important;color:#fff!important}
+#nexbitBottomNav>a.active::after,#nexbitBottomNav>a[aria-current="page"]::after{content:"";position:absolute;bottom:2px;left:50%;width:5px;height:5px;border-radius:50%;background:#f4d58a;transform:translateX(-50%)}
+@media(max-width:390px){
+  #nexbitBottomNav>a{font-size:9px!important}
+  #nexbitBottomNav>a>svg{width:17px!important;height:17px!important;flex-basis:17px!important}
+}
+</style>
+
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
@@ -1342,6 +1358,15 @@ body .bottom-nav > a.active svg { color:#fff !important; }
     <button class="profile-btn" id="logoutButton" type="button">Log out</button>
   </div>
 </header>
+
+<nav class="dashboard-tabs" aria-label="Dashboard market categories">
+  <a class="active" href="#overview" aria-current="page">All</a>
+  <a class="dashboard-tab-stocks" href="#stockMarkets">Stocks<span class="dashboard-tab-new">New</span></a>
+  <a href="#overview">Macro</a>
+  <a href="#cryptoMarkets">Crypto</a>
+  <a href="#overview">Earn</a>
+  <span class="tab-menu" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+</nav>
 
 <main class="layout" id="overview">
   <section class="grid dashboard-balance-grid">
