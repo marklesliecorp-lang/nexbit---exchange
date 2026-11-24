@@ -1296,6 +1296,9 @@ body .bottom-nav > a.active svg { color:#fff !important; }
 }
 </style>
 
+<style id="nexbit-dashboard-route-visibility">
+html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibility:hidden!important;pointer-events:none!important}
+</style>
 <style id="nexbit-bottom-nav-fresh">
   body { padding-bottom: calc(76px + env(safe-area-inset-bottom)) !important; }
   html body #nexbitBottomNav {
@@ -1340,6 +1343,7 @@ body .bottom-nav > a.active svg { color:#fff !important; }
 }
 </style>
 
+<script id="nexbit-dashboard-route-guard">if(/^\/dashboard(?:\/|\.html)?\/?$/.test(window.location.pathname)){document.documentElement.classList.add("nexbit-dashboard-route");}</script>
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
