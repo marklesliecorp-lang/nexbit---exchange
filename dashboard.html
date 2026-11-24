@@ -1453,6 +1453,79 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 .investment-dashboard-view .crypto-plan-card .crypto-return small{color:#c6d5df}
 .investment-dashboard-view .crypto-plan-card .crypto-invest-button{color:#101a22}
 </style>
+
+<style id="nexbit-crypto-package-polish">
+/* Readable descriptions, duration and action layout for Crypto cards only */
+.investment-dashboard-view .crypto-plan-card{
+  grid-template-columns:24% minmax(0,1fr);
+  min-height:176px;
+  padding:11px;
+  gap:5px;
+}
+.investment-dashboard-view .crypto-plan-badge{max-width:88px}
+.investment-dashboard-view .crypto-plan-top{
+  align-items:flex-start;
+  gap:8px;
+  margin-bottom:12px;
+}
+.investment-dashboard-view .crypto-plan-top>div{min-width:0;flex:1}
+.investment-dashboard-view .crypto-plan-top h3{font-size:17px;line-height:1.2}
+.investment-dashboard-view .crypto-plan-top p{
+  margin:6px 0 0;
+  color:#dce7f0;
+  font-size:11px;
+  line-height:1.45;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.investment-dashboard-view .crypto-duration{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:27px;
+  padding:5px 9px;
+  border:1px solid #c7d8e3;
+  border-radius:20px;
+  background:linear-gradient(135deg,#e7eff4,#9eb6c7);
+  color:#142432;
+  font-size:9px;
+  font-weight:850;
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
+.investment-dashboard-view .crypto-plan-bottom{
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+}
+.investment-dashboard-view .crypto-return strong{font-size:clamp(17px,4.6vw,21px)}
+.investment-dashboard-view .crypto-return small{font-size:10px;color:#d5e2eb}
+.investment-dashboard-view .crypto-return span{color:#a8d4ed}
+.investment-dashboard-view .crypto-invest-button{
+  min-width:112px;
+  min-height:41px;
+  padding:0 13px;
+  border:1px solid #d5e5ef;
+  border-radius:12px;
+  background:linear-gradient(115deg,#eaf3f8,#91b9d0);
+  color:#102333;
+  font-size:10px;
+  font-weight:900;
+  box-shadow:0 5px 14px rgba(89,151,185,.2);
+}
+@media(max-width:390px){
+  .investment-dashboard-view .crypto-plan-card{grid-template-columns:22% minmax(0,1fr);padding:9px;min-height:184px}
+  .investment-dashboard-view .crypto-plan-badge{max-width:76px}
+  .investment-dashboard-view .crypto-plan-top{gap:5px}
+  .investment-dashboard-view .crypto-plan-top h3{font-size:15px}
+  .investment-dashboard-view .crypto-plan-top p{font-size:10px;line-height:1.4}
+  .investment-dashboard-view .crypto-duration{min-height:25px;padding:4px 7px;font-size:8px}
+  .investment-dashboard-view .crypto-plan-bottom{gap:6px}
+  .investment-dashboard-view .crypto-invest-button{min-width:103px;min-height:39px;padding:0 9px;font-size:9px}
+}
+</style>
+
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
@@ -1688,7 +1761,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 <button type="button" data-package-category="stocks" role="tab" aria-selected="false">Stocks</button>
 <button type="button" data-package-category="options" role="tab" aria-selected="false">Options</button>
 </div>
-<div class="package-category-panel" data-package-panel="crypto" role="tabpanel"><div class="crypto-packages-hero"><img src="89A3C4AD-46C7-49C5-B1AF-74FE77B9D719.png" class="crypto-packages-banner-image" alt=""><div class="crypto-packages-hero-copy"><h2>Cryptocurrency<br><span>Packages</span></h2><p>Invest smart. Grow bigger.</p></div></div><div class="crypto-benefit-row"><div class="crypto-benefit">🛡️ <span>Secure<br>Investments</span></div><div class="crypto-benefit">⚡ <span>Daily<br>Profits</span></div><div class="crypto-benefit">📈 <span>High Growth<br>Potential</span></div></div><div class="investment-container"><div class="crypto-plan-list"><article class="crypto-plan-card plan-basic"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">BASIC</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Basic</h3><p>Steady growth, great start</p></div><span class="crypto-duration">▦ 1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>1%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-silver"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">SILVER</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Silver</h3><p>More returns, more value</p></div><span class="crypto-duration">▦ 1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>1.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-gold"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">GOLD</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Gold</h3><p>Accelerated growth</p></div><span class="crypto-duration">▦ 1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>10.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-diamond"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><path class="badge-diamond" d="m60 34 25 17-25 29-25-29z"/><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">DIAMOND</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Diamond</h3><p>Maximum returns</p></div><span class="crypto-duration">▦ 1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>20%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article></div><div class="crypto-security-note"><span class="security-info">ⓘ</span><div><strong>Your investments are secure with TradFi</strong><small>Powered by advanced security protocols</small></div><span class="security-check">✓</span></div></div></section></div>
+<div class="package-category-panel" data-package-panel="crypto" role="tabpanel"><div class="crypto-packages-hero"><img src="89A3C4AD-46C7-49C5-B1AF-74FE77B9D719.png" class="crypto-packages-banner-image" alt=""><div class="crypto-packages-hero-copy"><h2>Cryptocurrency<br><span>Packages</span></h2><p>Invest smart. Grow bigger.</p></div></div><div class="crypto-benefit-row"><div class="crypto-benefit">🛡️ <span>Secure<br>Investments</span></div><div class="crypto-benefit">⚡ <span>Daily<br>Profits</span></div><div class="crypto-benefit">📈 <span>High Growth<br>Potential</span></div></div><div class="investment-container"><div class="crypto-plan-list"><article class="crypto-plan-card plan-basic"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">BASIC</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Basic</h3><p>Perfect for beginners looking to start their investment journey with minimal risk</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>1%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-silver"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">SILVER</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Silver</h3><p>Ideal for investors seeking steady and reliable returns.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>1.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-gold"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">GOLD</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Gold</h3><p>For investors looking for higher returns with managed risk.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>10.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-diamond"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><path class="badge-diamond" d="m60 34 25 17-25 29-25-29z"/><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">DIAMOND</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Diamond</h3><p>Designed for high-value investors targeting strong returns with higher exposure.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-bottom"><div class="crypto-return"><span>☀</span><strong>20%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article></div><div class="crypto-security-note"><span class="security-info">ⓘ</span><div><strong>Your investments are secure with TradFi</strong><small>Powered by advanced security protocols</small></div><span class="security-check">✓</span></div></div></section></div>
 <div class="package-category-panel" data-package-panel="stocks" role="tabpanel" hidden>
 <div class="market-package-hero stocks-package-hero"><div class="market-package-hero-copy"><span>STOCK MARKET</span><h2>Stocks <em>Packages</em></h2></div><div class="market-package-art" aria-hidden="true"><svg viewBox="0 0 220 110"><path d="M12 91 48 70 78 78 112 43 145 55 205 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 102H208" stroke="#aeb8c2" stroke-width="1" opacity=".35"/><path d="M48 70V91M78 78V96M112 43V77M145 55V82" stroke="#aeb8c2" stroke-width="5" stroke-linecap="round"/></svg></div></div>
 <div class="market-package-list"><article class="market-package-card market-tier-basic"><div class="market-package-mark" aria-hidden="true">Ⅰ</div><div class="market-package-info"><div class="market-package-heading"><h3>Basic</h3><span>STOCKS</span></div><p>Basic stocks package</p><div class="market-package-details"><span>Investment amount <strong>To be added</strong></span><span>Package returns <strong>To be added</strong></span></div></div></article><article class="market-package-card market-tier-silver"><div class="market-package-mark" aria-hidden="true">Ⅱ</div><div class="market-package-info"><div class="market-package-heading"><h3>Silver</h3><span>STOCKS</span></div><p>Silver stocks package</p><div class="market-package-details"><span>Investment amount <strong>To be added</strong></span><span>Package returns <strong>To be added</strong></span></div></div></article><article class="market-package-card market-tier-gold"><div class="market-package-mark" aria-hidden="true">Ⅲ</div><div class="market-package-info"><div class="market-package-heading"><h3>Gold</h3><span>STOCKS</span></div><p>Gold stocks package</p><div class="market-package-details"><span>Investment amount <strong>To be added</strong></span><span>Package returns <strong>To be added</strong></span></div></div></article><article class="market-package-card market-tier-diamond"><div class="market-package-mark" aria-hidden="true">◇</div><div class="market-package-info"><div class="market-package-heading"><h3>Diamond</h3><span>STOCKS</span></div><p>Diamond stocks package</p><div class="market-package-details"><span>Investment amount <strong>To be added</strong></span><span>Package returns <strong>To be added</strong></span></div></div></article></div></div>
