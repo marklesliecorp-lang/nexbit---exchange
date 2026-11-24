@@ -1295,8 +1295,43 @@ body .bottom-nav > a.active svg { color:#fff !important; }
   body .bottom-nav > a span { font-size:8px !important; }
 }
 </style>
+
+<style id="nexbit-bottom-nav-fresh">
+  body { padding-bottom: calc(94px + env(safe-area-inset-bottom)) !important; }
+  html body #nexbitBottomNav {
+    all: initial !important; box-sizing: border-box !important; position: fixed !important;
+    left: 50% !important; right: auto !important; bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    transform: translateX(-50%) !important; width: min(560px, calc(100vw - 20px)) !important;
+    min-height: 64px !important; padding: 7px 5px !important; display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important; align-items: center !important; gap: 2px !important;
+    visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+    z-index: 2147483647 !important; background: #101114 !important; border: 1px solid #35383f !important;
+    border-radius: 18px !important; box-shadow: 0 5px 24px rgba(0,0,0,.75) !important;
+  }
+  html body #nexbitBottomNav > a {
+    all: unset !important; box-sizing: border-box !important; min-width: 0 !important; min-height: 48px !important;
+    display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important;
+    gap: 4px !important; color: #b9bdc7 !important; font: 600 10px/1.2 Inter, Arial, sans-serif !important;
+    text-align: center !important; text-decoration: none !important; cursor: pointer !important; -webkit-tap-highlight-color: transparent !important;
+  }
+  html body #nexbitBottomNav > a > svg { display: block !important; width: 20px !important; height: 20px !important; flex: 0 0 20px !important; color: currentColor !important; }
+  html body #nexbitBottomNav > a > span { display: block !important; color: inherit !important; font: inherit !important; white-space: nowrap !important; }
+  html body #nexbitBottomNav > a.active, html body #nexbitBottomNav > a[aria-current="page"] { color: #f3bd69 !important; }
+  @media (min-width: 761px) { html body #nexbitBottomNav { width: min(560px, calc(100vw - 32px)) !important; } }
+  @media (max-width: 390px) {
+    html body #nexbitBottomNav { width: calc(100vw - 14px) !important; min-height: 58px !important; bottom: calc(7px + env(safe-area-inset-bottom)) !important; }
+    html body #nexbitBottomNav > a { font-size: 9px !important; }
+  }
+</style>
 </head>
 <body>
+<nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
+  <a class="active" href="#home" data-dashboard-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
+  <a href="#markets" data-dashboard-view="markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
+  <a href="#trade" data-dashboard-view="trade"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
+  <a href="#investment" data-dashboard-view="investment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
+  <a href="#assets" data-dashboard-view="assets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
+</nav>
 <header class="topbar">
   <a class="brand brand-lockup" href="dashboard.html" aria-label="NEXBIT home"><img class="brand-logo" src="nexbit-logo.JPEG" alt=""><span class="brand-copy"><strong>NEXBIT</strong><small>EXCHANGE</small></span></a>
   <a class="dashboard-search" href="index.html#markets"><span>⌕</span><span>Search markets</span></a>
@@ -1544,13 +1579,7 @@ body .bottom-nav > a.active svg { color:#fff !important; }
   </section>
 </section>
 
-<nav class="bottom-nav" aria-label="Main navigation">
-  <a class="active" href="#home" data-dashboard-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
-  <a href="#markets" data-dashboard-view="markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
-  <a href="#trade" data-dashboard-view="trade"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
-  <a href="#investment" data-dashboard-view="investment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
-  <a href="#assets" data-dashboard-view="assets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
-</nav>
+
 <script>
 /* NEXBIT app-style bottom navigation: switch dashboard/trade views without reloading */
 (function(){
