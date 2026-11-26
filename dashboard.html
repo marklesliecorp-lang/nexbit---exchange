@@ -1765,7 +1765,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 
 <style id="nexbit-investment-overview-functional">
 .investment-dashboard-view .investment-summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-.investment-dashboard-view .investment-summary-profit strong{color:#d9c18a}
+.investment-dashboard-view .investment-summary-profit strong{color:#22c55e}
 .investment-dashboard-view .investment-overview-lower{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px;margin-top:14px}
 .investment-dashboard-view .investment-insight-card{min-width:0;padding:16px;border:1px solid rgba(218,228,245,.13);border-radius:14px;background:rgba(5,8,14,.38)}
 .investment-dashboard-view .investment-insight-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
@@ -2265,7 +2265,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       const plansNode=document.getElementById('investmentCurrentPlansList');
       const money=value=>String.fromCharCode(36)+Number(value||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
       const safe=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-      const {data:rows,error}=await client.from('nexbit_investments').select('id,reference,asset_category,package_name,principal_amount,currency_code,daily_rate_percent,duration_days,expected_profit,realized_profit,status,started_at,matures_at,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(50);
+      const {data:rows,error}=await client.from('nexbit_investments').select('id,reference,asset_category,package_name,principal_amount,currency_code,daily_rate_percent,duration_days,expected_profit,realized_profit,status,started_at,matures_at,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1000);
       if(error){
         console.warn('NEXBIT investment records unavailable:',error.message);
         [totalNode,returnsNode,countNode,profitNode].forEach(node=>{if(node)node.textContent='Unavailable';});
@@ -2279,11 +2279,18 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       const counted=investments.filter(row=>row.status==='active'||row.status==='completed');
       const total=counted.reduce((sum,row)=>sum+Number(row.principal_amount||0),0);
       const projected=active.reduce((sum,row)=>sum+Number(row.expected_profit||0),0);
-      const realized=investments.reduce((sum,row)=>sum+Number(row.realized_profit||0),0);
+      const realized=investments.reduce((sum,row)=>{
+        if(row.status==='completed')return sum+Number(row.realized_profit||0);
+        if(row.status!=='active'||!row.started_at)return sum;
+        const elapsedDays=Math.max(0,Math.floor((Date.now()-new Date(row.started_at).getTime())/86400000));
+        const earnedDays=Math.min(elapsedDays,Math.max(0,Number(row.duration_days||0)));
+        const dailyProfit=Number(row.principal_amount||0)*Number(row.daily_rate_percent||0)/100;
+        return sum+(dailyProfit*earnedDays);
+      },0);
       if(totalNode)totalNode.textContent=money(total);
       if(returnsNode)returnsNode.textContent=money(projected);
       if(countNode)countNode.textContent=String(active.length);
-      if(profitNode)profitNode.textContent=money(realized);
+      if(profitNode)profitNode.textContent='+'+money(realized);
       if(recentNode)recentNode.innerHTML=investments.length?investments.slice(0,5).map(row=>'<div class="investment-recent-row"><div class="investment-recent-main"><strong>'+safe(row.package_name)+' · '+safe(row.asset_category)+'</strong><small>'+safe(row.status.toUpperCase())+' · '+new Date(row.created_at).toLocaleDateString()+'</small></div><span class="investment-recent-amount">'+money(row.principal_amount)+'</span></div>').join(''):'<div class="investment-chart-empty">No investment records yet.</div>';
       if(chartNode){
         const chartRows=investments.slice(0,6).reverse();
