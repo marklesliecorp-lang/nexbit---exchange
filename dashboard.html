@@ -2228,23 +2228,6 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     </div>
     <iframe class="trade-chart-frame" id="tradeChart" title="Live TradingView candlestick chart" loading="lazy" allowfullscreen src="https://www.tradingview.com/widgetembed/?symbol=BINANCE%3ABTCUSDT&interval=15&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=%23080b10&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en"></iframe>
   </div>
-  <div class="trade-market-card">
-    <div class="trade-data-tabs" role="tablist" aria-label="Market data">
-      <button type="button" class="active" data-trade-data-tab="depth" role="tab" aria-selected="true">Order Book</button>
-      <button type="button" data-trade-data-tab="recent" role="tab" aria-selected="false">Recent Trades</button>
-    </div>
-    <div class="trade-depth-panel" id="tradeDepthPanel">
-      <div class="trade-depth-head"><span>Price (USDT)</span><span>Amount</span><span>Total</span></div>
-      <div id="tradeAsks" class="trade-depth-list"><div class="trade-feed-empty">Connecting to live market depth…</div></div>
-      <div class="trade-mid-price"><strong id="tradeMidPrice">—</strong><span>Live market price</span></div>
-      <div id="tradeBids" class="trade-depth-list"><div class="trade-feed-empty">Waiting for buy orders…</div></div>
-    </div>
-    <div class="trade-recent-panel" id="tradeRecentPanel" hidden>
-      <div class="trade-depth-head"><span>Price (USDT)</span><span>Amount</span><span>Time</span></div>
-      <div id="tradeRecentRows" class="trade-depth-list"><div class="trade-feed-empty">Waiting for recent trades…</div></div>
-    </div>
-    <div class="trade-data-source">Market prices and market depth supplied by Binance public market data.</div>
-  </div>
   <section class="trade-setup-card" aria-labelledby="tradeSetupTitle">
     <div class="trade-setup-heading"><h2 id="tradeSetupTitle">Place Spot Order</h2><span class="trade-order-status">SPOT</span></div>
     <div class="trade-order-tabs" role="group" aria-label="Order side">
@@ -2263,6 +2246,23 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     <div class="trade-available"><span id="tradeAvailableLabel">Available USDT</span><strong id="tradeAvailableBalance">Loading…</strong></div>
     <button type="button" class="trade-submit-button" id="tradeSubmitButton" disabled>Trading execution setup</button>
   </section>
+  <div class="trade-market-card">
+    <div class="trade-data-tabs" role="tablist" aria-label="Market data">
+      <button type="button" class="active" data-trade-data-tab="depth" role="tab" aria-selected="true">Order Book</button>
+      <button type="button" data-trade-data-tab="recent" role="tab" aria-selected="false">Recent Trades</button>
+    </div>
+    <div class="trade-depth-panel" id="tradeDepthPanel">
+      <div class="trade-depth-head"><span>Price (USDT)</span><span>Amount</span><span>Total</span></div>
+      <div id="tradeAsks" class="trade-depth-list"><div class="trade-feed-empty">Connecting to live market depth…</div></div>
+      <div class="trade-mid-price"><strong id="tradeMidPrice">—</strong><span>Live market price</span></div>
+      <div id="tradeBids" class="trade-depth-list"><div class="trade-feed-empty">Waiting for buy orders…</div></div>
+    </div>
+    <div class="trade-recent-panel" id="tradeRecentPanel" hidden>
+      <div class="trade-depth-head"><span>Price (USDT)</span><span>Amount</span><span>Time</span></div>
+      <div id="tradeRecentRows" class="trade-depth-list"><div class="trade-feed-empty">Waiting for recent trades…</div></div>
+    </div>
+    <div class="trade-data-source">Market prices and market depth supplied by Binance public market data.</div>
+  </div>
 </section>
 
 
