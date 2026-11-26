@@ -1765,7 +1765,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 
 <style id="nexbit-investment-overview-functional">
 .investment-dashboard-view .investment-summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-.investment-dashboard-view .investment-summary-profit strong{color:#22c55e}
+#investmentView #investmentRealizedProfit{color:#22c55e!important}
 .investment-dashboard-view .investment-overview-lower{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px;margin-top:14px}
 .investment-dashboard-view .investment-insight-card{min-width:0;padding:16px;border:1px solid rgba(218,228,245,.13);border-radius:14px;background:rgba(5,8,14,.38)}
 .investment-dashboard-view .investment-insight-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
@@ -1997,7 +1997,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       <article class="investment-summary-card investment-summary-total"><span class="investment-summary-label">Total invested</span><strong id="investmentTotalInvested">—</strong><small id="investmentTotalInvestedNote">Confirmed investments</small></article>
       <article class="investment-summary-card investment-summary-returns"><span class="investment-summary-label">Expected returns</span><strong id="investmentExpectedReturns">—</strong><small>Projected plan returns</small></article>
       <article class="investment-summary-card investment-summary-count"><span class="investment-summary-label">Active plans</span><strong id="investmentCurrentPlans">—</strong><small>Currently running</small></article>
-      <article class="investment-summary-card investment-summary-profit"><span class="investment-summary-label">Realized profit</span><strong id="investmentRealizedProfit">—</strong><small>Recorded earnings</small></article>
+      <article class="investment-summary-card investment-summary-profit"><span class="investment-summary-label">Realized profit</span><strong id="investmentRealizedProfit">+$0.00</strong><small>Recorded earnings</small></article>
     </div>
     <div class="investment-overview-lower">
       <section class="investment-insight-card" aria-labelledby="investmentActivityTitle"><div class="investment-insight-heading"><div><span class="investment-overview-eyebrow">PORTFOLIO HISTORY</span><h3 id="investmentActivityTitle">Investment activity</h3></div><span class="investment-insight-period">Recent plans</span></div><div id="investmentPerformanceChart" class="investment-activity-chart" aria-live="polite"><div class="investment-chart-empty">Your investment activity will appear here.</div></div></section>
