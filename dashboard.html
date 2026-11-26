@@ -2616,6 +2616,51 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 .nexbit-invest-review{margin-top:10px;padding:12px;border-radius:10px;background:#181a1d;color:#e8e8e8;font-size:12px;line-height:1.8}
 .nexbit-invest-message{min-height:15px;color:#e7c980;font-size:11px;line-height:1.5}.nexbit-invest-submit{width:100%;min-height:46px;border:0;border-radius:10px;background:linear-gradient(110deg,#d4a85c,#f0d797);color:#17120a;font-weight:800;font-size:13px}
 @media(max-width:480px){.nexbit-invest-dialog{padding:23px 17px 17px;border-radius:16px}.nexbit-invest-dialog h2{font-size:19px}}
+
+/* Compact water-silver and black investment overview */
+#investmentView .investment-section-nav{gap:6px;margin:0 auto 12px;max-width:920px}
+#investmentView .investment-section-nav button{padding:7px 11px;border:1px solid rgba(205,215,228,.25);border-radius:8px;background:linear-gradient(145deg,#222a34,#0b0e13);color:#cbd3df;font-size:10px;font-weight:750;box-shadow:inset 0 1px 0 rgba(255,255,255,.09)}
+#investmentView .investment-section-nav button.active{border-color:#aebdce;background:linear-gradient(145deg,#aebdce,#596575 55%,#252c36);color:#080b10}
+#investmentView .investment-overview{max-width:920px;margin:0 auto 16px;padding:15px;border:1px solid rgba(190,204,221,.3);border-radius:13px;background:linear-gradient(145deg,#151b23 0%,#080a0e 62%,#1b222c 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 9px 24px rgba(0,0,0,.24)}
+#investmentView .investment-overview-eyebrow{color:#aebdce;font-size:8px;letter-spacing:1.6px;margin-bottom:5px}
+#investmentView .investment-overview-title{font-size:19px;margin:0 0 12px;color:#f1f4f8}
+#investmentView .investment-summary-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#investmentView .investment-summary-card{min-height:82px;padding:10px;border:1px solid rgba(190,204,221,.2);border-radius:9px;background:linear-gradient(150deg,rgba(180,194,211,.11),rgba(7,10,15,.9) 75%);gap:5px}
+#investmentView .investment-summary-label{color:#b8c2d0;font-size:9px}
+#investmentView .investment-summary-card strong{color:#f0f3f7;font-size:clamp(16px,2.5vw,21px);letter-spacing:-.035em}
+#investmentView .investment-summary-returns strong{color:#c5d1df}
+#investmentView .investment-summary-card small{color:#8995a5;font-size:8px}
+#investmentView .investment-overview-lower{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+#investmentView .investment-insight-card{min-width:0;padding:11px;border:1px solid rgba(190,204,221,.2);border-radius:10px;background:linear-gradient(150deg,rgba(167,183,202,.09),rgba(5,7,11,.94) 72%)}
+#investmentView .investment-insight-heading{margin-bottom:8px}
+#investmentView .investment-insight-heading h3{font-size:12px;color:#edf1f6;margin:3px 0 0}
+#investmentView .investment-insight-period{font-size:8px;color:#aeb9c8}
+#investmentView .investment-activity-chart{min-height:92px}
+#investmentView .investment-chart-empty{padding:14px 8px;font-size:9px;color:#929eae}
+#investmentView .investment-recent-list{gap:6px}
+#investmentView .investment-view-all{padding:5px 8px;border:1px solid rgba(190,204,221,.3);border-radius:7px;background:#171e28;color:#d9e1eb;font-size:9px}
+#investmentView .investment-current-plans{max-width:920px;margin:0 auto 16px;padding:15px;border:1px solid rgba(190,204,221,.28);border-radius:13px;background:linear-gradient(145deg,#151b23,#080a0e 65%,#1b222c);box-shadow:0 9px 24px rgba(0,0,0,.22)}
+#investmentView .investment-current-heading{margin-bottom:10px}
+#investmentView .investment-current-heading h2{font-size:18px;margin:0;color:#f1f4f8}
+#investmentView .investment-current-list{gap:8px}
+#investmentView .investment-empty-state{min-height:96px;padding:14px 10px;border-color:rgba(190,204,221,.24);border-radius:10px;background:rgba(170,185,204,.035)}
+#investmentView .investment-empty-icon{width:29px;height:29px;margin-bottom:6px;background:rgba(190,204,221,.1);color:#c5d1df;font-size:17px}
+#investmentView .investment-empty-state strong{font-size:11px;color:#e4eaf1}
+#investmentView .investment-empty-state p{font-size:9px;color:#9aa6b6}
+@media(max-width:600px){
+ #investmentView .investment-section-nav{gap:5px;margin-bottom:9px}
+ #investmentView .investment-section-nav button{padding:7px 9px;font-size:9px}
+ #investmentView .investment-overview{padding:12px 10px;margin-bottom:12px;border-radius:11px}
+ #investmentView .investment-overview-title{font-size:17px;margin-bottom:9px}
+ #investmentView .investment-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ #investmentView .investment-summary-card{min-height:72px;padding:8px}
+ #investmentView .investment-summary-card:first-child{grid-column:auto;min-height:72px}
+ #investmentView .investment-summary-card strong{font-size:16px}
+ #investmentView .investment-overview-lower{grid-template-columns:1fr;gap:7px;margin-top:8px}
+ #investmentView .investment-insight-card{padding:9px}
+ #investmentView .investment-current-plans{padding:12px 10px;margin-bottom:12px}
+}
+
 </style>
 
 
