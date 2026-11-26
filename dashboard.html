@@ -1801,8 +1801,8 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 </style>
 
 <style id="nexbit-assets-watercolor-black">
-/* Assets only: pure black and natural water blue, with no additional colours */
-#assetsView{background:#000!important;color:#7ec8e3!important}
+/* Assets only: colourless, transparent water-like surfaces on pure black */
+#assetsView{background:#000!important;color:#000!important}
 #assetsView .subview-heading h1,
 #assetsView .subview-heading p,
 #assetsView .asset-view-label,
@@ -1811,28 +1811,22 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 #assetsView .asset-view-section-head h2,
 #assetsView .asset-view-section-head a,
 #assetsView .asset-view-row,
-#assetsView .asset-view-row strong{color:#7ec8e3!important}
+#assetsView .asset-view-row strong{color:inherit!important}
 #assetsView .asset-view-card{
-  background:#7ec8e3!important;
-  border:1px solid #7ec8e3!important;
+  background:transparent!important;
+  border:1px solid transparent!important;
   box-shadow:none!important;
-  color:#000!important
+  color:inherit!important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px)
 }
-#assetsView .asset-view-card *,
-#assetsView .asset-view-card .asset-view-label,
-#assetsView .asset-view-card .asset-view-empty,
-#assetsView .asset-view-card .asset-view-balance,
-#assetsView .asset-view-card .asset-view-section-head h2,
-#assetsView .asset-view-card .asset-view-section-head a,
-#assetsView .asset-view-card .asset-view-row,
-#assetsView .asset-view-card .asset-view-row strong{color:#000!important}
 #assetsView .asset-view-actions a{
-  background:#000!important;
-  border:1px solid #000!important;
-  color:#7ec8e3!important;
+  background:transparent!important;
+  border:1px solid transparent!important;
+  color:inherit!important;
   box-shadow:none!important
 }
-#assetsView .asset-view-row{border-top:1px solid #000!important}
+#assetsView .asset-view-row{border-top:1px solid transparent!important}
 </style>
 </head>
 <body>
