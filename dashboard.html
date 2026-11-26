@@ -1674,6 +1674,34 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 }
 </style>
 
+
+<style id="nexbit-available-packages-unified-layout">
+@media(max-width:760px){
+ body:has(#investment-packages:not([hidden])) .dashboard-tabs{display:none!important}
+ #investmentView:has(#investment-packages:not([hidden])){padding-top:8px!important}
+ #investmentView:has(#investment-packages:not([hidden])) .investment-section-nav{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;margin:0 13px 14px!important;padding:0!important
+ }
+ #investmentView:has(#investment-packages:not([hidden])) .investment-section-nav button{
+  display:flex!important;justify-content:center!important;align-items:center!important;min-width:0!important;min-height:42px!important;padding:8px 5px!important;border:1px solid #303238!important;border-radius:999px!important;background:#111214!important;color:#c5c9ce!important;font-size:11px!important;font-weight:700!important;white-space:nowrap!important
+ }
+ #investmentView:has(#investment-packages:not([hidden])) .investment-section-nav button.active{border-color:#d5bd83!important;background:#211d14!important;color:#ead8ad!important}
+ .investment-dashboard-view .nexbit-investments{padding:0 13px 24px!important;margin:0!important;background:#000!important;background-image:none!important}
+ .investment-dashboard-view .package-category-tabs{display:flex!important;gap:5px!important;margin:0 auto 13px!important;padding:4px!important;border:1px solid #292d31!important;border-radius:999px!important;background:#08090a!important}
+ .investment-dashboard-view .package-category-tabs button{min-height:40px!important;padding:7px 4px!important;font-size:11px!important}
+ #investment-packages .stocks-packages-banner{width:100%!important;max-width:820px!important;margin:0 auto 14px!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+ #investment-packages .stocks-packages-banner img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;object-fit:contain!important;border:0!important;border-radius:12px!important}
+ #investment-packages .stocks-package-list{display:grid!important;gap:10px!important;margin:0 auto!important}
+}
+@media(min-width:761px){
+ body:has(#investment-packages:not([hidden])) .dashboard-tabs{display:none!important}
+ #investmentView:has(#investment-packages:not([hidden])){padding-top:14px!important}
+ .investment-dashboard-view .nexbit-investments{padding:0 22px 30px!important;background:#000!important;background-image:none!important}
+ .investment-dashboard-view .package-category-tabs{margin:0 auto 16px!important}
+ #investment-packages .stocks-packages-banner{margin:0 auto 16px!important}
+}
+</style>
+
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
