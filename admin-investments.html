@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050505"><title>Investment Management | NEXBIT Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onerror="if(this.dataset.fallback){this.onerror=null;}else{this.dataset.fallback='1';this.src='https://unpkg.com/@supabase/supabase-js@2';}"></script>
+<style>
+:root{color-scheme:dark;--bg:#050505;--panel:#111214;--line:#292b30;--gold:#e4c47e;--muted:#9298a3;--white:#f5f5f5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:14px Inter,Arial,sans-serif}header{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(16px,calc((100% - 1180px)/2));position:sticky;top:0;background:#080808;z-index:5}.brand{font-size:19px;letter-spacing:3px;font-weight:900;color:var(--gold);text-decoration:none}header a.back{color:#c7cbd2;text-decoration:none;font-size:12px}main{max-width:1180px;margin:0 auto;padding:25px 16px 70px}.eyebrow{font-size:9px;letter-spacing:2px;color:var(--gold);font-weight:800}h1{font-size:26px;margin:8px 0 5px}.sub{color:var(--muted);font-size:12px;margin:0 0 22px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:17px}.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px}.stat{padding:16px}.stat small{display:block;color:var(--muted);font-size:10px}.stat strong{display:block;margin-top:8px;font-size:24px;font-variant-numeric:tabular-nums}.panel{padding:17px;margin-top:14px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.panel h2{font-size:15px;margin:0}.tools{display:flex;flex-wrap:wrap;gap:8px}.field,input,select{min-height:40px;border:1px solid #373a40;border-radius:8px;background:#08090b;color:#f5f5f5;padding:0 11px;font:inherit;font-size:12px}.tools input{min-width:180px}.btn{min-height:39px;padding:0 14px;border:1px solid #b99452;border-radius:8px;background:linear-gradient(110deg,#d2a65b,#efd797);color:#161109;font-size:11px;font-weight:800;cursor:pointer}.btn.secondary{background:#1a1b1f;color:#eee;border-color:#41434a}.btn:disabled{opacity:.55;cursor:wait}.grid-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.grid-form label{display:grid;gap:6px;color:#c2c7d0;font-size:10px}.grid-form input,.grid-form select{width:100%}.message{min-height:16px;color:var(--gold);font-size:11px;margin:10px 0 0}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #25272c;font-size:11px;white-space:nowrap}th{font-size:9px;color:#a7adb8;letter-spacing:.8px}td{color:#e7e8eb}.pill{display:inline-block;padding:5px 8px;border:1px solid #3c3e43;border-radius:20px;color:#e4c47e;font-size:9px}.edit{padding:6px 10px;border:1px solid #444;border-radius:7px;background:#191a1d;color:#f5f5f5;font-size:10px}.filters{display:flex;flex-wrap:wrap;gap:8px}.modal[hidden]{display:none}.modal{position:fixed;inset:0;z-index:10;background:#000c;display:grid;place-items:center;padding:16px}.modal-card{width:min(100%,540px);max-height:90vh;overflow:auto;background:#111317;border:1px solid #45413a;border-radius:15px;padding:19px}.modal-card h2{margin:0 0 14px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+@media(max-width:700px){main{padding:20px 13px 55px}h1{font-size:22px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{padding:13px}.stat strong{font-size:20px}.grid-form{grid-template-columns:1fr 1fr}.panel{padding:13px}.panel-head{align-items:flex-start;flex-direction:column}.tools{width:100%}.tools input{flex:1;min-width:0}}
+@media(max-width:420px){.grid-form{grid-template-columns:1fr}}
+</style></head><body>
+<header><a class="brand" href="admin.html">NEXBIT <span style="font-size:9px;letter-spacing:1px">ADMIN</span></a><a class="back" href="admin.html">← Admin dashboard</a></header>
+<main id="app" hidden>
+ <span class="eyebrow">PORTFOLIO CONTROL</span><h1>Investment Management</h1><p class="sub">Review, post and correct customer investment records.</p>
+ <section class="stats">
+  <article class="stat"><small>Total investments</small><strong id="statTotal">0</strong></article>
+  <article class="stat"><small>Active investments</small><strong id="statActive">0</strong></article>
+  <article class="stat"><small>Completed</small><strong id="statCompleted">0</strong></article>
+  <article class="stat"><small>Total principal</small><strong id="statPrincipal">$0.00</strong></article>
+ </section>
+ <section class="panel">
+  <div class="panel-head"><h2>Post an investment</h2></div>
+  <form id="postForm" class="grid-form">
+   <label>Customer<select id="postUser" required><option value="">Loading customers…</option></select></label>
+   <label>Category<select id="postCategory" required><option value="crypto">Crypto</option><option value="stocks">Stocks</option><option value="options">Options</option></select></label>
+   <label>Package name<input id="postPackage" required maxlength="80" placeholder="e.g. Silver"></label>
+   <label>Investment amount (USD)<input id="postAmount" type="number" min="0.01" step="0.01" required></label>
+   <label>Daily rate (%)<input id="postRate" type="number" min="0" max="100" step="0.01" required></label>
+   <label>Duration (days)<input id="postDuration" type="number" min="1" max="3650" value="30" required></label>
+   <div style="grid-column:1/-1;display:flex;justify-content:flex-end"><button class="btn" id="postSubmit">Post &amp; Activate</button></div>
+  </form><p class="message" id="postMessage" role="status"></p>
+ </section>
+ <section class="panel">
+  <div class="panel-head"><h2>All customer investments</h2><div class="tools">
+   <input id="search" type="search" placeholder="Search email, reference or user ID">
+   <select id="filterStatus"><option value="">All statuses</option><option value="active">Active</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select>
+   <select id="filterCategory"><option value="">All categories</option><option value="crypto">Crypto</option><option value="stocks">Stocks</option><option value="options">Options</option></select>
+   <button class="btn secondary" id="refresh">Refresh</button>
+  </div></div>
+  <div class="table-wrap"><table><thead><tr><th>DATE</th><th>CUSTOMER</th><th>REFERENCE</th><th>CATEGORY / PACKAGE</th><th>PRINCIPAL</th><th>DAILY RATE</th><th>STATUS</th><th>MATURITY</th><th>ACTION</th></tr></thead><tbody id="rows"><tr><td colspan="9">Loading investments…</td></tr></tbody></table></div>
+  <p class="message" id="listMessage" role="status"></p>
+ </section>
+</main>
+<section id="denied" hidden style="max-width:500px;margin:80px auto;padding:20px;text-align:center"><h2>Administrator access required</h2><p class="sub">Sign in with the authorized NEXBIT administrator account.</p><a class="btn" href="login.html">Return to login</a></section>
+<div class="modal" id="editModal" hidden role="dialog" aria-modal="true"><div class="modal-card">
+ <h2>Edit investment</h2><form id="editForm" class="grid-form">
+  <label>Package name<input id="editPackage" required maxlength="80"></label>
+  <label>Principal amount (USD)<input id="editAmount" type="number" min="0.01" step="0.01" required></label>
+  <label>Daily rate (%)<input id="editRate" type="number" min="0" max="100" step="0.01" required></label>
+  <label>Duration (days)<input id="editDuration" type="number" min="1" max="3650" required></label>
+  <label>Status<select id="editStatus"><option value="active">Active</option><option value="completed">Completed</option><option value="cancelled">Cancelled / Refund principal</option></select></label>
+ </form><p class="message" id="editMessage"></p><div class="modal-actions"><button class="btn secondary" id="closeEdit" type="button">Cancel</button><button class="btn" id="saveEdit" type="button">Save changes</button></div>
+</div></div>
+<script>
+(function(){
+ if(!window.supabase?.createClient)return;
+ const client=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
+ const $=id=>document.getElementById(id),adminEmail='markleslie.corp@gmail.com';let allRows=[],selected=null,searchTimer=null;
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const money=v=>'$'+Number(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+ const date=v=>v?new Date(v).toLocaleDateString():'—';
+ async function init(){
+  const {data:{user},error}=await client.auth.getUser();
+  if(error||!user){location.replace('login.html');return;}
+  if((user.email||'').toLowerCase()!==adminEmail||user.app_metadata?.role!=='admin'){$('denied').hidden=false;return;}
+  $('app').hidden=false;await Promise.all([loadUsers(),loadRows()]);
+ }
+ async function loadUsers(){
+  const {data,error}=await client.rpc('admin_list_users',{p_search:null,p_limit:500,p_offset:0});if(error)throw error;
+  $('postUser').innerHTML='<option value="">Select customer</option>'+(data||[]).map(u=>'<option value="'+esc(u.user_id)+'">'+esc(u.email||u.full_name||u.user_id)+'</option>').join('');
+ }
+ async function loadRows(){
+  $('listMessage').textContent='Loading investments…';
+  const {data,error}=await client.rpc('admin_list_investments',{p_search:$('search').value.trim()||null,p_status:$('filterStatus').value||null,p_category:$('filterCategory').value||null,p_limit:1000});
+  if(error){$('rows').innerHTML='<tr><td colspan="9">Could not load investment records.</td></tr>';$('listMessage').textContent=error.message;return;}
+  allRows=data||[];paint();
+ }
+ function paint(){
+  const rows=allRows;
+  $('statTotal').textContent=rows.length;$('statActive').textContent=rows.filter(r=>r.status==='active').length;$('statCompleted').textContent=rows.filter(r=>r.status==='completed').length;
+  $('statPrincipal').textContent=money(rows.filter(r=>r.status!=='cancelled').reduce((s,r)=>s+Number(r.principal_amount||0),0));
+  $('rows').innerHTML=rows.length?rows.map((r,i)=>'<tr><td>'+esc(date(r.created_at))+'</td><td>'+esc(r.user_email||r.user_id)+'</td><td>'+esc(r.reference)+'</td><td>'+esc(r.asset_category.toUpperCase())+' · '+esc(r.package_name)+'</td><td>'+money(r.principal_amount)+'</td><td>'+esc(r.daily_rate_percent)+'%</td><td><span class="pill">'+esc(r.status)+'</span></td><td>'+esc(date(r.matures_at))+'</td><td><button class="edit" data-edit="'+i+'">Edit</button></td></tr>').join(''):'<tr><td colspan="9">No investment records found.</td></tr>';
+  $('rows').querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEdit(rows[Number(b.dataset.edit)])));
+  $('listMessage').textContent='Showing '+rows.length+' investment record(s).';
+ }
+ $('postForm').addEventListener('submit',async e=>{
+  e.preventDefault();$('postSubmit').disabled=true;$('postMessage').textContent='Posting investment and deducting customer balance…';
+  try{
+   const {data,error}=await client.rpc('admin_post_investment',{p_user_id:$('postUser').value,p_asset_category:$('postCategory').value,p_package_name:$('postPackage').value.trim(),p_principal_amount:Number($('postAmount').value),p_daily_rate_percent:Number($('postRate').value),p_duration_days:Number($('postDuration').value)});
+   if(error)throw error;$('postMessage').textContent='Investment posted and activated. Customer balance has been deducted.';
+   $('postForm').reset();$('postDuration').value='30';await loadRows();
+  }catch(err){$('postMessage').textContent=err.message||'Could not post investment.';}
+  finally{$('postSubmit').disabled=false;}
+ });
+ function openEdit(r){selected=r;$('editPackage').value=r.package_name;$('editAmount').value=r.principal_amount;$('editRate').value=r.daily_rate_percent;$('editDuration').value=r.duration_days;$('editStatus').value=r.status;$('editMessage').textContent='Customer: '+(r.user_email||r.user_id)+' · '+r.reference;$('editModal').hidden=false;}
+ $('closeEdit').addEventListener('click',()=>{$('editModal').hidden=true;selected=null;});
+ $('saveEdit').addEventListener('click',async()=>{
+  if(!selected)return;$('saveEdit').disabled=true;$('editMessage').textContent='Saving changes…';
+  try{
+   const {error}=await client.rpc('admin_update_investment',{p_id:selected.id,p_package_name:$('editPackage').value.trim(),p_principal_amount:Number($('editAmount').value),p_daily_rate_percent:Number($('editRate').value),p_duration_days:Number($('editDuration').value),p_status:$('editStatus').value});
+   if(error)throw error;$('editMessage').textContent='Investment updated.';$('editModal').hidden=true;selected=null;await loadRows();
+  }catch(err){$('editMessage').textContent=err.message||'Could not update investment.';}
+  finally{$('saveEdit').disabled=false;}
+ });
+ $('refresh').addEventListener('click',loadRows);$('filterStatus').addEventListener('change',loadRows);$('filterCategory').addEventListener('change',loadRows);
+ $('search').addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(loadRows,300);});
+ init().catch(e=>{$('denied').hidden=false;console.error(e);});
+})();
+</script></body></html>
