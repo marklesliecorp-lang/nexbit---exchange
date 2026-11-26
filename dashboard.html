@@ -1734,6 +1734,32 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 }
 </style>
 
+
+<style id="nexbit-investment-section-nav-refine">
+/* Smaller navigation controls with clearer, larger labels */
+#investmentView .investment-section-nav{
+  gap:6px!important;
+  margin-bottom:12px!important;
+}
+#investmentView .investment-section-nav button{
+  min-height:36px!important;
+  padding:5px 4px!important;
+  font-size:12px!important;
+  line-height:1.15!important;
+}
+@media(max-width:760px){
+  #investmentView:has(#investment-packages:not([hidden])) .investment-section-nav{
+    gap:5px!important;
+    margin:0 13px 11px!important;
+  }
+  #investmentView:has(#investment-packages:not([hidden])) .investment-section-nav button{
+    min-height:36px!important;
+    padding:5px 2px!important;
+    font-size:12px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
