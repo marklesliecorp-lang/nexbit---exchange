@@ -1969,11 +1969,11 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     <article class="panel balance-panel">
       <div class="asset-heading"><div class="panel-label">Total Balance <span class="eye">◉</span></div></div>
       <a class="asset-deposit" href="deposit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 18v3h16v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Deposit</a>
-      <div class="balance-row"><div class="balance" id="dashboardBalance"></div><div class="currency">USD⌄</div></div>
+      <div class="balance-row"><div class="balance" id="dashboardBalance"></div><div class="currency">USDT⌄</div></div>
       <div class="pnl-line">Today's P&amp;L <strong id="todayPnl">$0.00 USD (0.00%)</strong></div>
     </article>
     <div class="side-stack balance-breakdown">
-      <article class="panel mini-balance-card"><div class="mini-balance-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h13M3 9h17m-4 5h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span>Available Balance</span><strong id="availableBalance">— — —</strong></div></article>
+      <article class="panel mini-balance-card"><div class="mini-balance-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h13M3 9h17m-4 5h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span>USDT Balance</span><strong id="availableBalance">— — —</strong></div></article>
       <article class="panel mini-balance-card"><div class="mini-balance-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div><span>Locked Balance</span><strong id="lockedBalance">— — —</strong></div></article>
     </div>
   </section>
@@ -2492,7 +2492,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     }
 
     let amount=Number(balance?.balance||0);
-    const formatUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
+    const formatUSD=value=>'USDT '+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     document.getElementById('availableBalance').textContent=formatUSD(amount);
     const assetsBreakdown=document.getElementById('assetsViewBreakdown');
     const {data:assetRows,error:assetRowsError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
@@ -2500,7 +2500,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       if(assetRowsError){
         assetsBreakdown.innerHTML='<div class="asset-view-empty">Asset balances are temporarily unavailable.</div>';
       }else if(assetRows?.length){
-        assetsBreakdown.innerHTML=assetRows.map(row=>'<div class="asset-view-row"><span>'+String(row.asset_code).replace(/[&<>"]/g,'')+'</span><strong>'+Number(row.balance||0).toLocaleString(undefined,{maximumFractionDigits:8})+' '+String(row.asset_code).replace(/[&<>"]/g,'')+'</strong></div>').join('');
+        assetsBreakdown.innerHTML='<div class="asset-view-row"><span>USDT</span><strong>'+formatUSD(amount)+'</strong></div>'+assetRows.filter(row=>String(row.asset_code||'').toUpperCase()!=='USD').map(row=>'<div class="asset-view-row"><span>'+String(row.asset_code).replace(/[&<>\"]/g,'')+'</span><strong>'+Number(row.balance||0).toLocaleString(undefined,{maximumFractionDigits:8})+' '+String(row.asset_code).replace(/[&<>\"]/g,'')+'</strong></div>').join('');
       }else{
         assetsBreakdown.innerHTML='<div class="asset-view-empty">No asset balances have been recorded yet.</div>';
       }
@@ -2517,13 +2517,13 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       const money=Math.abs(value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
       const rateText=Math.abs(rate).toFixed(2)+'%';
       if(value>0){
-        pnl.textContent='+$'+money+' USD (+'+rateText+')';
+        pnl.textContent='+USDT '+money+' (+'+rateText+')';
         pnl.className='pnl-profit';
       }else if(value<0){
-        pnl.textContent='-$'+money+' USD (-'+rateText+')';
+        pnl.textContent='-USDT '+money+' (-'+rateText+')';
         pnl.className='pnl-loss';
       }else{
-        pnl.textContent='$0.00 USD (0.00%)';
+        pnl.textContent='USDT 0.00 (0.00%)';
         pnl.className='pnl-neutral';
       }
     };
@@ -2597,22 +2597,17 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
           portfolioValue+=Number(amount);
           totalValue+=Number(amount);
         }
-        const money=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+        const money=value=>'USDT '+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
         const assetsBreakdown=document.getElementById('assetsViewBreakdown');
         if(assetsBreakdown){
-          assetsBreakdown.innerHTML=assetDisplay.length?assetDisplay.map(item=>{
-            const safeAsset=item.asset.replace(/[&<>"']/g,'');
-            const quantity=item.quantity.toLocaleString(undefined,{maximumFractionDigits:8});
-            const value=item.value===null?'Price unavailable':money(item.value);
-            return '<div class="asset-view-row"><span>'+safeAsset+'<small style="display:block;opacity:.7;font-size:11px;font-weight:400">'+quantity+' '+safeAsset+'</small></span><strong>'+value+'</strong></div>';
-          }).join(''):'<div class="asset-view-empty">No asset balances have been recorded yet.</div>';
+          assetsBreakdown.innerHTML='<div class="asset-view-row"><span>USDT</span><strong>'+money(amount)+'</strong></div>'+assetDisplay.filter(item=>item.asset!=='USD').map(item=>{const safeAsset=item.asset.replace(/[&<>\"']/g,'');const quantity=item.quantity.toLocaleString(undefined,{maximumFractionDigits:8});const value=item.value===null?'Price unavailable':money(item.value);return '<div class="asset-view-row"><span>'+safeAsset+'<small style="display:block;opacity:.7;font-size:11px;font-weight:400">'+quantity+' '+safeAsset+'</small></span><strong>'+value+'</strong></div>';}).join('');
         }
         if(unpriced.length){
           pnl.textContent='Unavailable';
           pnl.className='pnl-neutral';
           return;
         }
-        const formatPortfolioUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+        const formatPortfolioUSD=value=>'USDT '+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
         const dashboardTotal=document.getElementById('dashboardBalance');
         if(dashboardTotal)dashboardTotal.textContent=formatPortfolioUSD(portfolioValue);
         const assetsBalance=document.getElementById('assetsViewBalance');
