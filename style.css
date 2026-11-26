@@ -2049,52 +2049,60 @@ footer p {
   margin: 0 0 25px;
 }
 
-.package-price {
-  padding: 18px 0;
-  position: relative;
+/* PACKAGE INVESTMENT LIMITS — single, explicit component */
+.investment-limits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin: 18px 0;
 }
 
-.package-price-row {
+.investment-limit {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 7px 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 7px;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 13px 12px;
+  border: 1px solid rgba(190, 211, 235, .2);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(67, 111, 157, .19), rgba(17, 28, 44, .72));
 }
 
-.package-price-row .price-label {
-  margin: 0;
-  font-size: 9px;
-  letter-spacing: 0.7px;
-}
-
-.package-price-row strong {
-  font-size: clamp(16px, 1.8vw, 20px);
-  white-space: nowrap;
-}
-
-.price-label {
+.investment-limit-label {
   display: block;
+  margin: 0;
+  color: #b9c8d8;
   font-size: 10px;
-  letter-spacing: 1px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: .9px;
   text-transform: uppercase;
-  color: #aaa;
-  margin-bottom: 9px;
 }
 
-.package-price strong {
-  font-size: clamp(23px, 2.4vw, 29px);
+.investment-limit-value {
+  display: block;
+  margin: 0;
+  color: #f4f8ff;
+  font-size: clamp(18px, 2vw, 23px);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -.4px;
   white-space: nowrap;
-  color: #fff;
 }
 
-.package-price strong small {
-  color: #d9b65e;
-  font-size: 18px;
-}
+.basic-card .investment-limit-value { color: #79d4ff; }
+.silver-card .investment-limit-value { color: #dce6f5; }
+.gold-card .investment-limit-value { color: #f4ce75; }
+.diamond-card .investment-limit-value { color: #d2adff; }
 
-.gold-card .package-price strong {
-  color: #f5d88c;
+.package-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 10px 0 20px;
 }
 
 .package-divider {
@@ -2214,14 +2222,6 @@ footer p {
   margin-bottom: 16px;
 }
 
-.package-price {
-  padding: 13px 0;
-}
-
-.package-price strong {
-  font-size: 23px;
-}
-
 .package-features li {
   font-size: 11px;
   padding: 8px 0;
@@ -2246,9 +2246,6 @@ footer p {
     padding: 20px 18px;
   }
 
-  .package-price strong {
-    font-size: 24px;
-  }
 }
 
 
@@ -2280,12 +2277,6 @@ footer p {
     line-height: 1.6;
   }
 
-  .package-price strong {
-    font-size: clamp(20px, 6vw, 28px);
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-
   .package-features li {
     font-size: 13px;
     line-height: 1.5;
@@ -2315,14 +2306,6 @@ footer p {
   /* Remove lengthy descriptions on small screens */
   .package-description {
     display: none;
-  }
-
-  .package-price {
-    padding: 7px 0;
-  }
-
-  .package-price strong {
-    font-size: 25px;
   }
 
   .package-features {
@@ -5335,4 +5318,27 @@ footer {
   .markets-section .market-coin-name { font-size: 12px; }
   .markets-section .market-card-price { font-size: 16px; }
   .markets-section .market-change { font-size: 10px; padding: 5px 8px; }
+}
+
+
+/* Keep the minimum and maximum investment panels readable on phones */
+@media (max-width: 700px) {
+  .nexbit-investments .investment-limits {
+    gap: 8px;
+    margin: 14px 0;
+  }
+
+  .nexbit-investments .investment-limit {
+    padding: 12px 9px;
+    gap: 6px;
+  }
+
+  .nexbit-investments .investment-limit-label {
+    font-size: 9px;
+    letter-spacing: .6px;
+  }
+
+  .nexbit-investments .investment-limit-value {
+    font-size: clamp(17px, 5vw, 21px);
+  }
 }
