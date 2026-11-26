@@ -1537,6 +1537,16 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 .stocks-packages-heading h2 em{color:#aebdcb;font-style:normal}
 .stocks-packages-heading p{margin:0;color:#929eaa;font-size:11px;line-height:1.5}
 .stocks-packages-chart{width:150px;flex:0 0 150px;color:#b9c7d4;opacity:.85}
+/* Dedicated Stocks artwork display; isolated from legacy chart styles */
+#investment-packages .stocks-packages-header{position:relative;isolation:isolate;overflow:visible}
+#investment-packages .stocks-packages-heading{position:relative;z-index:1;min-width:0;flex:1 1 auto}
+#investment-packages .stocks-packages-artwork{position:relative;z-index:2;display:flex!important;align-items:center;justify-content:center;flex:0 0 148px;width:148px;height:112px;min-width:148px;opacity:1!important;visibility:visible!important;overflow:visible}
+#investment-packages .stocks-packages-artwork img{display:block!important;position:relative;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;opacity:1!important;visibility:visible!important;border:0!important;box-shadow:none!important}
+@media(max-width:600px){
+ #investment-packages .stocks-packages-header{gap:8px;padding:13px 10px}
+ #investment-packages .stocks-packages-artwork{flex-basis:92px;width:92px;height:82px;min-width:92px}
+}
+
 .stocks-packages-chart svg{display:block;width:100%;height:auto}
 .stocks-package-list{display:grid;gap:10px;max-width:820px;margin:0 auto}
 .stocks-package-card{display:grid;grid-template-columns:64px minmax(0,1fr);gap:11px;padding:11px 12px;border:1px solid rgba(174,190,205,.22);border-radius:13px;background:linear-gradient(110deg,#111820,#080b0f 78%);box-shadow:inset 0 1px rgba(255,255,255,.025)}
@@ -1819,7 +1829,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       <p>Choose a stock investment package that matches your investment amount.</p>
     </div>
     <div class="stocks-packages-artwork" aria-hidden="true">
-      <img src="/assets/stocks-bull.webp" alt="" loading="eager" decoding="async" fetchpriority="high">
+      <img src="/assets/stocks-bull.jpg" alt="Metallic bull with rising market arrow" width="555" height="375" loading="eager" decoding="async" fetchpriority="high">
     </div>
   </header>
   <div class="stocks-package-list" aria-label="Available stock packages">
