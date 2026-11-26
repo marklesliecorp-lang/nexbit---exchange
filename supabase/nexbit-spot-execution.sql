@@ -82,10 +82,10 @@ begin
    insert into public.nexbit_account_asset_balances(user_id,asset_code,balance) values(p_user_id,v_to,0) on conflict(user_id,asset_code) do nothing;
    select balance into v_asset_before from public.nexbit_account_asset_balances where user_id=p_user_id and asset_code=v_to for update;
  elsif v_action='sell' then
-   select balance into v_asset_before from public.nexbit_account_asset_balances where user_id=p_user_id and asset_code=v_from for update;
-   if not found or v_asset_before<v_input then raise exception 'Insufficient available asset balance'; end if;
    select balance into v_main_before from public.nexbit_account_balances where user_id=p_user_id for update;
    if not found then raise exception 'Main wallet balance was not found'; end if;
+   select balance into v_asset_before from public.nexbit_account_asset_balances where user_id=p_user_id and asset_code=v_from for update;
+   if not found or v_asset_before<v_input then raise exception 'Insufficient available asset balance'; end if;
  else
    v_codes:=array(select distinct x from unnest(array[v_from,v_to]) x order by x);
    foreach v_code in array v_codes loop
