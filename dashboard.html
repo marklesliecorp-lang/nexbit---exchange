@@ -1837,6 +1837,62 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 #assetsView .asset-view-balance,
 #assetsView .asset-view-row strong{color:#22c55e!important}
 </style>
+<style id="nexbit-spot-trade-v1">
+.trade-view{max-width:1240px;margin:0 auto;padding:14px 15px 100px;color:#f3f4f6}
+.trade-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+.trade-pair-heading{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.trade-mode-label{font-size:9px;letter-spacing:1.5px;font-weight:800;color:#aeb7c4}
+.trade-title{margin:0;font-size:17px;font-weight:800;color:#fff}
+.trade-live-indicator{display:inline-flex;align-items:center;gap:5px;color:#37ce88;font-size:8px;font-weight:800;letter-spacing:.7px}
+.trade-live-indicator i{width:6px;height:6px;border-radius:50%;background:#37ce88;box-shadow:0 0 8px #37ce88}
+.trade-pair-select{min-width:108px;min-height:36px;border:1px solid #34383e;border-radius:9px;background:#17191d;color:#f5f5f5;padding:0 9px;font-size:11px}
+.trade-market-summary{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;gap:8px;padding:12px;margin-bottom:11px;border:1px solid #24272c;border-radius:13px;background:#101113}
+.trade-market-summary>div{min-width:0;display:flex;flex-direction:column;gap:5px}
+.trade-market-summary small{font-size:8px;color:#858b95}
+.trade-market-summary strong{font-size:10px;color:#e8eaed;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.trade-market-summary .trade-main-quote strong{font-size:19px;color:#35c978;letter-spacing:-.5px}
+.trade-main-quote span{font-size:10px;color:#35c978}
+.trade-chart-card,.trade-market-card,.trade-setup-card{border:1px solid #25282d;border-radius:14px;background:#101113;overflow:hidden}
+.trade-chart-toolbar{height:38px;padding:0 12px;display:flex;align-items:center;justify-content:space-between;color:#e6e8eb;font-size:10px;font-weight:750;border-bottom:1px solid #25282d}
+.trade-chart-toolbar select{border:1px solid #34383e;border-radius:7px;background:#1b1d21;color:#e9eaec;padding:5px 8px;font-size:10px}
+.trade-chart-frame{display:block;width:100%;height:390px;border:0;background:#080b10}
+.trade-market-card{margin-top:11px;padding:0 12px 10px}
+.trade-data-tabs{display:flex;gap:18px;height:42px;align-items:center;border-bottom:1px solid #292c31}
+.trade-data-tabs button{height:100%;padding:0 2px;border:0;border-bottom:2px solid transparent;background:transparent;color:#858b95;font-size:11px;font-weight:700}
+.trade-data-tabs button.active{color:#f5f6f7;border-bottom-color:#c6cbd2}
+.trade-depth-head,.trade-depth-row{display:grid;grid-template-columns:1fr .8fr .8fr;gap:7px;align-items:center}
+.trade-depth-head{padding:10px 0 7px;color:#858b95;font-size:8px}
+.trade-depth-head span:nth-child(n+2),.trade-depth-row span:nth-child(n+2){text-align:right}
+.trade-depth-row{position:relative;min-height:24px;font-size:9px;font-variant-numeric:tabular-nums;overflow:hidden}
+.trade-depth-row .depth-bar{position:absolute;right:0;top:2px;bottom:2px;z-index:0;opacity:.11;border-radius:2px}
+.trade-depth-row span{position:relative;z-index:1}
+.trade-depth-row.ask .price{color:#ed747d}.trade-depth-row.bid .price{color:#35c978}
+.trade-mid-price{display:flex;align-items:baseline;gap:9px;padding:9px 0;border-top:1px solid #24272c;border-bottom:1px solid #24272c}
+.trade-mid-price strong{font-size:15px;color:#35c978;font-variant-numeric:tabular-nums}
+.trade-mid-price span{font-size:8px;color:#858b95}
+.trade-feed-empty{padding:15px 0;color:#858b95;font-size:9px}
+.trade-data-source{padding-top:9px;color:#747b85;font-size:8px}
+.trade-setup-card{margin-top:11px;padding:13px}
+.trade-setup-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.trade-setup-heading h2{margin:0;color:#f1f2f4;font-size:13px}
+.trade-order-status{padding:4px 7px;border:1px solid #363a40;border-radius:5px;color:#b7bdc6;font-size:8px;font-weight:800;letter-spacing:.7px}
+.trade-order-tabs,.trade-type-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.trade-order-tabs button,.trade-type-tabs button{min-height:37px;border:1px solid #33373d;border-radius:8px;background:#191b1f;color:#aeb4bd;font-size:11px;font-weight:750}
+.trade-order-tabs button[data-side="buy"][aria-pressed="true"]{background:#123c2b;border-color:#26764f;color:#4cdb98}
+.trade-order-tabs button[data-side="sell"][aria-pressed="true"]{background:#421e23;border-color:#88414a;color:#f18b93}
+.trade-type-tabs{margin-top:9px}
+.trade-type-tabs button[aria-pressed="true"]{border-color:#aab1ba;background:#2a2d32;color:#fff}
+.trade-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.trade-field label{display:block;margin:0 0 6px;color:#aeb4bd;font-size:9px}
+.trade-control{width:100%;min-width:0;min-height:39px;border:1px solid #353940;border-radius:8px;background:#08090b;color:#fff;padding:0 10px;font-size:12px}
+.trade-available{display:flex;justify-content:space-between;gap:10px;margin-top:12px;padding-top:11px;border-top:1px solid #292c31;color:#aeb4bd;font-size:10px}
+.trade-available strong{color:#35c978;font-size:12px;font-variant-numeric:tabular-nums}
+.trade-submit-button{width:100%;min-height:42px;margin-top:12px;border:0;border-radius:9px;background:#292d32;color:#9299a3;font-size:11px;font-weight:800}
+.trade-submit-button:disabled{opacity:1;cursor:not-allowed}
+@media(min-width:900px){.trade-view{padding:20px 22px 110px}.trade-chart-frame{height:480px}.trade-market-card{max-width:520px}.trade-setup-card{max-width:520px}}
+@media(max-width:600px){.trade-view{padding:11px 11px 92px}.trade-topline{gap:7px}.trade-pair-heading{gap:6px}.trade-title{font-size:15px}.trade-pair-select{min-width:99px;font-size:10px}.trade-market-summary{grid-template-columns:1.25fr 1fr 1fr;gap:7px;padding:10px}.trade-market-summary>div:last-child{display:none}.trade-market-summary .trade-main-quote strong{font-size:17px}.trade-chart-frame{height:355px}.trade-market-card,.trade-setup-card{border-radius:12px}.trade-fields{grid-template-columns:1fr 1fr;gap:7px}.trade-control{font-size:11px}}
+@media(max-width:360px){.trade-market-summary{grid-template-columns:1.2fr 1fr 1fr}.trade-market-summary .trade-main-quote strong{font-size:15px}.trade-chart-frame{height:320px}.trade-fields{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
@@ -2135,25 +2191,62 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Diamond</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$20,000</strong></div><div><span>Maximum investment</span><strong>$50,000</strong></div><div><span>Daily rate</span><strong>8%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
     </article>
   </div>
-</section><section class="trade-view" id="tradeView" hidden aria-label="Trade">
+</section><section class="trade-view" id="tradeView" hidden aria-label="Spot Trading">
   <div class="trade-topline">
-    <h1 class="trade-title">Trade</h1>
+    <div class="trade-pair-heading">
+      <span class="trade-mode-label">SPOT MARKET</span>
+      <h1 class="trade-title" id="tradePairHeading">BTC/USDT</h1>
+      <span class="trade-live-indicator"><i></i> LIVE MARKET</span>
+    </div>
     <select class="trade-pair-select" id="tradePair" aria-label="Trading pair">
       <option value="BINANCE:BTCUSDT">BTC/USDT</option>
       <option value="BINANCE:ETHUSDT">ETH/USDT</option>
       <option value="BINANCE:SOLUSDT">SOL/USDT</option>
       <option value="BINANCE:BNBUSDT">BNB/USDT</option>
       <option value="BINANCE:XRPUSDT">XRP/USDT</option>
+      <option value="BINANCE:DOGEUSDT">DOGE/USDT</option>
+      <option value="BINANCE:ADAUSDT">ADA/USDT</option>
+      <option value="BINANCE:TRXUSDT">TRX/USDT</option>
     </select>
   </div>
+  <div class="trade-market-summary">
+    <div class="trade-main-quote"><strong id="tradeLastPrice">Connecting…</strong><span id="tradePriceChange">Waiting for live price</span></div>
+    <div><small>24h High</small><strong id="tradeDayHigh">—</strong></div>
+    <div><small>24h Low</small><strong id="tradeDayLow">—</strong></div>
+    <div><small>24h Volume</small><strong id="tradeDayVolume">—</strong></div>
+  </div>
   <div class="trade-chart-card">
-    <iframe class="trade-chart-frame" id="tradeChart" title="Live TradingView market chart for BTC/USDT" loading="lazy" allowfullscreen src="https://www.tradingview.com/widgetembed/?symbol=BINANCE%3ABTCUSDT&interval=15&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=%23080b10&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en"></iframe>
+    <div class="trade-chart-toolbar">
+      <span>Price Chart</span>
+      <select id="tradeInterval" aria-label="Chart timeframe">
+        <option value="1">1m</option><option value="5">5m</option><option value="15" selected>15m</option>
+        <option value="60">1H</option><option value="240">4H</option><option value="D">1D</option><option value="W">1W</option>
+      </select>
+    </div>
+    <iframe class="trade-chart-frame" id="tradeChart" title="Live TradingView candlestick chart" loading="lazy" allowfullscreen src="https://www.tradingview.com/widgetembed/?symbol=BINANCE%3ABTCUSDT&interval=15&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=%23080b10&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en"></iframe>
+  </div>
+  <div class="trade-market-card">
+    <div class="trade-data-tabs" role="tablist" aria-label="Market data">
+      <button type="button" class="active" data-trade-data-tab="depth" role="tab" aria-selected="true">Order Book</button>
+      <button type="button" data-trade-data-tab="recent" role="tab" aria-selected="false">Recent Trades</button>
+    </div>
+    <div class="trade-depth-panel" id="tradeDepthPanel">
+      <div class="trade-depth-head"><span>Price (USDT)</span><span>Amount</span><span>Total</span></div>
+      <div id="tradeAsks" class="trade-depth-list"><div class="trade-feed-empty">Connecting to live market depth…</div></div>
+      <div class="trade-mid-price"><strong id="tradeMidPrice">—</strong><span>Live market price</span></div>
+      <div id="tradeBids" class="trade-depth-list"><div class="trade-feed-empty">Waiting for buy orders…</div></div>
+    </div>
+    <div class="trade-recent-panel" id="tradeRecentPanel" hidden>
+      <div class="trade-depth-head"><span>Price (USDT)</span><span>Amount</span><span>Time</span></div>
+      <div id="tradeRecentRows" class="trade-depth-list"><div class="trade-feed-empty">Waiting for recent trades…</div></div>
+    </div>
+    <div class="trade-data-source">Market prices and market depth supplied by Binance public market data.</div>
   </div>
   <section class="trade-setup-card" aria-labelledby="tradeSetupTitle">
-    <div class="trade-setup-heading"><h2 id="tradeSetupTitle">Order Setup</h2></div>
+    <div class="trade-setup-heading"><h2 id="tradeSetupTitle">Place Spot Order</h2><span class="trade-order-status">SPOT</span></div>
     <div class="trade-order-tabs" role="group" aria-label="Order side">
-      <button type="button" data-side="buy" aria-pressed="true">Buy / Long</button>
-      <button type="button" data-side="sell" aria-pressed="false">Sell / Short</button>
+      <button type="button" data-side="buy" aria-pressed="true">Buy</button>
+      <button type="button" data-side="sell" aria-pressed="false">Sell</button>
     </div>
     <div class="trade-type-tabs" role="group" aria-label="Order type">
       <button type="button" data-order-type="market" aria-pressed="true">Market</button>
@@ -2161,11 +2254,11 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     </div>
     <div class="trade-fields">
       <div class="trade-field" id="tradePriceField" hidden><label for="tradeLimitPrice">Limit Price (USDT)</label><input class="trade-control" id="tradeLimitPrice" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter limit price"></div>
-      <div class="trade-field"><label for="tradeQuantity">Quantity (base asset)</label><input class="trade-control" id="tradeQuantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter quantity"></div>
-      <div class="trade-field" id="tradeTotalField" hidden><label for="tradeTotal">Estimated Total (USDT)</label><input class="trade-control" id="tradeTotal" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter total" readonly></div>
+      <div class="trade-field"><label for="tradeQuantity">Amount (base asset)</label><input class="trade-control" id="tradeQuantity" type="number" min="0" step="any" inputmode="decimal" placeholder="Enter amount"></div>
+      <div class="trade-field" id="tradeTotalField"><label for="tradeTotal">Estimated Total (USDT)</label><input class="trade-control" id="tradeTotal" type="number" min="0" step="any" inputmode="decimal" placeholder="Calculated from live price" readonly></div>
     </div>
-    <div class="trade-available"><span>Available Balance</span><strong id="tradeAvailableBalance">Loading…</strong></div>
-    <p class="trade-notice">Trading interface preview. Order execution is not connected yet.</p>
+    <div class="trade-available"><span id="tradeAvailableLabel">Available USDT</span><strong id="tradeAvailableBalance">Loading…</strong></div>
+    <button type="button" class="trade-submit-button" id="tradeSubmitButton" disabled>Trading execution setup</button>
   </section>
 </section>
 
@@ -2760,6 +2853,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
  });
 })();
 </script>
+<script src="trade.js"></script>
 </body>
 </html>
 
