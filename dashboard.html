@@ -2549,9 +2549,18 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       if(!pnl||pnlRefreshBusy)return;
       pnlRefreshBusy=true;
       try{
-        const {data:rows,error}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id);
-        if(error)throw error;
-        const holdings=(rows||[]).filter(row=>Number(row.balance)>0);
+        const [cashResult,assetResult]=await Promise.all([
+          client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle(),
+          client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id)
+        ]);
+        if(cashResult.error)throw cashResult.error;
+        if(assetResult.error)throw assetResult.error;
+        amount=Number(cashResult.data?.balance||0);
+        const availableNode=document.getElementById('availableBalance');
+        if(availableNode)availableNode.textContent=formatUSD(amount);
+        const tradeBalanceNode=document.getElementById('tradeAvailableBalance');
+        if(tradeBalanceNode)tradeBalanceNode.textContent=formatUSD(amount);
+        const holdings=(assetResult.data||[]).filter(row=>Number(row.balance)>0);
         const pricedHoldings=holdings.filter(row=>String(row.asset_code||'').toUpperCase()!=='USD');
         let quotes={};
         if(pricedHoldings.length){
@@ -2566,7 +2575,6 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
         });
         let totalPnl=0,totalValue=0,portfolioValue=0,unpriced=[];
         const assetDisplay=[];
-        const hasUsdAsset=holdings.some(row=>String(row.asset_code||'').toUpperCase()==='USD');
         holdings.forEach(row=>{
           const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance);
           if(!Number.isFinite(quantity)||quantity<=0)return;
@@ -2583,7 +2591,9 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
           totalValue+=value;
           assetDisplay.push({asset,quantity,value});
         });
-        if(!hasUsdAsset&&Number.isFinite(Number(amount))&&Number(amount)>0){
+        // Main wallet cash is stored separately from crypto asset balances.
+        // Always include the latest cash balance in the portfolio total.
+        if(Number.isFinite(Number(amount))&&Number(amount)>0){
           portfolioValue+=Number(amount);
           totalValue+=Number(amount);
         }
