@@ -1763,6 +1763,30 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 }
 </style>
 
+<style id="nexbit-investment-overview-functional">
+.investment-dashboard-view .investment-summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.investment-dashboard-view .investment-summary-profit strong{color:#d9c18a}
+.investment-dashboard-view .investment-overview-lower{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px;margin-top:14px}
+.investment-dashboard-view .investment-insight-card{min-width:0;padding:16px;border:1px solid rgba(218,228,245,.13);border-radius:14px;background:rgba(5,8,14,.38)}
+.investment-dashboard-view .investment-insight-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+.investment-dashboard-view .investment-insight-heading h3{margin:0;color:#f0f1f3;font-size:15px;font-weight:700}
+.investment-dashboard-view .investment-insight-period{color:#8993a1;font-size:10px}
+.investment-dashboard-view .investment-view-all{border:0;background:none;color:#d9c18a;font-size:11px;font-weight:700}
+.investment-dashboard-view .investment-activity-chart{display:flex;align-items:flex-end;gap:8px;min-height:118px;padding:12px 2px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.investment-dashboard-view .investment-chart-bar{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;height:104px}
+.investment-dashboard-view .investment-chart-bar i{display:block;width:min(26px,75%);min-height:3px;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#e5d09b,#9a8150)}
+.investment-dashboard-view .investment-chart-bar small{color:#8993a1;font-size:9px;white-space:nowrap}
+.investment-dashboard-view .investment-chart-empty{width:100%;align-self:center;padding:26px 8px;text-align:center;color:#8791a0;font-size:11px}
+.investment-dashboard-view .investment-recent-list{display:grid;gap:0}
+.investment-dashboard-view .investment-recent-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.investment-dashboard-view .investment-recent-row:last-child{border-bottom:0}
+.investment-dashboard-view .investment-recent-main{min-width:0;display:grid;gap:4px}
+.investment-dashboard-view .investment-recent-main strong{color:#e9ebef;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.investment-dashboard-view .investment-recent-main small{color:#8993a1;font-size:9px}
+.investment-dashboard-view .investment-recent-amount{flex:0 0 auto;color:#f0d99e;font-size:11px;font-weight:700}
+@media(max-width:700px){.investment-dashboard-view .investment-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.investment-dashboard-view .investment-overview-lower{grid-template-columns:1fr}.investment-dashboard-view .investment-summary-card{min-height:100px}}
+@media(max-width:600px){.investment-dashboard-view .investment-summary-card:first-child{grid-column:auto;min-height:100px}.investment-dashboard-view .investment-insight-card{padding:14px}}
+</style>
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
@@ -1958,21 +1982,14 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     <span class="investment-overview-eyebrow">YOUR PORTFOLIO</span>
     <h2 class="investment-overview-title" id="investmentOverviewTitle">Investment Overview</h2>
     <div class="investment-summary-grid">
-      <article class="investment-summary-card investment-summary-total">
-        <span class="investment-summary-label">Total invested</span>
-        <strong id="investmentTotalInvested">—</strong>
-        <small>Awaiting investment records</small>
-      </article>
-      <article class="investment-summary-card investment-summary-returns">
-        <span class="investment-summary-label">Expected returns</span>
-        <strong id="investmentExpectedReturns">—</strong>
-        <small>Awaiting active plan details</small>
-      </article>
-      <article class="investment-summary-card investment-summary-count">
-        <span class="investment-summary-label">Current plans</span>
-        <strong id="investmentCurrentPlans">—</strong>
-        <small>Awaiting active plan records</small>
-      </article>
+      <article class="investment-summary-card investment-summary-total"><span class="investment-summary-label">Total invested</span><strong id="investmentTotalInvested">—</strong><small id="investmentTotalInvestedNote">Confirmed investments</small></article>
+      <article class="investment-summary-card investment-summary-returns"><span class="investment-summary-label">Expected returns</span><strong id="investmentExpectedReturns">—</strong><small>Projected plan returns</small></article>
+      <article class="investment-summary-card investment-summary-count"><span class="investment-summary-label">Active plans</span><strong id="investmentCurrentPlans">—</strong><small>Currently running</small></article>
+      <article class="investment-summary-card investment-summary-profit"><span class="investment-summary-label">Realized profit</span><strong id="investmentRealizedProfit">—</strong><small>Recorded earnings</small></article>
+    </div>
+    <div class="investment-overview-lower">
+      <section class="investment-insight-card" aria-labelledby="investmentActivityTitle"><div class="investment-insight-heading"><div><span class="investment-overview-eyebrow">PORTFOLIO HISTORY</span><h3 id="investmentActivityTitle">Investment activity</h3></div><span class="investment-insight-period">Recent plans</span></div><div id="investmentPerformanceChart" class="investment-activity-chart" aria-live="polite"><div class="investment-chart-empty">Your investment activity will appear here.</div></div></section>
+      <section class="investment-insight-card" aria-labelledby="investmentRecentTitle"><div class="investment-insight-heading"><div><span class="investment-overview-eyebrow">LATEST RECORDS</span><h3 id="investmentRecentTitle">Recent investments</h3></div><button type="button" class="investment-view-all" data-investment-section="active">View all</button></div><div id="investmentRecentList" class="investment-recent-list" aria-live="polite"><div class="investment-chart-empty">No investment records yet.</div></div></section>
     </div>
   </section>
 
