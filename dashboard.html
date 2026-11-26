@@ -2616,7 +2616,8 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
         const dashboardTotal=document.getElementById('dashboardBalance');
         const assetsTotal=document.getElementById('assetsViewBalance');
         const totalAccountValue=portfolioValue;
-        if(dashboardTotal)dashboardTotal.textContent=formatCompactBalance(totalAccountValue,'
+        if(dashboardTotal)dashboardTotal.textContent=formatCompactBalance(totalAccountValue,'$');
+        if(assetsTotal)assetsTotal.textContent=formatPortfolioUSD(totalAccountValue);
         const percent=totalValue>0?(totalPnl/totalValue)*100:0;
         window.updateTodayPnl(totalPnl,percent);
       }catch(error){
