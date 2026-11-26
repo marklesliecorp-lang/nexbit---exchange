@@ -2160,6 +2160,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     trade.hidden=valid!=='trade';
     assets.hidden=valid!=='assets';
     investment.hidden=valid!=='investment';
+    if(valid==='investment'&&typeof window.NEXBIT_REFRESH_INVESTMENTS==='function')window.NEXBIT_REFRESH_INVESTMENTS();
     nav.forEach(link=>{
       const active=link.dataset.dashboardView===valid;
       link.classList.toggle('active',active);
@@ -2586,6 +2587,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       }
       if(plansNode)plansNode.innerHTML=active.length?active.map(row=>'<article class="investment-active-row"><div class="investment-active-row-head"><div><strong>'+safe(row.package_name)+'</strong><small>'+safe(row.asset_category.toUpperCase())+' · '+safe(row.reference)+'</small></div><span class="investment-active-status">ACTIVE</span></div><div class="investment-active-row-facts"><span>Invested<strong>'+money(row.principal_amount)+'</strong></span><span>Daily rate<strong>'+Number(row.daily_rate_percent).toLocaleString()+'%</strong></span><span>Duration<strong>'+Number(row.duration_days)+' days</strong></span><span>Expected profit<strong>'+money(row.expected_profit)+'</strong></span></div><div class="investment-active-row-date">Matures '+(row.matures_at?new Date(row.matures_at).toLocaleDateString():'—')+'</div></article>').join(''):'<div class="investment-empty-state"><span class="investment-empty-icon" aria-hidden="true">◇</span><strong>No active investment plans</strong><p>Your active plans will appear here once they have been recorded.</p></div>';
     }
+    window.NEXBIT_REFRESH_INVESTMENTS=loadInvestmentOverview;
     loadInvestmentOverview();
 
     const {data:balance,error:balanceError}=await client
