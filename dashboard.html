@@ -2558,10 +2558,11 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
         ]);
         if(cashResult.error)throw cashResult.error;
         if(assetResult.error)throw assetResult.error;
-        if(investmentResult.error)throw investmentResult.error;
-        const lockedPrincipal=(investmentResult.data||[]).reduce((sum,row)=>sum+Number(row.principal_amount||0),0);
+        const investmentQueryFailed=Boolean(investmentResult.error);
+        if(investmentQueryFailed)console.warn('NEXBIT locked investment balance unavailable:',investmentResult.error);
+        const lockedPrincipal=investmentQueryFailed?0:(investmentResult.data||[]).reduce((sum,row)=>sum+Number(row.principal_amount||0),0);
         const lockedNode=document.getElementById('lockedBalance');
-        if(lockedNode)lockedNode.textContent=formatCompactBalance(lockedPrincipal);
+        if(lockedNode)lockedNode.textContent=investmentQueryFailed?'Unavailable':formatCompactBalance(lockedPrincipal);
         amount=Number(cashResult.data?.balance||0);
         const availableNode=document.getElementById('availableBalance');
         if(availableNode)availableNode.textContent=formatCompactBalance(amount);
@@ -2601,7 +2602,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
         const money=value=>'USDT '+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
         const assetsBreakdown=document.getElementById('assetsViewBreakdown');
         if(assetsBreakdown){
-          assetsBreakdown.innerHTML='<div class="asset-view-row"><span>USDT</span><strong>'+money(amount)+'</strong></div><div class="asset-view-row"><span>Locked investments</span><strong>'+money(lockedPrincipal)+'</strong></div>'+assetDisplay.filter(item=>item.asset!=='USD').map(item=>{const safeAsset=item.asset.replace(/[&<>\"']/g,'');const quantity=item.quantity.toLocaleString(undefined,{maximumFractionDigits:8});const value=item.value===null?'Price unavailable':money(item.value);return '<div class="asset-view-row"><span>'+safeAsset+'<small style="display:block;opacity:.7;font-size:11px;font-weight:400">'+quantity+' '+safeAsset+'</small></span><strong>'+value+'</strong></div>';}).join('');
+          assetsBreakdown.innerHTML='<div class="asset-view-row"><span>USDT</span><strong>'+money(amount)+'</strong></div><div class="asset-view-row"><span>Locked investments</span><strong>'+(investmentQueryFailed?'Unavailable':money(lockedPrincipal))+'</strong></div>'+assetDisplay.filter(item=>item.asset!=='USD').map(item=>{const safeAsset=item.asset.replace(/[&<>\"']/g,'');const quantity=item.quantity.toLocaleString(undefined,{maximumFractionDigits:8});const value=item.value===null?'Price unavailable':money(item.value);return '<div class="asset-view-row"><span>'+safeAsset+'<small style="display:block;opacity:.7;font-size:11px;font-weight:400">'+quantity+' '+safeAsset+'</small></span><strong>'+value+'</strong></div>';}).join('');
         }
         if(unpriced.length){
           pnl.textContent='Unavailable';
@@ -2609,7 +2610,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
           return;
         }
         const dashboardTotal=document.getElementById('dashboardBalance');
-        const totalAccountValue=portfolioValue+lockedPrincipal;
+        const totalAccountValue=portfolioValue;
         if(dashboardTotal)dashboardTotal.textContent=formatCompactBalance(totalAccountValue,'$');
         const percent=totalValue>0?(totalPnl/totalValue)*100:0;
         window.updateTodayPnl(totalPnl,percent);
