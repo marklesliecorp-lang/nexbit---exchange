@@ -122,6 +122,10 @@
     if(mode==='buy'){label.textContent='Available Main Wallet';node.textContent=fmtMoney(usdBalance);}
     else if(mode==='sell'){const asset=selectedAsset();label.textContent='Available '+asset;node.textContent=fmtQty(assetBalances[asset]||0)+' '+asset;}
     else{const asset=fromSelect?.value||'BTC';label.textContent='Available '+asset;node.textContent=fmtQty(assetBalances[asset]||0)+' '+asset;}
+    const amountLabel=document.querySelector('label[for="tradeQuantity"]');
+    if(amountLabel)amountLabel.textContent='Amount ('+(mode==='convert'?(fromSelect?.value||'BTC'):selectedAsset())+')';
+    const totalLabel=document.querySelector('label[for="tradeTotal"]');
+    if(totalLabel)totalLabel.textContent=mode==='buy'?'Estimated Cost (USD)':mode==='sell'?'Estimated Receive (USD)':'Estimated Receive ('+(toSelect?.value||'ETH')+')';
     if(submit)submit.textContent=mode==='buy'?'Buy '+selectedAsset():mode==='sell'?'Sell '+selectedAsset():'Convert';
     updateTotal();
   }
