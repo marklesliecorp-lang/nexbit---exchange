@@ -1561,6 +1561,16 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 .stocks-package-card:nth-child(2) .stocks-package-logo{color:#cbd6e1}
 .stocks-package-card:nth-child(3) .stocks-package-logo{color:#e2bd62}
 @media(max-width:480px){.stocks-packages-header{padding:14px 12px}.stocks-packages-heading h2{font-size:20px}.stocks-packages-chart{width:82px;flex-basis:82px}.stocks-package-card{grid-template-columns:48px minmax(0,1fr);gap:8px;padding:9px 8px}.stocks-package-logo{width:30px;height:30px}.stocks-package-number{font-size:16px}.stocks-package-tier-name{font-size:8px}.stocks-package-title-row h3{font-size:17px}.stocks-package-duration{font-size:9px;padding:4px 7px}.stocks-package-content>p{font-size:10px;margin-bottom:8px}.stocks-package-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 9px}.stocks-package-facts span{font-size:10px}.stocks-package-facts strong{font-size:12px}.stocks-package-button{margin-top:9px;min-height:29px}}
+
+/* Stocks artwork: dedicated visible image area, isolated from chart styles */
+#investment-packages .stocks-packages-header{position:relative;isolation:isolate;overflow:visible}
+#investment-packages .stocks-packages-heading{position:relative;z-index:1;min-width:0;flex:1 1 auto}
+#investment-packages .stocks-packages-artwork{position:relative;z-index:2;display:flex!important;align-items:center;justify-content:center;flex:0 0 148px;width:148px;height:112px;min-width:148px;opacity:1!important;visibility:visible!important;overflow:visible}
+#investment-packages .stocks-packages-artwork img{display:block!important;position:relative;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;opacity:1!important;visibility:visible!important;border:0!important;box-shadow:none!important}
+@media(max-width:600px){
+ #investment-packages .stocks-packages-header{gap:8px;padding:13px 10px}
+ #investment-packages .stocks-packages-artwork{flex-basis:92px;width:92px;height:82px;min-width:92px}
+}
 </style>
 </head>
 <body>
@@ -1808,8 +1818,8 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       <h2>Stocks <em>Packages</em></h2>
       <p>Choose a stock investment package that matches your investment amount.</p>
     </div>
-    <div class="stocks-packages-chart stocks-packages-visual" aria-hidden="true">
-      <img src="assets/stocks-bull.jpg" alt="" loading="eager" decoding="async">
+    <div class="stocks-packages-artwork" aria-hidden="true">
+      <img src="/assets/stocks-bull.webp" alt="" loading="eager" decoding="async" fetchpriority="high">
     </div>
   </header>
   <div class="stocks-package-list" aria-label="Available stock packages">
