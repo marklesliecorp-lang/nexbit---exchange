@@ -16,7 +16,7 @@
   const fmtPrice=n=>Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:Number(n)<1?6:2});
   const fmtQty=n=>Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:8});
   const fmtMoney=n=>'$'+Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-  let socket=null,retryTimer=null,retryDelay=1200,activeSymbol='',lastPrice=0,usdBalance=0,assetBalances={},client=null,currentUser=null;
+  let socket=null,retryTimer=null,retryDelay=1200,activeSymbol='',lastPrice=0,usdBalance=0,assetBalances={},client=null,currentUser=null,pendingIdempotencyKey=null;
   let orderBook={asks:[],bids:[]},recentTrades=[],mode='buy',busy=false,convertPriceCache={};
   const status=document.createElement('div');
   status.id='tradeExecutionStatus';
@@ -106,12 +106,12 @@
     let gross=0,fee=0,unit='';
     try{
       if(mode==='buy'){gross=amount;fee=gross*.001;unit=selectedAsset();total.value=amount>0&&lastPrice>0?(amount*lastPrice).toFixed(2):'';}
-      else if(mode==='sell'){gross=amount*lastPrice;fee=gross*.001;unit='USD';total.value=amount>0&&lastPrice>0?gross.toFixed(2):'';}
+      else if(mode==='sell'){gross=amount*lastPrice;fee=gross*.001;unit='USD';total.value=amount>0&&lastPrice>0?(gross-fee).toFixed(2):'';}
       else{
         const from=fromSelect.value,to=toSelect.value;
         if(from===to){total.value='';if(feeNode)feeNode.textContent='Choose different assets';return;}
         const [fp,tp]=await Promise.all([fetchPrice(from),fetchPrice(to)]);
-        gross=amount*fp/tp;fee=gross*.001;unit=to;total.value=amount>0?gross.toFixed(8):'';
+        gross=amount*fp/tp;fee=gross*.001;unit=to;total.value=amount>0?(gross-fee).toFixed(8):'';
       }
       if(feeNode)feeNode.textContent=amount>0&&gross>0?fmtQty(fee)+' '+unit:'—';
     }catch(e){total.value='';if(feeNode)feeNode.textContent='Price unavailable';}
@@ -182,13 +182,13 @@
     busy=true;if(submit){submit.disabled=true;submit.textContent='Processing…';}
     hideStatus();
     try{
-      const idempotencyKey=crypto.randomUUID();
-      const body={action:mode,fromAsset:assets.from,toAsset:assets.to,amount,idempotencyKey};
+      if(!pendingIdempotencyKey)pendingIdempotencyKey=crypto.randomUUID();
+      const body={action:mode,fromAsset:assets.from,toAsset:assets.to,amount,idempotencyKey:pendingIdempotencyKey};
       const {data,error}=await client.functions.invoke('nexbit-spot-execute',{body});
       if(error)throw new Error(data?.error||error.message||'Execution failed');
       if(data?.error||data?.success!==true)throw new Error(data?.error||'Execution failed');
       showStatus('Completed · '+data.reference+' · Fee: '+fmtQty(data.feeAmount)+' '+data.feeAsset+' · Received: '+fmtQty(data.netOutput)+' '+data.toAsset,'success');
-      quantity.value='';await loadBalances();
+      pendingIdempotencyKey=null;quantity.value='';await loadBalances();
     }catch(error){showStatus(error.message||'Trade could not be completed.','error');}
     finally{busy=false;updateAvailable();if(submit)submit.disabled=!currentUser||!(lastPrice>0);}
   }
@@ -205,7 +205,7 @@
     const quantityLabel=document.querySelector('label[for="tradeQuantity"]');
     if(quantityLabel)quantityLabel.textContent='Amount ('+asset+')';
     const totalLabel=document.querySelector('label[for="tradeTotal"]');
-    if(totalLabel)totalLabel.textContent=mode==='convert'?'Estimated Receive ('+(toSelect.value)+')':'Estimated Total (USDT)';
+    if(totalLabel)totalLabel.textContent=mode==='convert'?'Estimated Receive ('+(toSelect.value)+')':mode==='sell'?'Estimated Receive (USD)':'Estimated Cost (USD)';
     hideStatus();updateAvailable();
   }));
   fromSelect?.addEventListener('change',()=>{const label=document.querySelector('label[for="tradeQuantity"]');if(label)label.textContent='Amount ('+fromSelect.value+')';updateAvailable();});
