@@ -2493,7 +2493,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 
     let amount=Number(balance?.balance||0);
     const formatUSD=value=>'USDT '+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
-    document.getElementById('availableBalance').textContent=formatUSD(amount);
+    document.getElementById('availableBalance').textContent=Number(amount||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
     const assetsBreakdown=document.getElementById('assetsViewBreakdown');
     const {data:assetRows,error:assetRowsError}=await client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
     if(assetsBreakdown){
@@ -2557,7 +2557,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
         if(assetResult.error)throw assetResult.error;
         amount=Number(cashResult.data?.balance||0);
         const availableNode=document.getElementById('availableBalance');
-        if(availableNode)availableNode.textContent=formatUSD(amount);
+        if(availableNode)availableNode.textContent=Number(amount||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
         const tradeBalanceNode=document.getElementById('tradeAvailableBalance');
         if(tradeBalanceNode)tradeBalanceNode.textContent=formatUSD(amount);
         const holdings=(assetResult.data||[]).filter(row=>Number(row.balance)>0);
