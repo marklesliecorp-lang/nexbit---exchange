@@ -1526,6 +1526,34 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 }
 </style>
 
+
+<style id="nexbit-stocks-packages">
+.stocks-packages-header{max-width:820px;margin:0 auto 16px;padding:20px 21px;display:flex;align-items:center;justify-content:space-between;gap:18px;border:1px solid rgba(174,190,205,.18);border-radius:15px;background:linear-gradient(115deg,#111923,#080b10 78%)}
+.stocks-packages-kicker{color:#aebdcb;font-size:9px;font-weight:800;letter-spacing:.18em}
+.stocks-packages-heading h2{margin:7px 0 5px;color:#f0f3f6;font-size:23px;letter-spacing:-.04em}
+.stocks-packages-heading h2 em{color:#aebdcb;font-style:normal}
+.stocks-packages-heading p{margin:0;color:#929eaa;font-size:11px;line-height:1.5}
+.stocks-packages-chart{width:150px;flex:0 0 150px;color:#b9c7d4;opacity:.85}
+.stocks-packages-chart svg{display:block;width:100%;height:auto}
+.stocks-package-list{display:grid;gap:10px;max-width:820px;margin:0 auto}
+.stocks-package-card{display:grid;grid-template-columns:76px minmax(0,1fr);gap:15px;padding:15px;border:1px solid rgba(174,190,205,.22);border-radius:14px;background:linear-gradient(110deg,#111820,#080b0f 78%);box-shadow:inset 0 1px rgba(255,255,255,.025)}
+.stocks-package-tier{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border-right:1px solid rgba(174,190,205,.16);color:#c0ccd7}
+.stocks-package-number{font-size:24px;font-weight:800;letter-spacing:-.06em}
+.stocks-package-tier-name{font-size:8px;font-weight:800;letter-spacing:.15em;color:#9eacba}
+.stocks-package-content{min-width:0}
+.stocks-package-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stocks-package-title-row h3{margin:0;color:#f1f4f7;font-size:16px}
+.stocks-package-duration{padding:5px 9px;border:1px solid rgba(174,190,205,.24);border-radius:20px;color:#c0ccd7;font-size:9px;font-weight:700;white-space:nowrap}
+.stocks-package-content>p{margin:5px 0 12px;color:#9ba6b1;font-size:10px;line-height:1.45}
+.stocks-package-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px 14px}
+.stocks-package-facts div{display:flex;flex-direction:column;gap:5px;min-width:0}
+.stocks-package-facts span{color:#8995a1;font-size:9px;line-height:1.35}
+.stocks-package-facts strong{color:#e0e6eb;font-size:12px}
+.stocks-package-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:34px;margin-top:13px;padding:0 14px;border:1px solid rgba(190,207,222,.38);border-radius:8px;background:linear-gradient(110deg,#c4d0da,#8799a9);color:#101820;font-size:10px;font-weight:800}
+.stocks-package-button span{font-size:14px}
+.stocks-package-disclaimer{max-width:820px;margin:10px auto 0;color:#929ba4;font-size:10px;line-height:1.5}
+@media(max-width:480px){.stocks-packages-header{padding:16px 14px}.stocks-packages-heading h2{font-size:20px}.stocks-packages-chart{width:92px;flex-basis:92px}.stocks-package-card{grid-template-columns:46px minmax(0,1fr);gap:10px;padding:12px 10px}.stocks-package-number{font-size:19px}.stocks-package-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 10px}.stocks-package-facts strong{font-size:11px}.stocks-package-button{margin-top:11px}}
+</style>
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
@@ -1755,17 +1783,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     </div>
   </section>
 
-  <style id="nexbit-stocks-package-refinement">
-.stocks-package-list{gap:9px;max-width:760px}
-.stocks-plan-card{min-height:unset;padding:13px 14px;gap:12px;border-color:rgba(174,190,205,.24);background:linear-gradient(110deg,#111820,#080b0f 78%);box-shadow:inset 0 1px rgba(255,255,255,.025)}
-.stocks-plan-card .market-package-mark{border-color:rgba(174,190,205,.38);background:linear-gradient(145deg,rgba(132,157,181,.16),rgba(210,220,225,.025));color:#c0ccd7}
-.stocks-plan-card .market-package-heading span{color:#aebdcb}
-.stocks-plan-card .market-package-details{gap:8px 16px}
-.stocks-plan-card .market-package-details span{min-width:92px}
-.stocks-plan-card .market-package-details strong{color:#e0e6eb;font-size:11px}
-.stocks-plan-disclaimer{max-width:760px;margin:10px auto 0;color:#929ba4;font-size:10px;line-height:1.5}
-@media(max-width:480px){.stocks-plan-card{align-items:flex-start;padding:12px 10px;gap:9px}.stocks-plan-card .market-package-mark{width:36px;height:36px;flex-basis:36px;font-size:19px}.stocks-plan-card .market-package-details{gap:8px 12px}.stocks-plan-card .market-package-details span{min-width:calc(50% - 8px)}}
-</style>
+
 
 <section class="nexbit-investments" id="investment-packages" hidden>
 <div class="package-category-tabs" role="tablist" aria-label="Investment package categories">
@@ -1774,14 +1792,59 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 <button type="button" data-package-category="options" role="tab" aria-selected="false">Options</button>
 </div>
 <div class="package-category-panel" data-package-panel="crypto" role="tabpanel"><div class="crypto-packages-hero"><img src="89A3C4AD-46C7-49C5-B1AF-74FE77B9D719.png" class="crypto-packages-banner-image" alt=""><div class="crypto-packages-hero-copy"><h2>Cryptocurrency<br><span>Packages</span></h2><p>Invest smart. Grow bigger.</p></div></div><div class="crypto-benefit-row"><div class="crypto-benefit">🛡️ <span>Secure<br>Investments</span></div><div class="crypto-benefit">⚡ <span>Daily<br>Profits</span></div><div class="crypto-benefit">📈 <span>High Growth<br>Potential</span></div></div><div class="investment-container"><div class="crypto-plan-list"><article class="crypto-plan-card plan-basic"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">BASIC</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Basic</h3><p>Perfect for beginners looking to start their investment journey with minimal risk</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$1,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$4,900</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>1%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-silver"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">SILVER</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Silver</h3><p>Ideal for investors seeking steady and reliable returns.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$5,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$9,999</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>1.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-gold"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">GOLD</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Gold</h3><p>For investors looking for higher returns with managed risk.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$10,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$19,000</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>10.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-diamond"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><path class="badge-diamond" d="m60 34 25 17-25 29-25-29z"/><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">DIAMOND</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Diamond</h3><p>Designed for high-value investors targeting strong returns with higher exposure.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$20,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$50,000</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>20%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article></div><div class="crypto-security-note"><span class="security-info">ⓘ</span><div><strong>Your investments are secure with TradFi</strong><small>Powered by advanced security protocols</small></div><span class="security-check">✓</span></div></div></section></div>
-<div class="package-category-panel" data-package-panel="stocks" role="tabpanel" hidden>
-<div class="market-package-hero stocks-package-hero"><div class="market-package-hero-copy"><span>STOCK MARKET</span><h2>Stocks <em>Packages</em></h2></div><div class="market-package-art" aria-hidden="true"><svg viewBox="0 0 220 110"><path d="M12 91 48 70 78 78 112 43 145 55 205 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 102H208" stroke="#aeb8c2" stroke-width="1" opacity=".35"/><path d="M48 70V91M78 78V96M112 43V77M145 55V82" stroke="#aeb8c2" stroke-width="5" stroke-linecap="round"/></svg></div></div>
-<div class="market-package-list stocks-package-list">
-<article class="market-package-card market-tier-basic stocks-plan-card"><div class="market-package-mark" aria-hidden="true">Ⅰ</div><div class="market-package-info"><div class="market-package-heading"><h3>Basic</h3><span>STOCKS</span></div><p>For investors starting with a smaller stock investment.</p><div class="market-package-details"><span>Minimum investment<strong>$5,000</strong></span><span>Maximum investment<strong>$10,000</strong></span><span>Daily rate<strong>2%</strong></span><span>Duration<strong>1 Month</strong></span></div></div></article>
-<article class="market-package-card market-tier-silver stocks-plan-card"><div class="market-package-mark" aria-hidden="true">Ⅱ</div><div class="market-package-info"><div class="market-package-heading"><h3>Silver</h3><span>STOCKS</span></div><p>For investors seeking a larger stock investment allocation.</p><div class="market-package-details"><span>Minimum investment<strong>$11,000</strong></span><span>Maximum investment<strong>$49,999</strong></span><span>Daily rate<strong>3%</strong></span><span>Duration<strong>1 Month</strong></span></div></div></article>
-<article class="market-package-card market-tier-gold stocks-plan-card"><div class="market-package-mark" aria-hidden="true">Ⅲ</div><div class="market-package-info"><div class="market-package-heading"><h3>Gold</h3><span>STOCKS</span></div><p>For investors making a high-value stock investment.</p><div class="market-package-details"><span>Minimum investment<strong>$50,000</strong></span><span>Maximum investment<strong>$200,000</strong></span><span>Daily rate<strong>5%</strong></span><span>Duration<strong>1 Month</strong></span></div></div></article>
-</div>
-<p class="stocks-plan-disclaimer">Daily rates are illustrative targets, not guaranteed returns. Stock investments involve risk, including possible loss of capital.</p>
+<div class="package-category-panel stocks-package-panel" data-package-panel="stocks" role="tabpanel" aria-label="Stocks investment packages" hidden>
+  <header class="stocks-packages-header">
+    <div class="stocks-packages-heading">
+      <span class="stocks-packages-kicker">STOCK MARKET</span>
+      <h2>Stocks <em>Packages</em></h2>
+      <p>Choose a stock investment package that matches your investment amount.</p>
+    </div>
+    <div class="stocks-packages-chart" aria-hidden="true">
+      <svg viewBox="0 0 220 110" focusable="false"><path d="M12 91 48 70 78 78 112 43 145 55 205 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 102H208" stroke="currentColor" stroke-width="1" opacity=".3"/><circle cx="112" cy="43" r="4" fill="currentColor"/><circle cx="205" cy="15" r="4" fill="currentColor"/></svg>
+    </div>
+  </header>
+  <div class="stocks-package-list" aria-label="Available stock packages">
+    <article class="stocks-package-card">
+      <div class="stocks-package-tier"><span class="stocks-package-number">01</span><span class="stocks-package-tier-name">BASIC</span></div>
+      <div class="stocks-package-content">
+        <div class="stocks-package-title-row"><h3>Basic</h3><span class="stocks-package-duration">1 Month</span></div>
+        <p>For investors starting with a smaller stock investment.</p>
+        <div class="stocks-package-facts">
+          <div><span>Minimum investment</span><strong>$5,000</strong></div>
+          <div><span>Maximum investment</span><strong>$10,000</strong></div>
+          <div><span>Daily rate</span><strong>2%</strong></div>
+        </div>
+        <a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="stocks-package-card">
+      <div class="stocks-package-tier"><span class="stocks-package-number">02</span><span class="stocks-package-tier-name">SILVER</span></div>
+      <div class="stocks-package-content">
+        <div class="stocks-package-title-row"><h3>Silver</h3><span class="stocks-package-duration">1 Month</span></div>
+        <p>For investors seeking a larger stock investment allocation.</p>
+        <div class="stocks-package-facts">
+          <div><span>Minimum investment</span><strong>$11,000</strong></div>
+          <div><span>Maximum investment</span><strong>$49,999</strong></div>
+          <div><span>Daily rate</span><strong>3%</strong></div>
+        </div>
+        <a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="stocks-package-card">
+      <div class="stocks-package-tier"><span class="stocks-package-number">03</span><span class="stocks-package-tier-name">GOLD</span></div>
+      <div class="stocks-package-content">
+        <div class="stocks-package-title-row"><h3>Gold</h3><span class="stocks-package-duration">1 Month</span></div>
+        <p>For investors making a high-value stock investment.</p>
+        <div class="stocks-package-facts">
+          <div><span>Minimum investment</span><strong>$50,000</strong></div>
+          <div><span>Maximum investment</span><strong>$200,000</strong></div>
+          <div><span>Daily rate</span><strong>5%</strong></div>
+        </div>
+        <a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+  </div>
+  <p class="stocks-package-disclaimer">Daily rates are illustrative targets, not guaranteed returns. Stock investments involve risk, including possible loss of capital.</p>
 </div>
 <div class="package-category-panel" data-package-panel="options" role="tabpanel" hidden>
 <div class="market-package-hero options-package-hero"><div class="market-package-hero-copy"><span>OPTIONS MARKET</span><h2>Options <em>Packages</em></h2></div><div class="market-package-art" aria-hidden="true"><svg viewBox="0 0 220 110"><path d="M12 83 45 83 65 30 88 83 111 83 132 48 153 83 205 83" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 102H208" stroke="#aeb8c2" stroke-width="1" opacity=".35"/><circle cx="65" cy="30" r="4" fill="currentColor"/><circle cx="132" cy="48" r="4" fill="currentColor"/></svg></div></div>
@@ -2211,17 +2274,28 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 
 <script>
 (function(){
- const root=document.getElementById('investment-packages');
- if(!root)return;
- const tabs=[...root.querySelectorAll('[data-package-category]')];
- const panels=[...root.querySelectorAll('[data-package-panel]')];
- function selectCategory(category){
-  const selected=['crypto','stocks','options'].includes(category)?category:'crypto';
-  tabs.forEach(tab=>{const active=tab.dataset.packageCategory===selected;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active));});
-  panels.forEach(panel=>{panel.hidden=panel.dataset.packagePanel!==selected;});
- }
- tabs.forEach(tab=>tab.addEventListener('click',()=>selectCategory(tab.dataset.packageCategory)));
- selectCategory('crypto');
+  const root=document.getElementById('investment-packages');
+  if(!root)return;
+  const tabs=Array.from(root.querySelectorAll('[data-package-category]'));
+  const panels=Array.from(root.querySelectorAll('[data-package-panel]'));
+  function selectCategory(category){
+    const selected=['crypto','stocks','options'].includes(category)?category:'crypto';
+    tabs.forEach(function(tab){
+      const active=tab.dataset.packageCategory===selected;
+      tab.classList.toggle('active',active);
+      tab.setAttribute('aria-selected',String(active));
+    });
+    panels.forEach(function(panel){
+      panel.hidden=panel.dataset.packagePanel!==selected;
+    });
+  }
+  root.addEventListener('click',function(event){
+    const tab=event.target.closest('[data-package-category]');
+    if(!tab||!root.contains(tab))return;
+    event.preventDefault();
+    selectCategory(tab.dataset.packageCategory);
+  });
+  selectCategory('crypto');
 })();
 </script>
 </body>
