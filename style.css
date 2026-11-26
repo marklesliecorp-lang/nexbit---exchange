@@ -2054,6 +2054,25 @@ footer p {
   position: relative;
 }
 
+.package-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+}
+
+.package-price-row .price-label {
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 0.7px;
+}
+
+.package-price-row strong {
+  font-size: clamp(16px, 1.8vw, 20px);
+  white-space: nowrap;
+}
+
 .price-label {
   display: block;
   font-size: 10px;
