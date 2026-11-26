@@ -1582,6 +1582,48 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
  #investment-packages .stocks-packages-artwork{flex-basis:92px;width:92px;height:82px;min-width:92px}
 }
 </style>
+
+<style id="nexbit-stocks-full-background">
+#investment-packages .stocks-packages-header{
+  position:relative!important;
+  isolation:isolate!important;
+  display:flex!important;
+  align-items:center!important;
+  width:100%!important;
+  max-width:820px!important;
+  min-height:230px!important;
+  padding:28px 22px!important;
+  overflow:hidden!important;
+  border:1px solid rgba(174,190,205,.28)!important;
+  border-radius:18px!important;
+  background-image:linear-gradient(90deg,rgba(5,9,15,.88) 0%,rgba(5,9,15,.68) 48%,rgba(5,9,15,.18) 100%),url('/76BCED33-60A8-4DF4-9A24-75DC86CFF24A.png')!important;
+  background-size:cover!important;
+  background-position:center 46%!important;
+  background-repeat:no-repeat!important;
+}
+#investment-packages .stocks-packages-heading{
+  position:relative!important;
+  z-index:1!important;
+  width:100%!important;
+  max-width:560px!important;
+  flex:1 1 100%!important;
+}
+#investment-packages .stocks-packages-heading h2,
+#investment-packages .stocks-packages-heading p,
+#investment-packages .stocks-packages-kicker{
+  text-shadow:0 2px 12px rgba(0,0,0,.8)!important;
+}
+@media(max-width:600px){
+  #investment-packages .stocks-packages-header{
+    min-height:205px!important;
+    padding:20px 16px!important;
+    background-position:center center!important;
+  }
+  #investment-packages .stocks-packages-heading h2{font-size:22px!important}
+  #investment-packages .stocks-packages-heading p{max-width:92%!important}
+}
+</style>
+
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
@@ -1827,9 +1869,6 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       <span class="stocks-packages-kicker">STOCK MARKET</span>
       <h2>Stocks <em>Packages</em></h2>
       <p>Choose a stock investment package that matches your investment amount.</p>
-    </div>
-    <div class="stocks-packages-artwork" aria-hidden="true">
-      <img src="/76BCED33-60A8-4DF4-9A24-75DC86CFF24A.png" alt="Stocks investment market artwork" width="555" height="375" loading="eager" decoding="async" fetchpriority="high">
     </div>
   </header>
   <div class="stocks-package-list" aria-label="Available stock packages">
