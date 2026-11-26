@@ -82,7 +82,7 @@
   $('listMessage').textContent='Showing '+rows.length+' investment record(s).';
  }
  $('postForm').addEventListener('submit',async e=>{
-  e.preventDefault();$('postSubmit').disabled=true;$('postMessage').textContent='Posting investment and deducting customer balance…';
+  e.preventDefault();const customer=$('postUser').selectedOptions[0]?.textContent||'selected customer';const amount=Number($('postAmount').value);if(!window.confirm('Post and activate this investment for '+customer+'? '+money(amount)+' will be deducted from the customer’s available balance immediately.'))return;$('postSubmit').disabled=true;$('postMessage').textContent='Posting investment and deducting customer balance…';
   try{
    const {data,error}=await client.rpc('admin_post_investment',{p_user_id:$('postUser').value,p_asset_category:$('postCategory').value,p_package_name:$('postPackage').value.trim(),p_principal_amount:Number($('postAmount').value),p_daily_rate_percent:Number($('postRate').value),p_duration_days:Number($('postDuration').value)});
    if(error)throw error;$('postMessage').textContent='Investment posted and activated. Customer balance has been deducted.';
@@ -93,7 +93,7 @@
  function openEdit(r){selected=r;$('editPackage').value=r.package_name;$('editAmount').value=r.principal_amount;$('editRate').value=r.daily_rate_percent;$('editDuration').value=r.duration_days;$('editStatus').value=r.status;$('editMessage').textContent='Customer: '+(r.user_email||r.user_id)+' · '+r.reference;$('editModal').hidden=false;}
  $('closeEdit').addEventListener('click',()=>{$('editModal').hidden=true;selected=null;});
  $('saveEdit').addEventListener('click',async()=>{
-  if(!selected)return;$('saveEdit').disabled=true;$('editMessage').textContent='Saving changes…';
+  if(!selected)return;if(!window.confirm('Save these investment changes? If you change the principal amount, the customer’s available balance will be adjusted by the difference. Marking the investment cancelled refunds its principal.'))return;$('saveEdit').disabled=true;$('editMessage').textContent='Saving changes…';
   try{
    const {error}=await client.rpc('admin_update_investment',{p_id:selected.id,p_package_name:$('editPackage').value.trim(),p_principal_amount:Number($('editAmount').value),p_daily_rate_percent:Number($('editRate').value),p_duration_days:Number($('editDuration').value),p_status:$('editStatus').value});
    if(error)throw error;$('editMessage').textContent='Investment updated.';$('editModal').hidden=true;selected=null;await loadRows();
