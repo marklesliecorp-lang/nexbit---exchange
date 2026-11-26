@@ -2288,7 +2288,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       if(chartNode){
         const chartRows=investments.slice(0,6).reverse();
         const max=Math.max(1,...chartRows.map(row=>Number(row.principal_amount||0)));
-        chartNode.innerHTML=chartRows.length?chartRows.map(row=>{const height=Math.max(5,Math.round(Number(row.principal_amount||0)/max*88));return '<div class="investment-chart-bar" title="'+safe(row.package_name)+' · '+money(row.principal_amount)+'"><i style="height:'+height+'px"></i><small>'+new Date(row.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric'})+'</small></div>';}).join(''):'<div class="investment-chart-empty">Your investment activity will appear here.</div>';
+        chartNode.innerHTML=chartRows.length?chartRows.map(row=>{const height=Math.max(5,Math.round(Number(row.principal_amount||0)/max*88));const state=String(row.status||'active').toLowerCase();return '<div class="investment-chart-bar investment-chart-'+(state==='cancelled'?'cancelled':state==='completed'?'completed':'active')+'" title="'+safe(row.package_name)+' · '+money(row.principal_amount)+' · '+safe(state)+'"><i style="height:'+height+'px"></i><small>'+new Date(row.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric'})+'</small></div>';}).join(''):'<div class="investment-chart-empty">Your investment activity will appear here.</div>';
       }
       if(plansNode)plansNode.innerHTML=active.length?active.map(row=>'<article class="investment-active-row"><div class="investment-active-row-head"><div><strong>'+safe(row.package_name)+'</strong><small>'+safe(row.asset_category.toUpperCase())+' · '+safe(row.reference)+'</small></div><span class="investment-active-status">ACTIVE</span></div><div class="investment-active-row-facts"><span>Invested<strong>'+money(row.principal_amount)+'</strong></span><span>Daily rate<strong>'+Number(row.daily_rate_percent).toLocaleString()+'%</strong></span><span>Duration<strong>'+Number(row.duration_days)+' days</strong></span><span>Expected profit<strong>'+money(row.expected_profit)+'</strong></span></div><div class="investment-active-row-date">Matures '+(row.matures_at?new Date(row.matures_at).toLocaleDateString():'—')+'</div></article>').join(''):'<div class="investment-empty-state"><span class="investment-empty-icon" aria-hidden="true">◇</span><strong>No active investment plans</strong><p>Your active plans will appear here once they have been recorded.</p></div>';
     }
@@ -2800,4 +2800,11 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
   #investmentView #investment-packages .package-category-tabs button{min-height:34px!important;padding:6px 9px!important;font-size:10px!important}
   #investmentView #investment-packages .stocks-packages-banner{margin-bottom:10px!important}
 }
+</style>
+
+
+<style id="nexbit-investment-activity-candle-colors">
+#investmentView .investment-chart-bar i{background:linear-gradient(180deg,#39d98a,#087a49)!important;box-shadow:0 0 9px rgba(34,197,94,.18)}
+#investmentView .investment-chart-bar.investment-chart-cancelled i{background:linear-gradient(180deg,#ff7777,#a91f2b)!important;box-shadow:0 0 9px rgba(239,68,68,.2)}
+#investmentView .investment-chart-bar.investment-chart-completed i{background:linear-gradient(180deg,#39d98a,#087a49)!important}
 </style>
