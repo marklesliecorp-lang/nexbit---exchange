@@ -2334,7 +2334,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     const isLimit=button.dataset.orderType==='limit';
     if(priceField)priceField.hidden=!isLimit;
     const totalField=document.getElementById('tradeTotalField');
-    if(totalField)totalField.hidden=!isLimit;
+    if(totalField)totalField.hidden=false;
     updateLimitTotal();
   }));
 })();
