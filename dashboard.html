@@ -1329,6 +1329,20 @@ body .bottom-nav > a.active svg { color:#fff !important; }
 
 .stocks-packages-visual img{display:block;width:100%;height:auto;max-height:150px;object-fit:contain;border-radius:10px;}
 @media(max-width:600px){.stocks-packages-visual img{max-height:112px}}
+
+/* Compact package cards with the action directly beneath the duration */
+.stocks-package-card{padding:8px 9px!important;grid-template-columns:52px minmax(0,1fr)!important;gap:8px!important}
+.stocks-package-logo{width:30px;height:30px}.stocks-package-number{font-size:16px}
+.stocks-package-content{display:grid;grid-template-columns:minmax(0,1fr);align-content:center;gap:5px}
+.stocks-package-title-row{align-items:flex-start!important;gap:8px!important}.stocks-package-title-row h3{font-size:16px!important;padding-top:3px}
+.stocks-package-side-actions{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:0 0 auto}
+.stocks-package-side-actions .stocks-package-duration{font-size:9px;padding:3px 7px}
+.stocks-package-side-actions .stocks-package-button{margin:0!important;min-height:25px;padding:0 9px;font-size:10px;white-space:nowrap}
+.stocks-package-content>p{margin:1px 0 4px!important;font-size:10px!important}.stocks-package-facts{gap:4px 8px!important}
+.stocks-package-facts span{font-size:9px!important}.stocks-package-facts strong{font-size:12px!important}
+.options-package-list .stocks-package-card{padding-top:7px!important;padding-bottom:7px!important}
+@media(max-width:480px){.stocks-package-card{grid-template-columns:42px minmax(0,1fr)!important;padding:7px!important;gap:7px!important}.stocks-package-logo{width:26px;height:26px}.stocks-package-number{font-size:14px}.stocks-package-tier-name{font-size:7px}.stocks-package-title-row h3{font-size:15px!important}.stocks-package-facts{gap:4px 6px!important}.stocks-package-facts strong{font-size:11px!important}.stocks-package-side-actions .stocks-package-button{min-height:24px;padding:0 7px;font-size:9px}}
+
 </style>
 
 <style id="nexbit-dashboard-route-visibility">
@@ -1949,7 +1963,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     <article class="stocks-package-card">
       <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M8 17 17 24 24 10 31 24 40 17 36 34H12L8 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M12 39H36" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="8" cy="14" r="2.5" fill="currentColor"/><circle cx="24" cy="7" r="2.5" fill="currentColor"/><circle cx="40" cy="14" r="2.5" fill="currentColor"/></svg></span><span class="stocks-package-number">01</span><span class="stocks-package-tier-name">BASIC</span></div>
       <div class="stocks-package-content">
-        <div class="stocks-package-title-row"><h3>Basic</h3><span class="stocks-package-duration">1 Month</span></div>
+        <div class="stocks-package-title-row"><h3>Basic</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div>
         <p>For investors starting with a smaller stock investment.</p>
         <div class="stocks-package-facts">
           <div><span>Minimum investment</span><strong>$5,000</strong></div>
@@ -1962,7 +1976,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     <article class="stocks-package-card">
       <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="m24 5 5.4 11 12.1 1.8-8.8 8.6 2.1 12.1L24 32.8l-10.8 5.7 2.1-12.1-8.8-8.6L18.6 16 24 5Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M17 43H31" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="stocks-package-number">02</span><span class="stocks-package-tier-name">SILVER</span></div>
       <div class="stocks-package-content">
-        <div class="stocks-package-title-row"><h3>Silver</h3><span class="stocks-package-duration">1 Month</span></div>
+        <div class="stocks-package-title-row"><h3>Silver</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div>
         <p>For investors seeking a larger stock investment allocation.</p>
         <div class="stocks-package-facts">
           <div><span>Minimum investment</span><strong>$11,000</strong></div>
@@ -1975,7 +1989,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     <article class="stocks-package-card">
       <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M7 17 15 23 24 8 33 23 41 17 37 35H11L7 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M13 40H35M17 29H31" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><path d="M24 3V8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="stocks-package-number">03</span><span class="stocks-package-tier-name">GOLD</span></div>
       <div class="stocks-package-content">
-        <div class="stocks-package-title-row"><h3>Gold</h3><span class="stocks-package-duration">1 Month</span></div>
+        <div class="stocks-package-title-row"><h3>Gold</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div>
         <p>For investors making a high-value stock investment.</p>
         <div class="stocks-package-facts">
           <div><span>Minimum investment</span><strong>$50,000</strong></div>
@@ -1992,19 +2006,19 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
   <div class="stocks-package-list options-package-list" aria-label="Available options packages">
     <article class="stocks-package-card">
       <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M8 17 17 24 24 10 31 24 40 17 36 34H12L8 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M12 39H36" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="8" cy="14" r="2.5" fill="currentColor"/><circle cx="24" cy="7" r="2.5" fill="currentColor"/><circle cx="40" cy="14" r="2.5" fill="currentColor"/></svg></span><span class="stocks-package-number">01</span><span class="stocks-package-tier-name">BASIC</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Basic</h3><span class="stocks-package-duration">1 Month</span></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$1,000</strong></div><div><span>Maximum investment</span><strong>$4,900</strong></div><div><span>Daily rate</span><strong>2%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
+      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Basic</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$1,000</strong></div><div><span>Maximum investment</span><strong>$4,900</strong></div><div><span>Daily rate</span><strong>2%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
     </article>
     <article class="stocks-package-card">
       <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="m24 5 5.4 11 12.1 1.8-8.8 8.6 2.1 12.1L24 32.8l-10.8 5.7 2.1-12.1-8.8-8.6L18.6 16 24 5Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M17 43H31" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="stocks-package-number">02</span><span class="stocks-package-tier-name">SILVER</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Silver</h3><span class="stocks-package-duration">1 Month</span></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$5,000</strong></div><div><span>Maximum investment</span><strong>$9,999</strong></div><div><span>Daily rate</span><strong>3%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
+      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Silver</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$5,000</strong></div><div><span>Maximum investment</span><strong>$9,999</strong></div><div><span>Daily rate</span><strong>3%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
     </article>
     <article class="stocks-package-card">
       <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M7 17 15 23 24 8 33 23 41 17 37 35H11L7 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M13 40H35M17 29H31M24 3V8" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></span><span class="stocks-package-number">03</span><span class="stocks-package-tier-name">GOLD</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Gold</h3><span class="stocks-package-duration">1 Month</span></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$10,000</strong></div><div><span>Maximum investment</span><strong>$19,000</strong></div><div><span>Daily rate</span><strong>5%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
+      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Gold</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$10,000</strong></div><div><span>Maximum investment</span><strong>$19,000</strong></div><div><span>Daily rate</span><strong>5%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
     </article>
     <article class="stocks-package-card">
       <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="m24 5 18 13-18 25L6 18 24 5Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M6 18H42M24 5l-7 13 7 25 7-25-7-13Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="stocks-package-number">04</span><span class="stocks-package-tier-name">DIAMOND</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Diamond</h3><span class="stocks-package-duration">1 Month</span></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$20,000</strong></div><div><span>Maximum investment</span><strong>$50,000</strong></div><div><span>Daily rate</span><strong>8%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
+      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Diamond</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$20,000</strong></div><div><span>Maximum investment</span><strong>$50,000</strong></div><div><span>Daily rate</span><strong>8%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
     </article>
   </div>
 </section><section class="trade-view" id="tradeView" hidden aria-label="Trade">
