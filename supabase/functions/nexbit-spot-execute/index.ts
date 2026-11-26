@@ -71,7 +71,7 @@ Deno.serve(async (req: Request) => {
       const message = error.message || "Trade could not be completed";
       return json({ error: message.replace(/^.*?ERROR:\\s*/i, "") }, 400);
     }
-    return json(data);
+    return json({ ...data, fromAsset, toAsset });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Trade service temporarily unavailable";
     return json({ error: message }, 503);
