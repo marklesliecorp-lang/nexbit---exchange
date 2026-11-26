@@ -2998,48 +2998,6 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 #investmentView .investment-chart-bar.investment-chart-cancelled i{background:linear-gradient(180deg,#ff7777,#a91f2b)!important;box-shadow:0 0 9px rgba(239,68,68,.2)}
 #investmentView .investment-chart-bar.investment-chart-completed i{background:linear-gradient(180deg,#39d98a,#087a49)!important}
 </style>
-+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-        const dashboardTotal=document.getElementById('dashboardBalance');
-        if(dashboardTotal)dashboardTotal.textContent=formatPortfolioUSD(portfolioValue);
-        const assetsBalance=document.getElementById('assetsViewBalance');
-        if(assetsBalance)assetsBalance.textContent='USDT '+Number(portfolioValue||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-        const percent=totalValue>0?(totalPnl/totalValue)*100:0;
-        window.updateTodayPnl(totalPnl,percent);
-      }catch(error){
-        console.warn('NEXBIT account P&L refresh unavailable:',error);
-        pnl.textContent='Unavailable';pnl.className='pnl-neutral';
-
-      }finally{
-        pnlRefreshBusy=false;
-      }
-    }
-    loadAccountPnl();
-    setInterval(loadAccountPnl,5000);
-    message.textContent='Your secure session is active.';
-  }
-
-  const logoutButton=document.getElementById('logoutButton');
-  logoutButton.addEventListener('click',async function(){
-    this.disabled=true;
-    this.textContent='Logging out…';
-    const {error}=await client.auth.signOut();
-    if(error){
-      message.textContent='Unable to log out. Please try again.';
-      this.disabled=false;
-      this.textContent='Log out ↗';
-      return;
-    }
-    window.location.replace('login.html');
-  });
-
-  init().catch(function(error){
-    console.error('NEXBIT dashboard initialization error:',error);
-    message.textContent='Your session is active, but some dashboard information could not be loaded. Please refresh.';
-  });
-})();
-
-</script>
-
 
 <script>/* NEXBIT Market Watch: Binance live crypto stream; TradingView embedded stock quotes */
 (function(){
