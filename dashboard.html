@@ -1801,21 +1801,30 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 </style>
 
 <style id="nexbit-assets-watercolor-black">
-/* Assets only: colourless, transparent water-like surfaces on pure black */
-#assetsView{background:#000!important}
+/* Match Assets to the existing dashboard black, warm bronze and gold theme */
+#assetsView{background:#000!important;color:var(--white,#f7f2e9)!important}
 #assetsView .asset-view-card{
-  background:transparent!important;
-  border:1px solid transparent!important;
-  box-shadow:none!important;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px)
+  background:#080706!important;
+  border:1px solid rgba(185,116,35,.25)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.28)!important;
+  color:var(--white,#f7f2e9)!important
 }
+#assetsView .subview-heading h1,
+#assetsView .asset-view-section-head h2,
+#assetsView .asset-view-row,
+#assetsView .asset-view-row strong{color:var(--white,#f7f2e9)!important}
+#assetsView .subview-heading p,
+#assetsView .asset-view-label,
+#assetsView .asset-view-empty{color:var(--muted,#92877a)!important}
+#assetsView .asset-view-balance{color:var(--gold2,#f0bd70)!important}
+#assetsView .asset-view-section-head a{color:var(--gold2,#f0bd70)!important}
 #assetsView .asset-view-actions a{
-  background:transparent!important;
-  border:1px solid transparent!important;
+  background:#0d0a06!important;
+  border:1px solid rgba(185,116,35,.25)!important;
+  color:var(--gold2,#f0bd70)!important;
   box-shadow:none!important
 }
-#assetsView .asset-view-row{border-top:1px solid transparent!important}
+#assetsView .asset-view-row{border-top:1px solid rgba(185,116,35,.18)!important}
 </style>
 </head>
 <body>
