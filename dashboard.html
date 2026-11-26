@@ -2717,3 +2717,87 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 </script>
 </body>
 </html>
+
+
+<style id="nexbit-investment-tabs-consistent-silver-black">
+/* Keep all three investment views on one consistent silver-and-black system */
+#investmentView{max-width:100%;padding-top:10px!important}
+#investmentView .investment-section-nav,
+#investmentView:has(#investment-packages:not([hidden])) .investment-section-nav{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  width:100%!important;max-width:920px!important;margin:0 auto 12px!important;padding:0!important;
+  gap:7px!important;justify-content:stretch!important
+}
+#investmentView .investment-section-nav button,
+#investmentView:has(#investment-packages:not([hidden])) .investment-section-nav button{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;min-height:40px!important;padding:7px 8px!important;
+  border:1px solid rgba(190,204,221,.28)!important;border-radius:8px!important;
+  background:linear-gradient(145deg,#222a34,#0b0e13)!important;color:#cbd3df!important;
+  font-size:12px!important;font-weight:750!important;line-height:1.15!important;
+  white-space:nowrap!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important
+}
+#investmentView .investment-section-nav button.active,
+#investmentView:has(#investment-packages:not([hidden])) .investment-section-nav button.active{
+  border-color:#aebdce!important;background:linear-gradient(145deg,#aebdce,#596575 58%,#252c36)!important;color:#080b10!important
+}
+#investmentView #investment-overview-section,
+#investmentView #investment-active-plans,
+#investmentView #investment-packages{
+  box-sizing:border-box!important;width:100%!important;max-width:920px!important;
+  margin:0 auto 14px!important;padding:15px!important;
+  border:1px solid rgba(190,204,221,.28)!important;border-radius:13px!important;
+  background:linear-gradient(145deg,#151b23 0%,#080a0e 62%,#1b222c 100%)!important;
+  color:#e8edf4!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 8px 22px rgba(0,0,0,.2)!important
+}
+#investmentView #investment-overview-section .investment-insight-card,
+#investmentView #investment-active-plans .investment-empty-state,
+#investmentView #investment-active-plans .investment-active-row{
+  border-color:rgba(190,204,221,.22)!important;background:linear-gradient(150deg,rgba(167,183,202,.09),rgba(5,7,11,.82) 72%)!important;color:#e5ebf3!important
+}
+#investmentView #investment-active-plans h2,
+#investmentView #investment-active-plans h3,
+#investmentView #investment-active-plans strong{color:#edf1f6}
+#investmentView #investment-active-plans p,
+#investmentView #investment-active-plans small{color:#aab5c3}
+#investmentView #investment-packages .package-category-tabs{
+  display:flex!important;justify-content:center!important;gap:6px!important;
+  max-width:100%!important;margin:0 auto 12px!important;padding:4px!important;
+  border:1px solid rgba(190,204,221,.24)!important;border-radius:9px!important;
+  background:#080b10!important
+}
+#investmentView #investment-packages .package-category-tabs button{
+  min-height:36px!important;padding:7px 13px!important;border:1px solid transparent!important;
+  border-radius:7px!important;background:#151b23!important;color:#b9c4d2!important;
+  font-size:11px!important;font-weight:750!important
+}
+#investmentView #investment-packages .package-category-tabs button.active{
+  border-color:#aebdce!important;background:linear-gradient(145deg,#aebdce,#596575)!important;color:#080b10!important
+}
+#investmentView #investment-packages .stocks-packages-banner{max-width:820px!important;margin:0 auto 12px!important}
+#investmentView #investment-packages .stocks-package-card{
+  border-color:rgba(190,204,221,.28)!important;background:linear-gradient(145deg,#171e27,#080a0e 72%)!important;color:#e8edf4!important
+}
+#investmentView #investment-packages .stocks-package-tier-name,
+#investmentView #investment-packages .stocks-package-facts strong{color:#cbd6e3!important}
+#investmentView #investment-packages .stocks-package-button{
+  border-color:rgba(190,204,221,.35)!important;background:linear-gradient(145deg,#aebdce,#596575)!important;color:#080b10!important
+}
+@media(max-width:600px){
+  #investmentView{padding:8px 12px 20px!important}
+  #investmentView .investment-section-nav,
+  #investmentView:has(#investment-packages:not([hidden])) .investment-section-nav{
+    gap:5px!important;margin:0 auto 10px!important
+  }
+  #investmentView .investment-section-nav button,
+  #investmentView:has(#investment-packages:not([hidden])) .investment-section-nav button{
+    min-height:39px!important;padding:6px 3px!important;font-size:11px!important;border-radius:8px!important
+  }
+  #investmentView #investment-overview-section,
+  #investmentView #investment-active-plans,
+  #investmentView #investment-packages{padding:12px 10px!important;margin-bottom:12px!important;border-radius:11px!important}
+  #investmentView #investment-packages .package-category-tabs{gap:4px!important;margin-bottom:10px!important}
+  #investmentView #investment-packages .package-category-tabs button{min-height:34px!important;padding:6px 9px!important;font-size:10px!important}
+  #investmentView #investment-packages .stocks-packages-banner{margin-bottom:10px!important}
+}
+</style>
