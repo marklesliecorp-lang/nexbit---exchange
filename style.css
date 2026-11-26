@@ -2049,45 +2049,47 @@ footer p {
   margin: 0 0 25px;
 }
 
-/* PACKAGE INVESTMENT LIMITS — single, explicit component */
+/* CRYPTO PACKAGE MINIMUM / MAXIMUM INVESTMENT DISPLAY */
 .investment-limits {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
   width: 100%;
-  margin: 18px 0;
+  margin: 16px 0;
 }
 
 .investment-limit {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 7px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   min-width: 0;
   box-sizing: border-box;
-  padding: 13px 12px;
+  padding: 12px 13px;
   border: 1px solid rgba(190, 211, 235, .2);
-  border-radius: 10px;
+  border-radius: 9px;
   background: linear-gradient(145deg, rgba(67, 111, 157, .19), rgba(17, 28, 44, .72));
 }
 
 .investment-limit-label {
   display: block;
+  flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
   color: #b9c8d8;
   font-size: 10px;
-  line-height: 1.2;
+  line-height: 1.3;
   font-weight: 700;
-  letter-spacing: .9px;
+  letter-spacing: .7px;
   text-transform: uppercase;
 }
 
 .investment-limit-value {
   display: block;
+  flex: 0 0 auto;
   margin: 0;
   color: #f4f8ff;
-  font-size: clamp(18px, 2vw, 23px);
+  font-size: clamp(18px, 2vw, 22px);
   line-height: 1.2;
   font-weight: 800;
   letter-spacing: -.4px;
@@ -2098,6 +2100,41 @@ footer p {
 .silver-card .investment-limit-value { color: #dce6f5; }
 .gold-card .investment-limit-value { color: #f4ce75; }
 .diamond-card .investment-limit-value { color: #d2adff; }
+
+@media (max-width: 700px) {
+  .nexbit-investments .investment-limits { gap: 7px; margin: 13px 0; }
+  .nexbit-investments .investment-limit { padding: 11px 12px; gap: 8px; }
+  .nexbit-investments .investment-limit-label { font-size: 9px; letter-spacing: .5px; }
+  .nexbit-investments .investment-limit-value { font-size: clamp(17px, 5vw, 20px); }
+}
+
+.package-price {
+  padding: 18px 0;
+  position: relative;
+}
+
+.price-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 9px;
+}
+
+.package-price strong {
+  display: block;
+  font-size: clamp(23px, 2.4vw, 29px);
+  white-space: nowrap;
+  color: #fff;
+}
+
+.package-price strong small {
+  color: #d9b65e;
+  font-size: 18px;
+}
+
+.gold-card .package-price strong { color: #f5d88c; }
 
 .package-divider {
   height: 1px;
@@ -5341,4 +5378,10 @@ footer {
   .nexbit-investments .investment-limit-value {
     font-size: clamp(17px, 5vw, 21px);
   }
+}
+
+
+@media (max-width: 700px) {
+  .package-price { padding: 7px 0; }
+  .package-price strong { font-size: clamp(20px, 6vw, 25px); }
 }
