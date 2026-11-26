@@ -2560,8 +2560,8 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
         if(availableNode)availableNode.textContent=Number(amount||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:8});
         const tradeBalanceNode=document.getElementById('tradeAvailableBalance');
         if(tradeBalanceNode)tradeBalanceNode.textContent=formatUSD(amount);
-        const holdings=(assetResult.data||[]).filter(row=>Number(row.balance)>0);
-        const pricedHoldings=holdings.filter(row=>String(row.asset_code||'').toUpperCase()!=='USD');
+        const holdings=(assetResult.data||[]).filter(row=>Number(row.balance)>0&&!['USDT','USD'].includes(String(row.asset_code||'').toUpperCase()));
+        const pricedHoldings=holdings;
         let quotes={};
         if(pricedHoldings.length){
           try{quotes={...(await loadPnlMarketQuotes())};}
@@ -2573,7 +2573,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
             quotes[asset]={price:quote.price,change:quote.change};
           }
         });
-        let totalPnl=0,totalValue=0,portfolioValue=0,unpriced=[];
+        let totalPnl=0,totalValue=Number(amount)||0,portfolioValue=Number(amount)||0,unpriced=[];
         const assetDisplay=[];
         holdings.forEach(row=>{
           const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance);
@@ -2591,12 +2591,6 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
           totalValue+=value;
           assetDisplay.push({asset,quantity,value});
         });
-        // Main wallet cash is stored separately from crypto asset balances.
-        // Always include the latest cash balance in the portfolio total.
-        if(Number.isFinite(Number(amount))&&Number(amount)>0){
-          portfolioValue+=Number(amount);
-          totalValue+=Number(amount);
-        }
         const money=value=>'USDT '+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
         const assetsBreakdown=document.getElementById('assetsViewBreakdown');
         if(assetsBreakdown){
