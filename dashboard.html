@@ -2607,7 +2607,11 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
           pnl.className='pnl-neutral';
           return;
         }
-        const formatPortfolioUSD=value=>'
+        const formatPortfolioUSD=value=>String.fromCharCode(36)+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+        const dashboardTotal=document.getElementById('dashboardBalance');
+        if(dashboardTotal)dashboardTotal.textContent=formatPortfolioUSD(portfolioValue);
+        const assetsBalance=document.getElementById('assetsViewBalance');
+        if(assetsBalance)assetsBalance.textContent='USDT '+Number(portfolioValue||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
         const percent=totalValue>0?(totalPnl/totalValue)*100:0;
         window.updateTodayPnl(totalPnl,percent);
       }catch(error){
