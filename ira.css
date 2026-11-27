@@ -1,0 +1,69 @@
+/* NEXTBIT IRA — compact, mobile-first dashboard styling */
+#iraView{width:100%;min-height:100vh;padding:0 0 calc(100px + env(safe-area-inset-bottom));background:#05070b;color:#f1f4f8}
+#iraView[hidden],#iraView [hidden]{display:none!important}
+#iraView .ira-section-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;width:calc(100% - 24px);max-width:920px;margin:0 auto 9px}
+#iraView .ira-section-nav button{min-width:0;min-height:39px;padding:5px 2px;border:1px solid #38414d;border-radius:9px;background:linear-gradient(145deg,#1a222e,#0b1018);color:#c3ccd8;font:750 clamp(9px,2.7vw,12px)/1.15 Inter,Arial,sans-serif;cursor:pointer}
+#iraView .ira-section-nav button.active{border-color:#c6d1df;background:linear-gradient(145deg,#e1e7ef,#9ba8b8 70%,#697789);color:#090d13}
+#iraView .ira-panel{width:calc(100% - 24px);max-width:920px;margin:0 auto 14px;padding:13px;border:1px solid rgba(185,201,220,.23);border-radius:15px;background:linear-gradient(145deg,#151d28,#080b11 62%,#171f2a);box-shadow:0 10px 25px rgba(0,0,0,.23)}
+#iraView .ira-hero{padding:18px 14px 20px;border:1px solid rgba(177,196,220,.17);border-radius:13px;background:radial-gradient(ellipse at 100% 0%,rgba(87,123,170,.25),transparent 52%),linear-gradient(120deg,#111c2b,#090d15)}
+#iraView .ira-eyebrow{display:block;color:#aabbd0;font-size:8px;font-weight:850;letter-spacing:1.65px}
+#iraView .ira-hero h1{margin:9px 0 8px;color:#f6f8fb;font-size:clamp(27px,7vw,39px);line-height:1.05;letter-spacing:-1.1px}
+#iraView .ira-hero h1 span{color:#b6c7db}
+#iraView .ira-hero p{margin:0;color:#aeb9c8;font-size:11px;line-height:1.55}
+#iraView .ira-plan-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 18px}
+#iraView .ira-plan-summary article{display:grid;gap:5px;padding:11px;border:1px solid rgba(182,198,219,.2);border-radius:11px;background:linear-gradient(145deg,rgba(174,193,218,.12),rgba(7,11,17,.8))}
+#iraView .ira-plan-summary article>span{color:#aeb9c8;font-size:10px;font-weight:700}
+#iraView .ira-plan-summary strong{color:#e8eef6;font-size:25px;line-height:1}
+#iraView .ira-plan-summary strong small{font-size:9px;color:#aeb9c8}
+#iraView .ira-plan-summary em{color:#8493a6;font-size:9px;font-style:normal}
+#iraView .ira-how-heading{margin:0 0 9px}
+#iraView .ira-how-heading h2,#iraView .ira-heading h2{margin:5px 0;color:#f1f4f8;font-size:19px}
+#iraView .ira-how-heading p,#iraView .ira-heading p{margin:0;color:#9eabba;font-size:10px;line-height:1.5}
+#iraView .ira-how-list{display:grid;gap:7px}
+#iraView .ira-how-list article{display:grid;grid-template-columns:27px minmax(0,1fr);gap:9px;padding:10px;border:1px solid rgba(183,198,217,.14);border-radius:10px;background:rgba(4,7,12,.43)}
+#iraView .ira-how-list article>b{display:grid;place-items:center;width:25px;height:25px;border:1px solid rgba(183,201,224,.3);border-radius:8px;background:rgba(166,190,219,.1);color:#d3deea;font-size:9px}
+#iraView .ira-how-list h3{margin:1px 0 4px;color:#e8edf4;font-size:11px}
+#iraView .ira-how-list p{margin:0;color:#a2adbb;font-size:9px;line-height:1.5}
+#iraView .ira-notice{margin-top:10px;padding:11px;border:1px solid rgba(190,205,224,.2);border-radius:10px;background:rgba(145,170,201,.07)}
+#iraView .ira-notice strong{color:#dfe8f2;font-size:10px}
+#iraView .ira-notice p{margin:5px 0 0;color:#9eabba;font-size:9px;line-height:1.5}
+#iraView .ira-heading{margin-bottom:14px}
+#iraView .ira-empty{display:flex;min-height:155px;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px dashed rgba(182,199,220,.24);border-radius:12px;background:rgba(4,7,12,.35)}
+#iraView .ira-empty>span{display:grid;place-items:center;width:37px;height:37px;margin-bottom:9px;border-radius:50%;background:rgba(174,194,219,.1);color:#c8d6e6;font-size:23px}
+#iraView .ira-empty strong{color:#e7edf5;font-size:12px}
+#iraView .ira-empty p{max-width:300px;margin:6px 0 0;color:#9ba8b8;font-size:10px;line-height:1.5}
+#iraView .ira-plan-hero{padding:16px;border:1px solid rgba(186,202,223,.2);border-radius:12px;background:radial-gradient(ellipse at 100% 0%,rgba(89,131,183,.22),transparent 55%),linear-gradient(125deg,#172232,#0b1018)}
+#iraView .ira-plan-hero.core{background:radial-gradient(ellipse at 100% 0%,rgba(156,170,190,.2),transparent 55%),linear-gradient(125deg,#202833,#0b1018)}
+#iraView .ira-plan-hero h2{margin:7px 0 4px;color:#f4f6fa;font-size:25px}
+#iraView .ira-plan-hero p{margin:0;color:#aab7c7;font-size:10px}
+#iraView .ira-plan-hero>strong{display:block;margin-top:13px;color:#dce7f4;font-size:38px}
+#iraView .ira-plan-hero>strong small{color:#9eacbd;font-size:10px}
+#iraView .ira-minimum{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:9px 0;padding:11px;border:1px solid rgba(183,199,220,.17);border-radius:10px;background:rgba(175,195,220,.06)}
+#iraView .ira-minimum span{color:#aeb9c8;font-size:10px}
+#iraView .ira-minimum strong{color:#f1f5fa;font-size:15px}
+#iraView .ira-calculator{display:grid;gap:8px;padding:12px;border:1px solid rgba(183,199,220,.17);border-radius:12px;background:rgba(4,7,12,.45)}
+#iraView .ira-calculator h3{margin:0;color:#eef2f7;font-size:13px}
+#iraView .ira-calculator>p{margin:0 0 4px;color:#929fb0;font-size:9px;line-height:1.45}
+#iraView .ira-calculator label{margin-top:3px;color:#b7c2d0;font-size:9px;font-weight:700}
+#iraView .ira-calculator select,#iraView .ira-calculator input{width:100%;min-height:42px;padding:0 11px;border:1px solid #354253;border-radius:9px;background:#0d141e;color:#edf2f8;font:600 12px Inter,Arial,sans-serif;color-scheme:dark}
+#iraView .ira-results{display:grid;margin-top:5px;border:1px solid rgba(182,198,220,.18);border-radius:10px;overflow:hidden}
+#iraView .ira-results>div{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border-bottom:1px solid rgba(182,198,220,.12)}
+#iraView .ira-results>div:last-child{border:0}
+#iraView .ira-results span{color:#aab6c5;font-size:9px}
+#iraView .ira-results strong{color:#e9eff7;font-size:12px;text-align:right}
+#iraView .ira-results .total{background:linear-gradient(100deg,rgba(130,157,190,.15),rgba(9,14,22,.65))}
+#iraView .ira-results .total span{color:#d3deea;font-weight:750}
+#iraView .ira-results .total strong{font-size:18px}
+#iraView .ira-footnote{margin:0;color:#8492a4;font-size:8px;line-height:1.5}
+#iraView .ira-review-button{width:100%;min-height:40px;border:1px solid #c2cfdd;border-radius:9px;background:linear-gradient(110deg,#dce4ed,#9eacbd 70%,#718094);color:#0a1018;font-size:11px;font-weight:850}
+#iraView .ira-modal[hidden]{display:none!important}
+#iraView .ira-modal{position:fixed;z-index:9999;inset:0;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.76)}
+#iraView .ira-dialog{position:relative;width:min(100%,420px);padding:19px;border:1px solid rgba(192,209,230,.3);border-radius:15px;background:linear-gradient(145deg,#1b2635,#080c13);box-shadow:0 20px 60px rgba(0,0,0,.55)}
+#iraView .ira-dialog>#iraReviewClose{position:absolute;top:8px;right:10px;width:32px;height:32px;border:0;background:transparent;color:#dce4ef;font-size:25px}
+#iraView .ira-dialog h2{margin:7px 0 12px;color:#f4f6fa;font-size:19px}
+#iraView .ira-review-details{display:grid;gap:7px}
+#iraView .ira-review-details div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(185,202,223,.13);color:#aab7c7;font-size:10px}
+#iraView .ira-review-details strong{color:#f0f4f8;text-align:right}
+#iraView .ira-review-status{margin:12px 0;color:#e1c58f;font-size:9px;line-height:1.5}
+@media(min-width:700px){#iraView .ira-panel{padding:20px}#iraView .ira-how-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:370px){#iraView .ira-section-nav{gap:3px}#iraView .ira-section-nav button{font-size:8px;padding:4px 1px}#iraView .ira-panel{padding:10px}#iraView .ira-plan-hero{padding:13px}}
