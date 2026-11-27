@@ -44,4 +44,4 @@
 #marketsView .market-category-placeholder strong {color:#e7edf5;font-size:14px}
 #marketsView .market-category-placeholder span {color:#8794a5;font-size:11px;line-height:1.5}
 #marketsView .nexbit-stock-widget {min-height:230px;overflow:hidden;border-radius:10px}
-@media(max-width:600px){.market-watch-panel{padding:12px!important;border-radius:14px!important}.market-page-heading h2{font-size:19px}.nexbit-market-tabs{gap:15px}.nexbit-market-tabs button{font-size:11px}.market-watch-group{padding:10px}.market-watch-list .market-row{padding:10px 0}.market-coin-logo{width:27px;height:27px;flex-basis:27px}}
+@media(max-width:600px){#marketsView .market-watch-panel{padding:12px!important;border-radius:14px!important}#marketsView .market-page-heading h2{font-size:19px}#marketsView .nexbit-market-tabs{gap:15px}#marketsView .nexbit-market-tabs button{font-size:11px}#marketsView .market-watch-group{padding:10px}#marketsView .market-watch-list .market-row{padding:10px 0}#marketsView .market-coin-logo{width:27px;height:27px;flex-basis:27px}}
