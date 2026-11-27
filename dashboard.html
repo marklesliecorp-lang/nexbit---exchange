@@ -1746,13 +1746,13 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
  .trade-fields{grid-template-columns:1fr}
 }
 </style>
-<link rel="stylesheet" href="investment.css?v=1">
+<link rel="stylesheet" href="investment.css?v=1">\n<link rel="stylesheet" href="ira.css?v=1">\n<link rel="stylesheet" href="ira.css?v=1">
   <link rel="stylesheet" href="market.css?v=3">
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
   <a class="active" href="#home" data-dashboard-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
-  <a href="#markets" data-dashboard-view="markets"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="m5.5 15.5 4-4 3 2.5 5.5-6" fill="none" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Markets</span></a>
+  <a href="#ira" data-dashboard-view="ira"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20 6v5.2c0 5-3.2 8.5-8 10.3-4.8-1.8-8-5.3-8-10.3V6l8-3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>IRA</span></a>
   <a href="#trade" data-dashboard-view="trade"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
   <a href="#investment" data-dashboard-view="investment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
   <a href="#assets" data-dashboard-view="assets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
@@ -1884,191 +1884,36 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 
 </main>
 
-<section class="dashboard-subview" id="marketsView" hidden aria-label="Markets">
-  <div class="subview-heading"><h1>Markets</h1><p>Live cryptocurrency prices and stock market quotes</p></div>
-  <div id="marketsPanelMount"><section class="market-watch-panel" aria-label="Markets">
-  <header class="market-hero">
-    <div class="market-hero-copy"><span class="market-eyebrow">NEXBIT MARKET OVERVIEW</span><h2>Markets</h2><p>Explore real-time market data<br>and opportunities</p></div>
-    <div class="market-hero-art" aria-hidden="true"><img src="assets/stocks-bull.jpg" alt=""></div>
-    <div class="market-hero-glow" aria-hidden="true"></div>
-  </header>
-  <nav class="nexbit-market-tabs" aria-label="Market categories">
-    <button type="button" class="active" data-market-tab="all" aria-pressed="true">All</button>
-    <button type="button" data-market-tab="crypto" aria-pressed="false">Crypto</button>
-    <button type="button" data-market-tab="stocks" aria-pressed="false">Stocks</button>
-  </nav>
-  <section class="market-overview-block" aria-label="Featured cryptocurrencies">
-    <div class="market-featured" id="marketFeatured"><article class="market-feature-card" data-feature-symbol="BTC"><div class="market-feature-top"><img src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt=""><span>BTC</span></div><strong class="market-feature-price">Loading…</strong><span class="market-feature-change">—</span><svg class="market-feature-spark " viewBox="0 0 122 42" preserveAspectRatio="none" aria-hidden="true"><path d="M2 38 L14 30 23 34 35 21 46 27 58 23 70 12 81 17 94 5 108 10 120 3"/></svg></article><article class="market-feature-card" data-feature-symbol="ETH"><div class="market-feature-top"><img src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt=""><span>ETH</span></div><strong class="market-feature-price">Loading…</strong><span class="market-feature-change">—</span><svg class="market-feature-spark " viewBox="0 0 122 42" preserveAspectRatio="none" aria-hidden="true"><path d="M2 37 L13 35 23 28 34 31 46 18 58 22 70 10 82 15 94 5 107 9 120 2"/></svg></article><article class="market-feature-card" data-feature-symbol="SOL"><div class="market-feature-top"><img src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt=""><span>SOL</span></div><strong class="market-feature-price">Loading…</strong><span class="market-feature-change">—</span><svg class="market-feature-spark negative" viewBox="0 0 122 42" preserveAspectRatio="none" aria-hidden="true"><path d="M2 36 L14 31 25 34 36 24 48 28 60 17 72 22 84 11 96 17 108 7 120 12"/></svg></article></div>
-  </section>
-  <section class="market-movers" aria-labelledby="marketMoversTitle">
-    <div class="market-section-title"><h3 id="marketMoversTitle">Top Movers</h3><a href="#cryptoMarkets" class="market-see-all">See All <span aria-hidden="true">›</span></a></div>
-    <div id="marketMoversList" class="market-movers-list"><div class="market-mover-empty">Live market data loading…</div></div>
-  </section>
-  <section class="market-list-section" aria-labelledby="marketListTitle">
-    <div class="market-section-title"><h3 id="marketListTitle">Market List</h3><div class="market-list-tools">
-      <label class="market-search-box" aria-label="Search markets"><span aria-hidden="true">⌕</span><input id="nexbitMarketSearch" type="search" placeholder="Search assets" autocomplete="off"></label>
-      <button type="button" class="market-filter-button" id="nexbitMarketSort" aria-label="Sort by 24-hour change" aria-pressed="false">☷</button>
-    </div></div>
-    <div class="market-list-head"><span>Asset</span><span>Price</span><span class="market-chart-head">Trend</span><span>24h Change</span></div>
-    <section class="market-watch-group market-crypto-group" aria-labelledby="cryptoMarketTitle">
-      <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
-      <div class="market-list market-watch-list" id="cryptoMarkets"><div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin<small>BTC/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 27 L12 20 20 23 29 12 38 16 48 8 58 14 68 6 78 11 89 2 99 8 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
-<div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum<small>ETH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 25 L12 22 20 25 29 14 38 18 48 9 58 12 68 5 78 9 89 2 99 5 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
-<div class="market-row" data-market="solana"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana<small>SOL/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark negative" viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 4 L12 10 20 7 29 18 38 13 48 22 58 19 68 27 78 22 89 33 99 29 110 37"/></svg><span class="market-note" data-market-change>—</span></div>
-<div class="market-row" data-market="binancecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png" alt="BNB logo"><span class="coin">BNB<small>BNB/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 29 L12 24 20 27 29 16 38 20 48 10 58 15 68 7 78 11 89 2 99 7 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
-<div class="market-row" data-market="ripple"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png" alt="XRP logo"><span class="coin">XRP<small>XRP/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 28 L12 21 20 25 29 14 38 17 48 9 58 13 68 6 78 10 89 2 99 6 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
-<div class="market-row" data-market="dogecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png" alt="Dogecoin logo"><span class="coin">Dogecoin<small>DOGE/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 27 L12 20 20 23 29 12 38 16 48 8 58 14 68 6 78 11 89 2 99 8 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
-<div class="market-row" data-market="cardano"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/975/large/cardano.png" alt="Cardano logo"><span class="coin">Cardano<small>ADA/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 27 L12 23 20 25 29 15 38 19 48 10 58 14 68 7 78 11 89 3 99 8 110 2"/></svg><span class="market-note" data-market-change>—</span></div>
-<div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash<small>BCH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 26 L12 22 20 25 29 14 38 18 48 10 58 14 68 6 78 10 89 2 99 7 110 1"/></svg><span class="market-note" data-market-change>—</span></div></div>
-      <button class="market-see-more" type="button" data-market-more="cryptoMarkets" aria-expanded="false">See more</button>
-    </section>
-    <div class="market-filter-status" id="nexbitMarketStatus" aria-live="polite"></div>
-    <section class="market-watch-group market-stock-group" aria-labelledby="stockMarketTitle">
-      <div class="market-watch-group-heading"><h3 id="stockMarketTitle">Stocks</h3><span>US EQUITIES</span></div>
-      <div class="tradingview-widget-container nexbit-stock-widget" id="stockMarkets">
-        <div class="tradingview-widget-container__widget"></div>
-        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
-        {"width":"100%","height":"300","symbolsGroups":[{"name":"NEXBIT US Stocks","symbols":[{"name":"NASDAQ:AAPL","displayName":"Apple"},{"name":"NASDAQ:NVDA","displayName":"NVIDIA"},{"name":"NASDAQ:TSLA","displayName":"Tesla"},{"name":"NASDAQ:MSFT","displayName":"Microsoft"},{"name":"NASDAQ:AMZN","displayName":"Amazon"}]}],"showSymbolLogo":true,"isTransparent":false,"colorTheme":"dark","locale":"en","showFloatingTooltip":false}
-        </script>
-      </div>
-    </section>
-  </section>
-</section></div>
-</section>
-
-<section class="dashboard-subview" id="assetsView" hidden aria-label="Assets">
-  <div class="subview-heading"><h1>Assets</h1><p>Your wallet balance and account activity</p></div>
-  <section class="asset-view-card">
-    <div class="asset-view-label">Total wallet balance</div>
-    <strong class="asset-view-balance" id="assetsViewBalance"></strong>
-    <div class="asset-view-actions">
-      <a href="deposit.html">Deposit</a><a href="withdraw.html">Withdraw</a>
-      <a href="transfer.html">Transfer</a><a href="history.html">History</a>
-    </div>
-  </section>
-  <section class="asset-view-card">
-    <div class="asset-view-section-head"><h2>Asset balances</h2><a href="wallet.html">Full wallet</a></div>
-    <div id="assetsViewBreakdown"><div class="asset-view-empty">Loading asset balances…</div></div>
-  </section>
-  <section class="asset-view-card">
-    <div class="asset-view-section-head"><h2>Recent activity</h2><a href="history.html">View history</a></div>
-    <div class="asset-view-empty">Your account activity and transaction records are available in History.</div>
-  </section>
-</section>
-
-<section class="dashboard-subview investment-dashboard-view" id="investmentView" hidden aria-label="Investment">
-  <nav class="investment-section-nav" aria-label="Investment sections"><button type="button" data-investment-section="overview" class="active" aria-pressed="true">Overview</button><button type="button" data-investment-section="active" aria-pressed="false">Active Plans</button><button type="button" data-investment-section="packages" aria-pressed="false">Available Packages</button></nav>
-  <section class="investment-overview" id="investment-overview-section" aria-labelledby="investmentOverviewTitle">
-    <span class="investment-overview-eyebrow">YOUR PORTFOLIO</span>
-    <h2 class="investment-overview-title" id="investmentOverviewTitle">Investment Overview</h2>
-    <div class="investment-summary-grid">
-      <article class="investment-summary-card investment-summary-total"><span class="investment-summary-label">Total invested</span><strong id="investmentTotalInvested">—</strong><small id="investmentTotalInvestedNote">Confirmed investments</small></article>
-      <article class="investment-summary-card investment-summary-returns"><span class="investment-summary-label">Expected returns</span><strong id="investmentExpectedReturns">—</strong><small>Projected plan returns</small></article>
-      <article class="investment-summary-card investment-summary-count"><span class="investment-summary-label">Active plans</span><strong id="investmentCurrentPlans">—</strong><small>Currently running</small></article>
-      <article class="investment-summary-card investment-summary-profit"><span class="investment-summary-label">Realized profit</span><strong id="investmentRealizedProfit">+$0.00</strong><small>Recorded earnings</small></article>
-    </div>
-    <div class="investment-overview-lower">
-      <section class="investment-insight-card" aria-labelledby="investmentActivityTitle"><div class="investment-insight-heading"><div><span class="investment-overview-eyebrow">PORTFOLIO HISTORY</span><h3 id="investmentActivityTitle">Investment activity</h3></div><span class="investment-insight-period">Recent plans</span></div><div id="investmentPerformanceChart" class="investment-activity-chart" aria-live="polite"><div class="investment-chart-empty">Your investment activity will appear here.</div></div></section>
-      <section class="investment-insight-card" aria-labelledby="investmentRecentTitle"><div class="investment-insight-heading"><div><span class="investment-overview-eyebrow">LATEST RECORDS</span><h3 id="investmentRecentTitle">Recent investments</h3></div><button type="button" class="investment-view-all" data-investment-section="active">View all</button></div><div id="investmentRecentList" class="investment-recent-list" aria-live="polite"><div class="investment-chart-empty">No investment records yet.</div></div></section>
-    </div>
-  </section>
-
-  <section class="investment-current-plans" hidden id="investment-active-plans" aria-labelledby="investmentCurrentPlansTitle">
-    <div class="investment-current-heading">
-      <div>
-        <span class="investment-overview-eyebrow">YOUR INVESTMENTS</span>
-        <h2 id="investmentCurrentPlansTitle">Current Plans</h2>
-      </div>
-    </div>
-    <div id="investmentCurrentPlansList" class="investment-current-list" aria-live="polite">
-      <div class="investment-empty-state">
-        <span class="investment-empty-icon" aria-hidden="true">◇</span>
-        <strong>No investment records available</strong>
-        <p>Your active plans will appear here when investment records are connected.</p>
-      </div>
-    </div>
-  </section>
-
-
-
-<section class="nexbit-investments" id="investment-packages" hidden>
-<div class="package-category-tabs" role="tablist" aria-label="Investment package categories">
-<button type="button" data-package-category="crypto" role="tab" aria-selected="false">Crypto</button>
-<button type="button" class="active" data-package-category="stocks" role="tab" aria-selected="true">Stocks</button>
-<button type="button" data-package-category="options" role="tab" aria-selected="false">Options</button>
+<section class="dashboard-subview ira-dashboard-view" id="iraView" hidden aria-label="NEXTBIT IRA">
+<nav class="ira-section-nav" aria-label="IRA sections">
+<button class="active" type="button" data-ira-section="overview" aria-pressed="true">IRA Overview</button><button type="button" data-ira-section="active" aria-pressed="false">Active IRA Plan</button><button type="button" data-ira-section="growth" aria-pressed="false">IRA Growth</button><button type="button" data-ira-section="core" aria-pressed="false">IRA Core</button>
+</nav>
+<section class="ira-panel" id="ira-overview-section">
+<div class="ira-hero"><span class="ira-eyebrow">NEXBIT RETIREMENT PLANNING</span><h1>Plan today.<br><span>Build for tomorrow.</span></h1><p>Explore the NEXTBIT IRA plans, choose a monthly contribution and view an estimated maturity balance before proceeding.</p></div>
+<div class="ira-plan-summary"><article><span>IRA Core</span><strong>15% <small>monthly</small></strong><em>$200 minimum / month</em></article><article><span>IRA Growth</span><strong>25% <small>monthly</small></strong><em>$500 minimum / month</em></article></div>
+<div class="ira-how-heading"><span class="ira-eyebrow">BEFORE YOU BEGIN</span><h2>How NEXTBIT IRA Works</h2><p>Review the contribution schedule, interest rules and account conditions before selecting a plan.</p></div>
+<div class="ira-how-list">
+<article><b>01</b><div><h3>Choose your plan</h3><p>IRA Core has a minimum monthly contribution of $200 and a stated rate of 15% monthly. IRA Growth has a minimum monthly contribution of $500 and a stated rate of 25% monthly.</p></div></article>
+<article><b>02</b><div><h3>Select amount and duration</h3><p>Choose a monthly amount at or above the plan minimum and a duration of at least one year. The calculator displays estimated total contributions, projected interest and projected balance at maturity.</p></div></article>
+<article><b>03</b><div><h3>Monthly contributions</h3><p>Monthly contributions are scheduled for collection from your available USDT balance between the 1st and 10th of each month. Keep sufficient available USDT in your account during this collection window.</p></div></article>
+<article><b>04</b><div><h3>Monthly interest</h3><p>When that month's contribution is successfully collected within the 1st–10th window, the account qualifies for that month's interest. Interest is scheduled to be credited on the last day of the month.</p></div></article>
+<article><b>05</b><div><h3>Missed contributions</h3><p>If a contribution is not collected by the 10th, the account becomes Pending and does not qualify for that month's interest. The missed month is not automatically added to the maturity date.</p></div></article>
+<article><b>06</b><div><h3>Account locking and reopening</h3><p>If the account remains Pending for two consecutive months, it becomes Locked. Reopening requires payment of the outstanding missed contribution amount plus a $50 reopening fee. Reopening is subject to account review.</p></div></article>
+<article><b>07</b><div><h3>Maturity and withdrawal</h3><p>The account reaches maturity at the end of the selected duration. The maturity date does not automatically extend because of missed contributions or account locking. Eligible funds become available for withdrawal under the applicable account terms.</p></div></article>
 </div>
-<div class="package-category-panel" data-package-panel="crypto" role="tabpanel" hidden><div class="crypto-packages-hero"><img src="89A3C4AD-46C7-49C5-B1AF-74FE77B9D719.png" class="crypto-packages-banner-image" alt=""><div class="crypto-packages-hero-copy"><h2>Cryptocurrency<br><span>Packages</span></h2><p>Invest smart. Grow bigger.</p></div></div><div class="crypto-benefit-row"><div class="crypto-benefit">🛡️ <span>Secure<br>Investments</span></div><div class="crypto-benefit">⚡ <span>Daily<br>Profits</span></div><div class="crypto-benefit">📈 <span>High Growth<br>Potential</span></div></div><div class="investment-container"><div class="crypto-plan-list"><article class="crypto-plan-card plan-basic"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">BASIC</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Basic</h3><p>Perfect for beginners looking to start their investment journey with minimal risk</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$1,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$4,900</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>1%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-silver"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">SILVER</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Silver</h3><p>Ideal for investors seeking steady and reliable returns.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$5,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$9,999</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>1.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-gold"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><text x="60" y="70" class="badge-bitcoin">₿</text><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">GOLD</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Gold</h3><p>For investors looking for higher returns with managed risk.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$10,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$19,000</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>10.5%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article><article class="crypto-plan-card plan-diamond"><div class="crypto-plan-badge"><svg viewBox="0 0 120 132"><path class="badge-shield" d="M60 5 109 30 109 82 60 111 11 82 11 30Z"/><path class="badge-inner" d="M60 15 99 35 99 76 60 99 21 76 21 35Z"/><path class="badge-diamond" d="m60 34 25 17-25 29-25-29z"/><path class="badge-ribbon" d="M7 89 60 102 113 89 108 117 60 128 12 117Z"/><text x="60" y="112" class="badge-name">DIAMOND</text></svg></div><div class="crypto-plan-content"><div class="crypto-plan-top"><div><h3>Diamond</h3><p>Designed for high-value investors targeting strong returns with higher exposure.</p></div><span class="crypto-duration">1 Month</span></div><div class="crypto-plan-limits"><div class="crypto-plan-limit"><small>Minimum Investment</small><strong>$20,000</strong></div><div class="crypto-plan-limit"><small>Maximum Investment</small><strong>$50,000</strong></div></div><div class="crypto-plan-bottom"><div class="crypto-return"><strong>20%</strong><small>Daily</small></div><a href="signup.html" class="crypto-invest-button">Invest Now →</a></div></div></article></div><div class="crypto-security-note"><span class="security-info">ⓘ</span><div><strong>Your investments are secure with TradFi</strong><small>Powered by advanced security protocols</small></div><span class="security-check">✓</span></div></div>
-</div>
-<section class="package-category-panel stocks-package-panel" data-package-panel="stocks" role="tabpanel" aria-label="Stocks investment packages">
-  <div class="stocks-packages-banner" aria-label="Stocks packages artwork">
-    <img src="/76BCED33-60A8-4DF4-9A24-75DC86CFF24A.png" alt="Stocks packages market artwork" width="555" height="375" loading="eager" decoding="async" fetchpriority="high">
-  </div>
-  <div class="stocks-package-list" aria-label="Available stock packages">
-    <article class="stocks-package-card">
-      <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M8 17 17 24 24 10 31 24 40 17 36 34H12L8 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M12 39H36" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="8" cy="14" r="2.5" fill="currentColor"/><circle cx="24" cy="7" r="2.5" fill="currentColor"/><circle cx="40" cy="14" r="2.5" fill="currentColor"/></svg></span><span class="stocks-package-number">01</span><span class="stocks-package-tier-name">BASIC</span></div>
-      <div class="stocks-package-content">
-        <div class="stocks-package-title-row"><h3>Basic</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div>
-        <p>For investors starting with a smaller stock investment.</p>
-        <div class="stocks-package-facts">
-          <div><span>Minimum investment</span><strong>$5,000</strong></div>
-          <div><span>Maximum investment</span><strong>$10,000</strong></div>
-          <div><span>Daily rate</span><strong>2%</strong></div>
-        </div>
-        <a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
-    <article class="stocks-package-card">
-      <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="m24 5 5.4 11 12.1 1.8-8.8 8.6 2.1 12.1L24 32.8l-10.8 5.7 2.1-12.1-8.8-8.6L18.6 16 24 5Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M17 43H31" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="stocks-package-number">02</span><span class="stocks-package-tier-name">SILVER</span></div>
-      <div class="stocks-package-content">
-        <div class="stocks-package-title-row"><h3>Silver</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div>
-        <p>For investors seeking a larger stock investment allocation.</p>
-        <div class="stocks-package-facts">
-          <div><span>Minimum investment</span><strong>$11,000</strong></div>
-          <div><span>Maximum investment</span><strong>$49,999</strong></div>
-          <div><span>Daily rate</span><strong>3%</strong></div>
-        </div>
-        <a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
-    <article class="stocks-package-card">
-      <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M7 17 15 23 24 8 33 23 41 17 37 35H11L7 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M13 40H35M17 29H31" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><path d="M24 3V8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="stocks-package-number">03</span><span class="stocks-package-tier-name">GOLD</span></div>
-      <div class="stocks-package-content">
-        <div class="stocks-package-title-row"><h3>Gold</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div>
-        <p>For investors making a high-value stock investment.</p>
-        <div class="stocks-package-facts">
-          <div><span>Minimum investment</span><strong>$50,000</strong></div>
-          <div><span>Maximum investment</span><strong>$200,000</strong></div>
-          <div><span>Daily rate</span><strong>5%</strong></div>
-        </div>
-        <a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
-  </div>
+<div class="ira-notice"><strong>Projection information</strong><p>Projected balances assume every monthly contribution is successfully made at the beginning of its month and monthly interest is compounded on the accumulated eligible balance. Missed contributions reduce the actual outcome. Projections are estimates, not guaranteed results.</p></div>
 </section>
-<section class="package-category-panel stocks-package-panel options-package-panel" data-package-panel="options" role="tabpanel" aria-label="Options investment packages">
-  <div class="market-package-hero options-package-hero"><div class="market-package-hero-copy"><span>OPTIONS MARKET</span><h2>Options <em>Packages</em></h2></div><div class="market-package-art" aria-hidden="true"><svg viewBox="0 0 220 110"><path d="M12 83 45 83 65 30 88 83 111 83 132 48 153 83 205 83" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 102H208" stroke="#aeb8c2" stroke-width="1" opacity=".35"/><circle cx="65" cy="30" r="4" fill="currentColor"/><circle cx="132" cy="48" r="4" fill="currentColor"/></svg></div></div>
-  <div class="stocks-package-list options-package-list" aria-label="Available options packages">
-    <article class="stocks-package-card">
-      <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M8 17 17 24 24 10 31 24 40 17 36 34H12L8 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M12 39H36" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="8" cy="14" r="2.5" fill="currentColor"/><circle cx="24" cy="7" r="2.5" fill="currentColor"/><circle cx="40" cy="14" r="2.5" fill="currentColor"/></svg></span><span class="stocks-package-number">01</span><span class="stocks-package-tier-name">BASIC</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Basic</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$1,000</strong></div><div><span>Maximum investment</span><strong>$4,900</strong></div><div><span>Daily rate</span><strong>2%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
-    </article>
-    <article class="stocks-package-card">
-      <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="m24 5 5.4 11 12.1 1.8-8.8 8.6 2.1 12.1L24 32.8l-10.8 5.7 2.1-12.1-8.8-8.6L18.6 16 24 5Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M17 43H31" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="stocks-package-number">02</span><span class="stocks-package-tier-name">SILVER</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Silver</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$5,000</strong></div><div><span>Maximum investment</span><strong>$9,999</strong></div><div><span>Daily rate</span><strong>3%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
-    </article>
-    <article class="stocks-package-card">
-      <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M7 17 15 23 24 8 33 23 41 17 37 35H11L7 17Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M13 40H35M17 29H31M24 3V8" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></span><span class="stocks-package-number">03</span><span class="stocks-package-tier-name">GOLD</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Gold</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$10,000</strong></div><div><span>Maximum investment</span><strong>$19,000</strong></div><div><span>Daily rate</span><strong>5%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
-    </article>
-    <article class="stocks-package-card">
-      <div class="stocks-package-tier"><span class="stocks-package-logo" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="m24 5 18 13-18 25L6 18 24 5Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M6 18H42M24 5l-7 13 7 25 7-25-7-13Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="stocks-package-number">04</span><span class="stocks-package-tier-name">DIAMOND</span></div>
-      <div class="stocks-package-content"><div class="stocks-package-title-row"><h3>Diamond</h3><div class="stocks-package-side-actions"><span class="stocks-package-duration">1 Month</span></div></div><div class="stocks-package-facts"><div><span>Minimum investment</span><strong>$20,000</strong></div><div><span>Maximum investment</span><strong>$50,000</strong></div><div><span>Daily rate</span><strong>8%</strong></div></div><a class="stocks-package-button" href="signup.html">Invest Now <span aria-hidden="true">→</span></a></div>
-    </article>
-  </div>
-</section></section>
+<section class="ira-panel" id="ira-active-section" hidden><div class="ira-heading"><span class="ira-eyebrow">YOUR ACCOUNT</span><h2>Active IRA Plan</h2><p>Your enrolled IRA plans, contribution status, credited interest and maturity details will appear here.</p></div><div class="ira-empty"><span>◇</span><strong>No active IRA plan yet</strong><p>Active plan details will appear here when IRA enrollment and account records are connected.</p></div></section>
+<section class="ira-panel ira-plan-panel" id="ira-growth-section" hidden data-ira-plan="growth">
+<div class="ira-plan-hero growth"><span class="ira-eyebrow">NEXTBIT IRA PLAN</span><h2>IRA Growth</h2><p>For customers selecting a higher monthly contribution level.</p><strong>25% <small>Monthly rate</small></strong></div><div class="ira-minimum"><span>Minimum monthly contribution</span><strong>$500</strong></div>
+<div class="ira-calculator"><h3>Projected balance calculator</h3><p>Adjust your monthly contribution and duration to see the estimate.</p><label for="iraGrowthAmount">Monthly contribution (USDT)</label><select id="iraGrowthAmount"><option value="500">$500 — Minimum</option><option value="750">$750</option><option value="1000">$1,000</option><option value="1500">$1,500</option><option value="2500">$2,500</option><option value="5000">$5,000</option><option value="custom">Enter a custom amount</option></select><input id="iraGrowthCustom" type="number" min="500" step="1" inputmode="decimal" placeholder="Enter $500 or more" hidden><label for="iraGrowthDuration">Duration</label><select id="iraGrowthDuration"><option value="1">1 year (12 months)</option><option value="2">2 years (24 months)</option><option value="3">3 years (36 months)</option><option value="4">4 years (48 months)</option><option value="5">5 years (60 months)</option><option value="10">10 years (120 months)</option></select><div class="ira-results"><div><span>Total contributions</span><strong id="iraGrowthContributions">$6,000.00</strong></div><div><span>Projected interest</span><strong id="iraGrowthInterest">$0.00</strong></div><div class="total"><span>Projected balance at maturity</span><strong id="iraGrowthBalance">$0.00</strong></div></div><p class="ira-footnote">Estimate assumes each contribution is made at the beginning of the month and earns that month's interest. Missed contributions and account fees are not included.</p><button type="button" class="ira-review-button" data-ira-review="growth">Review Growth IRA</button></div>
 </section>
-
+<section class="ira-panel ira-plan-panel" id="ira-core-section" hidden data-ira-plan="core">
+<div class="ira-plan-hero core"><span class="ira-eyebrow">NEXTBIT IRA PLAN</span><h2>IRA Core</h2><p>A starting contribution level for customers building a long-term plan.</p><strong>15% <small>Monthly rate</small></strong></div><div class="ira-minimum"><span>Minimum monthly contribution</span><strong>$200</strong></div>
+<div class="ira-calculator"><h3>Projected balance calculator</h3><p>Adjust your monthly contribution and duration to see the estimate.</p><label for="iraCoreAmount">Monthly contribution (USDT)</label><select id="iraCoreAmount"><option value="200">$200 — Minimum</option><option value="300">$300</option><option value="500">$500</option><option value="750">$750</option><option value="1000">$1,000</option><option value="2000">$2,000</option><option value="custom">Enter a custom amount</option></select><input id="iraCoreCustom" type="number" min="200" step="1" inputmode="decimal" placeholder="Enter $200 or more" hidden><label for="iraCoreDuration">Duration</label><select id="iraCoreDuration"><option value="1">1 year (12 months)</option><option value="2">2 years (24 months)</option><option value="3">3 years (36 months)</option><option value="4">4 years (48 months)</option><option value="5">5 years (60 months)</option><option value="10">10 years (120 months)</option></select><div class="ira-results"><div><span>Total contributions</span><strong id="iraCoreContributions">$2,400.00</strong></div><div><span>Projected interest</span><strong id="iraCoreInterest">$0.00</strong></div><div class="total"><span>Projected balance at maturity</span><strong id="iraCoreBalance">$0.00</strong></div></div><p class="ira-footnote">Estimate assumes each contribution is made at the beginning of the month and earns that month's interest. Missed contributions and account fees are not included.</p><button type="button" class="ira-review-button" data-ira-review="core">Review Core IRA</button></div>
+</section>
+<div class="ira-modal" id="iraReviewModal" hidden role="dialog" aria-modal="true" aria-labelledby="iraReviewTitle"><div class="ira-dialog"><button type="button" id="iraReviewClose" aria-label="Close">×</button><span class="ira-eyebrow">PLAN SUMMARY</span><h2 id="iraReviewTitle">Review your IRA plan</h2><div id="iraReviewDetails" class="ira-review-details"></div><p class="ira-review-status">IRA enrollment and automatic USDT collection are not connected yet. No funds will be deducted from your account at this stage.</p><button type="button" id="iraReviewDone" class="ira-review-button">Close</button></div></div>
+</section>
 <section class="trade-view" id="tradeView" hidden aria-label="Spot Trading">
   <div class="trade-topline">
     <div class="trade-pair-heading">
@@ -2146,19 +1991,15 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 (function(){
   const home=document.getElementById('overview');
   const trade=document.getElementById('tradeView');
-  const markets=document.getElementById('marketsView');
+  const ira=document.getElementById('iraView');
   const assets=document.getElementById('assetsView');
   const investment=document.getElementById('investmentView');
-  const marketPanel=document.querySelector('.market-watch-panel');
-  
-  const mount=document.getElementById('marketsPanelMount');
 const nav=[...document.querySelectorAll('[data-dashboard-view]')];
-  if(!home||!trade||!markets||!assets||!investment||!nav.length)return;
+  if(!home||!trade||!ira||!assets||!investment||!nav.length)return;
   function show(view){
-    const valid=['home','markets','trade','investment','assets'].includes(view)?view:'home';
-    if(valid==='markets'&&marketPanel&&mount&&marketPanel.parentElement!==mount)mount.appendChild(marketPanel);
+    const valid=['home','ira','trade','investment','assets'].includes(view)?view:'home';
     home.hidden=valid!=='home';
-    markets.hidden=valid!=='markets';
+    ira.hidden=valid!=='ira';
     trade.hidden=valid!=='trade';
     assets.hidden=valid!=='assets';
     investment.hidden=valid!=='investment';
@@ -2986,6 +2827,6 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
 </script>
 <script src="trade.js"></script>
 
-<script src="investment.js?v=1" defer></script>
+<script src="investment.js?v=1" defer></script>\n<script src="ira.js?v=1" defer></script>\n<script src="ira.js?v=1" defer></script>
 </body>
 </html>
