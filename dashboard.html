@@ -3204,5 +3204,39 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 })();
 </script>
 <script src="trade.js"></script>
+
+<style id="nexbit-investment-layout-hardfix">
+#investmentView .investment-section-nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:calc(100% - 26px)!important;max-width:920px!important;margin:0 auto 14px!important;padding:0!important;gap:8px!important;align-items:stretch!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:20!important}
+#investmentView .investment-section-nav button{display:flex!important;visibility:visible!important;opacity:1!important;align-items:center!important;justify-content:center!important;min-width:0!important;min-height:44px!important;padding:8px 4px!important;border:1px solid rgba(190,204,221,.34)!important;border-radius:11px!important;background:linear-gradient(145deg,#222a34,#0b0e13)!important;color:#cbd3df!important;font-size:clamp(11px,3.5vw,16px)!important;font-weight:750!important;line-height:1.15!important;white-space:nowrap!important}
+#investmentView .investment-section-nav button.active{border-color:#aebdce!important;background:linear-gradient(145deg,#aebdce,#596575 55%,#252c36)!important;color:#080b10!important}
+@media(max-width:760px){#investmentView .investment-section-nav{width:calc(100% - 26px)!important;gap:7px!important;margin:0 auto 14px!important}#investmentView .investment-section-nav button{min-height:44px!important;padding:8px 3px!important}}
+</style>
+<script id="nexbit-investment-layout-hardfix-js">
+(function(){
+  const view=document.getElementById('investmentView');
+  if(!view)return;
+  const nav=view.querySelector('.investment-section-nav');
+  const sections={overview:document.getElementById('investment-overview-section'),active:document.getElementById('investment-active-plans'),packages:document.getElementById('investment-packages')};
+  if(!nav)return;
+  nav.removeAttribute('hidden');
+  function activate(name){
+    const selected=Object.prototype.hasOwnProperty.call(sections,name)?name:'overview';
+    Object.keys(sections).forEach(function(key){if(sections[key])sections[key].hidden=key!==selected;});
+    nav.querySelectorAll('[data-investment-section]').forEach(function(button){
+      const active=button.dataset.investmentSection===selected;
+      button.classList.toggle('active',active);
+      button.setAttribute('aria-pressed',String(active));
+    });
+  }
+  nav.addEventListener('click',function(event){
+    const button=event.target.closest('[data-investment-section]');
+    if(!button||!nav.contains(button))return;
+    event.preventDefault();
+    activate(button.dataset.investmentSection);
+  });
+  activate('overview');
+})();
+</script>
+
 </body>
 </html>
