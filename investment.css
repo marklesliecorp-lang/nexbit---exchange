@@ -1,0 +1,61 @@
+/* NEXBIT Investment — canonical mobile-first layout */
+#investmentView{width:100%;min-height:100vh;padding:0 0 calc(100px + env(safe-area-inset-bottom));background:#000;color:#f4f6f8}
+#investmentView[hidden],#investmentView [hidden]{display:none!important}
+#investmentView .investment-section-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:calc(100% - 40px);max-width:920px;margin:10px auto 16px;padding:0}
+#investmentView .investment-section-nav button{min-width:0;min-height:66px;padding:8px 4px;border:1px solid #3b414b;border-radius:13px;background:linear-gradient(145deg,#1d222b,#101319);color:#c5ccd6;font:750 clamp(11px,3.4vw,16px)/1.2 Inter,Arial,sans-serif;white-space:normal;cursor:pointer}
+#investmentView .investment-section-nav button.active{border-color:#b9c4d1;background:linear-gradient(145deg,#d4dce7,#7f8b9b 70%,#515d6b);color:#090c11}
+#investmentView .investment-section-nav button:focus-visible,#investmentView .package-category-tabs button:focus-visible{outline:2px solid #d2dce8;outline-offset:2px}
+#investmentView .investment-overview,#investmentView .investment-current-plans{width:calc(100% - 40px);max-width:920px;margin:0 auto 16px;padding:15px;border:1px solid rgba(190,204,221,.28);border-radius:15px;background:linear-gradient(145deg,#151b23,#080a0e 65%,#1b222c)}
+#investmentView .investment-overview-eyebrow{display:block;margin:0 0 6px;color:#aebdce;font-size:8px;font-weight:800;letter-spacing:1.6px}
+#investmentView .investment-overview-title,#investmentView .investment-current-heading h2{margin:0 0 13px;color:#f1f4f8;font-size:19px;font-weight:750}
+#investmentView .investment-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#investmentView .investment-summary-card{display:flex;min-width:0;min-height:82px;flex-direction:column;justify-content:center;gap:5px;padding:10px;border:1px solid rgba(190,204,221,.2);border-radius:10px;background:linear-gradient(150deg,rgba(180,194,211,.11),rgba(7,10,15,.9) 75%)}
+#investmentView .investment-summary-label{color:#b8c2d0;font-size:9px}
+#investmentView .investment-summary-card strong{color:#f0f3f7;font-size:clamp(16px,2.5vw,21px);font-weight:750}
+#investmentView .investment-summary-card small{color:#8995a5;font-size:8px}
+#investmentView .investment-overview-lower{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+#investmentView .investment-insight-card{min-width:0;padding:11px;border:1px solid rgba(190,204,221,.2);border-radius:10px;background:rgba(5,7,11,.75)}
+#investmentView .investment-insight-heading{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+#investmentView .investment-insight-heading h3{margin:3px 0 0;color:#edf1f6;font-size:12px}
+#investmentView .investment-insight-period{color:#aeb9c8;font-size:8px}
+#investmentView .investment-activity-chart{min-height:92px}
+#investmentView .investment-chart-empty{padding:14px 8px;color:#929eae;font-size:9px}
+#investmentView .investment-recent-list,#investmentView .investment-current-list{display:grid;gap:8px}
+#investmentView .investment-view-all{padding:5px 8px;border:1px solid rgba(190,204,221,.3);border-radius:7px;background:#171e28;color:#d9e1eb;font-size:9px}
+#investmentView .investment-current-heading{display:flex;justify-content:space-between;margin-bottom:10px}
+#investmentView .investment-empty-state{min-height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center;border:1px dashed rgba(190,204,221,.24);border-radius:10px}
+#investmentView .investment-empty-state strong{color:#e4eaf1;font-size:11px}
+#investmentView .investment-empty-state p{margin:6px 0 0;color:#9aa6b6;font-size:9px}
+#investmentView #investmentRealizedProfit{color:#22c55e}
+#investmentView #investment-packages{width:calc(100% - 40px);max-width:920px;margin:0 auto;padding:17px 16px 24px;border:1px solid rgba(190,204,221,.28);border-radius:18px;background:linear-gradient(145deg,#151b23 0%,#090c12 55%,#171d26 100%);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+#investmentView .package-category-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;margin:0 auto 18px;padding:6px;border:1px solid #343b45;border-radius:17px;background:#080a0d}
+#investmentView .package-category-tabs button{min-width:0;min-height:58px;padding:7px 4px;border:1px solid transparent;border-radius:13px;background:#151a21;color:#b9c2ce;font:750 14px/1.2 Inter,Arial,sans-serif;cursor:pointer}
+#investmentView .package-category-tabs button.active{border-color:#c1ccda;background:linear-gradient(145deg,#d5deea,#8996a6 72%,#657181);color:#080b10}
+#investmentView .package-category-panel[hidden]{display:none!important}
+#investmentView .stocks-packages-banner{display:block;width:100%;max-width:820px;margin:0 auto 26px;overflow:hidden;border:1px solid rgba(174,190,205,.28);border-radius:18px;line-height:0;background:#05080d}
+#investmentView .stocks-packages-banner img{display:block;width:100%;height:auto;max-height:250px;object-fit:cover;object-position:center;border-radius:17px}
+#investmentView .stocks-package-list{display:grid;gap:17px;max-width:820px;margin:0 auto}
+#investmentView .stocks-package-card{display:grid;grid-template-columns:66px minmax(0,1fr);gap:10px;min-width:0;padding:10px;border:1px solid rgba(174,190,205,.34);border-radius:17px;background:linear-gradient(115deg,#151a22,#090b10 76%);box-shadow:inset 0 1px rgba(255,255,255,.045)}
+#investmentView .stocks-package-tier{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-right:1px solid rgba(174,190,205,.2);color:#cbd6e1}
+#investmentView .stocks-package-logo{display:block;width:35px;height:35px}
+#investmentView .stocks-package-logo svg{display:block;width:100%;height:100%}
+#investmentView .stocks-package-number{color:#d9e0e8;font-size:22px;font-weight:800;letter-spacing:-.06em}
+#investmentView .stocks-package-tier-name{color:#c2ccd7;font-size:9px;font-weight:800;letter-spacing:.12em}
+#investmentView .stocks-package-card:first-child .stocks-package-logo{color:#d9b66e}
+#investmentView .stocks-package-card:nth-child(2) .stocks-package-logo{color:#cbd6e1}
+#investmentView .stocks-package-card:nth-child(3) .stocks-package-logo{color:#e2bd62}
+#investmentView .stocks-package-content{display:grid;min-width:0;gap:8px}
+#investmentView .stocks-package-title-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#investmentView .stocks-package-title-row h3{margin:0;color:#f1f4f7;font-size:20px;font-weight:800}
+#investmentView .stocks-package-duration{padding:5px 9px;border:1px solid rgba(190,204,221,.3);border-radius:20px;color:#d0dae3;font-size:10px;font-weight:700;white-space:nowrap}
+#investmentView .stocks-package-content>p{margin:0;color:#aeb9c4;font-size:12px;line-height:1.4}
+#investmentView .stocks-package-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+#investmentView .stocks-package-facts div{display:flex;min-width:0;flex-direction:column;gap:4px}
+#investmentView .stocks-package-facts span{color:#9eabb7;font-size:11px;line-height:1.3}
+#investmentView .stocks-package-facts strong{color:#edf1f5;font-size:15px;font-weight:750}
+#investmentView .stocks-package-button{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:48px;margin-top:2px;padding:0 12px;border:1px solid rgba(190,207,222,.48);border-radius:13px;background:linear-gradient(110deg,#c4d0da,#8799a9);color:#101820;font-size:14px;font-weight:850}
+#investmentView .stocks-package-button span{font-size:18px}
+#investmentView .options-package-hero{max-width:820px;margin:0 auto 14px}
+#investmentView .options-package-list{display:grid;gap:10px;max-width:820px;margin:0 auto}
+@media(max-width:600px){#investmentView .investment-overview-lower{grid-template-columns:1fr}#investmentView #investment-packages{width:calc(100% - 40px);padding:16px 13px 24px}#investmentView .stocks-package-list{gap:17px}#investmentView .stocks-package-card{grid-template-columns:66px minmax(0,1fr);gap:9px;padding:9px;border-radius:17px}}
+@media(max-width:390px){#investmentView .investment-section-nav{width:calc(100% - 28px);gap:6px}#investmentView .investment-section-nav button{min-height:58px;padding:6px 3px;font-size:11px}#investmentView #investment-packages{width:calc(100% - 28px)}#investmentView .stocks-package-card{grid-template-columns:56px minmax(0,1fr);gap:7px;padding:8px}#investmentView .stocks-package-logo{width:30px;height:30px}#investmentView .stocks-package-number{font-size:19px}#investmentView .stocks-package-title-row h3{font-size:18px}#investmentView .stocks-package-facts span{font-size:10px}#investmentView .stocks-package-facts strong{font-size:13px}}
