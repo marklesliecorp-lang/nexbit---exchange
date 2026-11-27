@@ -1846,7 +1846,18 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
 
   <div id="homeMarketPanelMount">
 <section class="market-watch-panel" aria-label="Market Watch">
-  <div class="section-head market-watch-heading"><h2>Market Watch</h2></div>
+  <div class="market-page-heading"><div><span class="market-eyebrow">NEXBIT MARKETS</span><h2>Explore Markets</h2><p>Track prices and discover opportunities across markets.</p></div><span class="market-live-pill"><i></i> LIVE</span></div>
+  <nav class="nexbit-market-tabs" aria-label="Market categories">
+    <button type="button" class="active" data-market-tab="all" aria-pressed="true">All</button>
+    <button type="button" data-market-tab="crypto" aria-pressed="false">Crypto</button>
+    <button type="button" data-market-tab="stocks" aria-pressed="false">Stocks</button>
+    <button type="button" data-market-tab="macro" aria-pressed="false">Macro Assets</button>
+    <button type="button" data-market-tab="earn" aria-pressed="false">Earn</button>
+    <button type="button" data-market-tab="alpha" aria-pressed="false">Alpha</button>
+  </nav>
+  <label class="market-search-box"><span aria-hidden="true">⌕</span><input id="nexbitMarketSearch" type="search" placeholder="Search coins or symbols" autocomplete="off"><kbd>⌕</kbd></label>
+  <div class="market-filter-status" id="nexbitMarketStatus" aria-live="polite"></div>
+  <div class="section-head market-watch-heading"><h2>Market Watch</h2><span class="market-watch-subtitle">Prices update live</span></div>
   <section class="market-watch-group" aria-labelledby="cryptoMarketTitle">
     <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
     <div class="market-list market-watch-list" id="cryptoMarkets">
@@ -2445,6 +2456,50 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
 </script>
 
 
+<script>/* NEXTBIT Market page category and search controls */
+(function(){
+ const root=document.querySelector('#marketsView .market-watch-panel');
+ if(!root)return;
+ const tabs=[...root.querySelectorAll('[data-market-tab]')];
+ const crypto=root.querySelector('#cryptoMarkets')?.closest('.market-watch-group');
+ const stocks=root.querySelector('#stockMarkets')?.closest('.market-watch-group');
+ const search=root.querySelector('#nexbitMarketSearch');
+ const status=root.querySelector('#nexbitMarketStatus');
+ const groups=[crypto,stocks].filter(Boolean);
+ function apply(){
+  const active=root.querySelector('[data-market-tab].active')?.dataset.marketTab||'all';
+  const query=(search?.value||'').trim().toLowerCase();
+  if(crypto)crypto.hidden=!(active==='all'||active==='crypto');
+  if(stocks)stocks.hidden=!(active==='all'||active==='stocks');
+  groups.forEach(group=>{
+   group.querySelectorAll('[data-market]').forEach(row=>{
+    const text=(row.textContent||'').toLowerCase();
+    row.hidden=!!query&&!text.includes(query);
+   });
+   const visible=[...group.querySelectorAll('[data-market]')].filter(row=>!row.hidden).length;
+   const more=group.querySelector('[data-market-more]');
+   if(more)more.hidden=!!query||active!=='all'&&active!=='crypto';
+   if(group===crypto&&active==='crypto'&&more)more.hidden=!!query;
+   group.dataset.searchEmpty=String(!!query&&visible===0);
+  });
+  const placeholder=root.querySelector('.market-category-placeholder');
+  if(placeholder)placeholder.remove();
+  if(['macro','earn','alpha'].includes(active)){
+   const names={macro:'Macro Assets',earn:'Earn',alpha:'Alpha'};
+   const box=document.createElement('div');box.className='market-category-placeholder';
+   box.innerHTML='<strong>'+names[active]+'</strong><span>Market information for this category is not connected yet.</span>';
+   root.appendChild(box);
+  }
+  if(status)status.textContent=query?'Showing matching assets for “'+search.value.trim()+'”':active==='all'?'All available markets':active==='crypto'?'Cryptocurrency markets':active==='stocks'?'Stock markets': 'Explore '+({macro:'Macro Assets',earn:'Earn',alpha:'Alpha'}[active]);
+ }
+ tabs.forEach(tab=>tab.addEventListener('click',()=>{
+  tabs.forEach(item=>{const selected=item===tab;item.classList.toggle('active',selected);item.setAttribute('aria-pressed',String(selected));});
+  if(search)search.value='';
+  apply();
+ }));
+ search?.addEventListener('input',apply);
+ apply();
+})();</script>
 <script>/* NEXBIT Market Watch: Binance live crypto stream; TradingView embedded stock quotes */
 (function(){
   const cryptoPanel=document.getElementById('cryptoMarkets');
