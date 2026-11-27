@@ -133,3 +133,41 @@
     margin-bottom:7px;
   }
 }
+
+/* Final compact sizing for investment category tabs and top navigation */
+#investmentView.investment-dashboard-view{
+  padding-top:0!important;
+}
+#investmentView .investment-section-nav{
+  margin-top:0!important;
+  margin-bottom:8px;
+}
+#investmentView .investment-section-nav button{
+  min-height:38px;
+  padding:4px 3px;
+  font-size:clamp(10px,2.8vw,12px);
+  border-radius:9px;
+}
+#investmentView .package-category-tabs{
+  gap:4px;
+  margin-top:0;
+  margin-bottom:5px;
+  padding:4px;
+  border-radius:13px;
+}
+#investmentView .package-category-tabs button{
+  min-height:36px;
+  padding:4px 3px;
+  border-radius:9px;
+  font-size:12px;
+}
+@media(max-width:390px){
+  #investmentView .investment-section-nav button{
+    min-height:35px;
+    font-size:10px;
+  }
+  #investmentView .package-category-tabs button{
+    min-height:33px;
+    font-size:11px;
+  }
+}
