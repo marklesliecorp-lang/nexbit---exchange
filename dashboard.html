@@ -1295,6 +1295,21 @@ body .bottom-nav > a.active svg { color:#fff !important; }
   body .bottom-nav > a span { font-size:8px !important; }
 }
 
+/* Dashboard's original connected live crypto and stock sections */
+.dashboard-connected-markets{margin-top:18px;padding:18px;border:1px solid #242424;border-radius:18px;background:#111}
+.dashboard-connected-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.dashboard-connected-heading h2{font-size:16px;margin:0;color:#f5f5f5}
+.dashboard-connected-heading span{font-size:10px;color:#999}
+.dashboard-connected-markets .market-watch-group{margin-top:12px}
+.dashboard-connected-markets .market-watch-group-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.dashboard-connected-markets .market-watch-group-heading h3{font-size:13px;margin:0}
+.dashboard-connected-markets .market-watch-group-heading span{font-size:9px;color:#888}
+.dashboard-connected-markets .market-row{grid-template-columns:minmax(0,1fr) auto auto;gap:10px}
+.dashboard-connected-markets .market-row-spark{display:none}
+.dashboard-connected-markets .market-see-more{margin-top:9px}
+.dashboard-connected-markets .nexbit-stock-widget{min-height:260px}
+@media(max-width:760px){.dashboard-connected-markets{margin-top:15px;padding:15px}.dashboard-connected-markets .market-row{gap:8px}}
+
 </style>
 
 <style id="nexbit-dashboard-route-visibility">
@@ -1838,6 +1853,32 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
   </section>
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 
+  <section class="dashboard-connected-markets" aria-label="Live crypto and stock markets">
+  <div class="dashboard-connected-heading"><h2>Markets</h2><span>Live market data</span></div>
+  <section class="market-watch-group market-crypto-group" aria-labelledby="dashboardCryptoMarketTitle">
+      <div class="market-watch-group-heading"><h3 id="dashboardCryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
+      <div class="market-list market-watch-list" id="dashboardCryptoMarkets"><div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin<small>BTC/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 27 L12 20 20 23 29 12 38 16 48 8 58 14 68 6 78 11 89 2 99 8 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
+<div class="market-row" data-market="ethereum"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/279/large/ethereum.png" alt="Ethereum logo"><span class="coin">Ethereum<small>ETH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 25 L12 22 20 25 29 14 38 18 48 9 58 12 68 5 78 9 89 2 99 5 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
+<div class="market-row" data-market="solana"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/4128/large/solana.png" alt="Solana logo"><span class="coin">Solana<small>SOL/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark negative" viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 4 L12 10 20 7 29 18 38 13 48 22 58 19 68 27 78 22 89 33 99 29 110 37"/></svg><span class="market-note" data-market-change>—</span></div>
+<div class="market-row" data-market="binancecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png" alt="BNB logo"><span class="coin">BNB<small>BNB/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 29 L12 24 20 27 29 16 38 20 48 10 58 15 68 7 78 11 89 2 99 7 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
+<div class="market-row" data-market="ripple"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png" alt="XRP logo"><span class="coin">XRP<small>XRP/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 28 L12 21 20 25 29 14 38 17 48 9 58 13 68 6 78 10 89 2 99 6 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
+<div class="market-row" data-market="dogecoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png" alt="Dogecoin logo"><span class="coin">Dogecoin<small>DOGE/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 27 L12 20 20 23 29 12 38 16 48 8 58 14 68 6 78 11 89 2 99 8 110 1"/></svg><span class="market-note" data-market-change>—</span></div>
+<div class="market-row" data-market="cardano"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/975/large/cardano.png" alt="Cardano logo"><span class="coin">Cardano<small>ADA/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 27 L12 23 20 25 29 15 38 19 48 10 58 14 68 7 78 11 89 3 99 8 110 2"/></svg><span class="market-note" data-market-change>—</span></div>
+<div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash<small>BCH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><strong class="price" data-market-price>Loading…</strong><svg class="market-row-spark " viewBox="0 0 112 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 26 L12 22 20 25 29 14 38 18 48 10 58 14 68 6 78 10 89 2 99 7 110 1"/></svg><span class="market-note" data-market-change>—</span></div></div>
+      <button class="market-see-more" type="button" data-market-more="dashboardCryptoMarkets" aria-expanded="false">See more</button>
+    </section>
+    <div class="market-filter-status" id="nexbitMarketStatus" aria-live="polite"></div>
+    <section class="market-watch-group market-stock-group" aria-labelledby="dashboardStockMarketTitle">
+      <div class="market-watch-group-heading"><h3 id="dashboardStockMarketTitle">Stocks</h3><span>US EQUITIES</span></div>
+      <div class="tradingview-widget-container nexbit-stock-widget" id="dashboardStockMarkets">
+        <div class="tradingview-widget-container__widget"></div>
+        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+        {"width":"100%","height":"300","symbolsGroups":[{"name":"NEXBIT US Stocks","symbols":[{"name":"NASDAQ:AAPL","displayName":"Apple"},{"name":"NASDAQ:NVDA","displayName":"NVIDIA"},{"name":"NASDAQ:TSLA","displayName":"Tesla"},{"name":"NASDAQ:MSFT","displayName":"Microsoft"},{"name":"NASDAQ:AMZN","displayName":"Amazon"}]}],"showSymbolLogo":true,"isTransparent":false,"colorTheme":"dark","locale":"en","showFloatingTooltip":false}
+        </script>
+      </div>
+    </section>
+</section>
   <div id="homeMarketPanelMount">
 >
   </div>
@@ -2497,9 +2538,10 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
 })();</script>
 <script>/* NEXBIT Market Watch: Binance live crypto stream; TradingView embedded stock quotes */
 (function(){
-  const cryptoPanel=document.getElementById('cryptoMarkets');
-  const stockPanel=document.getElementById('stockMarkets');
-  if(!cryptoPanel||!stockPanel)return;
+  const cryptoPanels=[document.getElementById('cryptoMarkets'),document.getElementById('dashboardCryptoMarkets')].filter(Boolean);
+  const stockPanels=[document.getElementById('stockMarkets'),document.getElementById('dashboardStockMarkets')].filter(Boolean);
+  if(!cryptoPanels.length||!stockPanels.length)return;
+  const allCryptoRows=cryptoPanels.flatMap(panel=>[...panel.querySelectorAll('[data-market]')]);
   document.querySelectorAll('[data-market-more]').forEach(button=>{
     const list=document.getElementById(button.dataset.marketMore);
     if(!list)return;
@@ -2510,7 +2552,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
     });
   });
   const symbols={bitcoin:'btcusdt',ethereum:'ethusdt',solana:'solusdt',binancecoin:'bnbusdt',ripple:'xrpusdt',dogecoin:'dogeusdt',cardano:'adausdt','bitcoin-cash':'bchusdt'};
-  const rowsBySymbol=new Map([...cryptoPanel.querySelectorAll('[data-market]')].map(row=>[symbols[row.dataset.market],row]));
+  const rowsBySymbol=new Map(allCryptoRows.map(row=>[symbols[row.dataset.market],row]));
   const formatPrice=value=>String.fromCharCode(36)+Number(value).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:Number(value)<1?6:2});
   function paint(row,price,change,priceSelector,changeSelector){
     if(!row||!Number.isFinite(Number(price))||!Number.isFinite(Number(change)))return false;
@@ -2528,7 +2570,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
   }
   function setVolume(row,value){const node=row&&row.querySelector('[data-market-volume]');if(node)node.textContent=formatVolume(value);}
   async function loadCryptoSnapshot(){
-    const rows=[...cryptoPanel.querySelectorAll('[data-market]')],ids=rows.map(row=>row.dataset.market);
+    const rows=allCryptoRows,ids=[...new Set(rows.map(row=>row.dataset.market))];
     try{
       const response=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+ids.join('%2C')+'&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true',{cache:'no-store'});
       if(!response.ok)throw new Error('CoinGecko unavailable');
