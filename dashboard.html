@@ -2448,11 +2448,12 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
  if(!list)return;
  const rows=()=>[...list.querySelectorAll('.market-row')];
  const symbol=row=>row.querySelector('.coin small')?.textContent.trim().split('/')[0]||'';
- const change=row=>Number((row.querySelector('[data-market-change]')?.textContent||'').replace(/[^0-9+.-]/g,''));
- let sorted=false;
+ const change=row=>{const raw=row.querySelector('[data-market-change]')?.textContent||'';return /[0-9]/.test(raw)?Number(raw.replace(/[^0-9+.-]/g,'')):NaN;};
+ const initialOrder=rows().map(row=>row.dataset.market);let sorted=false;
  function filterRows(){
   const query=(search?.value||'').trim().toLowerCase();
   rows().forEach(row=>row.hidden=!!query&&!row.textContent.toLowerCase().includes(query));
+  list.classList.toggle('expanded',!!query);
   if(status)status.textContent=query?rows().filter(row=>!row.hidden).length+' assets found':'';
   const more=root.querySelector('[data-market-more]');if(more)more.hidden=!!query;
  }
@@ -2465,7 +2466,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
  search?.addEventListener('input',filterRows);
  sortButton?.addEventListener('click',()=>{
   sorted=!sorted;sortButton.setAttribute('aria-pressed',String(sorted));
-  const ordered=rows().sort((a,b)=>{const av=change(a),bv=change(b);return sorted?bv-av:0;});
+  const ordered=rows().sort((a,b)=>sorted?(change(b)||-Infinity)-(change(a)||-Infinity):initialOrder.indexOf(a.dataset.market)-initialOrder.indexOf(b.dataset.market));
   ordered.forEach(row=>list.appendChild(row));
   sortButton.classList.toggle('active',sorted);
  });
