@@ -1937,6 +1937,45 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
  .trade-fields{grid-template-columns:1fr}
 }
 </style>
+<style id="nexbit-investment-navigation-restore">
+/* Keep the three investment section tabs in the original full-width segmented layout. */
+#investmentView > .investment-section-nav{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:8px!important;
+  width:calc(100% - 40px)!important;
+  max-width:920px!important;
+  margin:0 auto 16px!important;
+  padding:0!important;
+  position:relative!important;
+  z-index:5!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#investmentView > .investment-section-nav button{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  min-height:44px!important;
+  padding:8px 5px!important;
+  border:1px solid rgba(190,204,221,.34)!important;
+  border-radius:11px!important;
+  background:linear-gradient(145deg,#222a34,#0b0e13)!important;
+  color:#cbd3df!important;
+  font-size:clamp(11px,3.5vw,16px)!important;
+  font-weight:750!important;
+  line-height:1.15!important;
+  white-space:nowrap!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09)!important;
+}
+#investmentView > .investment-section-nav button.active{
+  border-color:#aebdce!important;
+  background:linear-gradient(145deg,#aebdce,#596575 55%,#252c36)!important;
+  color:#080b10!important;
+}
+</style>
 </head>
 <body>
 <nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
