@@ -1752,14 +1752,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
   </div>
 </header>
 
-<nav class="dashboard-tabs" aria-label="Dashboard market categories">
-  <a class="active" href="#overview" aria-current="page">All</a>
-  <a class="dashboard-tab-stocks" href="#stockMarkets">Stocks<span class="dashboard-tab-new">New</span></a>
-  <a href="#overview">Macro</a>
-  <a href="#cryptoMarkets">Crypto</a>
-  <a href="#overview">Earn</a>
-  <span class="tab-menu" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-</nav>
+<nav class="dashboard-tabs" aria-label="Dashboard market categories"><a class="active" href="#overview" aria-current="page">All</a><a href="#cryptoMarkets">Crypto</a><a class="dashboard-tab-stocks" href="#stockMarkets">Stocks</a></nav>
 
 <main class="layout" id="overview">
   <section class="grid dashboard-balance-grid">
@@ -1846,20 +1839,12 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 
   <div id="homeMarketPanelMount">
-<section class="market-watch-panel" aria-label="Market Watch">
-  <div class="market-page-heading"><div><span class="market-eyebrow">NEXBIT MARKETS</span><h2>Explore Markets</h2><p>Track prices and discover opportunities across markets.</p></div><span class="market-live-pill"><i></i> LIVE</span></div>
-  <nav class="nexbit-market-tabs" aria-label="Market categories">
-    <button type="button" class="active" data-market-tab="all" aria-pressed="true">All</button>
-    <button type="button" data-market-tab="crypto" aria-pressed="false">Crypto</button>
-    <button type="button" data-market-tab="stocks" aria-pressed="false">Stocks</button>
-    <button type="button" data-market-tab="macro" aria-pressed="false">Macro Assets</button>
-    <button type="button" data-market-tab="earn" aria-pressed="false">Earn</button>
-    <button type="button" data-market-tab="alpha" aria-pressed="false">Alpha</button>
-  </nav>
-  <label class="market-search-box"><span aria-hidden="true">⌕</span><input id="nexbitMarketSearch" type="search" placeholder="Search coins or symbols" autocomplete="off"><kbd>⌕</kbd></label>
-  <div class="market-filter-status" id="nexbitMarketStatus" aria-live="polite"></div>
-  <div class="section-head market-watch-heading"><h2>Market Watch</h2><span class="market-watch-subtitle">Prices update live</span></div>
-  <section class="market-watch-group" aria-labelledby="cryptoMarketTitle">
+<section class="market-watch-panel" aria-label="Markets">
+<div class="market-hero"><div class="market-hero-copy"><span class="market-eyebrow">NEXBIT MARKETS</span><h2>Markets</h2><p>Explore real-time market data<br>and opportunities</p></div><div class="market-hero-art" aria-hidden="true"><svg viewBox="0 0 360 220"><defs><linearGradient id="nbBull" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0f3f7"/><stop offset=".5" stop-color="#65758b"/><stop offset="1" stop-color="#111923"/></linearGradient></defs><path d="M0 177L32 160l22 11 26-52 24 32 28-71 22 38 25-64 24 55 24-83 24 54 25-43 26 66 22-28 18 20" fill="none" stroke="#315e91" stroke-width="3"/><path d="M69 166c14-26 34-45 55-56l20-37 24 10 16-23 21 7 18-15 22 20 27 4 14 25-7 23 20 21-13 17-34 2-17 24-28-3-16-20-31 4-20-14-25 17-24-6-22 12z" fill="url(#nbBull)"/><path d="M143 73c-17-21-20-39-9-55 2 22 12 31 28 34m65 1c12-22 27-31 43-26-17 9-21 21-20 38" fill="none" stroke="#d8e2ef" stroke-width="7" stroke-linecap="round"/><path d="M128 143l-34 27m129-15 24 22m-79-10-12 26m58-19 12 18" fill="none" stroke="#9eb0c5" stroke-width="9" stroke-linecap="round"/></svg></div></div>
+<nav class="nexbit-market-tabs" aria-label="Market categories"><button type="button" class="active" data-market-tab="all" aria-pressed="true">All</button><button type="button" data-market-tab="crypto" aria-pressed="false">Crypto</button><button type="button" data-market-tab="stocks" aria-pressed="false">Stocks</button></nav>
+<div class="market-featured" id="marketFeatured"><article class="market-feature-card" data-feature-symbol="BTC"><span class="market-feature-name">Bitcoin <b>BTC</b></span><strong class="market-feature-price">Loading…</strong><span class="market-feature-change">—</span></article><article class="market-feature-card" data-feature-symbol="ETH"><span class="market-feature-name">Ethereum <b>ETH</b></span><strong class="market-feature-price">Loading…</strong><span class="market-feature-change">—</span></article><article class="market-feature-card" data-feature-symbol="SOL"><span class="market-feature-name">Solana <b>SOL</b></span><strong class="market-feature-price">Loading…</strong><span class="market-feature-change">—</span></article></div>
+<section class="market-movers"><div class="market-section-title"><h3>Top Movers</h3><span>24h performance</span></div><div id="marketMoversList" class="market-movers-list"><div class="market-mover-empty">Live market data loading…</div></div></section>
+<section class="market-list-section"><div class="market-section-title"><h3>Market List</h3><label class="market-search-box"><span>⌕</span><input id="nexbitMarketSearch" type="search" placeholder="Search assets" autocomplete="off"></label></div><div class="market-list-head"><span>Asset</span><span>Price</span><span>24h Change</span></div>  <section class="market-watch-group market-crypto-group" aria-labelledby="cryptoMarketTitle">
     <div class="market-watch-group-heading"><h3 id="cryptoMarketTitle">Cryptocurrency</h3><span>CRYPTO</span></div>
     <div class="market-list market-watch-list" id="cryptoMarkets">
     <div class="market-row" data-market="bitcoin"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png" alt="Bitcoin logo"><span class="coin">Bitcoin <small>BTC/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
@@ -1872,8 +1857,8 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
     <div class="market-row" data-market="bitcoin-cash"><div class="market-identity"><img class="market-coin-logo real-coin-logo" src="https://assets.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png" alt="Bitcoin Cash logo"><span class="coin">Bitcoin Cash <small>BCH/USDT</small><em class="market-volume" data-market-volume>24h Vol —</em></span></div><div class="market-values"><strong class="price" data-market-price>Loading…</strong><span class="market-note" data-market-change>—</span></div></div>
   </div>
     <button class="market-see-more" type="button" data-market-more="cryptoMarkets" aria-expanded="false">See more</button>
-  </section>
-  <section class="market-watch-group" aria-labelledby="stockMarketTitle">
+  </section></section>
+<div class="market-filter-status" id="nexbitMarketStatus" aria-live="polite"></div>  <section class="market-watch-group" aria-labelledby="stockMarketTitle">
     <div class="market-watch-group-heading"><h3 id="stockMarketTitle">Stocks</h3><span>US EQUITIES</span></div>
     <div class="tradingview-widget-container nexbit-stock-widget" id="stockMarkets">
       <div class="tradingview-widget-container__widget"></div>
@@ -1903,6 +1888,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       </script>
     </div>
   </section>
+</section>
 </section>
   </div>
 
@@ -2459,48 +2445,14 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
 
 <script>/* NEXTBIT Market page category and search controls */
 (function(){
- const root=document.querySelector('.market-watch-panel');
- if(!root)return;
- const tabs=[...root.querySelectorAll('[data-market-tab]')];
- const crypto=root.querySelector('#cryptoMarkets')?.closest('.market-watch-group');
- const stocks=root.querySelector('#stockMarkets')?.closest('.market-watch-group');
- const search=root.querySelector('#nexbitMarketSearch');
- const status=root.querySelector('#nexbitMarketStatus');
- const groups=[crypto,stocks].filter(Boolean);
- function apply(){
-  const active=root.querySelector('[data-market-tab].active')?.dataset.marketTab||'all';
-  const query=(search?.value||'').trim().toLowerCase();
-  if(crypto)crypto.hidden=!(active==='all'||active==='crypto');
-  if(stocks)stocks.hidden=!(active==='all'||active==='stocks');
-  groups.forEach(group=>{
-   group.querySelectorAll('[data-market]').forEach(row=>{
-    const text=(row.textContent||'').toLowerCase();
-    row.hidden=!!query&&!text.includes(query);
-   });
-   const visible=[...group.querySelectorAll('[data-market]')].filter(row=>!row.hidden).length;
-   const more=group.querySelector('[data-market-more]');
-   if(more)more.hidden=!!query||active!=='all'&&active!=='crypto';
-   if(group===crypto&&active==='crypto'&&more)more.hidden=!!query;
-   group.dataset.searchEmpty=String(!!query&&visible===0);
-  });
-  const placeholder=root.querySelector('.market-category-placeholder');
-  if(placeholder)placeholder.remove();
-  if(['macro','earn','alpha'].includes(active)){
-   const names={macro:'Macro Assets',earn:'Earn',alpha:'Alpha'};
-   const box=document.createElement('div');box.className='market-category-placeholder';
-   box.innerHTML='<strong>'+names[active]+'</strong><span>Market information for this category is not connected yet.</span>';
-   root.appendChild(box);
-  }
-  if(status)status.textContent=query?'Showing matching assets for “'+search.value.trim()+'”':active==='all'?'All available markets':active==='crypto'?'Cryptocurrency markets':active==='stocks'?'Stock markets': 'Explore '+({macro:'Macro Assets',earn:'Earn',alpha:'Alpha'}[active]);
- }
- tabs.forEach(tab=>tab.addEventListener('click',()=>{
-  tabs.forEach(item=>{const selected=item===tab;item.classList.toggle('active',selected);item.setAttribute('aria-pressed',String(selected));});
-  if(search)search.value='';
-  apply();
- }));
- search?.addEventListener('input',apply);
- apply();
-})();</script>
+ const root=document.querySelector('.market-watch-panel');if(!root)return;
+ const tabs=[...root.querySelectorAll('[data-market-tab]')],crypto=root.querySelector('#cryptoMarkets')?.closest('.market-watch-group'),stocks=root.querySelector('#stockMarkets')?.closest('.market-watch-group'),search=root.querySelector('#nexbitMarketSearch'),status=root.querySelector('#nexbitMarketStatus');
+ const rows=()=>[...root.querySelectorAll('#cryptoMarkets .market-row')],sym=r=>r.querySelector('.coin small')?.textContent.trim().split('/')[0]||'';
+ function apply(){const active=root.querySelector('[data-market-tab].active')?.dataset.marketTab||'all',q=(search?.value||'').trim().toLowerCase();if(crypto)crypto.hidden=!(active==='all'||active==='crypto');if(stocks)stocks.hidden=!(active==='all'||active==='stocks');rows().forEach(r=>r.hidden=!!q&&!r.textContent.toLowerCase().includes(q));const more=root.querySelector('[data-market-more]');if(more)more.hidden=!!q;if(status)status.textContent=q?'Matching assets':active==='all'?'All markets':active==='crypto'?'Cryptocurrency markets':'Stock markets';}
+ tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>{const on=x===t;x.classList.toggle('active',on);x.setAttribute('aria-pressed',String(on));});if(search)search.value='';apply();}));search?.addEventListener('input',apply);apply();
+ function update(){const all=rows();['BTC','ETH','SOL'].forEach(s=>{const r=all.find(x=>sym(x)===s),c=root.querySelector('[data-feature-symbol="'+s+'"]');if(!r||!c)return;c.querySelector('.market-feature-price').textContent=r.querySelector('[data-market-price]')?.textContent||'—';const ch=r.querySelector('[data-market-change]')?.textContent||'—',n=c.querySelector('.market-feature-change');n.textContent=ch;n.className='market-feature-change '+(ch.includes('-')?'down':'up');});const movers=all.map(r=>({r,v:parseFloat((r.querySelector('[data-market-change]')?.textContent||'').replace(/[^0-9+.-]/g,''))})).filter(x=>Number.isFinite(x.v)).sort((a,b)=>Math.abs(b.v)-Math.abs(a.v)).slice(0,3),target=root.querySelector('#marketMoversList');if(target&&movers.length)target.innerHTML=movers.map(({r,v})=>{const s=sym(r),n=r.querySelector('.coin')?.childNodes[0]?.textContent.trim()||s,p=r.querySelector('[data-market-price]')?.textContent||'—';return '<div class="market-mover-row"><span class="market-mover-symbol">'+s+'</span><span class="market-mover-name">'+n+' <small>/ USDT</small></span><strong>'+p+'</strong><b class="'+(v>=0?'up':'down')+'">'+(v>=0?'▲ ':'▼ ')+Math.abs(v).toFixed(2)+'%</b></div>';}).join('');}
+ update();setInterval(update,1800);
+})();;</script>
 <script>/* NEXBIT Market Watch: Binance live crypto stream; TradingView embedded stock quotes */
 (function(){
   const cryptoPanel=document.getElementById('cryptoMarkets');
