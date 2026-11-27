@@ -1,47 +1,59 @@
-/* NEXTBIT Markets — Bybit-inspired multi-asset discovery */
-#marketsView .market-watch-panel {padding:16px!important;background:#090d13!important;border:1px solid rgba(180,194,212,.16)!important;border-radius:16px!important;color:#eef2f7}
-#marketsView .market-page-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0 0 15px}
-#marketsView .market-page-heading>div {min-width:0}
-#marketsView .market-eyebrow {display:block;margin-bottom:5px;color:#9eacbd;font-size:9px;font-weight:800;letter-spacing:1.7px}
-#marketsView .market-page-heading h2 {margin:0;color:#f3f6fa;font-size:21px;font-weight:800;letter-spacing:-.5px}
-#marketsView .market-page-heading p {margin:5px 0 0;color:#8e9aaa;font-size:11px;line-height:1.5}
-#marketsView .market-live-pill {display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid rgba(93,196,142,.22);border-radius:30px;color:#8dd5ae;font-size:9px;font-weight:800;letter-spacing:.5px}
-#marketsView .market-live-pill i {width:6px;height:6px;border-radius:50%;background:#55c98b;box-shadow:0 0 8px rgba(85,201,139,.65)}
-#marketsView .nexbit-market-tabs {display:flex;gap:17px;overflow-x:auto;white-space:nowrap;margin:0 -2px 13px;padding:0 2px 9px;border-bottom:1px solid rgba(180,194,212,.14);scrollbar-width:none}
-#marketsView .nexbit-market-tabs::-webkit-scrollbar {display:none}
-#marketsView .nexbit-market-tabs button {position:relative;flex:0 0 auto;padding:7px 1px 9px;border:0;background:none;color:#929eae;font:650 12px/1.2 Inter,Arial,sans-serif;cursor:pointer}
-#marketsView .nexbit-market-tabs button.active {color:#edf2f8}
-#marketsView .nexbit-market-tabs button.active:after {position:absolute;right:0;bottom:-10px;left:0;height:2px;border-radius:2px;background:#c6d0dd;content:""}
-#marketsView .market-search-box {display:flex;align-items:center;gap:9px;height:39px;margin:0 0 9px;padding:0 11px;border:1px solid rgba(180,194,212,.17);border-radius:9px;background:#111823;color:#9caabc}
-#marketsView .market-search-box>span {font-size:21px;line-height:1}
-#marketsView .market-search-box input {width:100%;min-width:0;border:0;outline:0;background:transparent;color:#edf2f7;font:12px Inter,Arial,sans-serif}
-#marketsView .market-search-box input::placeholder {color:#778496}
-#marketsView .market-search-box kbd {color:#7e8a9a;font-size:16px}
-#marketsView .market-filter-status {min-height:13px;margin:0 0 13px;color:#778596;font-size:9px}
-#marketsView .market-watch-heading {display:flex;align-items:center;justify-content:space-between;margin:0 0 8px!important}
-#marketsView .market-watch-heading h2 {margin:0;color:#e8edf4;font-size:14px;font-weight:750}
-#marketsView .market-watch-subtitle {color:#778596;font-size:9px}
-#marketsView .market-watch-group {margin:0 0 15px;padding:12px;border:1px solid rgba(180,194,212,.12);border-radius:12px;background:linear-gradient(145deg,#121a25,#0c1119)}
-#marketsView .market-watch-group[hidden],.market-row[hidden] {display:none!important}
-#marketsView .market-watch-group-heading {display:flex;align-items:center;justify-content:space-between;margin:0 0 8px}
-#marketsView .market-watch-group-heading h3 {margin:0;color:#e5ebf3;font-size:12px;font-weight:750}
-#marketsView .market-watch-group-heading>span {color:#8e9bac;font-size:8px;font-weight:800;letter-spacing:1px}
-#marketsView .market-watch-list {display:grid;gap:0}
-#marketsView .market-watch-list .market-row {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 0;border-top:1px solid rgba(180,194,212,.09)}
-#marketsView .market-identity {display:flex;align-items:center;gap:9px;min-width:0}
-#marketsView .market-coin-logo {width:29px;height:29px;flex:0 0 29px;object-fit:contain;border-radius:50%}
-#marketsView .market-identity .coin {min-width:0;color:#e8edf4;font-size:11px;font-weight:700}
-#marketsView .market-identity .coin small {display:block;margin-top:3px;color:#8794a5;font-size:9px;font-weight:500}
-#marketsView .market-volume {display:block;margin-top:3px;color:#6f7c8d;font-size:8px;font-style:normal;font-weight:500}
-#marketsView .market-values {display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-#marketsView .market-values .price {color:#edf2f7;font-size:11px;font-weight:750}
-#marketsView .market-values .market-note {font-size:9px;font-weight:700}
-#marketsView .market-note.market-up {color:#4fc58a!important}
-#marketsView .market-note.market-down {color:#e4777f!important}
-#marketsView .market-note.market-flat {color:#9aa6b5!important}
-#marketsView .market-see-more {width:100%;margin-top:9px;padding:9px;border:1px solid rgba(180,194,212,.15);border-radius:8px;background:#151e2a;color:#c7d1df;font-size:10px;font-weight:700}
-#marketsView .market-category-placeholder {display:flex;flex-direction:column;gap:7px;min-height:125px;justify-content:center;padding:18px;border:1px solid rgba(180,194,212,.14);border-radius:12px;background:#111823}
-#marketsView .market-category-placeholder strong {color:#e7edf5;font-size:14px}
-#marketsView .market-category-placeholder span {color:#8794a5;font-size:11px;line-height:1.5}
-#marketsView .nexbit-stock-widget {min-height:230px;overflow:hidden;border-radius:10px}
-@media(max-width:600px){#marketsView .market-watch-panel{padding:12px!important;border-radius:14px!important}#marketsView .market-page-heading h2{font-size:19px}#marketsView .nexbit-market-tabs{gap:15px}#marketsView .nexbit-market-tabs button{font-size:11px}#marketsView .market-watch-group{padding:10px}#marketsView .market-watch-list .market-row{padding:10px 0}#marketsView .market-coin-logo{width:27px;height:27px;flex-basis:27px}}
+/* NEXTBIT Markets — approved mobile-first premium black/silver layout */
+#marketsView .market-watch-panel{display:block!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#000!important;color:#f4f6f8!important;box-shadow:none!important}
+#marketsView .market-hero{position:relative;min-height:205px;display:flex;align-items:center;overflow:hidden;margin:0 0 17px;padding:23px 20px;border-radius:16px;background:radial-gradient(ellipse at 78% 50%,rgba(29,70,116,.3),transparent 48%),linear-gradient(105deg,#080b11,#090d14 55%,#05070b)}
+#marketsView .market-hero:after{content:"";position:absolute;inset:auto 0 0;height:1px;background:linear-gradient(90deg,transparent,rgba(135,174,220,.55),transparent)}
+#marketsView .market-hero-copy{position:relative;z-index:2;max-width:57%}
+#marketsView .market-eyebrow{display:block;margin-bottom:9px;color:#aeb9c8;font-size:9px;font-weight:800;letter-spacing:2px}
+#marketsView .market-hero h2{margin:0;color:#fff;font-size:clamp(30px,5vw,43px);font-weight:850;letter-spacing:-1.5px}
+#marketsView .market-hero p{margin:8px 0 0;color:#b2bac6;font-size:13px;line-height:1.5}
+#marketsView .market-hero-art{position:absolute;right:0;bottom:0;width:55%;height:100%;display:flex;align-items:flex-end;justify-content:flex-end;opacity:.9}
+#marketsView .market-hero-art svg{width:100%;height:100%;max-height:220px}
+#marketsView .nexbit-market-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 16px;padding:0;border:0}
+#marketsView .nexbit-market-tabs button{padding:11px 8px;border:1px solid #242a33;border-radius:30px;background:#0d1118;color:#9da6b3;font:700 12px Inter,Arial,sans-serif}
+#marketsView .nexbit-market-tabs button.active{border-color:#e0e5eb;background:linear-gradient(110deg,#f4f5f6,#cbd1d9);color:#080a0d}
+#marketsView .market-featured{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0 0 23px}
+#marketsView .market-feature-card{min-width:0;min-height:137px;padding:14px 12px;border:1px solid #1c232d;border-radius:15px;background:linear-gradient(145deg,#151b24,#0b0e14 72%)}
+#marketsView .market-feature-name{display:flex;flex-direction:column;gap:3px;color:#dce2ea;font-size:11px;font-weight:700}
+#marketsView .market-feature-name b{color:#8e9aaa;font-size:9px}
+#marketsView .market-feature-price{display:block;margin-top:12px;color:#fff;font-size:clamp(12px,3.1vw,18px);white-space:nowrap}
+#marketsView .market-feature-change{display:block;margin-top:6px;font-size:10px;font-weight:800}
+#marketsView .up{color:#2fd18a!important}#marketsView .down{color:#ff5364!important}
+#marketsView .market-movers{margin:0 0 24px}
+#marketsView .market-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px}
+#marketsView .market-section-title h3{margin:0;color:#f1f3f6;font-size:17px;font-weight:800}
+#marketsView .market-section-title>span{color:#8993a1;font-size:10px}
+#marketsView .market-movers-list{border-top:1px solid #242a32}
+#marketsView .market-mover-row{display:grid;grid-template-columns:32px minmax(0,1fr) auto auto;gap:7px;align-items:center;min-height:54px;border-bottom:1px solid #202630}
+#marketsView .market-mover-symbol{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:#1a2029;color:#e8edf4;font-size:10px;font-weight:800}
+#marketsView .market-mover-name{min-width:0;color:#e5e9ef;font-size:11px;font-weight:700}
+#marketsView .market-mover-name small{color:#7f8998;font-weight:500}
+#marketsView .market-mover-row strong{color:#f4f6f8;font-size:10px;white-space:nowrap}
+#marketsView .market-mover-row>b{min-width:68px;padding:7px 5px;border-radius:22px;background:rgba(26,191,124,.18);text-align:center;font-size:9px;white-space:nowrap}
+#marketsView .market-mover-row>b.down{background:rgba(227,57,77,.2)}
+#marketsView .market-mover-empty{padding:18px 0;color:#8993a1;font-size:11px}
+#marketsView .market-list-section{margin:0}
+#marketsView .market-list-section .market-section-title{margin-bottom:10px}
+#marketsView .market-search-box{display:flex;align-items:center;gap:6px;width:min(145px,48%);height:33px;padding:0 9px;border:1px solid #252c36;border-radius:9px;background:#111720;color:#aeb7c4}
+#marketsView .market-search-box input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#f4f6f8;font:11px Inter,Arial,sans-serif}
+#marketsView .market-list-head{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:10px;border-radius:7px;background:#111720;color:#aeb7c4;font-size:10px}
+#marketsView .market-list-head span:last-child{text-align:right}
+#marketsView .market-watch-group{margin:0 0 18px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+#marketsView .market-watch-group-heading{display:none}
+#marketsView .market-watch-list{display:grid;gap:0}
+#marketsView .market-watch-list .market-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;min-height:66px;padding:9px 4px;border:0;border-bottom:1px solid #202630}
+#marketsView .market-identity{display:flex;align-items:center;gap:10px;min-width:0}
+#marketsView .market-coin-logo{width:34px;height:34px;flex:0 0 34px;object-fit:contain;border-radius:50%}
+#marketsView .market-identity .coin{color:#f0f2f5;font-size:12px;font-weight:700}
+#marketsView .market-identity .coin small{display:block;margin-top:3px;color:#929cab;font-size:10px;font-weight:500}
+#marketsView .market-volume{display:none!important}
+#marketsView .market-values{display:flex;flex-direction:row;align-items:center;gap:8px}
+#marketsView .market-values .price{min-width:76px;color:#f4f6f8;font-size:11px;font-weight:750;text-align:right}
+#marketsView .market-values .market-note{min-width:67px;padding:7px 5px;border-radius:22px;background:rgba(26,191,124,.18);color:#2fd18a!important;font-size:9px;font-weight:800;text-align:center}
+#marketsView .market-values .market-note.market-down{background:rgba(227,57,77,.2);color:#ff6473!important}
+#marketsView .market-see-more{width:100%;margin:10px 0;padding:10px;border:1px solid #262d37;border-radius:9px;background:#10151d;color:#cbd3de;font-size:11px;font-weight:700}
+#marketsView .market-watch-group[hidden],#marketsView .market-row[hidden]{display:none!important}
+#marketsView .market-filter-status{min-height:12px;color:#8792a1;font-size:10px}
+#marketsView .market-watch-group:has(#stockMarkets){margin-top:22px;padding:14px;border:1px solid #202630;border-radius:14px;background:#0b0f15}
+#marketsView .market-watch-group:has(#stockMarkets) .market-watch-group-heading{display:flex;margin-bottom:10px}
+#marketsView .nexbit-stock-widget{min-height:300px;overflow:hidden;border-radius:10px;background:#080b10}
+@media(max-width:600px){#marketsView .market-hero{min-height:190px;padding:20px 16px}#marketsView .market-hero-copy{max-width:61%}#marketsView .market-hero h2{font-size:32px}#marketsView .market-hero p{font-size:11px}#marketsView .market-hero-art{width:56%;opacity:.82}#marketsView .market-featured{gap:7px;margin-bottom:20px}#marketsView .market-feature-card{min-height:130px;padding:11px 9px}#marketsView .market-feature-name{font-size:10px}#marketsView .market-feature-price{font-size:clamp(11px,3.3vw,15px)}#marketsView .market-section-title h3{font-size:16px}#marketsView .market-mover-row{grid-template-columns:29px minmax(0,1fr) auto auto;gap:5px}#marketsView .market-mover-row strong{font-size:9px}#marketsView .market-mover-row>b{min-width:62px;font-size:8px}#marketsView .market-list-head{font-size:9px;padding:9px 7px}#marketsView .market-watch-list .market-row{min-height:63px;padding:8px 2px}#marketsView .market-coin-logo{width:31px;height:31px;flex-basis:31px}#marketsView .market-values{gap:5px}#marketsView .market-values .price{min-width:69px;font-size:10px}#marketsView .market-values .market-note{min-width:60px;font-size:8px;padding:6px 4px}}
