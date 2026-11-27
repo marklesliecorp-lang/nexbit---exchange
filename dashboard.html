@@ -1839,7 +1839,14 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
   <p class="loading" id="authMessage" role="status" aria-live="polite">Checking your secure session…</p>
 
   <div id="homeMarketPanelMount">
-<section class="market-watch-panel" aria-label="Markets">
+>
+  </div>
+
+</main>
+
+<section class="dashboard-subview" id="marketsView" hidden aria-label="Markets">
+  <div class="subview-heading"><h1>Markets</h1><p>Live cryptocurrency prices and stock market quotes</p></div>
+  <div id="marketsPanelMount"><section class="market-watch-panel" aria-label="Markets">
   <header class="market-hero">
     <div class="market-hero-copy"><span class="market-eyebrow">NEXBIT MARKET OVERVIEW</span><h2>Markets</h2><p>Explore real-time market data<br>and opportunities</p></div>
     <div class="market-hero-art" aria-hidden="true"><img src="assets/stocks-bull.jpg" alt=""></div>
@@ -1887,14 +1894,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       </div>
     </section>
   </section>
-</section>>
-  </div>
-
-</main>
-
-<section class="dashboard-subview" id="marketsView" hidden aria-label="Markets">
-  <div class="subview-heading"><h1>Markets</h1><p>Live cryptocurrency prices and stock market quotes</p></div>
-  <div id="marketsPanelMount"></div>
+</section></div>
 </section>
 
 <section class="dashboard-subview" id="assetsView" hidden aria-label="Assets">
@@ -2110,14 +2110,13 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
   const assets=document.getElementById('assetsView');
   const investment=document.getElementById('investmentView');
   const marketPanel=document.querySelector('.market-watch-panel');
-  const homeMount=document.getElementById('homeMarketPanelMount');
+  
   const mount=document.getElementById('marketsPanelMount');
 const nav=[...document.querySelectorAll('[data-dashboard-view]')];
   if(!home||!trade||!markets||!assets||!investment||!nav.length)return;
   function show(view){
     const valid=['home','markets','trade','investment','assets'].includes(view)?view:'home';
-    const target=valid==='markets'?mount:homeMount;
-    if(marketPanel&&target&&marketPanel.parentElement!==target)target.appendChild(marketPanel);
+    if(valid==='markets'&&marketPanel&&mount&&marketPanel.parentElement!==mount)mount.appendChild(marketPanel);
     home.hidden=valid!=='home';
     markets.hidden=valid!=='markets';
     trade.hidden=valid!=='trade';
