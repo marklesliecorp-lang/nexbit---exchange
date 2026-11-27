@@ -85,3 +85,51 @@
     font-size:10px;
   }
 }
+
+/* Tighten Stocks artwork spacing and compact the top investment tabs */
+#investmentView #investment-packages{
+  padding:6px 7px 12px;
+}
+#investmentView .package-category-tabs{
+  margin-bottom:6px;
+}
+#investmentView .stocks-package-panel{
+  margin:0;
+  padding:0;
+}
+#investmentView .stocks-packages-banner{
+  width:100%;
+  max-width:none;
+  margin:0 auto 8px;
+  border-radius:13px;
+}
+#investmentView .stocks-packages-banner img{
+  max-height:180px;
+  border-radius:12px;
+}
+#investmentView .investment-section-nav{
+  gap:6px;
+  margin:6px auto 9px;
+}
+#investmentView .investment-section-nav button{
+  min-height:42px;
+  padding:5px 3px;
+  border-radius:9px;
+  font-size:clamp(10px,3vw,13px);
+}
+@media(max-width:390px){
+  #investmentView .investment-section-nav button{
+    min-height:38px;
+    padding:4px 2px;
+    font-size:10px;
+  }
+  #investmentView #investment-packages{
+    padding:5px 6px 10px;
+  }
+  #investmentView .package-category-tabs{
+    margin-bottom:5px;
+  }
+  #investmentView .stocks-packages-banner{
+    margin-bottom:7px;
+  }
+}
