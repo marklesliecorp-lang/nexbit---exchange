@@ -2343,6 +2343,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
     let pnlQuotes={},pnlQuotesAt=0,pnlQuoteBusy=false,pnlRenderBusy=false,snapshotBusy=false;
     let holdingsSnapshot={cash:0,assets:[],trades:[],lockedPrincipal:0};
     const pnlCashAssets=new Set(['USD','USDT']);
+    const pnlOpeningCostBasis=[{userId:'a4c367f8-3268-4b05-82a3-e041016b8a25',asset:'XRP',units:1500,unitCost:0.9475,asOf:'2026-11-28T13:51:57Z'}];
     const pnlNote=document.getElementById('todayPnlNote');
     function setPnlDisplay(value,percent,note){
       const pnl=document.getElementById('todayPnl');
@@ -2379,6 +2380,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
     }
     function buildHoldingsCostBasis(trades){
       const state={};
+      const openingEvents=pnlOpeningCostBasis.filter(row=>row.userId===user.id).map(row=>({action:'opening',from_asset:'USD',to_asset:row.asset,input_amount:row.units*row.unitCost,net_output:row.units,to_price_usdt:row.unitCost,created_at:row.asOf}));
       const entry=asset=>{
         const key=String(asset||'').toUpperCase();
         if(!state[key])state[key]={units:0,cost:0,complete:true};
@@ -2405,12 +2407,17 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
         item.cost=Math.max(0,item.cost-cost);
         return {cost,complete:true};
       };
-      (trades||[]).slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).forEach(trade=>{
+      [...(trades||[]),...openingEvents].sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).forEach(trade=>{
         const action=String(trade.action||'').toLowerCase();
         const from=String(trade.from_asset||'').toUpperCase();
         const to=String(trade.to_asset||'').toUpperCase();
         const input=Number(trade.input_amount||0),output=Number(trade.net_output||0);
         if(!(input>0))return;
+        if(action==='opening'&&pnlCashAssets.has(from)){
+          const openingPrice=Number(trade.to_price_usdt||0),openingCost=input*openingPrice;
+          add(to,output,openingCost,openingPrice>0&&Number.isFinite(openingCost));
+          return;
+        }
         if((action==='buy'||action==='convert')&&pnlCashAssets.has(from)){
           const sourcePrice=Number(trade.from_price_usdt||1);
           const acquisitionPrice=action==='buy'?Number(trade.to_price_usdt||0):sourcePrice;
