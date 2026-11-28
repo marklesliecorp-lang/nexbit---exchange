@@ -2413,8 +2413,9 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
         if(!(input>0))return;
         if((action==='buy'||action==='convert')&&pnlCashAssets.has(from)){
           const sourcePrice=Number(trade.from_price_usdt||1);
-          const cost=input*sourcePrice;
-          add(to,output,cost,sourcePrice>0&&Number.isFinite(cost));
+          const acquisitionPrice=action==='buy'?Number(trade.to_price_usdt||0):sourcePrice;
+          const cost=input*acquisitionPrice;
+          add(to,output,cost,acquisitionPrice>0&&Number.isFinite(cost));
           return;
         }
         if(action==='sell'||action==='convert'||(action==='buy'&&!pnlCashAssets.has(from))){
