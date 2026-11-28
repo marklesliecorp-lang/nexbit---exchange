@@ -31,7 +31,7 @@ main{width:min(100%,1240px);margin:0 auto;padding:27px 22px 35px}
 .full{grid-column:1/-1}
 .submit{min-height:44px;padding:0 18px;border:1px solid var(--accent);border-radius:9px;background:var(--accent);color:#080808;font-size:11px;font-weight:800;cursor:pointer}
 .submit:disabled{opacity:.5;cursor:wait}
-.help{color:#858585;font-size:10px;line-height:1.7}
+.help{color:#858585;font-size:10px;line-height:1.7}.fee-preview{padding:13px;border:1px solid #343434;border-radius:10px;background:#0b0b0b;color:#d8d8d8;font-size:11px;line-height:1.7}.fee-preview strong{color:#f4f4f4}
 .deposit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px}
 .deposit-card{min-width:0;padding:17px;border:1px solid #292929;border-radius:14px;background:linear-gradient(145deg,#171717,#101010 72%);box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
 .deposit-card h3{margin:0 0 6px;color:#f2f2f2;font-size:14px;font-weight:750}
@@ -95,12 +95,97 @@ main{width:min(100%,1240px);margin:0 auto;padding:27px 22px 35px}
   #nexbitBottomNav>a.active,#nexbitBottomNav>a[aria-current="page"]{background:#252525!important;border-radius:10px!important;color:#fff!important}
   #nexbitBottomNav>a.active::after,#nexbitBottomNav>a[aria-current="page"]::after{content:"";position:absolute;bottom:2px;left:50%;width:5px;height:5px;border-radius:50%;background:#f4d58a;transform:translateX(-50%)}
   @media(max-width:390px){#nexbitBottomNav>a{font-size:9px!important}#nexbitBottomNav>a>svg{width:17px!important;height:17px!important;flex-basis:17px!important}}
-</style><style>@media (max-width: 760px) { .field input, .field select, .field textarea { font-size: 16px !important; } }</style></head><body><header class="topbar"><a class="brand brand-lockup" href="dashboard.html" aria-label="NEXBIT home"><img class="brand-logo" src="nexbit-logo.JPEG" alt=""><span class="brand-copy"><strong>NEXBIT</strong><small>EXCHANGE</small></span></a></header><main><p class="eyebrow">NEXBIT WALLET</p><h1 class="heading">Withdraw</h1><p class="sub">Submit a withdrawal request and track its review status.</p><section class="panel"><div class="section-head"><h2>Withdrawal request</h2></div><form class="form" id="withdrawForm"><div class="field"><label for="asset">Asset</label><select id="asset" required><option value="">Select asset</option></select></div><div class="field"><label for="amount">Amount</label><input id="amount" type="number" min="0.000000000000000001" step="any" required placeholder="Enter amount"></div><div class="field"><label for="network">Network</label><input id="network" maxlength="40" required placeholder="e.g. Ethereum, TON"></div><div class="field"><label for="address">Receiving wallet address</label><input id="address" maxlength="256" required autocomplete="off" placeholder="Destination address"></div><div class="field full"><label for="note">Note (optional)</label><textarea id="note" maxlength="500"></textarea></div><div class="field full"><button class="submit" id="submit" type="submit">Submit withdrawal request</button></div></form><p class="help">Submitting or approving a request does not send crypto. Check the asset, network and destination address carefully.</p><div class="section-head" style="margin-top:22px"><h2>Your requests</h2></div><div id="withdrawHistory"><div class="empty">Loading requests…</div></div></section><p class="message" id="pageMessage" role="status" aria-live="polite"></p></main><nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
+</style><style>@media (max-width: 760px) { .field input, .field select, .field textarea { font-size: 16px !important; } }</style></head><body><header class="topbar"><a class="brand brand-lockup" href="dashboard.html" aria-label="NEXBIT home"><img class="brand-logo" src="nexbit-logo.JPEG" alt=""><span class="brand-copy"><strong>NEXBIT</strong><small>EXCHANGE</small></span></a></header><main><p class="eyebrow">NEXBIT WALLET</p><h1 class="heading">Withdraw</h1><p class="sub">Submit a withdrawal request and track its review status.</p><section class="panel"><div class="section-head"><h2>Withdrawal request</h2></div><form class="form" id="withdrawForm"><div class="field"><label for="asset">Asset</label><select id="asset" required><option value="">Select asset</option></select></div><div class="field"><label for="amount">Amount</label><input id="amount" type="number" min="0.000000000000000001" step="any" required placeholder="Enter amount"></div><div class="field"><label for="network">Network</label><input id="network" maxlength="40" required placeholder="e.g. Ethereum, TON"></div><div class="field"><label for="address">Receiving wallet address</label><input id="address" maxlength="256" required autocomplete="off" placeholder="Destination address"></div><div class="field full"><label for="note">Note (optional)</label><textarea id="note" maxlength="500"></textarea></div><div class="field full"><button class="submit" id="submit" type="submit">Submit withdrawal request</button></div></form><div id="withdrawFee" class="fee-preview full" hidden aria-live="polite"></div><p class="help">Submitting or approving a request does not send crypto. Check the asset, network and destination address carefully.</p><div class="section-head" style="margin-top:22px"><h2>Your requests</h2></div><div id="withdrawHistory"><div class="empty">Loading requests…</div></div></section><p class="message" id="pageMessage" role="status" aria-live="polite"></p></main><nav id="nexbitBottomNav" class="bottom-nav" aria-label="Main navigation">
   <a href="dashboard.html#home" data-dashboard-view="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z" fill="currentColor"/><path d="M9 16.5h6" stroke="#050505" stroke-width="1.8" stroke-linecap="round"/></svg><span>Home</span></a>
   <a href="dashboard.html#ira" data-dashboard-view="ira"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20 6v5.2c0 5-3.2 8.5-8 10.3-4.8-1.8-8-5.3-8-10.3V6l8-3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>IRA</span></a>
   <a href="dashboard.html#trade" data-dashboard-view="trade"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="3" fill="currentColor"/><path d="M7 8h10M7 12h6m-6 4 3-3-3-3" fill="none" stroke="#080808" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trade</span></a>
   <a href="dashboard.html#investment" data-dashboard-view="investment"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18.5 8.5 13l3.5 2 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 7H20v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18.5h18v2H3z" fill="currentColor"/></svg><span>Investment</span></a>
   <a class="active" href="dashboard.html#assets" data-dashboard-view="assets" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="currentColor"/><path d="M3 8V5a2 2 0 0 1 2-2h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="13.5" r="1.5" fill="#080808"/></svg><span>Assets</span></a>
 </nav><script>
-(function(){if(!window.supabase?.createClient){document.getElementById('pageMessage').textContent='Secure connection could not load. Refresh and try again.';return;}const db=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');const msg=document.getElementById('pageMessage');const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));async function start(){const {data:{user},error}=await db.auth.getUser();if(error||!user){location.replace('login.html');return;}await page(db,msg,safe);}async function page(db,msg,safe){const {data:balances,error:be}=await db.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',(await db.auth.getUser()).data.user.id).order('asset_code');if(be)throw be;(balances||[]).filter(r=>Number(r.balance)>0).forEach(r=>{const o=document.createElement('option');o.value=r.asset_code;o.textContent=r.asset_code+' — '+Number(r.balance).toLocaleString();document.getElementById('asset').appendChild(o);});const hist=document.getElementById('withdrawHistory');async function load(){const {data,error}=await db.rpc('nexbit_list_my_withdrawal_requests',{p_limit:50});if(error){hist.innerHTML='<div class="empty">Unable to load requests.</div>';return;}hist.innerHTML=(data||[]).length?(data||[]).map(r=>'<div class="row"><div><strong>'+safe(r.amount)+' '+safe(r.asset_code)+' · '+safe(r.network)+'</strong>'+safe(r.reference)+' · '+safe(new Date(r.created_at).toLocaleString())+(r.admin_comment?'<div>'+safe(r.admin_comment)+'</div>':'')+'</div><div class="status">'+safe(r.status)+'</div></div>').join(''):'<div class="empty">You have not submitted any withdrawal requests.</div>';}await load();document.getElementById('withdrawForm').addEventListener('submit',async e=>{e.preventDefault();const asset=document.getElementById('asset').value,amount=document.getElementById('amount').value,network=document.getElementById('network').value.trim(),address=document.getElementById('address').value.trim(),note=document.getElementById('note').value.trim();if(!confirm('Submit a request for '+amount+' '+asset+' on '+network+' to the address entered? Verify it carefully.'))return;const b=document.getElementById('submit');b.disabled=true;b.textContent='Submitting…';const {data,error}=await db.rpc('nexbit_submit_withdrawal_request',{p_asset_code:asset,p_amount:amount,p_network:network,p_destination_address:address,p_user_note:note||null});b.disabled=false;b.textContent='Submit withdrawal request';if(error){msg.textContent=error.message;return;}const x=Array.isArray(data)?data[0]:data;msg.textContent='Request submitted: '+(x?.reference||'created')+'. Awaiting review; no funds have been sent.';e.target.reset();await load();});}start().catch(e=>{console.error(e);msg.textContent=e.message||'Unable to load this wallet page.';});document.getElementById('logoutButton')?.addEventListener('click',async()=>{await db.auth.signOut();location.replace('login.html');});})();
+(function(){
+  if(!window.supabase?.createClient){document.getElementById('pageMessage').textContent='Secure connection could not load. Refresh and try again.';return;}
+  const db=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
+  const msg=document.getElementById('pageMessage');
+  const feeBox=document.getElementById('withdrawFee');
+  const assetEl=document.getElementById('asset'),amountEl=document.getElementById('amount'),networkEl=document.getElementById('network');
+  const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let ethBalance=0,quoteVersion=0,currentQuote=null,quoteTimer=null;
+  const fmt=(v,d=8)=>Number(v||0).toLocaleString(undefined,{maximumFractionDigits:d});
+  async function invoke(body){
+    const {data,error}=await db.functions.invoke('nexbit-withdrawal',{body});
+    if(error)throw new Error(data?.error||error.message||'Withdrawal service unavailable');
+    if(data?.error)throw new Error(data.error);
+    return data;
+  }
+  async function loadBalances(){
+    const {data:{user}}=await db.auth.getUser();
+    const {data:balances,error}=await db.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
+    if(error)throw error;
+    ethBalance=Number((balances||[]).find(r=>String(r.asset_code).toUpperCase()==='ETH')?.balance||0);
+    const selected=assetEl.value;
+    assetEl.innerHTML='<option value="">Select asset</option>';
+    (balances||[]).filter(r=>Number(r.balance)>0).forEach(r=>{
+      const o=document.createElement('option');o.value=r.asset_code;o.textContent=r.asset_code+' — '+Number(r.balance).toLocaleString();assetEl.appendChild(o);
+    });
+    if(selected)assetEl.value=selected;
+  }
+  async function start(){
+    const {data:{user},error}=await db.auth.getUser();
+    if(error||!user){location.replace('login.html');return;}
+    await loadBalances();
+    const hist=document.getElementById('withdrawHistory');
+    async function loadHistory(){
+      const {data,error}=await db.rpc('nexbit_list_my_withdrawal_requests',{p_limit:50});
+      if(error){hist.innerHTML='<div class="empty">Unable to load requests.</div>';return;}
+      hist.innerHTML=(data||[]).length?(data||[]).map(r=>{
+        const fee=Number(r.withdrawal_fee_eth)>0?'<div>ETH fee: '+safe(fmt(r.withdrawal_fee_eth))+' ETH (</body></html>+safe(fmt(r.withdrawal_fee_usd,2))+')</div>':'';
+        return '<div class="row"><div><strong>'+safe(r.amount)+' '+safe(r.asset_code)+' · '+safe(r.network)+'</strong>'+safe(r.reference)+' · '+safe(new Date(r.created_at).toLocaleString())+fee+(r.admin_comment?'<div>'+safe(r.admin_comment)+'</div>':'')+'</div><div class="status">'+safe(r.status)+'</div></div>';
+      }).join(''):'<div class="empty">You have not submitted any withdrawal requests.</div>';
+    }
+    async function refreshQuote(){
+      const version=++quoteVersion;
+      const asset=assetEl.value,amount=Number(amountEl.value),network=networkEl.value.trim();
+      currentQuote=null;
+      feeBox.hidden=true;
+      if(asset!=='USDT'||!/(ethereum|erc\s*-?20)/i.test(network)||!Number.isFinite(amount)||amount<=0)return;
+      feeBox.hidden=false;feeBox.textContent='Calculating ETH withdrawal fee…';
+      try{
+        const q=await invoke({action:'quote',asset,amount,network});
+        if(version!==quoteVersion)return;
+        currentQuote=q;
+        feeBox.innerHTML='<strong>ETH withdrawal fee</strong><br></body></html>+fmt(q.fee_usd,2)+' worth of ETH = '+fmt(q.fee_eth)+' ETH<br>ETH balance: '+fmt(ethBalance)+' ETH<br>'+(ethBalance+1e-12<Number(q.fee_eth)?'<span style="color:#e7a0a0">Insufficient ETH balance for this fee.</span>':'The fee will be deducted from your ETH balance when you submit.');
+      }catch(err){
+        if(version!==quoteVersion)return;
+        feeBox.textContent=err.message||'Unable to calculate the ETH fee. Try again.';
+      }
+    }
+    function scheduleQuote(){clearTimeout(quoteTimer);quoteTimer=setTimeout(refreshQuote,350);}
+    assetEl.addEventListener('change',scheduleQuote);amountEl.addEventListener('input',scheduleQuote);networkEl.addEventListener('input',scheduleQuote);
+    await loadHistory();
+    document.getElementById('withdrawForm').addEventListener('submit',async e=>{
+      e.preventDefault();
+      const asset=assetEl.value,amount=Number(amountEl.value),network=networkEl.value.trim(),address=document.getElementById('address').value.trim(),note=document.getElementById('note').value.trim();
+      const b=document.getElementById('submit');
+      b.disabled=true;b.textContent='Checking fee…';msg.textContent='';
+      try{
+        let quote=null;
+        if(asset==='USDT'&&/(ethereum|erc\s*-?20)/i.test(network)){
+          quote=await invoke({action:'quote',asset,amount,network});
+          if(ethBalance+1e-12<Number(quote.fee_eth))throw new Error('Insufficient ETH balance. Required: '+fmt(quote.fee_eth)+' ETH; available: '+fmt(ethBalance)+' ETH.');
+        }
+        const confirmation=quote
+          ?'Submit '+fmt(amount,8)+' USDT on '+network+'?\n\nETH withdrawal fee: '+fmt(quote.fee_eth)+' ETH (</body></html>+fmt(quote.fee_usd,2)+').\nThis fee will be deducted from your NEXBIT ETH balance.\n\nVerify the receiving address carefully.'
+          :'Submit a request for '+amount+' '+asset+' on '+network+' to the address entered? Verify it carefully.';
+        if(!confirm(confirmation))return;
+        b.textContent='Submitting…';
+        const result=await invoke({action:'submit',asset,amount,network,destination_address:address,user_note:note,idempotency_key:crypto.randomUUID()});
+        msg.textContent='Request submitted: '+(result?.reference||'created')+'.'+(Number(result?.fee_eth)>0?' ETH fee deducted: '+fmt(result.fee_eth)+' ETH.':'')+' Awaiting review; no funds have been sent.';
+        e.target.reset();currentQuote=null;feeBox.hidden=true;
+        await loadBalances();await loadHistory();
+      }catch(err){msg.textContent=err.message||'Unable to submit withdrawal request.';}
+      finally{b.disabled=false;b.textContent='Submit withdrawal request';}
+    });
+  }
+  start().catch(e=>{console.error(e);msg.textContent=e.message||'Unable to load this wallet page.';});
+})();
 </script></body></html>
