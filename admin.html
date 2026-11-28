@@ -69,7 +69,15 @@ a.tab{text-decoration:none;display:inline-flex;align-items:center}
     <article class="stat"><small>Email verified</small><strong id="verifiedUsers">—</strong></article>
     <article class="stat"><small>New users · 30 days</small><strong id="newUsers">—</strong></article>
   </section>
-  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="detectedDepositsPanel">Detected Deposits</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" data-panel="withdrawalsPanel">Withdrawals</button><button class="tab" type="button" data-panel="transfersPanel">Transfer Requests</button><button class="tab" type="button" data-panel="balancesPanel">Balances</button> <a class="tab" href="admin-investments.html">Investment Management</a><button class="tab" type="button" disabled title="Not implemented yet">Plans · Later</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <nav class="tabs"><button class="tab active" type="button" data-panel="usersPanel">User Management</button><button class="tab" type="button" data-panel="depositPanel">Deposit Addresses</button><button class="tab" type="button" data-panel="detectedDepositsPanel">Detected Deposits</button><button class="tab" type="button" data-panel="kycPanel">KYC Verification</button><button class="tab" type="button" data-panel="transactionsPanel">Transactions</button><button class="tab" type="button" data-panel="withdrawalsPanel">Withdrawals</button><button class="tab" type="button" data-panel="transfersPanel">Transfer Requests</button><button class="tab" type="button" data-panel="balancesPanel">Balances</button> <a class="tab" href="admin-investments.html">Investment Management</a><button class="tab" type="button" data-panel="iraPlansPanel">IRA Plans</button><button class="tab" type="button" disabled title="Not implemented yet">Activity Logs · Later</button></nav>
+  <section class="panel" id="iraPlansPanel" hidden>
+    <div class="panel-head"><div><h2>IRA plan settings</h2><p class="sub">Changes apply to new enrolments only. Existing IRA accounts keep their original terms.</p></div><button id="refreshIraPlans" type="button">Refresh</button></div>
+    <div id="iraPlanCards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px">
+      <article class="panel" style="margin:0"><h3 style="font-size:13px">IRA Core</h3><label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="iraCoreMinimum">Minimum monthly contribution (USDT)</label><input id="iraCoreMinimum" type="number" min="0.01" step="0.01"><label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="iraCoreRate">Monthly rate (%)</label><input id="iraCoreRate" type="number" min="0" max="100" step="0.01"><label style="display:flex;align-items:center;gap:8px;font-size:11px;margin:14px 0"><input id="iraCoreEnabled" type="checkbox" style="width:16px;height:16px"> Plan available for new enrolments</label><button type="button" data-save-ira-plan="core">Save Core settings</button></article>
+      <article class="panel" style="margin:0"><h3 style="font-size:13px">IRA Growth</h3><label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="iraGrowthMinimum">Minimum monthly contribution (USDT)</label><input id="iraGrowthMinimum" type="number" min="0.01" step="0.01"><label style="display:block;font-size:10px;color:var(--muted);margin:12px 0 6px" for="iraGrowthRate">Monthly rate (%)</label><input id="iraGrowthRate" type="number" min="0" max="100" step="0.01"><label style="display:flex;align-items:center;gap:8px;font-size:11px;margin:14px 0"><input id="iraGrowthEnabled" type="checkbox" style="width:16px;height:16px"> Plan available for new enrolments</label><button type="button" data-save-ira-plan="growth">Save Growth settings</button></article>
+    </div>
+    <p id="iraPlanMessage" role="status" aria-live="polite" style="font-size:11px;color:#e2c991;line-height:1.7;margin:14px 0">Loading IRA plan settings…</p>
+  </section>
   <section class="panel" id="usersPanel">
     <div class="panel-head"><h2>Registered accounts</h2><div class="tools"><input id="search" type="search" placeholder="Search name or email"><button id="refresh" type="button">Refresh</button></div></div>
     <div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>ACCOUNT CREATED</th><th>LAST SIGN-IN</th><th>EMAIL STATUS</th><th>ACTION</th></tr></thead><tbody id="usersBody"><tr><td colspan="6" class="muted">Loading accounts…</td></tr></tbody></table></div>
@@ -304,6 +312,7 @@ a.tab{text-decoration:none;display:inline-flex;align-items:center}
    $('transfersPanel').hidden=tab.dataset.panel!=='transfersPanel';
    $('balancesPanel').hidden=tab.dataset.panel!=='balancesPanel';
    $('detectedDepositsPanel').hidden=tab.dataset.panel!=='detectedDepositsPanel';
+   $('iraPlansPanel').hidden=tab.dataset.panel!=='iraPlansPanel';
    if(tab.dataset.panel==='depositPanel')loadDepositAddresses();
    if(tab.dataset.panel==='detectedDepositsPanel')loadDetectedDeposits();
    if(tab.dataset.panel==='kycPanel')loadKycApplications();
@@ -311,6 +320,7 @@ a.tab{text-decoration:none;display:inline-flex;align-items:center}
    if(tab.dataset.panel==='withdrawalsPanel')loadWithdrawals();
    if(tab.dataset.panel==='transfersPanel')loadInternalTransfers();
    if(tab.dataset.panel==='balancesPanel'){loadBalances();loadBalanceHistory();}
+   if(tab.dataset.panel==='iraPlansPanel')window.loadAdminIraPlans?.();
  }));
  let selectedDetectedDeposit=null;
  let selectedDepositUser=null;
@@ -773,4 +783,5 @@ a.tab{text-decoration:none;display:inline-flex;align-items:center}
  $('saveBalanceAdjustment').addEventListener('click',saveBalanceAdjustment);
 })();
 </script>
+<script src="admin-ira.js?v=1"></script>
 </body></html>
