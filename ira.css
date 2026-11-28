@@ -67,3 +67,27 @@
 #iraView .ira-review-status{margin:12px 0;color:#e1c58f;font-size:9px;line-height:1.5}
 @media(min-width:700px){#iraView .ira-panel{padding:20px}#iraView .ira-how-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:370px){#iraView .ira-section-nav{gap:3px}#iraView .ira-section-nav button{font-size:8px;padding:4px 1px}#iraView .ira-panel{padding:10px}#iraView .ira-plan-hero{padding:13px}}
+
+#iraView .ira-active-plans{display:grid;gap:12px}
+#iraView .ira-account-card{padding:14px;border:1px solid rgba(178,198,223,.2);border-radius:13px;background:linear-gradient(145deg,rgba(24,36,52,.92),rgba(8,13,21,.96));}
+#iraView .ira-account-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#iraView .ira-account-top>div{display:grid;gap:4px}
+#iraView .ira-account-top strong{font-size:10px;color:#9baabe;letter-spacing:.05em}
+#iraView .ira-status{padding:5px 8px;border:1px solid #526274;border-radius:20px;font-size:8px;font-weight:800;color:#d6e0ed}
+#iraView .ira-status.active{color:#a8e2bf;border-color:#427b5a}
+#iraView .ira-status.pending{color:#e6c88b;border-color:#8b713c}
+#iraView .ira-status.locked{color:#f1a5a5;border-color:#8d4848}
+#iraView .ira-status.matured{color:#b8c9df}
+#iraView .ira-account-balance{display:grid;gap:4px;margin:15px 0;padding:12px;border-radius:9px;background:rgba(161,185,214,.08)}
+#iraView .ira-account-balance span,#iraView .ira-account-grid span{font-size:9px;color:#9aa9bc}
+#iraView .ira-account-balance strong{font-size:22px;color:#eef4fb}
+#iraView .ira-account-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+#iraView .ira-account-grid>div{display:grid;gap:4px;min-width:0}
+#iraView .ira-account-grid strong{font-size:10px;color:#dce5ef;overflow-wrap:anywhere}
+#iraView .ira-account-alert{font-size:10px;line-height:1.5;color:#e8c18b}
+#iraView .ira-contribution-history{margin-top:14px;padding-top:10px;border-top:1px solid rgba(178,198,223,.15)}
+#iraView .ira-contribution-history>strong{display:block;margin-bottom:7px;color:#b8c7d9;font-size:9px}
+#iraView .ira-contribution-history>div{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:6px 0;color:#9eacbf;font-size:9px}
+#iraView .ira-contribution-history b.paid{color:#9cddb5}
+#iraView .ira-contribution-history b.missed{color:#eaa2a2}
+#iraView .ira-reopen-button{margin-top:8px}
