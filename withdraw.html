@@ -105,11 +105,10 @@ main{width:min(100%,1240px);margin:0 auto;padding:27px 22px 35px}
 (function(){
   if(!window.supabase?.createClient){document.getElementById('pageMessage').textContent='Secure connection could not load. Refresh and try again.';return;}
   const db=window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N');
-  const msg=document.getElementById('pageMessage');
-  const feeBox=document.getElementById('withdrawFee');
+  const msg=document.getElementById('pageMessage'),feeBox=document.getElementById('withdrawFee');
   const assetEl=document.getElementById('asset'),amountEl=document.getElementById('amount'),networkEl=document.getElementById('network');
   const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  let ethBalance=0,quoteVersion=0,currentQuote=null,quoteTimer=null;
+  let ethBalance=0,quoteVersion=0,quoteTimer=null;
   const fmt=(v,d=8)=>Number(v||0).toLocaleString(undefined,{maximumFractionDigits:d});
   async function invoke(body){
     const {data,error}=await db.functions.invoke('nexbit-withdrawal',{body});
@@ -138,34 +137,27 @@ main{width:min(100%,1240px);margin:0 auto;padding:27px 22px 35px}
       const {data,error}=await db.rpc('nexbit_list_my_withdrawal_requests',{p_limit:50});
       if(error){hist.innerHTML='<div class="empty">Unable to load requests.</div>';return;}
       hist.innerHTML=(data||[]).length?(data||[]).map(r=>{
-        const fee=Number(r.withdrawal_fee_eth)>0?'<div>ETH fee: '+safe(fmt(r.withdrawal_fee_eth))+' ETH (</body></html>+safe(fmt(r.withdrawal_fee_usd,2))+')</div>':'';
+        const fee=Number(r.withdrawal_fee_eth)>0?'<div>ETH fee: '+safe(fmt(r.withdrawal_fee_eth))+' ETH ($'+safe(fmt(r.withdrawal_fee_usd,2))+')</div>':'';
         return '<div class="row"><div><strong>'+safe(r.amount)+' '+safe(r.asset_code)+' · '+safe(r.network)+'</strong>'+safe(r.reference)+' · '+safe(new Date(r.created_at).toLocaleString())+fee+(r.admin_comment?'<div>'+safe(r.admin_comment)+'</div>':'')+'</div><div class="status">'+safe(r.status)+'</div></div>';
       }).join(''):'<div class="empty">You have not submitted any withdrawal requests.</div>';
     }
     async function refreshQuote(){
-      const version=++quoteVersion;
-      const asset=assetEl.value,amount=Number(amountEl.value),network=networkEl.value.trim();
-      currentQuote=null;
+      const version=++quoteVersion,asset=assetEl.value,amount=Number(amountEl.value),network=networkEl.value.trim();
       feeBox.hidden=true;
       if(asset!=='USDT'||!/(ethereum|erc\s*-?20)/i.test(network)||!Number.isFinite(amount)||amount<=0)return;
       feeBox.hidden=false;feeBox.textContent='Calculating ETH withdrawal fee…';
       try{
         const q=await invoke({action:'quote',asset,amount,network});
         if(version!==quoteVersion)return;
-        currentQuote=q;
-        feeBox.innerHTML='<strong>ETH withdrawal fee</strong><br></body></html>+fmt(q.fee_usd,2)+' worth of ETH = '+fmt(q.fee_eth)+' ETH<br>ETH balance: '+fmt(ethBalance)+' ETH<br>'+(ethBalance+1e-12<Number(q.fee_eth)?'<span style="color:#e7a0a0">Insufficient ETH balance for this fee.</span>':'The fee will be deducted from your ETH balance when you submit.');
-      }catch(err){
-        if(version!==quoteVersion)return;
-        feeBox.textContent=err.message||'Unable to calculate the ETH fee. Try again.';
-      }
+        feeBox.innerHTML='<strong>ETH withdrawal fee</strong><br>$'+fmt(q.fee_usd,2)+' worth of ETH = '+fmt(q.fee_eth)+' ETH<br>ETH balance: '+fmt(ethBalance)+' ETH<br>'+(ethBalance+1e-12<Number(q.fee_eth)?'<span style="color:#e7a0a0">Insufficient ETH balance for this fee.</span>':'The fee will be deducted from your ETH balance when you submit.');
+      }catch(err){if(version===quoteVersion)feeBox.textContent=err.message||'Unable to calculate the ETH fee. Try again.';}
     }
     function scheduleQuote(){clearTimeout(quoteTimer);quoteTimer=setTimeout(refreshQuote,350);}
     assetEl.addEventListener('change',scheduleQuote);amountEl.addEventListener('input',scheduleQuote);networkEl.addEventListener('input',scheduleQuote);
     await loadHistory();
     document.getElementById('withdrawForm').addEventListener('submit',async e=>{
       e.preventDefault();
-      const asset=assetEl.value,amount=Number(amountEl.value),network=networkEl.value.trim(),address=document.getElementById('address').value.trim(),note=document.getElementById('note').value.trim();
-      const b=document.getElementById('submit');
+      const asset=assetEl.value,amount=Number(amountEl.value),network=networkEl.value.trim(),address=document.getElementById('address').value.trim(),note=document.getElementById('note').value.trim(),b=document.getElementById('submit');
       b.disabled=true;b.textContent='Checking fee…';msg.textContent='';
       try{
         let quote=null;
@@ -174,13 +166,13 @@ main{width:min(100%,1240px);margin:0 auto;padding:27px 22px 35px}
           if(ethBalance+1e-12<Number(quote.fee_eth))throw new Error('Insufficient ETH balance. Required: '+fmt(quote.fee_eth)+' ETH; available: '+fmt(ethBalance)+' ETH.');
         }
         const confirmation=quote
-          ?'Submit '+fmt(amount,8)+' USDT on '+network+'?\n\nETH withdrawal fee: '+fmt(quote.fee_eth)+' ETH (</body></html>+fmt(quote.fee_usd,2)+').\nThis fee will be deducted from your NEXBIT ETH balance.\n\nVerify the receiving address carefully.'
+          ?'Submit '+fmt(amount,8)+' USDT on '+network+'?\n\nETH withdrawal fee: '+fmt(quote.fee_eth)+' ETH ($'+fmt(quote.fee_usd,2)+').\nThis fee will be deducted from your NEXBIT ETH balance.\n\nVerify the receiving address carefully.'
           :'Submit a request for '+amount+' '+asset+' on '+network+' to the address entered? Verify it carefully.';
         if(!confirm(confirmation))return;
         b.textContent='Submitting…';
         const result=await invoke({action:'submit',asset,amount,network,destination_address:address,user_note:note,idempotency_key:crypto.randomUUID()});
         msg.textContent='Request submitted: '+(result?.reference||'created')+'.'+(Number(result?.fee_eth)>0?' ETH fee deducted: '+fmt(result.fee_eth)+' ETH.':'')+' Awaiting review; no funds have been sent.';
-        e.target.reset();currentQuote=null;feeBox.hidden=true;
+        e.target.reset();feeBox.hidden=true;
         await loadBalances();await loadHistory();
       }catch(err){msg.textContent=err.message||'Unable to submit withdrawal request.';}
       finally{b.disabled=false;b.textContent='Submit withdrawal request';}
