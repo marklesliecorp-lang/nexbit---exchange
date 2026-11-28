@@ -37,6 +37,15 @@
    if(minimum)minimum.textContent=money(settings[key].minimum);
    if(rate)rate.innerHTML=String(settings[key].rate)+'% <small>Monthly rate</small>';
    if(input){input.min=String(settings[key].minimum);input.placeholder='Enter '+money(settings[key].minimum)+' or more';}
+   const amountSelect=root.querySelector('#'+prefix+'Amount');
+   if(amountSelect){
+    [...amountSelect.options].forEach(option=>{if(option.value!=='custom'&&Number(option.value)<settings[key].minimum)option.remove();});
+    const first=[...amountSelect.options].find(option=>option.value!=='custom');
+    if(first&&Number(first.value)>settings[key].minimum){const option=document.createElement('option');option.value=String(settings[key].minimum);option.textContent=money(settings[key].minimum)+' — Minimum';amountSelect.insertBefore(option,amountSelect.firstChild);}
+    const minimumOption=[...amountSelect.options].find(option=>option.value!=='custom'&&Number(option.value)===settings[key].minimum);
+    if(minimumOption)minimumOption.textContent=money(settings[key].minimum)+' — Minimum';
+    if(amountSelect.value==='custom'||Number(amountSelect.value)<settings[key].minimum)amountSelect.value=String(settings[key].minimum);
+   }
    if(button){button.disabled=!settings[key].enabled;button.textContent=settings[key].enabled?'Review '+(key==='growth'?'Growth':'Core')+' IRA':'Currently unavailable';}
    if(section&&!settings[key].enabled){const banner=document.createElement('p');banner.className='ira-footnote';banner.textContent='This plan is temporarily unavailable for new enrolments.';section.querySelector('.ira-calculator')?.prepend(banner);}
   });
