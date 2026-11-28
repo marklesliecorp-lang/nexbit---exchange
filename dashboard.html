@@ -2280,9 +2280,18 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
       if(unrealizedNode)unrealizedNode.textContent='+'+money(unrealized);
       if(recentNode)recentNode.innerHTML=investments.length?investments.slice(0,5).map(row=>'<div class="investment-recent-row"><div class="investment-recent-main"><strong>'+safe(row.package_name)+' · '+safe(row.asset_category)+'</strong><small>'+safe(row.status.toUpperCase())+' · '+new Date(row.created_at).toLocaleDateString()+'</small></div><span class="investment-recent-amount">'+money(row.principal_amount)+'</span></div>').join(''):'<div class="investment-chart-empty">No investment records yet.</div>';
       if(chartNode){
+        // Each candle represents one real investment record; height is scaled to its principal.
+        // This is a portfolio-activity visualization, not a live market OHLC chart.
         const chartRows=investments.slice(0,6).reverse();
         const max=Math.max(1,...chartRows.map(row=>Number(row.principal_amount||0)));
-        chartNode.innerHTML=chartRows.length?chartRows.map(row=>{const height=Math.max(5,Math.round(Number(row.principal_amount||0)/max*88));const state=String(row.status||'active').toLowerCase();return '<div class="investment-chart-bar investment-chart-'+(state==='cancelled'?'cancelled':state==='completed'?'completed':'active')+'" title="'+safe(row.package_name)+' · '+money(row.principal_amount)+' · '+safe(state)+'"><i style="height:'+height+'px"></i><small>'+new Date(row.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric'})+'</small></div>';}).join(''):'<div class="investment-chart-empty">Your investment activity will appear here.</div>';
+        chartNode.innerHTML=chartRows.length?chartRows.map(row=>{
+          const principal=Math.max(0,Number(row.principal_amount||0));
+          const height=Math.max(14,Math.round(principal/max*82));
+          const bodyHeight=Math.max(9,Math.round(height*.62));
+          const state=String(row.status||'active').toLowerCase();
+          const date=row.created_at?new Date(row.created_at).toLocaleDateString(undefined,{month:'short',day:'numeric'}):'—';
+          return '<div class="investment-candle-item investment-chart-'+(state==='cancelled'?'cancelled':state==='completed'?'completed':'active')+'" title="'+safe(row.package_name)+' · '+money(principal)+' · '+safe(state)+'"><span class="investment-candle-value">'+money(principal)+'</span><span class="investment-candle" style="height:'+height+'px"><i class="investment-candle-wick"></i><i class="investment-candle-body" style="height:'+bodyHeight+'px"></i></span><small>'+safe(date)+'</small></div>';
+        }).join(''):'<div class="investment-chart-empty">Your investment activity will appear here.</div>';
       }
       if(plansNode)plansNode.innerHTML=active.length?active.map(row=>'<article class="investment-active-row"><div class="investment-active-row-head"><div><strong>'+safe(row.package_name)+'</strong><small>'+safe(row.asset_category.toUpperCase())+' · '+safe(row.reference)+'</small></div><span class="investment-active-status">ACTIVE</span></div><div class="investment-active-row-facts"><span>Invested<strong>'+money(row.principal_amount)+'</strong></span><span>Daily rate<strong>'+Number(row.daily_rate_percent).toLocaleString()+'%</strong></span><span>Duration<strong>'+Number(row.duration_days)+' days</strong></span><span>Expected profit<strong>'+money(row.expected_profit)+'</strong></span></div><div class="investment-active-row-date">Matures '+(row.matures_at?new Date(row.matures_at).toLocaleDateString():'—')+'</div></article>').join(''):'<div class="investment-empty-state"><span class="investment-empty-icon" aria-hidden="true">◇</span><strong>No active investment plans</strong><p>Your active plans will appear here once they have been recorded.</p></div>';
     }
@@ -2985,5 +2994,45 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
 
 <script src="investment.js?v=1" defer></script>
 <script src="ira.js?v=3" defer></script>
+
+<style id="nexbit-investment-activity-candles">
+/* Investment activity candles: green portfolio markers, scaled to actual invested amounts. */
+#investmentView #investmentPerformanceChart.investment-activity-chart{
+  display:flex;align-items:flex-end;justify-content:space-around;gap:8px;
+  min-height:138px;height:138px;padding:8px 4px 0;border-bottom:1px solid rgba(34,197,94,.22);
+}
+#investmentView .investment-candle-item{
+  flex:1 1 0;min-width:0;height:128px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;gap:5px;
+}
+#investmentView .investment-candle-value{
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#86efac;font-size:8px;font-weight:700;font-variant-numeric:tabular-nums;
+}
+#investmentView .investment-candle{
+  position:relative;width:100%;max-width:22px;min-height:14px;display:flex;
+  align-items:flex-end;justify-content:center;
+}
+#investmentView .investment-candle-wick{
+  position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);
+  border-radius:2px;background:#22c55e;opacity:.85;
+}
+#investmentView .investment-candle-body{
+  position:relative;z-index:1;width:100%;min-height:9px;border:1px solid #4ade80;
+  border-radius:3px;background:linear-gradient(180deg,#4ade80,#16a34a);
+  box-shadow:0 0 9px rgba(34,197,94,.18);
+}
+#investmentView .investment-candle-item small{color:#929eae;font-size:8px;white-space:nowrap}
+#investmentView .investment-candle-item.investment-chart-completed .investment-candle-body{background:linear-gradient(180deg,#86efac,#22c55e)}
+#investmentView .investment-candle-item.investment-chart-cancelled .investment-candle-wick{background:#7b8794}
+#investmentView .investment-candle-item.investment-chart-cancelled .investment-candle-body{background:#475569;border-color:#64748b;box-shadow:none}
+#investmentView .investment-candle-item.investment-chart-cancelled .investment-candle-value{color:#94a3b8}
+@media(max-width:600px){
+  #investmentView #investmentPerformanceChart.investment-activity-chart{min-height:132px;height:132px;gap:5px}
+  #investmentView .investment-candle-item{height:122px}
+  #investmentView .investment-candle-value{font-size:7px}
+  #investmentView .investment-candle{max-width:19px}
+}
+</style>
 </body>
 </html>
