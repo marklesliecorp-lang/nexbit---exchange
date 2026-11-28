@@ -6,11 +6,12 @@
  const sections={overview:root.querySelector('#ira-overview-section'),active:root.querySelector('#ira-active-section'),growth:root.querySelector('#ira-growth-section'),core:root.querySelector('#ira-core-section')};
  function show(name){const key=Object.prototype.hasOwnProperty.call(sections,name)?name:'overview';Object.entries(sections).forEach(([k,node])=>{if(node)node.hidden=k!==key;});buttons.forEach(b=>{const on=b.dataset.iraSection===key;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));});}
  buttons.forEach(b=>b.addEventListener('click',()=>show(b.dataset.iraSection)));
+ const settings={core:{minimum:200,rate:15,enabled:true},growth:{minimum:500,rate:25,enabled:true}};
  const money=n=>'$'+Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
  const safe=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const dateFmt=value=>value?new Date(value+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
  function calc(key){
-  const growth=key==='growth',prefix=growth?'iraGrowth':'iraCore',rate=growth?.25:.15,min=growth?500:200;
+  const growth=key==='growth',prefix=growth?'iraGrowth':'iraCore',rate=settings[key].rate/100,min=settings[key].minimum;
   const select=root.querySelector('#'+prefix+'Amount'),custom=root.querySelector('#'+prefix+'Custom'),duration=root.querySelector('#'+prefix+'Duration');
   const contribution=root.querySelector('#'+prefix+'Contributions'),interest=root.querySelector('#'+prefix+'Interest'),balance=root.querySelector('#'+prefix+'Balance');
   const amount=select.value==='custom'?Number(custom.value):Number(select.value),months=Number(duration.value)*12;
@@ -26,6 +27,21 @@
  const modal=root.querySelector('#iraReviewModal'),details=root.querySelector('#iraReviewDetails');
  const enrollMessage=root.querySelector('#iraEnrollMessage'),enrollButton=root.querySelector('#iraEnrollConfirm');
  const client=window.supabase?.createClient?window.supabase.createClient('https://cubzhenuumvsogysmaeo.supabase.co','sb_publishable_RqrGL9aFCgyzZsU9sRCzcw_zb2lCZ7N'):null;
+ async function loadPlanSettings(){
+  if(!client)throw new Error('Secure connection unavailable');
+  const {data,error}=await client.from('nexbit_ira_plan_settings').select('plan_code,minimum_monthly_contribution,monthly_rate_percent,enabled');
+  if(error)throw error;
+  (data||[]).forEach(p=>{settings[p.plan_code]={minimum:Number(p.minimum_monthly_contribution),rate:Number(p.monthly_rate_percent),enabled:!!p.enabled};});
+  ['core','growth'].forEach(key=>{
+   const prefix=key==='growth'?'iraGrowth':'iraCore',section=root.querySelector('#ira-'+key+'-section'),minimum=section?.querySelector('.ira-minimum strong'),rate=section?.querySelector('.ira-plan-hero strong'),input=root.querySelector('#'+prefix+'Custom'),button=root.querySelector('[data-ira-review="'+key+'"]');
+   if(minimum)minimum.textContent=money(settings[key].minimum);
+   if(rate)rate.innerHTML=String(settings[key].rate)+'% <small>Monthly rate</small>';
+   if(input){input.min=String(settings[key].minimum);input.placeholder='Enter '+money(settings[key].minimum)+' or more';}
+   if(button){button.disabled=!settings[key].enabled;button.textContent=settings[key].enabled?'Review '+(key==='growth'?'Growth':'Core')+' IRA':'Currently unavailable';}
+   if(section&&!settings[key].enabled){const banner=document.createElement('p');banner.className='ira-footnote';banner.textContent='This plan is temporarily unavailable for new enrolments.';section.querySelector('.ira-calculator')?.prepend(banner);}
+  });
+  ['growth','core'].forEach(calc);
+ }
  let selected=null,enrolling=false;
  async function loadIraAccounts(){
   const host=root.querySelector('#iraActivePlans');if(!host)return;
@@ -45,7 +61,8 @@
  }
  let selectedPlan=null;
  root.querySelectorAll('[data-ira-review]').forEach(btn=>btn.addEventListener('click',()=>{
-  const growth=btn.dataset.iraReview==='growth',key=growth?'growth':'core',prefix=growth?'iraGrowth':'iraCore',min=growth?500:200,rate=growth?.25:.15;
+  const growth=btn.dataset.iraReview==='growth',key=growth?'growth':'core',prefix=growth?'iraGrowth':'iraCore',min=settings[key].minimum,rate=settings[key].rate/100;
+  if(!settings[key].enabled){alert('This IRA plan is currently unavailable.');return;}
   const select=root.querySelector('#'+prefix+'Amount'),custom=root.querySelector('#'+prefix+'Custom'),duration=root.querySelector('#'+prefix+'Duration');
   const amount=select.value==='custom'?Number(custom.value):Number(select.value);
   if(!Number.isFinite(amount)||amount<min){alert('Enter a monthly contribution of at least $'+min.toLocaleString('en-US')+'.');return;}
@@ -81,4 +98,6 @@
  });
  loadIraAccounts();
  show('overview');
+ root.querySelectorAll('[data-ira-review]').forEach(b=>b.disabled=true);
+ loadPlanSettings().catch(error=>{console.error('IRA plan settings unavailable:',error);root.querySelectorAll('[data-ira-review]').forEach(b=>{b.disabled=true;b.textContent='Plan settings unavailable';});});
 })();
