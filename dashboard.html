@@ -1778,7 +1778,7 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       <div class="asset-heading"><div class="panel-label">Total Balance <span class="eye">◉</span></div></div>
       <a class="asset-deposit" href="deposit.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 18v3h16v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Deposit</a>
       <div class="balance-row"><div class="balance" id="dashboardBalance"></div><div class="currency">USD⌄</div></div>
-      <div class="pnl-line">Today's P&amp;L <strong id="todayPnl">$0.00 USD (0.00%)</strong></div>
+      <div class="pnl-line">Holdings P&amp;L <strong id="todayPnl">Unavailable</strong><small id="todayPnlNote" style="display:block;margin-top:3px;color:#85878c;font-size:9px;font-weight:500;line-height:1.4"></small></div>
     </article>
     <div class="side-stack balance-breakdown">
       <article class="panel mini-balance-card"><div class="mini-balance-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h13M3 9h17m-4 5h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span>USDT Balance</span><strong id="availableBalance">— — —</strong></div></article>
@@ -2339,126 +2339,215 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
     const tradeBalance=document.getElementById('tradeAvailableBalance');
     if(tradeBalance)tradeBalance.textContent=formatUSD(amount);
 
-    window.updateTodayPnl=function(profitLoss,percent){
+    const pnlMarketIds={BTC:'bitcoin',ETH:'ethereum',SOL:'solana',BNB:'binancecoin',XRP:'ripple',DOGE:'dogecoin',ADA:'cardano',BCH:'bitcoin-cash',TRX:'tron'};
+    let pnlQuotes={},pnlQuotesAt=0,pnlQuoteBusy=false,pnlRenderBusy=false,snapshotBusy=false;
+    let holdingsSnapshot={cash:0,assets:[],trades:[],lockedPrincipal:0};
+    const pnlCashAssets=new Set(['USD','USDT']);
+    const pnlNote=document.getElementById('todayPnlNote');
+    function setPnlDisplay(value,percent,note){
       const pnl=document.getElementById('todayPnl');
-      const value=Number(profitLoss);
-      const rate=Number(percent);
-      if(!pnl||!Number.isFinite(value)||!Number.isFinite(rate))return;
-      const money=Math.abs(value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-      const rateText=Math.abs(rate).toFixed(2)+'%';
-      if(value>0){
-        pnl.textContent='+USDT '+money+' (+'+rateText+')';
-        pnl.className='pnl-profit';
-      }else if(value<0){
-        pnl.textContent='-USDT '+money+' (-'+rateText+')';
-        pnl.className='pnl-loss';
+      if(!pnl)return;
+      if(!Number.isFinite(value)||!Number.isFinite(percent)){
+        pnl.textContent='Unavailable';pnl.className='pnl-neutral';
       }else{
-        pnl.textContent='USDT 0.00 (0.00%)';
-        pnl.className='pnl-neutral';
+        const money=Math.abs(value).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+        const rate=Math.abs(percent).toFixed(2)+'%';
+        if(value>0){pnl.textContent='+USDT '+money+' (+'+rate+')';pnl.className='pnl-profit';}
+        else if(value<0){pnl.textContent='-USDT '+money+' (-'+rate+')';pnl.className='pnl-loss';}
+        else{pnl.textContent='USDT 0.00 (0.00%)';pnl.className='pnl-neutral';}
       }
-    };
-    const pnlMarketIds={BTC:'bitcoin',ETH:'ethereum',SOL:'solana',BNB:'binancecoin',XRP:'ripple',DOGE:'dogecoin',ADA:'cardano',BCH:'bitcoin-cash',USDT:'tether'};
-    let pnlQuotes={},pnlQuotesAt=0,pnlRefreshBusy=false;
+      if(pnlNote)pnlNote.textContent=note||'';
+    }
     async function loadPnlMarketQuotes(){
       const now=Date.now();
-      if(now-pnlQuotesAt<30000&&Object.keys(pnlQuotes).length)return pnlQuotes;
-      const ids=[...new Set(Object.values(pnlMarketIds))].join(',');
-      const response=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+encodeURIComponent(ids)+'&vs_currencies=usd&include_24hr_change=true',{cache:'no-store'});
-      if(!response.ok)throw new Error('Portfolio market prices unavailable');
-      const data=await response.json(),next={};
-      Object.entries(pnlMarketIds).forEach(([asset,id])=>{
-        const price=Number(data?.[id]?.usd),change=Number(data?.[id]?.usd_24h_change);
-        if(Number.isFinite(price)&&price>0&&Number.isFinite(change)&&change>-100)next[asset]={price,change};
-      });
-      if(!Object.keys(next).length)throw new Error('No valid portfolio market prices');
-      pnlQuotes=next;pnlQuotesAt=now;
+      if(now-pnlQuotesAt<15000&&Object.keys(pnlQuotes).length)return pnlQuotes;
+      if(pnlQuoteBusy)return pnlQuotes;
+      pnlQuoteBusy=true;
+      try{
+        const ids=[...new Set(Object.values(pnlMarketIds))].join(',');
+        const response=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+encodeURIComponent(ids)+'&vs_currencies=usd',{cache:'no-store'});
+        if(!response.ok)throw new Error('Portfolio market prices unavailable');
+        const data=await response.json(),next={};
+        Object.entries(pnlMarketIds).forEach(([asset,id])=>{
+          const price=Number(data?.[id]?.usd);
+          if(Number.isFinite(price)&&price>0)next[asset]=price;
+        });
+        if(Object.keys(next).length){pnlQuotes=next;pnlQuotesAt=now;}
+      }catch(error){console.warn('NEXBIT fallback market quotes unavailable:',error);}
+      finally{pnlQuoteBusy=false;}
       return pnlQuotes;
     }
-    async function loadAccountPnl(){
-      const pnl=document.getElementById('todayPnl');
-      if(!pnl||pnlRefreshBusy)return;
-      pnlRefreshBusy=true;
+    function buildHoldingsCostBasis(trades){
+      const state={};
+      const entry=asset=>{
+        const key=String(asset||'').toUpperCase();
+        if(!state[key])state[key]={units:0,cost:0,complete:true};
+        return state[key];
+      };
+      const add=(asset,units,cost,complete=true)=>{
+        const key=String(asset||'').toUpperCase();
+        if(!key||pnlCashAssets.has(key)||!(units>0))return;
+        const item=entry(key);
+        item.units+=units;
+        item.cost+=Math.max(0,cost||0);
+        if(!complete)item.complete=false;
+      };
+      const remove=(asset,units)=>{
+        const item=entry(asset);
+        if(!(units>0))return {cost:0,complete:false};
+        if(!item.complete||item.units+1e-10<units){
+          item.complete=false;item.units=0;item.cost=0;
+          return {cost:0,complete:false};
+        }
+        const average=item.units>0?item.cost/item.units:0;
+        const cost=average*units;
+        item.units=Math.max(0,item.units-units);
+        item.cost=Math.max(0,item.cost-cost);
+        return {cost,complete:true};
+      };
+      (trades||[]).slice().sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).forEach(trade=>{
+        const action=String(trade.action||'').toLowerCase();
+        const from=String(trade.from_asset||'').toUpperCase();
+        const to=String(trade.to_asset||'').toUpperCase();
+        const input=Number(trade.input_amount||0),output=Number(trade.net_output||0);
+        if(!(input>0))return;
+        if((action==='buy'||action==='convert')&&pnlCashAssets.has(from)){
+          const sourcePrice=Number(trade.from_price_usdt||1);
+          const cost=input*sourcePrice;
+          add(to,output,cost,sourcePrice>0&&Number.isFinite(cost));
+          return;
+        }
+        if(action==='sell'||action==='convert'||(action==='buy'&&!pnlCashAssets.has(from))){
+          const transferred=remove(from,input);
+          if(action!=='sell'&&!pnlCashAssets.has(to))add(to,output,transferred.cost,transferred.complete);
+        }
+      });
+      return state;
+    }
+    async function refreshAccountSnapshot(){
+      if(snapshotBusy)return;
+      snapshotBusy=true;
       try{
-        const [cashResult,assetResult,investmentResult,iraResult]=await Promise.all([
+        const [cashResult,assetResult,investmentResult,iraResult,tradeResult]=await Promise.all([
           client.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle(),
           client.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id),
           client.from('nexbit_investments').select('principal_amount').eq('user_id',user.id).eq('status','active'),
-          client.from('nexbit_ira_accounts').select('current_balance').eq('user_id',user.id).in('status',['active','pending','locked'])
+          client.from('nexbit_ira_accounts').select('current_balance').eq('user_id',user.id).in('status',['active','pending','locked']),
+          client.from('nexbit_spot_trades').select('action,from_asset,to_asset,input_amount,net_output,from_price_usdt,to_price_usdt,fee_amount,fee_asset,created_at').eq('user_id',user.id).order('created_at',{ascending:true}).limit(2000)
         ]);
         if(cashResult.error)throw cashResult.error;
         if(assetResult.error)throw assetResult.error;
-        const investmentQueryFailed=Boolean(investmentResult.error);
-        if(investmentQueryFailed)console.warn('NEXBIT locked investment balance unavailable:',investmentResult.error);
-        const iraQueryFailed=Boolean(iraResult.error);if(iraQueryFailed)console.warn('NEXBIT locked IRA balance unavailable:',iraResult.error);const lockedPrincipal=investmentQueryFailed||iraQueryFailed?0:(investmentResult.data||[]).reduce((sum,row)=>sum+Number(row.principal_amount||0),0)+(iraResult.data||[]).reduce((sum,row)=>sum+Number(row.current_balance||0),0);
-        const lockedNode=document.getElementById('lockedBalance');
-        if(lockedNode)lockedNode.textContent=investmentQueryFailed||iraQueryFailed?'Unavailable':formatCompactBalance(lockedPrincipal);
-        amount=Number(cashResult.data?.balance||0);
+        if(tradeResult.error)throw tradeResult.error;
+        const lockedQueryFailed=Boolean(investmentResult.error||iraResult.error);
+        if(investmentResult.error)console.warn('NEXBIT locked investment balance unavailable:',investmentResult.error);
+        if(iraResult.error)console.warn('NEXBIT locked IRA balance unavailable:',iraResult.error);
+        const lockedPrincipal=lockedQueryFailed?null:
+          (investmentResult.data||[]).reduce((sum,row)=>sum+Number(row.principal_amount||0),0)+
+          (iraResult.data||[]).reduce((sum,row)=>sum+Number(row.current_balance||0),0);
+        holdingsSnapshot={cash:Number(cashResult.data?.balance||0),assets:assetResult.data||[],trades:tradeResult.data||[],lockedPrincipal};
+        amount=holdingsSnapshot.cash;
         const availableNode=document.getElementById('availableBalance');
         if(availableNode)availableNode.textContent=formatCompactBalance(amount);
+        const lockedNode=document.getElementById('lockedBalance');
+        if(lockedNode)lockedNode.textContent=lockedPrincipal===null?'Unavailable':formatCompactBalance(lockedPrincipal);
         const tradeBalanceNode=document.getElementById('tradeAvailableBalance');
         if(tradeBalanceNode)tradeBalanceNode.textContent=formatUSD(amount);
-        const holdings=(assetResult.data||[]).filter(row=>Number(row.balance)>0&&!['USDT','USD'].includes(String(row.asset_code||'').toUpperCase()));
-        const pricedHoldings=holdings;
-        let quotes={};
-        if(pricedHoldings.length){
-          try{quotes={...(await loadPnlMarketQuotes())};}
-          catch(priceError){console.warn('NEXBIT fallback to live market quotes:',priceError);}
-        }
-        const liveQuotes=window.NEXBIT_LIVE_QUOTES||{};
-        Object.entries(liveQuotes).forEach(([asset,quote])=>{
-          if(Date.now()-quote.updatedAt<15000&&Number.isFinite(quote.price)&&Number.isFinite(quote.change)&&quote.change>-100){
-            quotes[asset]={price:quote.price,change:quote.change};
-          }
-        });
-        let totalPnl=0,totalValue=Number(amount)||0,portfolioValue=Number(amount)||0,unpriced=[];
+        const livePriceCache=window.NEXBIT_LIVE_QUOTES||{};
+        const assets=holdingsSnapshot.assets.filter(row=>String(row.asset_code||'').toUpperCase()!=='USD');
         const assetDisplay=[];
-        holdings.forEach(row=>{
-          const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance);
-          if(!Number.isFinite(quantity)||quantity<=0)return;
+        let totalAccountValue=amount,unpriced=[];
+        assets.forEach(row=>{
+          const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance||0);
+          if(!asset||!Number.isFinite(quantity)||quantity<=0)return;
           let price=1;
-          if(asset!=='USD'){
-            const quote=quotes[asset];
-            if(!quote){unpriced.push(asset);assetDisplay.push({asset,quantity,value:null});return;}
-            price=quote.price;
-            const previousPrice=price/(1+quote.change/100);
-            totalPnl+=quantity*(price-previousPrice);
+          if(asset!=='USDT'){
+            const live=livePriceCache[asset],fresh=live&&Date.now()-Number(live.updatedAt||0)<15000&&Number(live.price)>0;
+            price=fresh?Number(live.price):Number(pnlQuotes[asset]||0);
+            if(!(price>0)){unpriced.push(asset);assetDisplay.push({asset,quantity,value:null});return;}
           }
           const value=quantity*price;
-          portfolioValue+=value;
-          totalValue+=value;
+          totalAccountValue+=value;
           assetDisplay.push({asset,quantity,value});
         });
-        const money=value=>'USDT '+Number(value||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-        const assetsBreakdown=document.getElementById('assetsViewBreakdown');
-        if(assetsBreakdown){
-          assetsBreakdown.innerHTML='<div class="asset-view-row"><span>USDT</span><strong>'+money(amount)+'</strong></div>'+assetDisplay.filter(item=>item.asset!=='USD').map(item=>{const safeAsset=item.asset.replace(/[&<>\"']/g,'');const quantity=item.quantity.toLocaleString(undefined,{maximumFractionDigits:8});const value=item.value===null?'Price unavailable':money(item.value);return '<div class="asset-view-row"><span>'+safeAsset+'<small style="display:block;opacity:.7;font-size:11px;font-weight:400">'+quantity+' '+safeAsset+'</small></span><strong>'+value+'</strong></div>';}).join('');
-        }
-        if(unpriced.length){
-          pnl.textContent='Unavailable';
-          pnl.className='pnl-neutral';
-          const dashboardTotal=document.getElementById('dashboardBalance');
-          const assetsTotal=document.getElementById('assetsViewBalance');
-          if(dashboardTotal)dashboardTotal.textContent='Unavailable';
-          if(assetsTotal)assetsTotal.textContent='Unavailable';
-          return;
-        }
         const dashboardTotal=document.getElementById('dashboardBalance');
         const assetsTotal=document.getElementById('assetsViewBalance');
-        const totalAccountValue=portfolioValue;
-        if(dashboardTotal)dashboardTotal.textContent=formatCompactBalance(totalAccountValue,'$');
-        if(assetsTotal)assetsTotal.textContent=formatPortfolioUSD(totalAccountValue);
-        const percent=totalValue>0?(totalPnl/totalValue)*100:0;
-        window.updateTodayPnl(totalPnl,percent);
+        const assetsBreakdown=document.getElementById('assetsViewBreakdown');
+        const money=value=>'USDT '+Number(value||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+        if(unpriced.length){
+          if(dashboardTotal)dashboardTotal.textContent='Unavailable';
+          if(assetsTotal)assetsTotal.textContent='Unavailable';
+        }else{
+          if(dashboardTotal)dashboardTotal.textContent=formatCompactBalance(totalAccountValue,'$');
+          if(assetsTotal)assetsTotal.textContent=formatPortfolioUSD(totalAccountValue);
+        }
+        if(assetsBreakdown){
+          assetsBreakdown.innerHTML='<div class="asset-view-row"><span>USDT</span><strong>'+money(amount)+'</strong></div>'+
+            assetDisplay.map(item=>{
+              const safeAsset=item.asset.replace(/[&<>"']/g,'');
+              const quantity=item.quantity.toLocaleString(undefined,{maximumFractionDigits:8});
+              const value=item.value===null?'Price unavailable':money(item.value);
+              return '<div class="asset-view-row"><span>'+safeAsset+'<small style="display:block;opacity:.7;font-size:11px;font-weight:400">'+quantity+' '+safeAsset+'</small></span><strong>'+value+'</strong></div>';
+            }).join('');
+        }
+        if(unpriced.length)console.warn('NEXBIT total balance has unpriced assets:',unpriced);
       }catch(error){
-        console.warn('NEXBIT account P&L refresh unavailable:',error);
-        pnl.textContent='Unavailable';pnl.className='pnl-neutral';
-
-      }finally{
-        pnlRefreshBusy=false;
-      }
+        console.warn('NEXBIT account snapshot refresh unavailable:',error);
+        setPnlDisplay(NaN,NaN,'Holdings data is temporarily unavailable.');
+      }finally{snapshotBusy=false;}
     }
-    loadAccountPnl();
-    setInterval(loadAccountPnl,5000);
+    async function updateHoldingsPnl(){
+      if(pnlRenderBusy)return;
+      pnlRenderBusy=true;
+      try{
+        if(!pnlQuotesAt||Date.now()-pnlQuotesAt>=15000)loadPnlMarketQuotes();
+        const basis=buildHoldingsCostBasis(holdingsSnapshot.trades);
+        const liveQuotes=window.NEXBIT_LIVE_QUOTES||{};
+        const missingBasis=[],missingPrice=[];
+        let totalPnl=0,totalCost=0,pricedKnownHoldings=0;
+        for(const row of holdingsSnapshot.assets){
+          const asset=String(row.asset_code||'').toUpperCase(),quantity=Number(row.balance||0);
+          if(!asset||pnlCashAssets.has(asset)||!(quantity>0))continue;
+          const item=basis[asset];
+          if(!item||!item.complete||item.units+1e-10<quantity){missingBasis.push(asset);continue;}
+          const knownCost=item.units>0?item.cost*(quantity/item.units):0;
+          const live=liveQuotes[asset];
+          const price=live&&Date.now()-Number(live.updatedAt||0)<15000&&Number(live.price)>0?Number(live.price):Number(pnlQuotes[asset]||0);
+          if(!(price>0)){missingPrice.push(asset);continue;}
+          totalPnl+=(quantity*price)-knownCost;
+          totalCost+=knownCost;
+          pricedKnownHoldings++;
+        }
+        if(!pricedKnownHoldings){
+          const reasons=[];
+          if(missingBasis.length)reasons.push('Cost basis not recorded for: '+[...new Set(missingBasis)].join(', ')+'.');
+          if(missingPrice.length)reasons.push('Live price unavailable for: '+[...new Set(missingPrice)].join(', ')+'.');
+          setPnlDisplay(NaN,NaN,reasons.join(' ')||'No crypto holdings with a recorded purchase cost yet.');
+          return;
+        }
+        const percent=totalCost>0?(totalPnl/totalCost)*100:0;
+        const notes=[];
+        if(missingBasis.length)notes.push('Partial P&L · cost basis missing: '+[...new Set(missingBasis)].join(', '));
+        if(missingPrice.length)notes.push('Price unavailable: '+[...new Set(missingPrice)].join(', '));
+        setPnlDisplay(totalPnl,percent,notes.join(' · '));
+      }catch(error){
+        console.warn('NEXBIT holdings P&L calculation unavailable:',error);
+        setPnlDisplay(NaN,NaN,'Unable to calculate holdings P&L right now.');
+      }finally{pnlRenderBusy=false;}
+    }
+    await loadPnlMarketQuotes();
+    await refreshAccountSnapshot();
+    await updateHoldingsPnl();
+    if(!window.NEXBIT_PNL_REFRESH_TIMER)window.NEXBIT_PNL_REFRESH_TIMER=window.setInterval(updateHoldingsPnl,3000);
+    if(!window.NEXBIT_ACCOUNT_SNAPSHOT_TIMER)window.NEXBIT_ACCOUNT_SNAPSHOT_TIMER=window.setInterval(refreshAccountSnapshot,15000);
+    if(!window.NEXBIT_PNL_REALTIME_CHANNEL){
+      window.NEXBIT_PNL_REALTIME_CHANNEL=client.channel('nexbit-holdings-pnl-'+user.id)
+        .on('postgres_changes',{event:'*',schema:'public',table:'nexbit_account_asset_balances',filter:'user_id=eq.'+user.id},()=>refreshAccountSnapshot())
+        .on('postgres_changes',{event:'*',schema:'public',table:'nexbit_account_balances',filter:'user_id=eq.'+user.id},()=>refreshAccountSnapshot())
+        .on('postgres_changes',{event:'*',schema:'public',table:'nexbit_spot_trades',filter:'user_id=eq.'+user.id},()=>refreshAccountSnapshot())
+        .on('postgres_changes',{event:'*',schema:'public',table:'nexbit_investments',filter:'user_id=eq.'+user.id},()=>refreshAccountSnapshot())
+        .on('postgres_changes',{event:'*',schema:'public',table:'nexbit_ira_accounts',filter:'user_id=eq.'+user.id},()=>refreshAccountSnapshot())
+        .subscribe();
+    }
     message.textContent='Your secure session is active.';
   }
 
