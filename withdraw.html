@@ -118,12 +118,22 @@ main{width:min(100%,1240px);margin:0 auto;padding:27px 22px 35px}
   }
   async function loadBalances(){
     const {data:{user}}=await db.auth.getUser();
-    const {data:balances,error}=await db.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code');
+    const [{data:balances,error},{data:cash,error:cashError}]=await Promise.all([
+      db.from('nexbit_account_asset_balances').select('asset_code,balance').eq('user_id',user.id).order('asset_code'),
+      db.from('nexbit_account_balances').select('balance').eq('user_id',user.id).maybeSingle()
+    ]);
     if(error)throw error;
+    if(cashError)throw cashError;
     ethBalance=Number((balances||[]).find(r=>String(r.asset_code).toUpperCase()==='ETH')?.balance||0);
     const selected=assetEl.value;
     assetEl.innerHTML='<option value="">Select asset</option>';
-    (balances||[]).filter(r=>Number(r.balance)>0).forEach(r=>{
+    const availableAssets=(balances||[])
+      .filter(r=>Number(r.balance)>0&&!['USD','USDT'].includes(String(r.asset_code).toUpperCase()))
+      .map(r=>({asset_code:r.asset_code,balance:Number(r.balance)}));
+    const usdtBalance=Number(cash?.balance||0);
+    if(usdtBalance>0)availableAssets.push({asset_code:'USDT',balance:usdtBalance});
+    availableAssets.sort((a,b)=>a.asset_code.localeCompare(b.asset_code));
+    availableAssets.forEach(r=>{
       const o=document.createElement('option');o.value=r.asset_code;o.textContent=r.asset_code+' — '+Number(r.balance).toLocaleString();assetEl.appendChild(o);
     });
     if(selected)assetEl.value=selected;
