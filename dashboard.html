@@ -1215,6 +1215,8 @@ html,body{
 .investment-dashboard-view .investment-summary-label{color:#aab2c0;font-size:11px;font-weight:600}
 .investment-dashboard-view .investment-summary-card strong{color:#f5f5f5;font-size:clamp(22px,3vw,29px);font-weight:750;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
 .investment-dashboard-view .investment-summary-returns strong{color:#d9c18a}
+.investment-dashboard-view .investment-summary-unrealized strong{color:#22c55e}
+.investment-dashboard-view .investment-summary-unrealized{border-color:rgba(34,197,94,.28);background:rgba(34,197,94,.055)}
 .investment-dashboard-view .investment-summary-card small{color:#7f8998;font-size:9px;line-height:1.4}
 .investment-dashboard-view .investment-current-plans{margin-bottom:27px}
 .investment-dashboard-view .investment-current-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
@@ -2260,10 +2262,14 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
       const realized=investments.reduce((sum,row)=>row.status==='completed'?sum+Number(row.realized_profit||0):sum,0);
       const unrealized=active.reduce((sum,row)=>{
         if(!row.started_at)return sum;
-        const startedAt=new Date(row.started_at).getTime();
-        if(!Number.isFinite(startedAt))return sum;
-        const elapsedDays=Math.max(0,Math.floor((Date.now()-startedAt)/86400000));
-        const earnedDays=Math.min(elapsedDays,Math.max(0,Number(row.duration_days||0)));
+        const startedAt=new Date(row.started_at);
+        if(!Number.isFinite(startedAt.getTime()))return sum;
+        // Accrue once per local calendar day after the purchase date.
+        const today=new Date();
+        const startDay=Date.UTC(startedAt.getFullYear(),startedAt.getMonth(),startedAt.getDate());
+        const currentDay=Date.UTC(today.getFullYear(),today.getMonth(),today.getDate());
+        const elapsedCalendarDays=Math.max(0,Math.floor((currentDay-startDay)/86400000));
+        const earnedDays=Math.min(elapsedCalendarDays,Math.max(0,Number(row.duration_days||0)));
         const dailyProfit=Number(row.principal_amount||0)*Number(row.daily_rate_percent||0)/100;
         return sum+(dailyProfit*earnedDays);
       },0);
