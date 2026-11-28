@@ -1944,7 +1944,8 @@ html:not(.nexbit-dashboard-route) .dashboard-tabs{display:none!important;visibil
       <article class="investment-summary-card investment-summary-total"><span class="investment-summary-label">Total invested</span><strong id="investmentTotalInvested">—</strong><small id="investmentTotalInvestedNote">Confirmed investments</small></article>
       <article class="investment-summary-card investment-summary-returns"><span class="investment-summary-label">Expected returns</span><strong id="investmentExpectedReturns">—</strong><small>Projected plan returns</small></article>
       <article class="investment-summary-card investment-summary-count"><span class="investment-summary-label">Active plans</span><strong id="investmentCurrentPlans">—</strong><small>Currently running</small></article>
-      <article class="investment-summary-card investment-summary-profit"><span class="investment-summary-label">Realized profit</span><strong id="investmentRealizedProfit">+$0.00</strong><small>Recorded earnings</small></article>
+      <article class="investment-summary-card investment-summary-profit"><span class="investment-summary-label">Realized profit</span><strong id="investmentRealizedProfit">+$0.00</strong><small>Profit from completed plans</small></article>
+      <article class="investment-summary-card investment-summary-unrealized"><span class="investment-summary-label">Unrealized profit</span><strong id="investmentUnrealizedProfit">+$0.00</strong><small>Accrued on active plans</small></article>
     </div>
     <div class="investment-overview-lower">
       <section class="investment-insight-card" aria-labelledby="investmentActivityTitle"><div class="investment-insight-heading"><div><span class="investment-overview-eyebrow">PORTFOLIO HISTORY</span><h3 id="investmentActivityTitle">Investment activity</h3></div><span class="investment-insight-period">Recent plans</span></div><div id="investmentPerformanceChart" class="investment-activity-chart" aria-live="polite"><div class="investment-chart-empty">Your investment activity will appear here.</div></div></section>
@@ -2236,6 +2237,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
       const returnsNode=document.getElementById('investmentExpectedReturns');
       const countNode=document.getElementById('investmentCurrentPlans');
       const profitNode=document.getElementById('investmentRealizedProfit');
+      const unrealizedNode=document.getElementById('investmentUnrealizedProfit');
       const recentNode=document.getElementById('investmentRecentList');
       const chartNode=document.getElementById('investmentPerformanceChart');
       const plansNode=document.getElementById('investmentCurrentPlansList');
@@ -2244,7 +2246,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
       const {data:rows,error}=await client.from('nexbit_investments').select('id,reference,asset_category,package_name,principal_amount,currency_code,daily_rate_percent,duration_days,expected_profit,realized_profit,status,started_at,matures_at,created_at').eq('user_id',user.id).order('created_at',{ascending:false}).limit(1000);
       if(error){
         console.warn('NEXBIT investment records unavailable:',error.message);
-        [totalNode,returnsNode,countNode,profitNode].forEach(node=>{if(node)node.textContent='Unavailable';});
+        [totalNode,returnsNode,countNode,profitNode,unrealizedNode].forEach(node=>{if(node)node.textContent='Unavailable';});
         if(recentNode)recentNode.innerHTML='<div class="investment-chart-empty">Investment records are temporarily unavailable.</div>';
         if(chartNode)chartNode.innerHTML='<div class="investment-chart-empty">Investment activity is temporarily unavailable.</div>';
         if(plansNode)plansNode.innerHTML='<div class="investment-empty-state"><strong>Investment records unavailable</strong><p>Please refresh to try again.</p></div>';
@@ -2255,10 +2257,12 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
       const counted=investments.filter(row=>row.status==='active'||row.status==='completed');
       const total=counted.reduce((sum,row)=>sum+Number(row.principal_amount||0),0);
       const projected=active.reduce((sum,row)=>sum+Number(row.expected_profit||0),0);
-      const realized=investments.reduce((sum,row)=>{
-        if(row.status==='completed')return sum+Number(row.realized_profit||0);
-        if(row.status!=='active'||!row.started_at)return sum;
-        const elapsedDays=Math.max(0,Math.floor((Date.now()-new Date(row.started_at).getTime())/86400000));
+      const realized=investments.reduce((sum,row)=>row.status==='completed'?sum+Number(row.realized_profit||0):sum,0);
+      const unrealized=active.reduce((sum,row)=>{
+        if(!row.started_at)return sum;
+        const startedAt=new Date(row.started_at).getTime();
+        if(!Number.isFinite(startedAt))return sum;
+        const elapsedDays=Math.max(0,Math.floor((Date.now()-startedAt)/86400000));
         const earnedDays=Math.min(elapsedDays,Math.max(0,Number(row.duration_days||0)));
         const dailyProfit=Number(row.principal_amount||0)*Number(row.daily_rate_percent||0)/100;
         return sum+(dailyProfit*earnedDays);
@@ -2267,6 +2271,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
       if(returnsNode)returnsNode.textContent=money(projected);
       if(countNode)countNode.textContent=String(active.length);
       if(profitNode)profitNode.textContent='+'+money(realized);
+      if(unrealizedNode)unrealizedNode.textContent='+'+money(unrealized);
       if(recentNode)recentNode.innerHTML=investments.length?investments.slice(0,5).map(row=>'<div class="investment-recent-row"><div class="investment-recent-main"><strong>'+safe(row.package_name)+' · '+safe(row.asset_category)+'</strong><small>'+safe(row.status.toUpperCase())+' · '+new Date(row.created_at).toLocaleDateString()+'</small></div><span class="investment-recent-amount">'+money(row.principal_amount)+'</span></div>').join(''):'<div class="investment-chart-empty">No investment records yet.</div>';
       if(chartNode){
         const chartRows=investments.slice(0,6).reverse();
@@ -2277,6 +2282,16 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
     }
     window.NEXBIT_REFRESH_INVESTMENTS=loadInvestmentOverview;
     loadInvestmentOverview();
+    // Refresh accrued active-plan profit daily (at the next 24-hour boundary), and
+    // refresh immediately whenever this user's investment rows change.
+    if(!window.NEXBIT_INVESTMENT_REFRESH_TIMER){
+      window.NEXBIT_INVESTMENT_REFRESH_TIMER=window.setInterval(loadInvestmentOverview,60000);
+    }
+    if(!window.NEXBIT_INVESTMENT_REALTIME_CHANNEL){
+      window.NEXBIT_INVESTMENT_REALTIME_CHANNEL=client.channel('nexbit-investment-overview-'+user.id)
+        .on('postgres_changes',{event:'*',schema:'public',table:'nexbit_investments',filter:'user_id=eq.'+user.id},()=>loadInvestmentOverview())
+        .subscribe();
+    }
 
     const {data:balance,error:balanceError}=await client
       .from('nexbit_account_balances')
@@ -2651,6 +2666,7 @@ const nav=[...document.querySelectorAll('[data-dashboard-view]')];
 #investmentView .investment-summary-label{color:#b8c2d0;font-size:9px}
 #investmentView .investment-summary-card strong{color:#f0f3f7;font-size:clamp(16px,2.5vw,21px);letter-spacing:-.035em}
 #investmentView .investment-summary-returns strong{color:#c5d1df}
+#investmentView .investment-summary-unrealized strong{color:#c5d1df}
 #investmentView .investment-summary-card small{color:#8995a5;font-size:8px}
 #investmentView .investment-overview-lower{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
 #investmentView .investment-insight-card{min-width:0;padding:11px;border:1px solid rgba(190,204,221,.2);border-radius:10px;background:linear-gradient(150deg,rgba(167,183,202,.09),rgba(5,7,11,.94) 72%)}
